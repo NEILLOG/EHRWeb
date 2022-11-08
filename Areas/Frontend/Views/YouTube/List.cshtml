@@ -1,0 +1,53 @@
+﻿@using BASE.Service
+@model BASE.Areas.Frontend.Models.VM_YouTube
+
+@await Html.PartialAsync("_BannerPartial")
+
+<form method="post" id="frm" autocomplete="off">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageIndex, new { @class="hiddenCurrentPage" })
+    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageCount, new { @class="hiddenPageCount" })
+    @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
+</form>
+
+<!-- ================================================== -->
+<!-- YouTube影片-->
+<!-- ================================================== -->
+<div class="section pb-md-4 py-lg-5">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 g-4 listBox" id="ytList">
+            @foreach (var item in Model.DataList)
+            {
+                <div class="col">
+                    <a class="card h-100" href="#">
+                        <div style="overflow:hidden; border-top-right-radius: 10px; border-top-left-radius: 10px;">
+                            <iframe width="100%" style="min-height:320px;" src="https://www.youtube.com/embed/@item.YouTubeId"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">@item.Title</h5>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between px-2">
+                                <div class="date text-dark">
+                                    <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
+                                    @item.DisplayDate.ToString("yyyy / MM / dd")
+                                </div>
+                                <div class="morebtn">
+                                    <span class="me-2">點我觀看</span>
+                                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+        <!-- pagination -->
+        <div class="mt-5">
+            @await Html.PartialAsync("_Pagination", Model.Search.PagerInfo)
+        </div>
+        <!-- pagination END -->
+    </div>
+</div>    

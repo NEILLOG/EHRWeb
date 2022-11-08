@@ -1,0 +1,327 @@
+﻿@using BASE.Extensions
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Title -->
+    <title></title>
+
+    <!-- Styles -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+
+    <!-- Font-awesome 6 -->
+    <link href="~/lib/fontawesome-free/css/all.css" rel="stylesheet" />
+    <link href="~/lib/fontawesome-free/js/all.js" rel="stylesheet" />
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <link href="~/lib/bootstrap/v5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/areas/backend/template/base/plugins/perfectscroll/perfect-scrollbar.css" rel="stylesheet">
+    <link href="~/areas/backend/template/base/plugins/pace/pace.css" rel="staylesheet">
+
+
+    <!-- Theme Styles -->
+    <link href="~/areas/backend/template/base/css/main.css" rel="stylesheet" asp-append-version="true">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="~/areas/backend/template/base/images/neptune.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="~/areas/backend/template/base/images/neptune.png" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- sweetalert2 -->
+    <link href="~/lib/sweetalert2/v11.x/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <!-- toastr -->
+    <link href="~/lib/toastr/dist/toastr.min.css" rel="stylesheet">
+    @*<link href="~/css/PagerInfo.css" rel="stylesheet" />*@
+
+    <!-- Parsley -->
+    <link href="~/lib/Parsley/v2.9.2/dist/parsley.css" rel="stylesheet" />
+
+    <!-- daterangepicker -->
+    @*<link href="~/lib/daterangepicker/v3.0.5/daterangepicker.css" rel="stylesheet" />*@
+    <link href="~/lib/daterangepicker/v3.1/daterangepicker.css" rel="stylesheet" />
+
+    <!-- fileupload -->
+    <link href="~/lib/bootstrap-fileinput/v5.2.7/css/fileinput.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.min.css" crossorigin="anonymous">
+
+    <!-- select2 -->
+    @*<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />*@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.0/select2.min.css" rel="stylesheet" />
+
+
+    <link href="~/areas/backend/css/custom.css" rel="stylesheet" asp-append-version="true">
+
+    @await RenderSectionAsync("CustomCss", required: false)
+</head>
+<body>
+    <div class="app full-width-header align-content-stretch d-flex flex-wrap">
+        @await Component.InvokeAsync("MenuSidebar")
+        <div class="app-container">
+            @await Component.InvokeAsync("Header")
+            <div class="app-content">
+                <div class="content-wrapper">
+                    <div class="container-fluid">
+                        @await Component.InvokeAsync("Breadcrumb")
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+        @await Component.InvokeAsync("Footer")
+    </div>
+    <img id="loading" style="cursor: default; display: none;" src="~/lib/blockUI/loading_2.gif" />
+    <!-- Full screen modal -->
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel">圖片檢視</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascripts -->
+    <script src="~/lib/jquery/v3.6.0/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/v5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/areas/backend/template/base/plugins/perfectscroll/perfect-scrollbar.min.js"></script>
+    <script src="~/areas/backend/template/base/plugins/pace/pace.min.js"></script>
+    <script src="~/areas/backend/template/base/js/main.min.js"></script>
+
+    <!-- taiwan-id-validator 2 -->
+    <script src="~/lib/taiwan-id-validator2/taiwan-id-validator2.min.js"></script>
+
+    <!-- sweetalert2 -->
+    <script src="~/lib/sweetalert2/v11.x/dist/sweetalert2.all.min.js"></script>
+    <script>
+        Swal = Swal.mixin({
+            confirmButtonText: '確認'
+        })
+    </script>
+
+    <!-- toastr -->
+    <script src="~/lib/toastr/dist/toastr.min.js"></script>
+
+    <!-- Parsley -->
+    <script src="~/lib/Parsley/v2.9.2/dist/parsley.min.js" asp-append-version="true"></script>
+    <script src="~/lib/Parsley/v2.9.2/dist/i18n/zh_tw.js" asp-append-version="true"></script>
+    <script src="~/lib/Parsley/parsley-custom.js" asp-append-version="true"></script>
+
+    <!-- daterangepicker -->
+    @*    <script src="~/lib/daterangepicker/v3.0.5/moment.min.js" asp-append-version="true"></script>
+        <script src="~/lib/daterangepicker/v3.0.5/daterangepicker.js" asp-append-version="true"></script>*@
+
+    <script src="~/lib/daterangepicker/v3.1/moment.min.js" asp-append-version="true"></script>
+    <script src="~/lib/daterangepicker/v3.1/daterangepicker.js" asp-append-version="true"></script>
+    <script src="~/lib/daterangepicker/daterangepicker-custom.js" asp-append-version="true"></script>
+
+    <!-- fileupload -->
+    <script src="~/lib/bootstrap-fileinput/v5.2.7/js/fileinput.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap-fileinput/v5.2.7/js/locales/zh-TW.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap-fileinput/fileinput-custom.js" asp-append-version="true"></script>
+
+    <!-- select2 -->
+    @*<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.0/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            document.title = "@_conf["Site:Name"] - @(Context.Items["Title"])";
+            $('.select2').select2();
+        });
+    </script>
+
+    <!-- blockUI -->
+    <script src="~/lib/blockUI/jquery.blockUI.js" asp-append-version="true"></script>
+    <script>
+        $.blockUI.defaults.message = $('#loading');
+        $.blockUI.defaults.css = {
+            border: 'none',
+            padding: '15px',
+            background: 'none',
+            '-webkit-border-radius': '10px',
+            '-moz-border-radius': '10px',
+            top: ($(window).height() - 250) / 2 + 'px',
+            left: ($(window).width() - 400) / 2 + 'px',
+            width: '400px'
+        }
+    </script>
+
+    @*提示訊息*@
+    <script>
+        // type: success, info, warning, error
+        // plugin: swal, toastr
+        /* example:
+         * inform({
+                plugin: response.alert_plugin,
+                type: response.alert_type,
+                title: response.Message,
+                contenxt: response.MessageDetail,
+                redirect_url : response.redirect_url,
+           });
+        */
+        const inform = (optional_setting) => {
+            let default_setting = {
+                plugin: 'swal',
+                type: 'success',
+                title: null,
+                content: null,
+                redirect_url: null,
+                duration: 5000,
+            }
+
+            let setting = $.extend({}, default_setting, optional_setting);
+
+            setting.content = setting.content ?? '';
+
+            if (setting.title != null) {
+
+                switch (setting.plugin) {
+                    case 'swal':
+                        Swal.fire(setting.title, setting.content, setting.type)
+                        .then((result) => {
+                            if (setting.redirect_url !== null) {
+                                location.href = setting.redirect_url;
+                            }
+                        });
+                        break;
+                    case 'toastr':
+                        if (setting.content == '' || setting.content == null) {
+                            toastr[setting.type](setting.title);
+                        } else {
+                            toastr[setting.type](setting.content, setting.title);
+                        }
+                        break;
+                }
+            }
+
+
+            if (setting.redirect_url !== null) {
+                setTimeout(() => {
+                    location.href = setting.redirect_url;
+                }, setting.duration);
+            }
+
+        }
+    </script>
+
+    @*提示訊息*@
+
+    @if (TempData["TempMsg"] != null)
+    {
+        String Type = "info";
+        if (TempData["TempMsgType"] != null)
+        {
+            switch ((MsgTypeEnum)TempData["TempMsgType"])
+            {
+                case MsgTypeEnum.error: Type = "error"; break;
+                case MsgTypeEnum.info: Type = "info"; break;
+                case MsgTypeEnum.success: Type = "success"; break;
+                case MsgTypeEnum.warning: Type = "warning"; break;
+                default:
+                    Type = "error";
+                    break;
+            }
+        }
+
+        switch ((string?)TempData["TempPlugin"])
+        {
+            case "toastr":
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        toastr["@Type"]("@TempData["TempMsg"]","@TempData["TempMsgDetail"]");
+                    });
+                </script>
+                break;
+            default:
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        Swal.fire({
+                            title: '@TempData["TempMsg"]',
+                            text: '@TempData["TempMsgDetail"]',
+                            //timer: 3000,
+                            //showConfirmButton: true,
+                            icon: '@Type'
+                        });
+                    });
+                </script>
+                break;
+        }
+
+    }
+
+
+    <script src="~/areas/backend/js/custom.js"></script>
+
+    @await RenderSectionAsync("CustomScripts", required: false)
+    @Html.RenderPartialSectionScriptsAsync()
+</body>
+</html>
+@*<!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BASE</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BASE.styles.css" asp-append-version="true" />
+    </head>
+    <body>
+    <header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container-fluid">
+    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BASE</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+    <ul class="navbar-nav flex-grow-1">
+    <li class="nav-item">
+    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </li>
+    </ul>
+    <partial name="_LoginPartial" />
+    </div>
+    </div>
+    </nav>
+    </header>
+    <div class="container">
+    <main role="main" class="pb-3">
+    @RenderBody()
+    </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+    <div class="container">
+    &copy; 2022 - BASE - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    </body>
+    </html>*@

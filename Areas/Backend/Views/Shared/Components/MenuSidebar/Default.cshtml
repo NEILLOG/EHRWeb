@@ -1,0 +1,90 @@
+﻿@model BASE.Areas.Backend.Models.VM_Menu
+
+@{
+    void GenerateSubMenuRecursive(TreeMenu menu)
+    {
+        List<TreeMenu> sub_menus = Model.MenuList.Where(x => x.ParentID == menu.MenuID && x.Level == menu.Level + 1).ToList();
+        string has_tree = sub_menus.Any() && string.IsNullOrEmpty(menu.Url) ? "has-sub-menu" : "";
+        string menuOpen = menu.MenuOpen ? "open" : "";
+        string IsSelected = menu.Selected ? "menu-selected" : "";
+
+        <li class="@menuOpen">
+            <a href="@menu.Url">
+                <i class="material-icons-two-tone">@menu.Icon</i>@menu.Title
+                @if (sub_menus.Any())
+                {
+                    <i class="material-icons has-sub-menu">keyboard_arrow_right</i>
+                }
+            </a>
+            @if (sub_menus.Any())
+            {
+                <ul class="sub-menu">
+                    @foreach (TreeMenu sub_menu in sub_menus)
+                    {
+                        GenerateSubMenuRecursive(sub_menu);
+                    }
+                </ul>
+            }
+
+        </li>
+    }
+}
+
+
+<script>
+    function Signout() {
+
+        $.ajax({
+            type: "POST",
+            url: '/Backend/BackendHome/Signout',
+            dataType: "json",
+            data: JSON.stringify({}),
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                window.location = "/Backend/BackendHome/Login";
+            }
+
+        });
+    }
+
+
+
+</script>
+
+
+<div class="app-sidebar">
+    <div class="logo">
+        <a href="" class="logo-icon"><span class="logo-text">@_conf["Site:Name"]</span></a>
+        @if(Model.UserExtendItem != null)
+        {
+            <div class="sidebar-user-switcher user-activity-online">
+                <a href="#">
+                    <img src="~/areas/backend/template/base/images/user.png">
+                    <span class="activity-indicator"></span>
+                    <span class="user-info-text">@Model.UserExtendItem.User.UserName<br><span class="user-state-info">上線中</span></span>
+                </a>
+            </div>
+        }
+        
+    </div>
+
+    <div class="app-menu">
+        <ul class="accordion-menu">
+            <!--<li class="sidebar-title">
+                Apps
+            </li>-->
+            @if (Model.MenuList != null && Model.MenuList.Any())
+            {
+                int min_level = Model.MenuList.Select(x => x.Level).Min();
+                List<TreeMenu> menuList = Model.MenuList.Where(x => x.Level == min_level).ToList();
+
+                foreach (var menu in menuList)
+                {
+                    GenerateSubMenuRecursive(menu);
+                }
+            }
+
+        </ul>
+    </div>
+</div>
+

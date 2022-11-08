@@ -1,0 +1,1755 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+* {
+  font-family:'Noto Sans TC','Microsoft JhengHei', sans-serif;
+}
+body{
+  background: url(../img/Grid_BG.png) no-repeat; 
+  overflow-x: hidden;   
+}
+
+html{
+   overflow-x: hidden;   
+}
+
+a{
+  color: #1A1B1E;
+  text-decoration: none;
+}
+a:hover{
+  text-decoration: none;
+  color: #2FAEAB;
+}
+a:active{
+  text-decoration: none;
+  color: #2FAEAB;
+}
+hr{
+  color: #B2B2B2;
+}
+
+.ellipsis {
+  overflow:hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.multiline-ellipsis { 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.tripleline-ellipsis { 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.fs--1{
+  font-size: 0.8rem;
+}
+.fc-white{
+  color: #FFF;
+}
+.fc-gray{
+   color: #C9C9C9;
+}
+.fc-ored{
+   color: #F56962;
+}
+.fc-blue{
+   color: #2982F6;
+}
+.fc-darkblue{
+   color: #183650;
+}
+.fc-yellow{
+   color: #F9D440;
+}
+.fc-red{
+   color: red;
+}
+.fc-orange{
+   color: #ED6F30;
+}
+.fc-green{
+   color: #2DA7A4;
+}
+.bg-green{
+   background-color: #2DA7A4;
+}
+.bg-gray{
+   background-color: #DDD;
+}
+.bg-yellow{
+   background-color: #FFF9E1;
+}
+.bg-transparent{
+   background-color: transparent;
+}
+.bg-blue{
+   background-color: #E5F0F8;
+}
+
+.btn-primary{
+   color: #FFF;
+   background-color: #ED6F30;
+   border-color: #ED6F30;
+}
+
+.btn-primary:hover{
+   color: #FFF;
+   background-color: #af3e06;
+   border-color: #af3e06;
+}
+
+.btn-outline-primary {
+  color: #ED6F30;
+  border-color: #ED6F30;
+}
+
+.btn-outline-primary:hover {
+  color: #fff;
+  background-color: #d34b07;
+  border-color: #d34b07;
+}
+
+.btn-success{
+   color: #FFF;
+   background-color: #2DA7A4;
+   border-color: #2DA7A4;
+}
+
+.btn-success:hover{
+   color: #FFF;
+   background-color: #227e7c;
+   border-color: #227e7c;
+}
+
+.btn-more{
+   color: #929292;
+   background-color: #EFEFEF;
+   border-color: #EFEFEF;
+   border-radius: 100%;
+   width: 35px;
+   height: 35px;
+   padding: 0;
+}
+
+.btn-more:hover{
+   color: #FFF;
+   background-color: #999;
+   border-color: #999;
+}
+
+.btn-info{
+   color: #fff;
+   background-color: #0d6efd;
+   border-color: #0d6efd;
+}
+
+.btn-info:hover {
+  color: #fff;
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+
+.mt-minus{
+   margin-top: -3%;
+}
+.mt-n1 {
+ margin-top: -6.5rem;
+}
+
+/*========================*/
+/*========= 首頁  ========*/
+/*========================*/
+
+/*===== Header =====*/
+
+#myHeader{
+   position: fixed;
+   top: 0;
+   transition: 0.3s;
+   z-index: 999;
+   background-color: #FFF;
+   width: 100%;
+}
+
+.small-header{ 
+   background: #2DA7A4;      
+   width: 100%;
+   height: 50px; 
+}
+
+.topLinks .slink{
+  font-size: 0.95rem;
+  color: #FFF;
+  text-decoration: none;
+}
+
+.topLinks .slink::after{
+   content: "　|　";
+   color: #FFF;
+}
+
+.topLinks .slink:nth-last-child(2)::after{
+   content: "";
+   margin-right: 15px;
+}
+
+.topLinks .slink:hover{
+   font-size: 0.95rem;
+   color: #2b5c54;
+   font-weight: 700;
+   text-decoration: none;
+}
+
+.topLinks .subscribe-btn{
+   font-size: 0.95rem;
+   text-decoration: none;
+   color: #2DA7A4;
+   font-weight: 700;
+   background-color: #FFF;
+   padding: 13.5px;
+}
+
+.topLinks .subscribe-btn:hover{
+   text-decoration: none;
+   color: #FFF;
+   background-color: #217c7a;
+   font-weight: 700;
+}
+
+#headernav{    
+   background-color: #FFF;
+}
+
+@media (min-width: 992px){
+  #headernav {
+      padding-left: 0;
+      padding-right: 0;
+   }    
+}
+
+.navbar-light .navbar-nav .nav-link{
+   white-space: nowrap;
+   color: #1A1B1E;
+   font-weight: 500;
+   font-size: 1rem;
+}
+
+.dropdown-menu[data-bs-popper]{
+   margin-top: 1.125rem;
+}
+
+/*=====  訂閱服務  =====*/
+/* custom checkbox */
+.CusCheckbox-form input[type="checkbox"]{
+   display: none;
+}
+
+.CusCheckbox-form input[type="checkbox"]:checked~ .CusCheckbox-form-label {
+   background-color: #373737;
+   color: #fff;
+   padding: 5px 20px 5px 40px;
+}
+
+.CusCheckbox-form input[type="checkbox"]:checked~ .CusCheckbox-form-label::before{
+   content: "";
+   background: url('../img/checkmark-filled.png') no-repeat;
+   width: 18px;
+   height: 18px;  
+   position: absolute;
+   top: 6px;
+   left: 8px;
+}
+
+.CusCheckbox-form-label{
+   position: relative;
+   padding: 5px 20px;
+   border-radius: 5px;
+   background: #FFF;
+   cursor: pointer;
+   color: #373737;
+   border: 1px solid #A8A8A8;
+}
+
+#subs-form .form-check-inline{
+   margin-right: 0;
+}
+
+#subs-form .form-check{
+   padding-left: 0;
+}
+
+#exampleModal .modal-header{
+   border-bottom: 0;
+}
+
+/*===== 輪播 =====*/
+.view{
+ position: relative;
+ overflow: hidden;
+ background-repeat: no-repeat;
+ background-size: cover;
+}
+
+.mask{
+ position: absolute;
+ top: 0;
+ right: 0;
+ bottom: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ overflow: hidden;
+ color:#fff;
+ background: rgba(48, 96, 94, .65);
+}
+
+.carousel-inner .carousel-item {
+ height: 800px;
+ object-fit: cover;
+}
+
+.carousel-inner img {
+ position: absolute;
+ left: 50%;
+ top: 50%;
+ transform: translate(-50%, -50%);
+}
+
+.mask h2{
+   font-size: 3.5rem;
+   font-weight: 700;
+}
+
+
+/*=====  圖形按鈕區塊  =====*/
+.imgbtnBox{
+   margin-top: -100px;
+   position: relative;
+   z-index: 800;
+}
+
+.imgbtnBox .item{
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   background-color: #FFF;
+   box-shadow: 5px 10px 15px rgb(60 70 80 / 20%);
+   border-radius: 12px;
+   padding-left: 10px;
+   padding-right: 10px;
+   padding-top: 25px;
+   padding-bottom: 25px;
+}
+
+.imgbtnBox .item:hover{
+   border: 3px solid #2FAEAB;
+   transition: 0.2s;
+}
+
+.pic-circle{
+  z-index: -2;
+  position: absolute;
+  top: 15%;
+  left: -35%;
+  width: 40%;
+}
+
+
+/*=====  index共用  =====*/
+
+.section{
+   z-index: 50;
+   margin-top: 20px;
+}
+
+.section-title{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+/*===== back to top=====*/
+#gotopbutton {
+  display: inline-block;  
+  width: 40px;
+  height: 65px;
+  background: url(../img/gotop.svg) no-repeat center;
+  text-align: center;
+  border-radius: 4px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  transition: background-color .3s, opacity .5s, visibility .5s;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+}
+
+#gotopbutton div{
+   color: #BCBCBC;
+}
+
+#gotopbutton div::before {
+  content: "";
+  border-left: 1px solid #BCBCBC;
+  position: absolute;
+  bottom: 100%;
+  left: 45%;
+  height: 100px;
+}
+
+#gotopbutton:hover {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+#gotopbutton.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+
+/*=====  最新消息  =====*/
+.articleBox .card-body h4{
+   font-size: 1.4rem;
+}
+
+.articleBox .card img{
+   box-shadow: -20px -15px 0px 0px rgba(235,235,235,1);
+   -webkit-box-shadow: -20px -15px 0px 0px rgba(235,235,235,1);
+   -moz-box-shadow: -20px -15px 0px 0px rgba(235,235,235,1);
+}
+
+.card-tag{
+   font-size: 0.8rem;
+   color: #FFF;
+   margin-bottom: 15px;
+}
+
+.card-tag .tag-news{
+   background-color: #EA4B35;
+   padding: 5px 10px;   
+   border-radius: 8px;
+}
+
+.card-tag .tag-other{
+   background-color: #049AA8;
+   padding: 5px 10px;   
+   border-radius: 8px;
+}
+
+.card-tag .tag-resource{
+   background-color: #67C1F8;
+   padding: 5px 10px;   
+   border-radius: 8px;
+}
+
+.newsList .list-group-item{
+   border: 0;
+   border-bottom: 1px solid #DDD;
+   line-height: 2.1rem;
+}
+
+.newsList .list-group-item:hover .moreicon{
+   transform: translateX(15px);
+   transition: 0.4s ease-in-out;
+   color: #67C1F8;
+}
+
+/*=====  熱門報名課程  =====*/
+.courseSection{
+   background: url(../img/greenBG.png) no-repeat center;
+}
+
+.courseBox{
+   height: 540px;
+}
+
+.courseBox .courseItem{
+   border-radius: 15px;
+}
+
+.courseBox .courseItem .card-body{
+   padding: 25px;
+}
+
+.courseBox .courseItem .card-title{
+   font-weight: 700;
+   margin-bottom: 25px;
+}
+
+.courseBox .courseItem .card-text{
+   color: #68737D;
+   font-size: 0.95rem;
+   margin-bottom: 15px;
+}
+
+.courseBox .courseItem .card-footer{
+   background-color: #FFF;
+   padding: 25px;
+   border-radius: 0;
+   border-radius: 0 0 15px 15px;
+   display: flex;
+   justify-content: space-between;
+   font-weight: 700;
+}
+
+.courseBox .courseItem .card-footer .more-btn{
+   color: #183650;   
+}
+
+.courseBox .moreBox{   
+   color: #FFF;
+   border-radius: 15px;
+   text-align: center;
+   height: 476px;
+   background: url(../img/course/moreBG.png) center;
+}
+
+.courseBox .courseItem:hover ,  .courseBox .moreBox:hover{
+   transition: .3s;
+   box-shadow: 14px 14px 0px rgb(0 0 0 / 40%);
+}
+
+.courseBox .courseItem:hover .card-title{
+   color: #2DA7A4;
+}
+
+.courseBox .moreBox .card-body{
+   padding: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+}
+
+.wrap-mask{
+   height:100%;
+   width:100%;
+   background: rgba(39, 148, 145, 0.8);
+   border-radius: 15px;
+   display: flex;   
+   align-items: center;
+}
+
+
+/*======  相關連結  ======*/
+
+
+#link-owl .owl-nav [class*='owl-'], #link-owl .owl-theme .owl-nav [class*='owl-'] {
+   color: #818181;
+   padding: 10px 15px !important;
+   display: inline-block;
+   border-radius: 0;
+   margin-right: 0;
+}
+
+#link-owl .owl-nav .owl-next::after {
+   content: "\f054";
+   display: inline-block;
+   font: normal normal normal 45px/1 FontAwesome;
+}
+
+#link-owl .owl-nav .owl-prev::after {
+   content: "\f053";
+   display: inline-block;
+   font: normal normal normal 45px/1 FontAwesome;
+}
+
+#link-owl .owl-nav span {
+   display: none;
+}
+
+#link-owl .owl-nav button.owl-prev, #link-owl .owl-nav button.owl-next {
+   position: absolute;
+   top: 50%;
+   transform: translateY(-50%);
+}
+
+#link-owl .owl-nav button.owl-prev {
+   left: -4%;
+}
+
+#link-owl .owl-nav button.owl-next {
+   right: -4%;
+}
+
+#link-owl .owl-nav [class*=owl-]:hover{
+   background: transparent;
+   color: #2DA7A4;
+   text-decoration: none;
+}
+
+
+#link-owl .owl-dots .owl-dot span{
+   background-color: #DDD; 
+   border: 5px solid transparent;
+   border-radius: 100%;
+   width: 11px;
+   height: 11px;
+   opacity: 1;
+   margin: 8px;
+   padding: 3px;
+}
+
+#link-owl .owl-dots .owl-dot.active span, #link-owl .owl-dots .owl-dot:hover span{
+   background-color: #FFF;
+   border: 5px solid #FD9019;
+}
+
+#link-owl .item{
+   background-color: #FFF;
+   border: 1px solid #CFCFCF;   
+   padding: 15px;
+   height: 100px;
+   overflow: hidden;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+#link-owl .item img{
+   height: 100%;
+   width: auto !important;
+}
+
+/*======  Footer  ======*/
+
+footer{
+   background: url(../img/footerBG.png) no-repeat;
+   background-size: cover;
+   background-position: top;
+}
+.pic-circle-bottom{
+   z-index: -2;
+   position: absolute;
+   bottom: 0%;
+   right: -15%;
+   width: 45%;   
+}
+
+
+
+/*========================*/
+/*===== index - RWD  =====*/
+/*========================*/
+
+/* laptop */
+@media (max-width: 1366px) {  
+   .footer div{
+      max-width: 50%;      
+   }
+   .dropdown-menu[data-bs-popper]{
+      margin-top: 0.7rem;
+   }
+}
+
+/* tablets */
+@media (max-width: 992px) {   
+
+   .carousel-inner .carousel-item {
+      height: 250px;
+      object-fit: cover;
+   }
+   .mask h2{
+      font-size: 2.2rem;
+   }
+   .mask p{ 
+      font-size: 1.1rem;     
+      padding-left: 18%;
+      padding-right: 18%;
+   }
+
+   .imgbtnBox .item{
+      padding: 15px;
+      margin-bottom: 10px;
+   }
+
+   #link-owl .owl-nav button.owl-prev {
+      left: -7%;
+   }
+
+   #link-owl .owl-nav button.owl-next {
+      right: -7%;
+   }
+
+   .courseBox .moreBox{
+      height: 390px;
+   }
+
+   .courseBox{
+      height: 450px;
+   }
+
+   .courseBox .courseItem .card-footer{
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
+   }
+
+   .courseBox .courseItem .card-body{
+      padding: 15px;
+   }
+
+   .mt-minus{
+      margin-top: 0;
+   }
+
+   footer{
+      background: unset;
+      background-color: #2DA7A4;
+   }
+   .courseSection{
+      background-size: cover;
+   }
+   .dropdown-menu[data-bs-popper]{
+      margin-top: 0.125rem;
+   }
+}
+
+
+
+/* phones */
+@media (max-width: 576px) {   
+   .navbar-brand img{
+      width: 75%;
+   }
+
+   .carousel-inner .carousel-item {
+      height: 160px;
+      object-fit: cover;
+   }
+
+   .mask h2{
+      font-size: 1.2rem;
+   }
+
+   .mask p{
+      font-size: 0.8rem;
+      padding-left: 18%;
+      padding-right: 18%;
+   }
+   .imgbtnBox{
+      margin-top: -50px;
+   }
+
+   .imgbtnBox .item{
+      padding: 15px;
+      margin-bottom: 10px;
+   }
+
+   .imgbtnBox .item img{
+      width: 50%;
+   }
+   .courseBox{
+      height: auto;
+   }
+   .courseBox .courseItem,  .courseBox .moreBox{
+      margin-top: 25px;
+   }
+   #link-owl .owl-nav button.owl-prev {
+      display: none;
+   }
+
+   #link-owl .owl-nav button.owl-next {
+      display: none;
+   }
+   footer{
+      background: unset;
+      background-color: #2DA7A4;
+   }
+   .footer div{
+      max-width: 85%;      
+   }
+   .courseSection{
+      background: unset;
+   }
+   .courseCard{
+      background-color: #2DA7A4!important;
+   }
+   .courseBox .courseItem .card-footer{
+      flex-direction: row;
+      align-items: center;
+      padding: 15px;
+   }
+
+}
+
+/*===========================*/
+/*===== index - RWD  END=====*/
+/*===========================*/
+
+
+/*====================*/
+/*===== PAGE共用 =====*/
+/*====================*/
+
+/*Banner*/
+
+.bg-image{
+  background: linear-gradient(rgba(46, 87, 85,0.6), rgba(46, 87, 85,0.6)),url('../img/page_banner.png') no-repeat;
+  height: 350px;
+  background-size: cover ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-position: center center;   
+  position: relative; 
+  z-index: 1;
+}
+
+.bg-image:after{
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: inherit;
+  filter: blur(3px); 
+  z-index: 2;
+}
+
+.bn-title{
+  z-index: 99;
+  margin-top: 7%;
+}
+
+.cTop{
+  color: #FFF;
+  font-weight: 700;
+  display: inline-block;
+  position: relative;
+  margin-top: 25px;
+}
+
+.cBottom{
+  color: #FFF;
+  opacity: 0.7;
+}
+
+.cBottom p{
+  margin-bottom: 0;
+}
+
+.pic-circle-page{
+  z-index: -2;
+  position: absolute;
+  top: 100%;
+  left: -12%;
+  width: 30%;
+}
+
+/*card-image*/
+
+.listBox .card-img-top{
+  width: 100%;
+  height: 12vw;
+  object-fit: cover; 
+  border-radius: 1rem 1rem 0 0;
+}
+
+
+/*pagination*/
+
+.pagination .page-link{
+   color: #153556;
+}
+
+.pagination .page-link:hover{
+   color: #FFF;
+   background-color: #373737;
+}
+
+/*========================*/
+/*===== PAGE - RWD  =====*/
+/*=======================*/
+
+
+/* tablets */
+@media (max-width: 992px) {   
+   .listBox .card-img-top{
+      height: 20vw;
+   }
+}
+
+/* phones */
+@media (max-width: 576px) { 
+ .bn-title{
+   margin-top: 25%;
+}   
+.listBox .card-img-top{
+   height: 35vw;
+}
+}
+
+/*===========================*/
+/*===== PAGE - RWD  END=====*/
+/*=========================*/
+
+
+
+/*==========================*/
+/*===== 活動訊息-列表頁 =====*/
+/*==========================*/
+
+#collapseActivity ul li{
+   list-style: none;
+}
+
+#collapseActivity .nav-tabs{
+   border-bottom: 0;
+}
+
+#collapseActivity .nav-tabs .nav-link{
+   border: 0;
+   margin: auto;
+   color: #373737;
+}
+
+.activityBtn a:not(.collapsed){
+   color: #FFF;
+   background-color: #ED6F30;
+}
+.activityBtn a.nav-link {
+    color: #373737;
+    background-color: white;
+    text-align:center;
+}
+
+.activityBtn a.collapsed{
+   color: #373737;
+   background-color: #FFF;
+}
+
+#collapseActivity .nav-tabs .nav-item.show .nav-link, #collapseActivity .nav-tabs .nav-link.active{
+   color: #E16A2F;
+   font-weight: 700;
+}
+
+.searchBar{
+   border: 1px solid transparent;
+   border-radius: 0.5rem;
+   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.listBox .card{
+   border-radius: 1rem;
+}
+
+.listBox .card-footer:last-child{
+   border-radius: 0 0 calc(1rem - 1px) calc(1rem - 1px);
+}
+
+.listBox .card:hover{
+   border: 2px solid #287D7B;
+   color: #287D7B;
+}
+
+.listBox .card-footer .date{
+   color: #3B3B3B;
+}
+
+/*======  popover  ======*/
+.popover-content {
+   display: none;
+}
+
+.popover {
+   -moz-box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+   -webkit-box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+   min-width: 650px;
+   border: 1px solid transparent;
+   border-radius: 12px;
+}
+
+.popdate {
+   border: 1px solid #CFCFCF;
+   border-radius: 22px;
+   margin-right: 15px;
+   margin-top: 10px;
+}
+
+/*=================================*/
+/*===== 活動訊息-列表頁 - RWD  =====*/
+/*=================================*/
+
+
+/* tablets */
+@media (max-width: 992px) {   
+   .popover{
+      min-width: 630px;
+   }
+}
+
+/* phones */
+@media (max-width: 576px) { 
+    .popover{
+      min-width: 330px;
+   }   
+}
+
+/*====================================*/
+/*===== 活動訊息-列表頁 - RWD  END=====*/
+/*====================================*/
+
+
+/*==========================*/
+/*===== 活動訊息-內容頁 =====*/
+/*==========================*/
+
+.activityPage h2{
+   color: #2DA7A4;
+   font-weight: 700;
+}
+
+.activityPage h3{
+   font-weight: 700;
+   font-size: 1.4rem;
+}
+
+.activityPage h4{
+   font-weight: 700;
+   font-size: 1.2rem;
+   margin-top: 20px;
+   margin-bottom: 20px;
+}
+
+.activityPage .intro{
+   border-left: 3px solid #3DC3C0;
+   padding: 18px;
+}
+
+.activityPage p{
+   color: #878787;
+}
+
+.activityInfo{
+   -moz-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+   -webkit-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.activityInfo .info-title{
+   font-size: 1.2rem;
+   font-weight: 700;
+}
+
+.activityInfo .info-text{
+   color: #5F5982;
+   margin-top: 20px;
+}
+
+.activityInfo .info-text .text{
+   margin-top: 8px;
+}
+
+.info-text .dateBox{   
+   border: 1px solid #D5D3D3;
+   border-radius: 10px;   
+   padding: 15px;
+   margin-top: 28px;
+}
+
+.info-text .dateBox .act-date{
+   position: absolute;
+   top: -42px;
+   left: 0px;
+   background-color: #FFF;
+   padding: 6px;
+}
+
+.info-text .dateBox .act-time{
+   position: relative;
+}
+
+/*==========================*/
+/*===== 活動訊息-報名頁 =====*/
+/*==========================*/
+
+.registrationBox{
+   -moz-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+   -webkit-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.registrationBox .rb-title h2 span{
+   border-bottom: 5px solid #F3C404;
+   padding-bottom: 4.2rem;
+}
+
+.registrationBox .rb-title small{
+   line-height: 4rem;
+}
+
+#regis-form .form-check-inline, #mode-form .form-check-inline, #food-form .form-check-inline{
+   margin-right: 0;
+}
+
+#regis-form .form-check, #mode-form .form-check, #food-form .form-check{
+   padding-left: 0;
+}
+
+.form-CusSwitch .form-check-input{
+   margin-left: 0;
+   margin-right: 0.5rem;
+   float: initial;
+}
+
+#regis-form .CusCheckbox-form input[type="checkbox"]:checked~ .CusCheckbox-form-label {
+   background-color: #2DA7A4;
+   color: #fff;
+   padding: 5px 20px 5px 40px;
+}
+
+#regis-form .CusCheckbox-form input[type="checkbox"]:checked~ .CusCheckbox-form-label::before{
+   content: "";
+   background: url('../img/checkmark-filled.png') no-repeat;
+   width: 18px;
+   height: 18px;  
+   position: absolute;
+   top: 8px;
+   left: 8px;
+}
+
+.CusCheckbox-form input[type="radio"]{
+   display: none;
+}
+
+.CusCheckbox-form input[type="radio"]:checked~ .CusCheckbox-form-label {
+   background-color: #373737;
+   color: #fff;
+   padding: 5px 20px 5px 40px;
+}
+
+.CusCheckbox-form input[type="radio"]:checked~ .CusCheckbox-form-label::before{
+   content: "";
+   background: url('../img/checkmark-filled.png') no-repeat;
+   width: 18px;
+   height: 18px;  
+   position: absolute;
+   top: 6px;
+   left: 8px;
+}
+
+.activityDetail{
+   border: 1px solid #F3C404;
+   border-radius: 5px;
+}
+
+.detailItem{
+   border-bottom: 1px solid #F3C404;
+   padding: 15px;
+}
+
+.detailItem:last-child{
+   border-bottom: 0;
+}
+
+.detailItem .del-btn a i{
+   background-color: rgba(233, 138, 90, 0.2);
+   border-radius: 50%;
+   padding: 19px 20px;
+}
+
+.detailItem .del-btn a{
+   color: #E98A5A;
+   display: block;
+}
+
+.detailItem .del-btn a:hover{
+   color: rgba(221, 91, 25, 1);
+}
+
+.choiceBox{
+   display: inline-flex;
+}
+
+/*=================================*/
+/*===== 活動訊息-報名頁 - RWD  =====*/
+/*=================================*/
+
+
+/* tablets */
+@media (max-width: 992px) {   
+   #regis-form .form-check{
+      margin-top: 8px;
+   }
+}
+
+/* phones */
+@media (max-width: 576px) { 
+ .registrationBox .rb-title h2 span{
+   border-bottom: 0;
+   padding-bottom: 0;
+} 
+.registrationBox .rb-title small{
+   line-height: 0;
+} 
+#regis-form .form-check{
+   margin-top: 8px;
+}
+.choiceBox{
+   display: block;
+}
+.choiceBox .choice{
+   margin-bottom: 10px;
+}
+}
+
+/*====================================*/
+/*===== 活動訊息-報名頁 - RWD  END=====*/
+/*====================================*/
+
+
+/*==========================*/
+/*===== 諮詢輔導顧問 =====*/
+/*==========================*/
+
+.applicationBox{
+   border: 1px solid #F3C404;
+   border-radius: 5px;
+}
+
+/*==========================*/
+/*====== 企業資源專區 ======*/
+/*=========================*/
+
+#resourceTab li{
+   list-style: none;
+}
+
+#resourceTab{
+   border-bottom: 0;
+}
+
+#resourceTab .nav-link{
+   width: 100%;
+   border: 0;
+   margin: auto;
+   color: #373737;
+   transition: .3s;
+}
+
+#resourceTab .nav-item.show .nav-link, #resourceTab .nav-link.active{
+   width: 100%;
+   background-color: #E16A2F;
+   color: #FFF;
+   font-weight: 700;
+   border-bottom-left-radius: 0.25rem;
+   border-bottom-right-radius: 0.25rem;
+   transition: .3s;
+}
+
+.corp-resource {
+   padding-left: 0;
+}
+
+.corp-resource li{
+   list-style: none;
+}
+
+.corp-resource .item{
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background-color: #FFF;
+   padding: 24px 22px;
+   margin-bottom: 15px;
+   border-radius: 20px;
+   border: 1.5px solid #ECECEC;
+   box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.corp-resource .item:hover{
+   border: 1.5px solid #2DA7A4;
+   box-shadow:rgba(91, 196, 186, 0.8) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+   transition: 0.3s;
+}
+
+.corp-resource .item .tag{
+   border-radius: 21px;
+   background-color: rgba(45, 167, 164, 0.2);
+   color: #2DA7A4;
+   font-weight: 400;
+   font-size: 0.9rem;
+   padding: 5px 16px;
+   margin-right: 10px;
+}
+
+.corp-resource .item i{
+   color: #B7B7B7;
+   transition: 0.5s ease-in-out;
+}
+
+.corp-resource .item:hover i{
+   transform: translateX(-40px);
+   transition: 0.75s ease-in-out;
+}
+
+.fileBox{
+   border: 1px solid #0079D5;
+   border-radius: 5px;
+}
+
+/*=================================*/
+/*===== 企業資源專區 - RWD  =====*/
+/*=================================*/
+
+
+/* tablets */
+@media (max-width: 992px) {   
+
+}
+
+/* phones */
+@media (max-width: 576px) { 
+ .corp-resource .title {
+   display: block;
+   margin-top: 15px;
+}
+}
+
+/*====================================*/
+/*===== 企業資源專區 - RWD  END=====*/
+/*====================================*/
+
+
+/*==========================*/
+/*======= 人資小幫手 ========*/
+/*==========================*/
+
+.hr-charger{
+   padding-left: 0;
+}
+
+.hr-charger li{
+   list-style: none;
+}
+
+.hr-charger .item{
+   display: flex;   
+   flex-direction: column;
+   background-color: #FFF;
+   padding: 24px 22px;
+   margin-bottom: 15px;
+   border-radius: 20px;
+   border: 1.5px solid #ECECEC;
+   box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.hr-charger .item:hover{
+   border: 1.5px solid #67C1F8;
+   transition: 0.3s;
+   box-shadow:rgba(91, 196, 186, 0.8) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.hr-charger .item .date{
+   color: #3B3B3B;
+   font-size: 0.9rem;
+}
+
+.hr-charger .item .morebtn{
+   color: #183650;
+   font-size: 0.9rem;
+   transition: 0.4s ease-in-out;
+}
+
+.hr-charger .item:hover .morebtn{
+   transform: translateX(10px);
+   transition: 0.4s ease-in-out;
+}
+
+#HRToolBoxTab li{
+   list-style: none;
+}
+
+#HRToolBoxTab{
+   border-bottom: 0;
+}
+
+#HRToolBoxTab .nav-link{
+   width: 100%;
+   border: 0;
+   margin: auto;
+   color: #373737;
+   transition: .3s;
+}
+
+#HRToolBoxTab .nav-item.show .nav-link, #HRToolBoxTab .nav-link.active{
+   width: 100%;
+   background-color: #E16A2F;
+   color: #FFF;
+   font-weight: 700;
+   border-bottom-left-radius: 0.25rem;
+   border-bottom-right-radius: 0.25rem;
+   transition: .3s;
+}
+
+#HRTab .nav-item.show .nav-link, #HRTab .nav-link.active{
+   color: #E16A2F;
+   font-weight: 700;
+   background-color: transparent;
+}
+
+#HRTab{
+   border-bottom: 0;
+}
+
+.guidebookContent ul{
+   list-style-type:none;
+}
+
+.guidebookContent ul li::before {
+ content: "— ";
+ color: #008EEC;
+ font-weight: bold;
+ display: inline-block; 
+ width: 1.5em;
+ margin-left: -1em;
+}
+
+.guidebookContent ul li{
+   margin-bottom: 10px;
+}
+
+.guidebookContent .lawlist a{
+   color: #008EEC;
+}
+.guidebookContent .lawlist a:hover{
+   color: #024b7a;
+}
+
+.CusRadiobox-form input[type="radio"]{
+   display: none;
+}
+
+.CusRadiobox-form-label{
+   position: relative;
+   padding: 8px 25px;
+   border-radius: 6px 0px 0px 6px;
+   background: #FFF;
+   cursor: pointer;
+   color: #373737;
+   border: 1px solid transparent;
+   width: 100%;
+   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.CusRadiobox-form-label.-left{
+   border-radius: 6px 0px 0px 6px;
+}
+
+.CusRadiobox-form-label.-right{
+   border-radius: 0px 6px 6px 0px;
+}
+
+.CusRadiobox-form input[type="radio"]:checked~ .CusRadiobox-form-label {
+   background-color: #2DA7A4;
+   color: #fff;
+   padding: 8px 25px;
+}
+
+#materialBox .form-check-inline{
+   margin-right: 0;
+}
+
+#materialBox .form-check{
+   padding-left: 0;
+}
+
+.viewhidden{   
+   display: none;
+}
+
+.material-package {
+   padding-left: 0;
+}
+
+.material-package li{
+   list-style: none;
+}
+
+.material-package .item{
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background-color: #FFF;
+   padding: 24px 22px;
+   margin-bottom: 15px;
+   border-radius: 20px;
+   border: 1.5px solid #ECECEC;
+   box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.material-package .item:hover{
+   border: 1.5px solid #2DA7A4;
+   box-shadow:rgba(91, 196, 186, 0.8) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+   transition: 0.3s;
+}
+
+.iconRadio .item{
+   display: block;
+   padding: 25px;
+   background-color: #FFF;
+   border: 1.5px solid #ECECEC;
+   border-radius: 20px;
+   box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+   width: 100%; 
+   height: 100%; 
+}
+
+.iconRadio .item:hover{
+   border: 1.5px solid #2DA7A4;
+}
+
+.iconRadio .item .title{
+   margin-top: 100%;
+}
+
+.pics{ 
+   position:relative;
+}
+.pics img{ 
+   position:absolute;
+   left: 0; 
+   right: 0; 
+   margin-left: auto; 
+   margin-right: auto; 
+ }
+ .pics img:last-child:hover{
+    opacity:0;
+ }
+
+/*=================================*/
+/*===== 人資小幫手 - RWD  =====*/
+/*=================================*/
+
+
+/* tablets */
+@media (max-width: 992px) {   
+   .iconRadio .item .title{
+      margin-top: 73%;
+   }
+}
+
+/* phones */
+@media (max-width: 576px) { 
+    .iconRadio .item .title{
+      margin-top: 65%;
+   }
+   .CusRadiobox-form-label{
+      padding: 8px 40px;
+   }
+   .CusRadiobox-form input[type="radio"]:checked~ .CusRadiobox-form-label {
+      padding: 8px 40px;
+   }
+}
+
+/*====================================*/
+/*======== 人資小幫手 - RWD  END=======*/
+/*====================================*/
+
+
+/*==============================*/
+/*======== 最新消息 列表=========*/
+/*==============================*/
+
+#news-tabContent .card{
+   border-radius: 20px;
+}
+
+#news-tabContent .card-text{
+   color: #878787;
+   margin-top: 25px;
+   font-size: 0.9rem;
+}
+
+#news-tabContent .card-footer{
+   font-size: 0.8rem;
+   background-color: #FFF;
+   padding: 20px;
+   border-radius:0 0 20px 20px;
+}
+
+#news-tabContent .tag{
+   display: inline-block;
+   border-radius: 21px;
+   background-color: rgba(233, 138, 90, 0.2);
+   color: #E16A2F;
+   font-weight: 400;
+   font-size: 0.85rem;
+   padding: 5px 16px;
+   margin-bottom: 15px;
+}
+
+#news-tabContent .card-footer .more-btn{
+   color: #183650;
+}
+
+#news-tab .nav-link{
+   border: 1.2px solid #2DA7A4;
+   color: #2DA7A4;
+   padding: 8px 36px;    
+   width: 200px;
+}
+
+#news-tab .nav-link.active, #news-tab .show>.nav-link{
+   background-color: #2DA7A4;
+   color: #FFF;
+   width: 200px;
+}
+
+/*=====================================*/
+/*========= 最新消息列表 - RWD  ========*/
+/*====================================*/
+
+
+/* tablets */
+@media (max-width: 992px) {   
+   #news-tab .nav-link{      
+      padding: 6px 10px;
+      width: 150px;
+   }
+
+   #news-tab .nav-link.active, #news-tab .show>.nav-link{
+      width: 150px;
+   }
+}
+
+/* phones */
+@media (max-width: 576px) { 
+   #news-tab .nav-link{      
+      padding: 6px 10px;
+      width: 90px;
+   }
+
+   #news-tab .nav-link.active, #news-tab .show>.nav-link{
+      width: 90px;
+   }
+}
+
+/*=========================================*/
+/*========= 最新消息列表 - RWD  END========*/
+/*=======================================*/
+
+
+/*==============================*/
+/*======== 最新消息 內頁=========*/
+/*==============================*/
+
+.contentBox{
+   box-shadow: 5px 10px 15px rgb(60 70 80 / 20%);
+}
+
+
+
+/*==============================*/
+/*========== 聯絡我們 ===========*/
+/*==============================*/
+
+.contactBox{
+   display: flex;
+   justify-content: space-around;
+   align-content: center;
+   border-radius: 5px;
+   border: 1.5px solid #ECECEC;
+   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.contactBox .item{
+   display: flex;
+   align-items: center;
+}
+
+.contactBox .item .icon{
+   position: relative;
+   display: inline-block;
+   background-color: #2DA7A4;
+   color: #FFF;
+   border-radius: 100%;
+   width: 60px;
+   height: 60px;
+   margin-right: 15px;
+}
+
+.contactBox .item .icon i{
+   position: absolute;
+   top: 30%;
+   left: 30%;
+   font-size: 1.5rem;
+}
+
+.contactBox .item .detail{
+   color: #747474;
+}
+
+
+/*=====================================*/
+/*============ 聯絡我們 - RWD  ========*/
+/*====================================*/
+
+
+/* tablets */
+@media (max-width: 992px) {  
+   .contactBox .item .icon{
+      width: 60px;
+      height: 40px;
+   } 
+
+   .contactBox .item .icon i{
+      font-size: 1rem;
+   }
+   
+}
+
+/* phones */
+@media (max-width: 576px) { 
+   .contactBox{
+      flex-direction: column;
+      justify-content: start;
+   }
+   .contactBox .item{
+      margin-bottom: 15px;
+   }
+   .contactBox .item .icon{
+      width: 60px;
+      height: 60px;
+   } 
+   .contactBox .item .icon i{
+      font-size: 1.5rem;
+   }
+}
+
+/*=========================================*/
+/*========= 聯絡我們 - RWD  END========*/
+/*=======================================*/
+
+
+/*==================================*/
+/*========== Youtube影片 ===========*/
+/*=================================*/
+
+#ytList .card-footer{
+   font-size: 0.9rem;
+   background-color: #FFF;
+   padding: 20px;
+   border-radius:0 0 20px 20px;
+}
+
+#ytList .card-footer .more-btn{
+   color: #183650;
+}

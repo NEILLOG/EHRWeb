@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace BASE.Models.DB
+{
+    /// <summary>
+    /// 一頁式頁面內容
+    /// </summary>
+    public partial class TbOnePage
+    {
+        public string Id { get; set; } = null!;
+        /// <summary>
+        /// 內容
+        /// </summary>
+        public string Contents { get; set; } = null!;
+        public string? ModifyUser { get; set; }
+        public DateTime? ModifyDate { get; set; }
+    }
+}

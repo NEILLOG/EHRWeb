@@ -1,0 +1,258 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@model BASE.Areas.Backend.Models.VM_Event
+@{
+}
+@section CustomScripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @*檔案上傳物件*@
+            $('.File').each(function () {
+                $(this).FileInputCus({
+                    dropZoneEnabled: false
+                });
+            });
+            
+            // 活動類型切換
+            $('input[type=radio][name="EventInfoItem.activity.Category"]').on('change', function() {
+                if($(this).val() == "活動")
+                {
+                    $('#EventInfoItem_activity_LecturerInfo').attr('data-parsley-required', 'false');
+                    $('#spLecturerInfo').hide();
+                }else{
+                    $('#EventInfoItem_activity_LecturerInfo').attr('data-parsley-required', '');   
+                    $('#spLecturerInfo').show();
+                }
+            })
+
+            $('#frm').on('submit', function () {
+                var sectionRow = $("#tb_Section tr").length;
+                if (sectionRow == 0) {
+                    toastr['error']("請新增活動日期、時段及活動參與模式");
+                    return false
+                }
+
+                // 判斷活動日期不可重複
+                var arraySection = [];
+                var sTableName = document.getElementById("tb_Section");
+                for (var i = 0; i < $("#tb_Section tr").length; i++) {
+                    arraySection.push(sTableName.children[i].children[0].children[0].value)
+                }
+                var repeat = arraySection.filter(function (element, index, arr) {
+                    return arr.indexOf(element) !== index;
+                });
+                if(repeat.length > 0)
+                {
+                    toastr['error']("活動日期不可重複");
+                    return false;
+                }
+            });
+        });
+
+        // 新增場次
+        function addSection() {
+            var currentRow = $("#tb_Section tr").length;
+
+            var html = "";
+            html += "<tr>"
+            html += `<td><input class='form-control' type='date' data-parsley-required data-val='true' data-val-required='The sectionDay field is required.' id='EventInfoItem_sectionExtendList_${currentRow}__sectionDay' name='EventInfoItem.sectionExtendList[${currentRow}].sectionDay' placeholder='請輸入活動日期' value></td>`
+            html += `<td><input class='form-control' type='time' data-parsley-required data-val='true' data-val-required='The startTime field is required.' id='EventInfoItem_sectionExtendList_${currentRow}__startTime' name='EventInfoItem.sectionExtendList[${currentRow}].startTime' placeholder='請輸入時段起'></td>`
+            html += `<td><input class='form-control' type='time' data-parsley-required data-val='true' data-val-required='The endTime field is required.' id='EventInfoItem_sectionExtendList_${currentRow}__endTime' name='EventInfoItem.sectionExtendList[${currentRow}].endTime' placeholder='請輸入時段訖'></td>`
+            html += `<td><select onchange='CheckFIleUpload()' class='form-control ddlType' data-parsley-errors-container='#errors-container-1' data-parsley-required data-val='true' data-val-required='The sectionType field is required.' id='EventInfoItem_sectionExtendList_${currentRow}__sectionType' name='EventInfoItem.sectionExtendList[${currentRow}].sectionType'>`
+            html += `<option value='實體'>實體</option><option value='線上'>線上</option><option value='實體+線上'>實體+線上</option>`
+            html += `<select></td>`
+            html += "</tr>"
+            $("#tb_Section").append(html);
+
+            // 預設新增 實體壓縮檔需上傳
+            $("#div_EntityFile").show();
+            $("#EntityFile").attr('data-parsley-required', '');
+        }
+
+        // 判斷壓縮檔上傳
+        function CheckFIleUpload()
+        {
+            var isEntity = false;
+            var isOnline = false;
+            var sTableName = document.getElementById("tb_Section");
+            for(var i = 0; i < $("#tb_Section tr").length; i++)
+            {
+                var type = sTableName.children[i].children[3].children[0].value;
+                switch (type) {
+                    case "實體":
+                        isEntity = true;
+                        break;
+                    case "線上":
+                        isOnline = true;
+                        break;
+                    case "實體+線上":
+                        isEntity = true;
+                        isOnline = true;
+                        break;
+                }
+            }
+            // 若為實體模式，實體壓縮檔必須上傳
+            if (isEntity)
+            {
+                $("#div_EntityFile").show();
+                $("#EntityFile").attr('data-parsley-required', '');
+            }else
+            {
+                $("#div_EntityFile").hide();
+                $("#EntityFile").attr('data-parsley-required', 'false');
+            }
+            // 若為線上模式，線上壓縮檔必須上傳
+            if (isOnline) {
+                $("#div_OnlineFile").show();
+                $("#OnlineFile").attr('data-parsley-required', '');
+            } else {
+                $("#div_OnlineFile").hide();
+                $("#OnlineFile").attr('data-parsley-required', 'false');
+            }
+        }
+
+    </script>
+}
+
+    <div class="card">
+        <div class="card-body">
+        @using (Html.BeginForm(FormMethod.Post, new { id = "frm", @autocomplete = "off", @enctype = "multipart/form-data", @data_parsley_validate = "" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.EventInfoItem.activity.Category, "類型：", new { @class = "form-label" })<br>
+                    @Html.RadioButtonFor(x=>x.EventInfoItem.activity.Category,"課程",new{ data_parsley_required = ""})課程
+                    @Html.RadioButtonFor(x=>x.EventInfoItem.activity.Category,"講座",new{ data_parsley_required = ""})講座
+                    @Html.RadioButtonFor(x=>x.EventInfoItem.activity.Category,"活動",new{ data_parsley_required = ""})活動
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.EventInfoItem.activity.Qid, "選擇所需的滿意度問卷", new { @class = "form-label" })
+                    @Html.DropDownListFor(x=>x.EventInfoItem.activity.Qid,Model.ddlQuiz,new{@class="form-control",id="ddlQuiz", data_parsley_required = "", data_parsley_errors_container="#errors-container-1" })
+                    <div id="errors-container-1"></div>
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.EventInfoItem.activity.RegStartDate, "報名區間", new { @class = "form-label" })
+                    <div class="row col-6">
+                        <div class="col">
+                            @Html.TextBoxFor(x => x.EventInfoItem.activity.RegStartDate, new { @class="form-control",type="date",placeholder = "年/月/日", data_parsley_required = ""})                        
+                        </div>
+                        <div class="col">
+                            @Html.TextBoxFor(x => x.EventInfoItem.activity.RegEndDate, new { @class="form-control",type="date", placeholder = "年/月/日", data_parsley_required = ""})
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.EventInfoItem.activity.Title, "活動標題", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.EventInfoItem.activity.Title, new { @class="form-control", placeholder = "請輸入活動標題", data_parsley_required = "" })
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.EventInfoItem.activity.Subject, "活動主題", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.EventInfoItem.activity.Subject, new { @class="form-control", placeholder = "請輸入活動主題", data_parsley_required = "" })
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.EventInfoItem.activity.DateType, "活動半/全日", new { @class = "form-label" })<br>
+                    @Html.RadioButtonFor(x=>x.EventInfoItem.activity.DateType,"半日",new{ data_parsley_required = ""})半日
+                    @Html.RadioButtonFor(x=>x.EventInfoItem.activity.DateType,"全日",new{ data_parsley_required = ""})全日
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.EventInfoItem.activity.Id, "活動日期、時段及活動參與模式", new { @class = "form-label" })
+                    <button type="button" class="btn btn-primary btn-sm" onclick="addSection()">新增</button>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th>時段起</th>
+                                <th>時段訖</th>
+                                <th>活動參與模式</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tb_Section">
+                            @*<tr>
+                                <td>
+                                    @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[0].sectionDay, new { @class="form-control daterange_selector sectionDate", placeholder = "請輸入活動日期",data_parsley_required = ""})
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[0].startTime, new { @class="form-control sectionTime", placeholder = "請輸入時段起",data_parsley_required = ""})
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[0].endTime, new { @class="form-control sectionTime", placeholder = "請輸入時段訖",data_parsley_required = ""})
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(x=>x.EventInfoItem.sectionExtendList[0].sectionType,Model.ddlEventType,new{@class="form-control", data_parsley_required = "", data_parsley_errors_container="#errors-container-1" })
+                                </td>
+                            </tr>*@
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red" id="spLecturerInfo">*</span>
+                    @Html.LabelFor(x => x.EventInfoItem.activity.LecturerInfo, "講師資訊", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.EventInfoItem.activity.LecturerInfo, new {@class="form-control", placeholder = "請輸入講師資訊", data_parsley_required = "" })
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.EventInfoItem.activity.ActivityImage, "活動圖片", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.ActivityImageFile, new { @FileID = "ActivityImage", @class="form-control File", @type = "file", accept = ".pnf,.jpg,.jpeg", data_parsley_file_type="png,jpg,jpeg", data_parsley_errors_container="#ActivityImage-errors-container" , data_parsley_required = "" })
+                    @Html.HiddenFor(x => x.EventInfoItem.activity.ActivityImage, new { @id ="ActivityImage" })
+                    <div id="ActivityImage-errors-container"></div>
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.EventInfoItem.activity.Description, "活動簡介", new { @class = "form-label" })
+                    @Html.TextAreaFor(x => x.EventInfoItem.activity.Description, new { @class="form-control", placeholder = "請輸入活動簡介", data_parsley_required = ""})
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.EventInfoItem.activity.Quota, "報名名額", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.EventInfoItem.activity.Quota, new {@class="form-control", placeholder = "請輸入報名名額", data_parsley_required = "" })
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.EventInfoItem.activity.RegisterFor, "報名對象", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.EventInfoItem.activity.RegisterFor, new {@class="form-control", placeholder = "請輸入報名對象", data_parsley_required = "" })
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.EventInfoItem.activity.Place, "活動地點", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.EventInfoItem.activity.Place, new {@class="form-control", placeholder = "請輸入活動地點", data_parsley_required = "" })
+                </div>
+                <div class="col-12 form-group mb-3" id="div_EntityFile" style="display:none">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.EventInfoItem.activity.FileForEntity, "上傳行前通知信壓縮檔(for實體參與者)", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.EntityFile, new { @FileID = "FileForEntity", @class="form-control File", @type = "file", data_parsley_errors_container="#entity-errors-container" })
+                    @Html.HiddenFor(x => x.EventInfoItem.activity.FileForEntity, new { @id ="FileForEntity" })
+                    <div id="entity-errors-container"></div>
+                </div>
+                <div class="col-12 form-group mb-3" id="div_OnlineFile" style="display:none">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.EventInfoItem.activity.FileForOnline, "上傳行前通知信壓縮檔(for線上參與者)", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.OnlineFile, new { @FileID = "FileForOnline", @class="form-control File", @type = "file", data_parsley_errors_container="#online-errors-container" })
+                    @Html.HiddenFor(x => x.EventInfoItem.activity.FileForOnline, new { @id ="FileForOnline" })
+                    <div id="online-errors-container"></div>
+                </div>
+
+                <div class="col-12 form-group mb-3">
+                    @Html.LabelFor(x => x.EventInfoItem.activity.HandoutFile, "講義", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.HandoutFile, new { @FileID = "HandoutFile", @class="form-control File", @type = "file", data_parsley_errors_container="#handout-errors-container" })
+                    @Html.HiddenFor(x => x.EventInfoItem.activity.HandoutFile, new { @id ="HandoutFile" })
+                    <div id="handout-errors-container"></div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">儲存</button>
+                    <a class="btn btn-light" href="@(Url.Action("EventInfoManage", "Event"))">取消</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

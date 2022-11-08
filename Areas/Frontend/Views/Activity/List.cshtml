@@ -1,0 +1,165 @@
+﻿@using BASE.Service
+@model BASE.Areas.Frontend.Models.VM_Activity
+
+@await Html.PartialAsync("_BannerPartial")
+
+@section Scripts {
+    <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            const popoverId = popoverTriggerEl.attributes['data-content-id'];
+            if (popoverId) {
+                const contentEl = $(`#${popoverId.value}`).html();
+                return new bootstrap.Popover(popoverTriggerEl, {
+                    content: contentEl,
+                    html: true,
+                });
+            }
+        });
+    </script>
+}
+
+    
+
+    <!-- ================================================== -->
+    <!-- 活動訊息 -->
+    <!-- ================================================== -->
+    <div class="section pb-md-4 py-lg-5">
+        <div class="container">
+            <div class="row">
+
+                <!-- 左邊按鈕區塊 -->
+                <div class="col-lg-3 col-12">
+                    <div class="activityBtn bg-white p-3">
+                        <a class="btn w-100 " data-bs-toggle="collapse" href="#collapseActivity" role="button" aria-expanded="false" aria-controls="collapseActivity" id="msgbtn">
+                            <i class="fa-solid fa-lightbulb me-2" aria-hidden="true"></i>
+                            活動訊息
+                            <i class="fa-solid fa-chevron-down ms-2" aria-hidden="true"></i>
+                        </a>
+                        <div class="collapse show" id="collapseActivity">
+                            <ul class="nav nav-tabs flex-column" id="activityTab" role="tablist">
+                                <li><hr class="dropdown-divider"></li>
+                                <li class="nav-item">
+                                    <a class="nav-link @(Model.Search.Category == "課程" ? "active" : "")" href="@Url.Action("List", new { id = "課程"})">課程</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @(Model.Search.Category == "講座" ? "active" : "")" href="@Url.Action("List", new { id = "講座"})">講座</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @(Model.Search.Category == "活動" ? "active" : "")" href="@Url.Action("List", new { id = "活動"})">活動</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @(Model.Search.Category == "已完成辦理之活動" ? "active" : "")" href="@Url.Action("List", new { id = "已完成辦理之活動"})">已完成辦理之活動</a>
+                                </li>
+                                <li class="nav-item d-none">
+                                    <button class="nav-link" href="#"></button>
+                                </li>
+                            </ul>
+                        </div>
+                        <hr class="dropdown-divider">
+                        <a href="@Url.Action("List", "Album")" class="btn w-100 collapsed mt-2" id="mybut">
+                            <i class="fa-solid fa-images me-2" aria-hidden="true"></i>
+                            活動花絮
+                        </a>
+                        <hr class="dropdown-divider">
+                    </div>
+                </div>
+
+                <!-- 右邊內容區塊 -->
+                <div class="col-lg-9 col-12">
+
+                    <!-- 活動訊息 - 課程 TAB -->
+                    <form method="post" id="frm" autocomplete="off">
+                    <div class="tab-pane">
+                        <!-- 搜尋列 -->
+                        <div class="p-2 bg-white searchBar">
+                            <div class="row g-0 justify-content-center align-items-center">
+
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageIndex, new { @class="hiddenCurrentPage" })
+                                @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageCount, new { @class="hiddenPageCount" })
+                                @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
+                                @Html.HiddenFor(x => x.Search.Category)
+                               
+                                <hr class="d-block d-md-none">
+
+                                <div class="col-12 mt-md-0 mt-2">
+                                    <div class="d-flex">
+                                        @Html.TextBoxFor(x => x.Search.Keyword, new { @class="form-control rounded-0 border-0 border-md-end", placeholder="請輸入關鍵字"})
+                                        <button class="btn btn-secondary ms-3 rounded-end" type="submit">
+                                            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
+                        <!-- 列表 -->
+                        <div class="row row-cols-1 row-cols-md-2 g-4 mt-3 listBox">
+
+
+                        @if(Model.ActivityExtendList.Count <= 0) 
+                        {
+                            <div class="col col-12">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        無資料
+                                    </div>
+                                </div>
+                            </div>
+                        } 
+                        else 
+                        {
+                            foreach (var item in Model.ActivityExtendList)
+                            {
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <a href="@Url.Action("Detail", new { id = EncryptService.AES.RandomizedEncrypt(item.Header.Id) })">
+                                            <img src="@item.FileInfo.FilePath" class="card-img-top" alt="">
+                                        </a>
+                                        <div class="card-body">
+                                            <h5 class="card-title fw-bold">@item.Header.Title</h5>
+                                        </div>
+                                        <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                                            <div class="date">
+                                                <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
+                                                @item.Header.RegStartDate.ToString("yyyy / MM / dd")
+                                            </div>
+                                            <button class="btn btn-more" data-bs-placement="bottom" data-bs-container="body" data-bs-toggle="popover" data-bs-trigger="hover focus" data-content-id="popover-card-@item.Header.Id">
+                                                <i class="fa-solid fa-ellipsis" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- /popover-content -->
+                                    <div id="popover-card-@item.Header.Id" class="popover popover-content">
+                                        <div class="d-flex flex-wrap justify-content-start align-items-center">
+                                            @foreach (var day in item.Sections.GroupBy(x => x.Day))
+                                            {
+                                                <div class="popdate p-2" href="#">
+                                                    <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
+                                                    @day.Key.ToString("yyyy / MM / dd")
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+                        }
+                    </div>
+
+                    <!-- pagination -->
+                    <div class="mt-5">
+                        @await Html.PartialAsync("_Pagination", Model.Search.PagerInfo)
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>

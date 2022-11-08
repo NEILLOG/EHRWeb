@@ -1,0 +1,270 @@
+﻿@using BASE.Extensions
+@model BASE.Areas.Backend.Models.VM_Event
+
+<style>
+    .switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  top: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: green;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+</style>
+@section CustomScripts
+    {
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+
+        function Delete(id) {
+            Swal.fire({
+                title: '提示訊息',
+                text: '你是否要活動？',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '刪除',
+                cancelButtonText: '取消',
+            }).then((r) => {
+                if (r.isConfirmed) {
+
+                    $.blockUI();
+
+                    //確定刪除
+                    $.ajax({
+                        type: "Post",
+                        url: "@(Url.Action("EventInfoDelete", "Event"))",
+                        dataType: "json",
+                        beforeSend: function (request) {
+                            request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
+                        },
+                        data: { id: id },
+                        success: function (result) {
+                            $.unblockUI();
+                            inform({
+                                plugin: result.alert_plugin,
+                                type: result.alert_type,
+                                title: result.message,
+                                content: result.messageDetail,
+                                redirect_url: ""
+                            });
+                        }
+                    });
+                } else {
+                    //任何方式的取消
+                    Swal.fire('刪除', '取消成功', 'success');
+                }
+            });
+        }
+
+        // 清除查詢條件
+        function clearSearch() {
+            // 群組下拉改為請選擇
+            document.getElementById("Search_sCategory").selectedIndex = 0;
+            // 查詢清空
+            $('#Search_sTitle').val('');
+            $('#Search_sSubject').val('');
+            $('#Search_sTime').val('');
+            $('#Search_eTime').val('');
+        }
+        $(function () {
+            $("#Search_sTime").datepicker({dateFormat: 'yy/mm/dd'});
+            $("#Search_eTime").datepicker({ dateFormat: 'yy/mm/dd' });
+        });
+
+        // 報名開關
+        function SignupSwitch(actID,isPublic)
+        {
+            Swal.fire({
+                title: '提示訊息',
+                text: '你是否要變更報名狀態？',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '變更',
+                cancelButtonText: '取消',
+            }).then((r) => {
+                if (r.isConfirmed) {
+
+                    $.blockUI();
+
+                    //確定刪除
+                    $.ajax({
+                        type: "Post",
+                        url: "@(Url.Action("PublicSwitch", "Event"))",
+                        dataType: "json",
+                        beforeSend: function (request) {
+                            request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
+                        },
+                        data: { id: actID },
+                        success: function (result) {
+                            $.unblockUI();
+                            inform({
+                                plugin: result.alert_plugin,
+                                type: result.alert_type,
+                                title: result.message,
+                                content: result.messageDetail,
+                                redirect_url: ""
+                            });
+                        }
+                    });
+                } else {
+                    //任何方式的取消
+                    Swal.fire('變更', '取消成功', 'success');
+                    document.getElementById("chb_" + actID).checked = isPublic == 'True' ? true : false;
+                }
+            }); 
+        }
+    </script>
+}
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                @using (Html.BeginForm(FormMethod.Get, new { id = "frm", @autocomplete = "off" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageIndex, new { @class="hiddenCurrentPage" })
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageCount, new { @class="hiddenPageCount" })
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
+
+                    <div class="row g-3 align-items-end mb-3">
+                        <div class="col-12 col-md-auto ms-auto">
+                            <div class="input-group">
+                                @Html.LabelFor(x => x.Search.sCategory, "類型", new { @class="input-group-text" })
+                                @Html.DropDownListFor(x=>x.Search.sCategory,Model.ddlCategory,new{@class="form-control"})
+                                
+                                @Html.LabelFor(x => x.Search.sTitle, "標題", new { @class="input-group-text" })
+                                @Html.TextBoxFor(x => x.Search.sTitle, new {@class="form-control", placeholder = "請輸入標題",type="text"})
+
+                                @Html.LabelFor(x => x.Search.sSubject, "主題", new { @class="input-group-text" })
+                                @Html.TextBoxFor(x => x.Search.sSubject, new {@class="form-control", placeholder = "請輸入主題",type="text"})
+
+                                @Html.LabelFor(x => x.Search.sTime, "時間區間", new { @class="input-group-text" })
+                                @Html.TextBoxFor(x => x.Search.sTime, new {@class="form-control", placeholder = "請輸入時間起",type="text"})
+                                @Html.TextBoxFor(x => x.Search.eTime, new {@class="form-control", placeholder = "請輸入時間起",type="text"})
+                                
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-auto">
+                            <button type="button" class="btn btn-danger float-end" onclick="clearSearch()">清除</button>
+                            <button type="submit" class="btn btn-primary float-end">查詢</button>
+                        </div>
+                    </div>
+                    <div class="row g-3 align-items-end mb-3">
+                        <div class="col-12 col-md-auto ms-auto">
+                            <a class="btn btn-primary" href="@(Url.Action("EventInfoAdd", "Event"))">新增</a>
+                        </div>
+                    </div>
+                }
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>項目</th>
+                                <th>類型</th>
+                                <th>標題</th>
+                                <th>主題</th>
+                                <th>活動日期</th>
+                                <th>報名區間</th>
+                                <th>報名開關</th>
+                                @*<th>上傳講義</th>*@
+                                <th>管理</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.EventInfoList != null && Model.EventInfoList.Count > 0)
+                            {
+                                foreach (var item in Model.EventInfoList)
+                                {
+                                    <tr>
+                                        <td>@(Model.EventInfoList.IndexOf(item) + 1)</td>
+                                        <td style="max-width:30vw;">@item.activity.Category</td>
+                                        <td style="max-width:30vw;">@item.activity.Title</td>
+                                        <td style="max-width:30vw;">@item.activity.Subject</td>
+                                        <td style="max-width:30vw;">@item.activityDateList</td>
+                                        <td style="max-width:30vw;">@(item.activity.RegStartDate.ToString("yyyy-MM-dd")) ~ @(item.activity.RegEndDate.ToString("yyyy-MM-dd"))</td>
+                                        <td style="max-width:50vw;">
+                                            <div class="py-3 d-flex justify-content-center">
+                                                <div>
+                                                    <label class="switch">
+                                                        <input id="chb_@item.activity.Id" type="checkbox" class="checkbox" @(item.activity.IsPublish ? "checked" : "") onclick="SignupSwitch('@EncryptService.AES.RandomizedEncrypt(item.activity.Id)','@item.activity.IsPublish');" />
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-primary" href="@(Url.Action("EventInfoEdit", "Event", new { id = EncryptService.AES.RandomizedEncrypt(item.activity.Id) }))">編輯</a>
+                                            <a class="btn btn-info" href="@(Url.Action("RegistrationList", "Event", new { id = EncryptService.AES.RandomizedEncrypt(item.activity.Id) }))">報名名單</a>
+                                            @if (Model.GroupId == "G000000001")
+                                            { // 分署承辦權限
+                                                <a class="btn btn-warning" href="@(Url.Action("EventInfoAudit", "Event", new { id = EncryptService.AES.RandomizedEncrypt(item.activity.Id) }))">審核</a>
+                                            }
+                                            <button type="button" class="btn btn-danger" onclick="Delete('@(EncryptService.AES.RandomizedEncrypt(item.activity.Id))')">刪除</button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="9">目前暫無資料</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (Model != null && Model.EventInfoList != null && Model.EventInfoList.Count > 0)
+                {
+                    @await Html.PartialAsync("_Pagination", Model.Search.PagerInfo)
+                }
+            </div>
+        </div>
+    </div>
+</div>

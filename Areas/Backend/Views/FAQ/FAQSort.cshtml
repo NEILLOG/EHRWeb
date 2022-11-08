@@ -1,0 +1,57 @@
+﻿@model BASE.Areas.Backend.Models.VM_FAQ
+@section CustomScripts
+{
+<script src="~/lib/sortable/Sortable.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        new Sortable(divSort, {
+            animation: 150
+        });
+    });
+
+    const stick = (ele, evt) => {
+        evt.preventDefault();
+        let item = $(ele).closest(".list-group-item");
+        let first_item = $('.list-group-item').eq(0);
+
+        item.insertBefore(first_item);          
+    }
+</script>
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                @using (Html.BeginForm(FormMethod.Post, new { id = "frm", @autocomplete = "off" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <h5 class="mb-3 fw-bold">請拖動以下項目進行排序</h5>
+                    <div id="divSort" class="list-group col-md-8 col-12">
+                        @if (Model != null && Model.FAQExtendList != null && Model.FAQExtendList.Count > 0)
+                        {
+                            foreach (var item in Model.FAQExtendList)
+                            {
+                                <div class="list-group-item align-items-center" style="cursor: grab; position: relative;">
+                                    <input name="SortList" type="hidden" value="@(item.FAQ.Fid)" />
+                                    <div style="float:left; line-height:35px;">
+                                        <span class="material-icons" style="vertical-align:middle;">reorder</span>
+                                        <label style="cursor: grab; font-size: 16px; vertical-align:middle;">@Html.Raw(item.FAQ.Question.Replace("\r\n", "<br>"))</label>
+                                    </div>
+                                    <button class="btn btn-primary float-end" style="position: absolute; left:91%; top:50%; transform: translate(-50%, -50%)" onclick="stick(this, event);">置頂</button>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="col-md-8 col-12 mt-3">
+                        @if (Model != null && Model.FAQExtendList != null && Model.FAQExtendList.Count > 0)
+                        {
+                            <button type="submit" class="btn btn-primary">儲存</button>
+                        }
+                        <a class="btn btn-light" href="@(Url.Action("FAQList", "FAQ"))">取消</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

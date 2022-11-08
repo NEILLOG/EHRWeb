@@ -1,0 +1,121 @@
+﻿@using BASE.Extensions
+@model BASE.Areas.Backend.Models.VM_FAQ
+@section CustomScripts
+{
+<script type="text/javascript">
+    $(document).ready(function () {
+    });
+
+    function Delete(id) {
+        Swal.fire({
+            title: '提示訊息',
+            text: '你是否要刪除FAQ？',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '刪除',
+            cancelButtonText: '取消',
+        }).then((r) => {
+            if (r.isConfirmed) {
+
+                $.blockUI();
+
+                //確定刪除
+                $.ajax({
+                    type: "Post",
+                    url: "@(Url.Action("FAQDelete", "FAQ"))",
+                    dataType: "json",
+                    beforeSend: function(request) {
+                       request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
+                    },
+                    data: { id: id },
+                    success: function (result) {
+                        $.unblockUI();
+                        inform({
+                            plugin: result.alert_plugin,
+                            type: result.alert_type,
+                            title: result.message,
+                            content: result.messageDetail,
+                            redirect_url: ""
+                        });
+                    }
+                });
+            } else {
+                //任何方式的取消
+                Swal.fire('刪除', '取消成功', 'success');
+            }
+        });
+    }
+</script>
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                @using (Html.BeginForm(FormMethod.Get, new { id = "frm", @autocomplete = "off" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageIndex, new { @class="hiddenCurrentPage" })
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageCount, new { @class="hiddenPageCount" })
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
+
+                    <div class="row g-3 align-items-end mb-3">
+                        <div class="col-12 col-md-auto">
+                            <a class="btn btn-primary" href="@(Url.Action("FAQAdd", "FAQ"))">新增</a>
+                            <a class="btn btn-primary " href="@(Url.Action("FAQSort", "FAQ"))">排序</a>                            
+                        </div>
+                        <div class="col-12 col-md-auto ms-auto">
+                            <div class="input-group">
+                                @Html.LabelFor(x => x.Search.Keyword, "關鍵字", new { @class="input-group-text" })
+                                @Html.TextBoxFor(x => x.Search.Keyword, new { @type="text", @class="form-control", @placeholder="請輸入問題或答案", @aria_label="關鍵字" })
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-auto">
+                            <button type="submit" class="btn btn-primary float-end">查詢</button>
+                        </div>
+                    </div>
+                }
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>項次</th>
+                                <th>問題</th>
+                                <th>答案</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.FAQExtendList != null && Model.FAQExtendList.Count > 0)
+                            {
+                                foreach (var item in Model.FAQExtendList)
+                                {
+                                   <tr>
+                                       <td>@(Model.FAQExtendList.IndexOf(item) +1)</td>
+                                       <td style="max-width:30vw;">@Html.Raw(item.FAQ.Question.Replace("\r\n", "<br>"))</td>                                       
+                                       <td style="max-width:55vw;">@Html.Raw(item.FAQ.Answer)</td>
+                                       <td>
+                                           <a class="btn btn-primary" href="@(Url.Action("FAQEdit", "FAQ", new { id = EncryptService.AES.RandomizedEncrypt(item.FAQ.Fid) }))">編輯</a>
+                                           <button type="button" class="btn btn-danger" onclick="Delete('@(EncryptService.AES.RandomizedEncrypt(item.FAQ.Fid))')">刪除</button>
+                                       </td>
+                                   </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="4">目前暫無資料</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (Model != null && Model.FAQExtendList != null && Model.FAQExtendList.Count > 0)
+                {
+                    @await Html.PartialAsync("_Pagination", Model.Search.PagerInfo)
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,110 @@
+﻿@using BASE.Service
+@model BASE.Areas.Frontend.Models.VM_Album
+
+@await Html.PartialAsync("_BannerPartial")
+
+<form method="post" id="frm" autocomplete="off">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageIndex, new { @class="hiddenCurrentPage" })
+    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageCount, new { @class="hiddenPageCount" })
+    @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
+</form>
+
+
+
+<!-- ================================================== -->
+<!-- 活動訊息 -->
+<!-- ================================================== -->
+<div class="section pb-md-4 py-lg-5">
+    <div class="container">
+        <div class="row">
+
+            <!-- 左邊按鈕區塊 -->
+            <div class="col-lg-3 col-12">
+                <div class="activityBtn bg-white p-3">
+                    <a class="btn w-100 collapsed" data-bs-toggle="collapse" href="#collapseActivity" role="button" aria-expanded="true" aria-controls="collapseActivity" id="msgbtn">
+                        <i class="fa-solid fa-lightbulb me-2" aria-hidden="true"></i>
+                        活動訊息
+                        <i class="fa-solid fa-chevron-down ms-2" aria-hidden="true"></i>
+                    </a>
+                    <div class="collapse" id="collapseActivity">
+                        <ul class="nav nav-tabs flex-column" id="activityTab" role="tablist">
+                            <li><hr class="dropdown-divider"></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("List", "Activity", new { id = "課程"})">課程</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("List", "Activity", new { id = "講座"})">講座</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("List", "Activity", new { id = "活動"})">活動</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("List", "Activity", new { id = "已完成辦理之活動"})">已完成辦理之活動</a>
+                            </li>
+                            <li class="nav-item d-none">
+                                <button class="nav-link" href="#"></button>
+                            </li>
+                        </ul>
+                    </div>
+                    <hr class="dropdown-divider">
+                    <a href="@Url.Action("Album")" class="btn w-100 collapsed mt-2" id="mybut">
+                        <i class="fa-solid fa-images me-2" aria-hidden="true"></i>
+                        活動花絮
+                    </a>
+                    <hr class="dropdown-divider">
+                </div>
+            </div>
+
+            <!-- 右邊內容區塊 -->
+            <div class="col-lg-9 col-12">
+                <div class="tab-content" id="activityTabContent">
+
+
+                    <!-- 列表 -->
+                    <div class="row row-cols-1 row-cols-md-2 g-4 mt-3 listBox">
+
+                        @if (Model.AlbumExtendList.Count <= 0)
+                        {
+                            <div class="col">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        無資料
+                                    </div>
+                                </div>
+                            </div>
+                        } 
+                        else 
+                        {
+                            foreach(var item in Model.AlbumExtendList) 
+                            {
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <a href="#"><img src="@item.FileInfo.FilePath" class="card-img-top" alt=""></a>
+                                        <div class="card-body">
+                                            <div class="date mb-3">
+                                                <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
+                                                @item.Header.DisplayDate.ToString("yyyy / MM / dd")
+                                            </div>
+                                            <h5 class="card-title fw-bold">@item.Header.Title</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <!-- 列表 END -->
+                    <!-- pagination -->
+                    <div class="mt-5">
+                        @await Html.PartialAsync("_Pagination", Model.Search.PagerInfo)
+                    </div>
+                    <!-- pagination END -->
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

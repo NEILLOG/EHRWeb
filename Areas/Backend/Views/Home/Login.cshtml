@@ -1,0 +1,40 @@
+﻿@model BASE.Areas.Backend.Models.VM_Home
+@{
+    Layout = "~/Areas/Backend/Views/Shared/_Layout_SourceOnly.cshtml";
+    ViewData["Title"] = "Login";
+}
+
+<div class="app app-auth-sign-in align-content-stretch d-flex flex-wrap justify-content-end">
+    <div class="app-auth-background">
+    </div>
+    <div class="app-auth-container">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="logo">
+                <a href="">@_conf["Site:Name"]</a>
+            </div>
+            <p class="auth-description">請先進行登入再進行後台訪問。<br>@*還沒有帳號？ <a href="sign-up.html">點我前往註冊</a>*@</p>
+
+            <div class="auth-credentials m-b-xxl">
+                @Html.LabelFor(x => x.acct, "帳號", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.acct, new { @class = "form-control m-b-md", placeholder = "請輸入帳號" })
+
+                @Html.LabelFor(x => x.acct, "密碼", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.aua8, new { type="password", @class = "form-control", placeholder = "請輸入密碼" })
+                @*<input type="password" class="form-control" id="signInPassword" aria-describedby="signInPassword" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">*@
+            </div>
+
+            <div class="auth-submit">
+                <button type="submit" class="btn btn-primary">登入</button>
+                <a href="#" class="auth-forgot-password float-end">忘記密碼？</a>
+            </div>
+            @*<div class="divider"></div>
+                <div class="auth-alts">
+                <a href="#" class="auth-alts-google"></a>
+                <a href="#" class="auth-alts-facebook"></a>
+                <a href="#" class="auth-alts-twitter"></a>
+                </div>*@
+        </form>
+
+    </div>
+</div>

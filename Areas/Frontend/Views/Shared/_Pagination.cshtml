@@ -1,0 +1,60 @@
+﻿@using BASE.Extensions
+@model BASE.Models.PagerInfo
+
+@Html.PartialSectionScriptsAsync(
+    @<script type="text/javascript">
+             $(document).ready(function () {
+                 $('.pager-Info-Search').val(true);
+             });
+
+             //頁數切換
+             function ChangeCurrentPage(page, e) {
+                 $('.hiddenCurrentPage').val(page)
+                 var form = $("#frm");
+                 if (form != null) {
+                     $('#hiddenSearchSource').val('2');
+                     $('.pager-Info-Search').val(false);
+                     if ($('#table-body').length == 1) {
+                         $('#table-body').empty();
+                     }
+                     form.submit();
+                 }
+             }
+
+             //每頁筆數變更
+             function ChangePageSize(page) {
+                 var _pageCount = $(page).val();
+                 $('.hiddenPageCount').val(_pageCount)
+                 var form = $("#frm");
+                 if (form != null) {
+                     $('#hiddenSearchSource').val('2');
+                     $('.pager-Info-Search').val(false);
+                     if ($('#table-body').length == 1) {
+                         $('#table-body').empty();
+                     }
+                     form.submit();
+                 }
+             }
+    </script>
+)
+
+<div class="col-12 mt-5">
+    <nav aria-label="Page navigation">
+        <ul class="pgexample pagination justify-content-center">
+            <li class="page-item"><a class="page-link" href="#" title="上一頁" onclick="@(Html.Raw("ChangeCurrentPage("+ (Model.m_iPageIndex - 1).ToString() +", this)"))">上一頁</a></li>
+            @for (int i = Model.m_iPageMin; i <= Model.m_iPageMax; i++)
+            {
+                if (i == Model.m_iPageIndex)
+                {
+                    <li class="page-item"><a class="page-link">@i</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" href="#" onclick="ChangeCurrentPage('@i', this)">@i</a></li>
+                }
+
+            }
+            <li class="page-item"><a class="page-link" href="#" title="下一頁" onclick="@(Html.Raw("ChangeCurrentPage("+ (Model.m_iPageIndex + 1).ToString() +", this)"))">下一頁</a></li>
+        </ul>
+    </nav>
+</div>

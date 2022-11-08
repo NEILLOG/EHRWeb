@@ -1,0 +1,32 @@
+﻿@using BASE.Service
+@model BASE.Areas.Frontend.Models.VM_News
+
+@await Html.PartialAsync("_BannerPartial")
+
+<!-- ================================================== -->
+<!-- 最新消息 內頁-->
+<!-- ================================================== -->
+<div class="section pb-md-4 py-lg-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-12">
+                <div class="contentBox bg-white p-md-5 p-3">
+                    <div class="title">
+                        <h2 class="fc-green fw-bold">@Model.NewsExtendItem.Header.Title</h2>
+                    </div>
+                    <div class="date my-4">
+                        <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
+                        @Model.NewsExtendItem.Header.DisplayDate.ToString("yyyy / MM / dd")
+                    </div>
+                    
+                    @if(Model.NewsExtendItem.FileInfo != null)
+                    {
+                        <img src="@Model.NewsExtendItem.FileInfo.FilePath" class="img-fluid" alt="最新消息圖片">
+                    }
+
+                    @Html.Raw(System.Text.RegularExpressions.Regex.Replace(Model.NewsExtendItem.Header.Contents, "<.*?>", String.Empty))
+                </div>
+            </div>
+        </div>
+    </div>
+</div>      

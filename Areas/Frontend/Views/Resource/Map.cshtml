@@ -1,0 +1,59 @@
+﻿@using BASE.Service
+@model BASE.Areas.Frontend.Models.VM_OnePage
+
+@await Html.PartialAsync("_BannerPartial")
+
+<!-- ================================================== -->
+<!-- 企業資源專區 -->
+<!-- ================================================== -->
+<div class="section pb-md-4 py-lg-5">
+    <div class="container">
+        <div class="row">
+            <!-- 左邊按鈕區塊 -->
+            <div class="col-lg-3 col-12">
+                <div class="activityBtn bg-white p-3">
+                    <ul class="nav nav-tabs flex-column" id="resourceTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="resource-A-tab" data-bs-toggle="tab" data-bs-target="#resource-A" type="button" role="tab" aria-controls="resource-A" aria-selected="true">
+                                <i class="fa-solid fa-map me-2" aria-hidden="true"></i>計畫資源地圖
+                            </button>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="resource-B-tab" data-bs-toggle="tab" data-bs-target="#resource-B" type="button" role="tab" aria-controls="resource-B" aria-selected="false">
+                                <i class="fa-solid fa-screwdriver-wrench me-2" aria-hidden="true"></i>企業訓練資源
+                            </button>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="resource-C-tab" data-bs-toggle="tab" data-bs-target="#resource-C" type="button" role="tab" aria-controls="resource-C" aria-selected="false">
+                                <i class="fa-solid fa-user-gear me-2" aria-hidden="true"></i>就業服務資源
+                            </button>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="resource-D-tab" data-bs-toggle="tab" data-bs-target="#resource-D" type="button" role="tab" aria-controls="resource-D" aria-selected="false">
+                                <i class="fa-solid fa-file-lines me-2" aria-hidden="true"></i>紓困資源
+                            </button>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="resource-E-tab" data-bs-toggle="tab" data-bs-target="#resource-E" type="button" role="tab" aria-controls="resource-E" aria-selected="false">
+                                <i class="fa-solid fa-magnifying-glass me-2" aria-hidden="true"></i>其他資源
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 右邊內容區塊 -->
+            <div class="col-lg-9 col-12">
+                <div class="tab-content" id="resourceTabContent">
+                    <!-- 計畫資源地圖 TAB內容 -->
+                    <div class="tab-pane fade show active" id="resource-A" role="tabpanel" aria-labelledby="resource-A-tab">
+                        <img src="~/areas/frontend/img/resource/image.png" class="img-fluid" alt="區域運籌人力資源整合計畫_計畫資源地圖+懶人包" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

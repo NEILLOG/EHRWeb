@@ -1,0 +1,230 @@
+﻿using BASE.Areas.Backend.Models.Extend;
+using BASE.Areas.Backend.Models;
+using BASE.Models.DB;
+using BASE.Service.Base;
+using System.Linq.Expressions;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace BASE.Areas.Backend.Service
+{
+    public class EventService : ServiceBase
+    {
+        string _Msg = string.Empty;
+        public EventService(DBContext context) : base(context)
+        {
+        }
+
+        /// <summary>
+        /// 列表
+        /// </summary>
+        /// <returns></returns>
+        public List<EventInfoExtend>? GetEventInfoExtendList(ref String ErrMsg, VM_EventQueryParam? vmParam, Expression<Func<EventInfoExtend, bool>>? filter = null)
+        {
+            try
+            {
+                List<EventInfoExtend> dataList = (from activity in _context.TbActivity
+
+                                                  where activity.IsDelete == false
+                                                  select new EventInfoExtend
+                                                  {
+                                                      activity = activity,
+                                                  }).ToList();
+
+                // 取得活動日期字串
+                foreach (var item in dataList)
+                {
+                    List<string> listActivityDate = new List<string>();
+                    listActivityDate = Lookup<TbActivitySection>(ref _Msg, x => x.ActivityId == item.activity.Id).Select(x => x.Day.ToString()).Distinct().ToList();
+                    string strActivityDate = "";
+                    foreach (var itemActivityDate in listActivityDate)
+                    {
+                        strActivityDate = String.IsNullOrEmpty(strActivityDate) ? strActivityDate + itemActivityDate : String.Concat(strActivityDate, "、", itemActivityDate);
+                    }
+                    item.activityDateList = strActivityDate;
+                }
+
+
+                if (vmParam != null)
+                {
+                    if (!string.IsNullOrEmpty(vmParam.sCategory))
+                    {
+                        //關鍵字搜尋：類型
+                        dataList = dataList.Where(x => x.activity.Category == vmParam.sCategory).ToList();
+                    }
+
+                    if (!string.IsNullOrEmpty(vmParam.sTitle))
+                    {
+                        //關鍵字搜尋：標題
+                        dataList = dataList.Where(x => x.activity.Title.Contains(vmParam.sTitle)).ToList();
+                    }
+
+                    if (!string.IsNullOrEmpty(vmParam.sSubject))
+                    {
+                        //關鍵字搜尋：主題
+                        dataList = dataList.Where(x => x.activity.Subject.Contains(vmParam.sSubject)).ToList();
+                    }
+
+                    // 日期搜尋僅有開始日期
+                    if ((!string.IsNullOrEmpty(vmParam.sTime) && string.IsNullOrEmpty(vmParam.eTime)))
+                    {
+                        DateTime startDaet = Convert.ToDateTime(vmParam.sTime);
+                        dataList = dataList.Where(x => x.activity.RegStartDate <= startDaet && x.activity.RegEndDate >= startDaet).ToList();
+                    }
+
+                    // 日期搜尋僅有結束日期
+                    if (string.IsNullOrEmpty(vmParam.sTime) && !string.IsNullOrEmpty(vmParam.eTime))
+                    {
+                        DateTime endDaet = Convert.ToDateTime(vmParam.eTime);
+                        dataList = dataList.Where(x => x.activity.RegStartDate <= endDaet && x.activity.RegEndDate >= endDaet).ToList();
+                    }
+
+                    // 日期搜尋起訖皆有
+                    if (!string.IsNullOrEmpty(vmParam.sTime) && !string.IsNullOrEmpty(vmParam.eTime))
+                    {
+                        DateTime startDate = Convert.ToDateTime(vmParam.sTime);
+                        DateTime endDate = Convert.ToDateTime(vmParam.eTime);
+                        dataList = dataList.Where(x => (startDate < x.activity.RegStartDate && endDate < x.activity.RegStartDate) == false
+                                                    || (startDate > x.activity.RegEndDate && endDate > x.activity.RegEndDate) == false).ToList();
+                    }
+                }
+                return dataList;
+            }
+            catch (Exception ex)
+            {
+                ErrMsg = ex.ToString();
+                return null;
+            }
+        }
+
+        public EventInfoExtend? GetEventInfoExtendItem(ref string ErrMsg, string id)
+        {
+            try
+            {
+                EventInfoExtend? dataList = (from activity in _context.TbActivity
+
+                                             where activity.IsDelete == false && activity.Id == id
+                                             select new EventInfoExtend
+                                             {
+                                                 activity = activity
+                                             }).FirstOrDefault();
+
+                // 活動場次
+                List<TbActivitySection> listSection = Lookup<TbActivitySection>(ref _Msg, x => x.ActivityId == id).ToList();
+                foreach (var item in listSection)
+                {
+                    SectionExtend temp = new SectionExtend();
+                    temp.sectionDay = item.Day;
+                    temp.startTime = item.Day + item.StartTime;
+                    temp.endTime = item.Day + item.EndTime;
+                    temp.sectionType = item.SectionType;
+
+                    dataList.sectionExtendList.Add(temp);
+                }
+
+                return dataList;
+            }
+            catch (Exception ex)
+            {
+                ErrMsg = ex.ToString();
+                return null;
+            }
+        }
+
+        #region 下拉選單
+
+        /// <summary>
+        /// 取得類型列表
+        /// </summary>
+        /// <param name="Type">0: 無項目 1: 請選擇 2: 全部 3: 不拘</param>
+        /// <returns></returns>
+        public List<SelectListItem> SetDDL_Category(int Type)
+        {
+            List<SelectListItem> Data = new List<SelectListItem>();
+            switch (Type)
+            {
+                case 1:
+                    Data.Add(new SelectListItem() { Text = "--- 請選擇 ---", Value = "" });
+                    break;
+                case 2:
+                    Data.Add(new SelectListItem() { Text = "--- 全部 ---", Value = "" });
+                    break;
+                case 3:
+                    Data.Add(new SelectListItem() { Text = "不拘", Value = "" });
+                    break;
+                default:
+                    break;
+            }
+
+            Data.Add(new SelectListItem() { Text = "課程", Value = "課程" });
+            Data.Add(new SelectListItem() { Text = "講座", Value = "講座" });
+            Data.Add(new SelectListItem() { Text = "活動", Value = "活動" });
+
+            return Data;
+        }
+
+        /// <summary>
+        /// 取得滿意度問卷
+        /// </summary>
+        /// <param name="Type">0: 無項目 1: 請選擇 2: 全部 3: 不拘</param>
+        /// <returns></returns>
+        public List<SelectListItem> SetDDL_quiz(int Type)
+        {
+            List<SelectListItem> Data = new List<SelectListItem>();
+            List<TbQuiz> dataQuiz = Lookup<TbQuiz>(ref _Msg).ToList();
+            switch (Type)
+            {
+                case 1:
+                    Data.Add(new SelectListItem() { Text = "--- 請選擇 ---", Value = "" });
+                    break;
+                case 2:
+                    Data.Add(new SelectListItem() { Text = "--- 全部 ---", Value = "" });
+                    break;
+                case 3:
+                    Data.Add(new SelectListItem() { Text = "不拘", Value = "" });
+                    break;
+                default:
+                    break;
+            }
+
+            foreach (var item in dataQuiz)
+            {
+                Data.Add(new SelectListItem() { Text = item.Name, Value = item.Id });
+            }
+
+            return Data;
+        }
+
+        /// <summary>
+        /// 取得活動參與模式
+        /// </summary>
+        /// <param name="Type">0: 無項目 1: 請選擇 2: 全部 3: 不拘</param>
+        /// <returns></returns>
+        public List<SelectListItem> SetDDL_eventType(int Type)
+        {
+            List<SelectListItem> Data = new List<SelectListItem>();
+            switch (Type)
+            {
+                case 1:
+                    Data.Add(new SelectListItem() { Text = "--- 請選擇 ---", Value = "" });
+                    break;
+                case 2:
+                    Data.Add(new SelectListItem() { Text = "--- 全部 ---", Value = "" });
+                    break;
+                case 3:
+                    Data.Add(new SelectListItem() { Text = "不拘", Value = "" });
+                    break;
+                default:
+                    break;
+            }
+
+            Data.Add(new SelectListItem() { Text = "實體", Value = "實體" });
+            Data.Add(new SelectListItem() { Text = "線上", Value = "線上" });
+            Data.Add(new SelectListItem() { Text = "實體+線上", Value = "實體+線上" });
+
+            return Data;
+        }
+
+        #endregion
+    }
+}

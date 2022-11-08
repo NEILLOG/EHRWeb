@@ -1,0 +1,70 @@
+﻿@using BASE.Service
+@model BASE.Areas.Frontend.Models.VM_News
+
+@await Html.PartialAsync("_BannerPartial")
+
+<form method="post" id="frm" autocomplete="off">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageIndex, new { @class="hiddenCurrentPage" })
+    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageCount, new { @class="hiddenPageCount" })
+    @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
+    @Html.HiddenFor(x => x.Search.Category)
+</form>
+
+<div class="section pb-md-4 py-lg-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-12">
+                <ul class="nav nav-pills mb-3" id="news-tab" role="tablist">
+                    <li class="nav-item mx-auto">
+                        <a class="nav-link rounded-pill text-center @(Model.Search.Category != "計畫消息" && Model.Search.Category != "其他消息" ? "active" : "")" href="@Url.Action("List", new { id = ""})">全部</a>
+                    </li>
+                    <li class="nav-item mx-auto">
+                        <a class="nav-link rounded-pill text-center @(Model.Search.Category == "計畫消息" ? "active" : "")" href="@Url.Action("List", new { id = "計畫消息"})">計畫消息</a>
+                    </li>
+                    <li class="nav-item mx-auto">
+                        <a class="nav-link rounded-pill text-center @(Model.Search.Category == "其他消息" ? "active" : "")" href="@Url.Action("List", new { id = "其他消息"})">其他消息</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="news-tabContent">
+                    <!-- 全部 Tab內容 -->
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                            @foreach(var news in Model.NewsExtendList)
+                            {
+                                <div class="col">
+                                    <a class="card h-100" href="@Url.Action("Detail", new { id = EncryptService.AES.RandomizedEncrypt(news.Header.Id) })">
+                                        <div class="card-body">
+                                            <div class="tag">@news.Header.Category</div>
+                                            <h5 class="card-title fw-bold">@news.Header.Title</h5>
+                                            <p class="card-text tripleline-ellipsis">
+                                                @(news.Header.Contents.Length > 50 ? news.Header.Contents.Substring(0, 50) + "..." : news.Header.Contents)
+                                            </p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="d-flex justify-content-between px-2">
+                                                <div class="date text-dark">
+                                                    <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
+                                                    @news.Header.DisplayDate.ToString("yyyy / MM / dd")
+                                                </div>
+                                                <div class="morebtn">
+                                                    <span class="me-2">了解更多</span>
+                                                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                        <!-- pagination -->
+                        <div class="mt-5">
+                            @await Html.PartialAsync("_Pagination", Model.Search.PagerInfo)
+                        </div>
+                        <!-- pagination END -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

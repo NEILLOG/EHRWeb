@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html>
+
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>桃竹苗企業人力資源服務網</title>
+    <!-- Bootstrap core CSS -->
+    <link href="~/areas/frontend/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- fontawesome -->
+    <link href="~/areas/frontend/fontawesome/css/all.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="~/areas/frontend/css/style.css" rel="stylesheet" />
+
+    @RenderSection("Css", required: false)
+</head>
+<body>
+    <a id="gotopbutton"><div class="fs--1 mt-5">back to top</div></a>
+
+    <header id="myHeader">
+        <div class="small-header d-none d-lg-block" id="small-header">
+            <div class="container-fluid">
+                <div class="row justify-content-end align-items-center">
+                    <div class="col-5 topLinks">
+                        <a class="slink" href="@Url.Action("Index", "Home")" title="回首頁">回首頁</a>
+                        <a class="slink" href="#" title="網站導覽">網站導覽</a>
+                        <a class="slink" href="#" title="聯絡我們">聯絡我們</a>
+                        <a class="subscribe-btn" href="#" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> 訂閱服務</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav id="headernav" class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container">
+                <h1 class="d-none">桃竹苗企業人力資源服務網</h1>
+                <a class="navbar-brand" href="index.html" title="桃竹苗企業人力資源服務網">
+                    <img src="~/areas/frontend/img/logo.png" alt="桃竹苗企業人力資源服務網" class="img-fluid">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="~/areas/frontend/img/icon/icon-a.png" class="me-2" alt="">最新消息
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="@Url.Action("List", "News")">最新消息</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("List", "YouTube")">YouTube影片</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="~/areas/frontend/img/icon/icon-b.png" class="me-2" alt="">活動訊息
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                                <li><a class="dropdown-item" href="@Url.Action("List", "Activity")">活動訊息</a></li>
+                                <li><a class="dropdown-item" href="#">活動花絮</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="~/areas/frontend/img/icon/icon-c.png" class="me-2" alt="">企業資源專區
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                                <li><a class="dropdown-item" href="#">計畫資源地圖</a></li>
+                                <li><a class="dropdown-item" href="#">企業訓練資源</a></li>
+                                <li><a class="dropdown-item" href="#">就業服務資源</a></li>
+                                <li><a class="dropdown-item" href="#">紓困資源</a></li>
+                                <li><a class="dropdown-item" href="#">其他資源</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <img src="~/areas/frontend/img/icon/icon-d.png" class="me-2" alt="">諮詢輔導服務
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="~/areas/frontend/img/icon/icon-e.png" class="me-2" alt="">人資小幫手
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown4">
+                                <li><a class="dropdown-item" href="#">HR知識充電站</a></li>
+                                <li><a class="dropdown-item" href="#">HR工具箱</a></li>
+                                <li><a class="dropdown-item" href="#">成功案例分享</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        
+
+        <div>
+        @RenderBody()
+        </div>
+
+    </main>
+
+    <!-- ================================================== -->
+    <!-- Footer -->
+    <!-- ================================================== -->
+    <footer class="container-fluid mt-5 p-lg-5 p-4 position-relative">
+        <img src="~/areas/frontend/img/circle.png" class="pic-circle-bottom d-none d-lg-block">
+        <div class="footer row row-cols-auto justify-content-center align-items-center flex-column flex-md-row">
+            <div class="col">
+                <img src="~/areas/frontend/img/footer/left-logo.png" class="img-fluid" alt="勞動力發展署桃竹苗分署Logo">
+                <p class="fc-yellow text-center">您是第<span class="fw-bold mx-2 fs-5">5889058</span>位訪客</p>
+            </div>
+            <div class="col">
+                <img src="~/areas/frontend/img/footer/center-logo.png" class="img-fluid" alt="桃竹苗企業人力資源服務網Logo">
+            </div>
+            <div class="col fc-white">Copyright©2022企業人力資源服務網</div>
+        </div>
+    </footer>
+    
+    <!-- 條款及隱私權政策Modal -->
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel2">使用訂閱服務之條款及隱私權規範</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Hide this modal and show the first with the button below.
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-target="#exampleModal" data-bs-toggle="modal" data-bs-dismiss="modal">確認</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 訂閱Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" id="exampleModalLabel">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="~/areas/frontend/img/subs-done.png" class="img-fluid mt-n1" alt="">
+                    <div class="fs-2 fw-bold">訂閱服務</div>
+                    <img src="~/areas/frontend/img/subscribe.png" class="img-fluid" alt="">
+                    <form class="text-start">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Email<span class="fc-red ms-1">*</span></label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="請輸入Email">
+                        </div>
+                        <div class="mb-3" id="subs-form">
+                            <div class="mb-2">訂閱內容<span class="fc-red ms-1">*</span></div>
+                            <div class="form-check form-check-inline CusCheckbox-form">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox-1" value="option-1" name="sort">
+                                <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-1">課程/活動訊息</label>
+                            </div>
+                            <div class="form-check form-check-inline CusCheckbox-form">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox-2" value="option-2" name="sort">
+                                <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-2">計畫消息</label>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">使用訂閱服務之<a class="fc-orange" type="button" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">條款及隱私權規範</a><span class="fc-red ms-1">*</span></label>
+                        </div>
+                        <div class="mb-3 d-flex">
+                            <div>
+                                <label for="exampleInputRandom1" class="form-label">驗證碼<span class="fc-red">*</span></label>
+                                <input type="text" class="form-control" id="exampleInputRandom1" placeholder="請輸入驗證碼">
+                            </div>
+                            <div>
+                                <canvas id="canvas" width="120" height="45" class="ms-3 mt-4"></canvas>
+                                <a href="#" id="changeImg" title="重新產生驗證碼">重新產生</a>
+                            </div>
+                        </div>
+                    </form>
+                    <button type="button" class="btn btn-success mb-2 w-100">確定</button>
+                    <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/areas/frontend/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+    <script>
+        $(function () {
+            var $radios = $('input:radio[name=inlineRadioOptions]');
+            if ($radios.is(':checked') === false) {
+                $radios.filter('[value=iconRadio]').click();
+                var radioValue = $radios.filter('[value=iconRadio]').click().attr("value");
+                var targetRadio = $("." + radioValue);
+                $(targetRadio).show();
+            }
+            $('input[type="radio"]').click(function () {
+                var inputValue = $(this).attr("value");
+                var targetBox = $("." + inputValue);
+                $(".viewhidden").not(targetBox).hide();
+                $(targetBox).show();
+            });
+        });
+    </script>
+
+    <script>
+        var prevScrollpos = window.pageYOffset;
+        window.onscroll = function () {
+            var currentScrollPos = window.pageYOffset;
+            if (prevScrollpos > currentScrollPos) {
+                document.getElementById("myHeader").style.top = "0";
+            } else {
+                document.getElementById("myHeader").style.top = "-50px";
+            }
+            prevScrollpos = currentScrollPos;
+        }
+    </script>
+
+    <script>
+        var btn = $('#gotopbutton');
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() > 300) {
+                btn.addClass('show');
+            } else {
+                btn.removeClass('show');
+            }
+        });
+
+        btn.on('click', function (e) {
+            e.preventDefault();
+            $('html, body').animate({ scrollTop: 0 }, '200');
+        });
+    </script>
+
+    @*提示訊息*@
+    @if (TempData["TempMsg"] != null)
+    {
+        string Type = "alert";
+        string ModalName = "msgmodal";
+
+        if (TempData["TempMsgType"] != null)
+        {
+            @*alert, error, check*@
+            switch ((MsgTypeEnum)TempData["TempMsgType"])
+            {
+                case MsgTypeEnum.error: Type = "error"; break;
+                case MsgTypeEnum.info: Type = "alert"; break;
+                case MsgTypeEnum.success: Type = "check"; break;
+                case MsgTypeEnum.warning: Type = "alert"; break;
+            }
+        }
+
+        <script>
+            $(document).ready(function () {
+                $("#" + '@ModalName' + "_img").attr("src", "/areas/frontend/img/icon/" + '@Type' + ".png");
+                $("#" + '@ModalName' + "_title").html('@TempData["TempMsg"]');
+                $("#" + '@ModalName' + "_text").html('@TempData["TempMsgDetail"]');
+                $("#" + '@ModalName').modal('toggle');
+            });
+        </script>
+    }
+
+    @RenderSection("Scripts", required: false)
+    @Html.RenderPartialSectionScriptsAsync()
+
+</body>
+</html>

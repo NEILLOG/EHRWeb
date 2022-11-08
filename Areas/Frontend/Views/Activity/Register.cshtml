@@ -1,0 +1,356 @@
+﻿@using BASE.Service
+@model BASE.Areas.Frontend.Models.VM_ActivityReigster
+
+@await Html.PartialAsync("_BannerPartial")
+
+
+
+<!-- ================================================== -->
+<!-- 活動訊息 報名頁-->
+<!-- ================================================== -->
+<div class="section pb-md-4 py-lg-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-12">
+                <div class="registrationBox bg-white p-4">
+                    <div class="row">
+                        <div class="col-12 text-center border-bottom rb-title">
+                            <h2 class="fc-green fw-bold"><span>報名表</span></h2>
+                            <small>請填寫以下報名表單，請注意必填欄位，確認後送出。</small>
+                        </div>
+                    </div>
+                    <form method="post" class="row g-3 justify-content-center mt-3">
+                        <div class="col-md-4">
+                            <label for="inputA" class="form-label">企業名稱<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.Main.CompanyName, new { @class="form-control", placeholder="請輸入企業名稱"})
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputB" class="form-label">企業所在地<span class="fc-red ms-1">*</span></label>
+                            @Html.DropDownListFor(x => x.Main.CompanyLocation, Model.ddlCompanyLocation, new { @class="form-select" })
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputC" class="form-label">產業別<span class="fc-red ms-1">*</span></label>
+                            @Html.DropDownListFor(x => x.Main.CompanyType, Model.ddlCompanyType, new { @class="form-select" })
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputD" class="form-label">姓名<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.Main.Name, new { @class="form-control", placeholder="請輸入姓名"})
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputE" class="form-label">職稱<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.Main.JobTitle, new { @class="form-control", placeholder="請輸入職稱"})
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputF" class="form-label">連絡電話<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.Main.Phone, new { @class="form-control", placeholder="請輸入連絡電話"})
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputG" class="form-label">手機<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.Main.CellPhone, new { @class="form-control", placeholder="請輸入手機"})
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputEmail4" class="form-label">電子郵件<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.Main.Email, new { @class="form-control", placeholder="請輸入電子郵件", type="email"})
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputH" class="form-label">公司員工人數<span class="fc-red ms-1">*</span></label>
+                            @Html.DropDownListFor(x => x.Main.CompanyEmpAmount, Model.ddlCompanyEmpAmount, new { @class="form-select" })
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-2" id="regis-form">
+                                <div class="mb-2">活動日期<span class="fc-red ms-1">*</span></div>
+
+                                @foreach(var day in Model.Sections) 
+                                {
+                                    <div class="form-check form-check-inline CusCheckbox-form">
+                                        <label class="form-check-label CusCheckbox-form-label" data-bs-toggle="modal" data-bs-target="#section@(day.Id)">
+                                            <i class="fa-regular fa-calendar-days me-2" aria-hidden="true"></i>
+                                            @day.Day.ToString("yyyy / MM / dd")
+                                            @day.StartTime.ToString(@"hh\:mm")
+                                            -
+                                            @day.EndTime.ToString(@"hh\:mm")
+                                        </label>
+                                    </div>
+                                }
+                            
+                            </div>
+                        </div>
+
+                        <!-- 活動參與模式/飲食選擇 - 顯示方式 -->
+                        <div id="panelSection" class="col-12 activityDetail bg-yellow p-md-3 p-0" style="display:none;">
+                            @*透過JS插入資料*@
+                        </div>
+
+                        <div class="col-12">
+                            <div class="mb-2" id="regis-form">
+                                <div class="mb-2">訊息來源<span class="fc-red ms-1">*</span></div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-AA" value="朋友介紹" name="ckbsInfoFrom">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-AA">朋友介紹</label>
+                                </div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-BB" value="網站廣告" name="ckbsInfoFrom">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-BB">網站廣告</label>
+                                </div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-CC" value="Google搜尋" name="ckbsInfoFrom">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-CC">Google搜尋</label>
+                                </div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-DD" value="同事介紹" name="ckbsInfoFrom">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-DD">同事介紹</label>
+                                </div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-EE" value="相關網站" name="activityChoice">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-EE">相關網站</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3 d-flex">
+                                <div>
+                                    <label for="exampleInputRandom2" class="form-label">驗證碼<span class="fc-red ms-1">*</span></label>
+                                    <input type="text" class="form-control" id="exampleInputRandom2" placeholder="請輸入驗證碼">
+                                </div>
+                                <div>
+                                    <canvas id="canvas2" width="120" height="45" class="ms-3 mt-4"></canvas>
+                                    <a href="#" id="changeImg2" title="重新產生驗證碼">重新產生</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 text-center">
+                            <div class="form-check form-switch form-CusSwitch">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                <label class="form-check-label" for="flexSwitchCheckDefault">我已詳讀<a class="fc-orange" type="button" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal" data-bs-dismiss="modal">個資宣告項目</a><span class="fc-red ms-1">*</span></label>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 mt-5">
+                            <button class="btn btn-outline-primary w-50" type="button"><i class="fa-solid fa-chevron-left me-2" aria-hidden="true"></i>返回詳細頁</button>
+                            <button class="btn btn-primary w-50" type="submit" data-bs-toggle="modal" data-bs-target="#regisDoneModal"><i class="fa-solid fa-check-to-slot me-2" aria-hidden="true"></i>確定報名</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 報名Modal -->
+@foreach(var day in Model.Sections) {
+    <div class="modal fade" id="section@(day.Id)" tabindex="-1" aria-labelledby="regisModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header border-0" id="regisModalLabel">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="~/areas/frontend/img/regis-page.png"  class="img-fluid mt-n1" alt="" />
+                    <div class="fs-5 fc-orange mb-2">
+                        <i class="fa-regular fa-calendar-days me-2" aria-hidden="true"></i>
+                        <span class="lbDateRange">
+                        @day.Day.ToString("yyyy / MM / dd") 
+                        @day.StartTime.ToString(@"hh\:mm") 
+                        - 
+                        @day.EndTime.ToString(@"hh\:mm")
+                        </span>
+                    </div>
+                    <small>請選擇參與模式及飲食</small>
+                    <div class="text-start">
+                        <div class="mb-3" id="mode-form">
+                            <div class="mb-2 fw-bold"><i class="fa-solid fa-book-open me-2 fc-gray" aria-hidden="true"></i>活動參與模式<span class="fc-red ms-1">*</span></div>
+
+                            @{
+                                Boolean IsOnline = false;
+                                Boolean IsOffline = false; 
+                                switch(day.SectionType)
+                                {
+                                    case "線上":
+                                        IsOnline = true;
+                                        break;
+                                    case "實體":
+                                        IsOffline = true;
+                                        break;
+                                    case "實體+線上":
+                                        IsOnline = true;
+                                        IsOffline = true;
+                                        break;
+                                }
+                            }
+
+                            @if (IsOnline)
+                            {
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input" type="radio" id="inlineCheckbox_online_@(day.Id)" value="線上" name="mode@(day.Id)">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox_online_@(day.Id)">線上</label>
+                                </div>
+                            }
+
+                            @if (IsOffline)
+                            {
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input" type="radio" id="inlineCheckbox_offline_@(day.Id)" value="實體" name="mode@(day.Id)">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox_offline_@(day.Id)">實體</label>
+                                </div>
+                            }
+                        </div>
+                        <div class="mb-3" id="food-form">
+                            <div class="mb-2 fw-bold"><i class="fa-solid fa-utensils me-2 fc-gray" aria-hidden="true"></i>飲食選擇<span class="fc-red ms-1">*</span></div>
+                            <div class="form-check form-check-inline CusCheckbox-form">
+                                <input class="form-check-input" type="radio" id="inlineCheckbox-meat@(day.Id)" value="葷食" name="food@(day.Id)">
+                                <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-meat@(day.Id)">葷食</label>
+                            </div>
+                            <div class="form-check form-check-inline CusCheckbox-form">
+                                <input class="form-check-input" type="radio" id="inlineCheckbox-vegetarian@(day.Id)" value="素食" name="food@(day.Id)">
+                                <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-vegetarian@(day.Id)">素食</label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success mb-2 w-100 btnAddSection">確定</button>
+                    <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">取消</button>
+                    <input type="hidden" value="@day.Id" class="hidSectionId">
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<!-- 個資宣告項目Modal -->
+<div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel3" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalToggleLabel3">個資宣告項目</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                個資宣告項目個資宣告項目個資宣告項目個資宣告項目個資宣告項目個資宣告項目個資宣告項目
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-dismiss="modal">確認</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    <script src="https://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+    <script type="text/x-jquery-tmpl" id="section-tmpl">
+        <div class="detailItem d-flex justify-content-between align-items-center">
+            <div>
+                <div class="date fw-bold">
+                    <i class="fa-regular fa-calendar-days me-2 fc-orange" aria-hidden="true"></i>
+                    ${DateRange}
+                </div>
+                <div class="choiceBox mt-2">
+                    <div class="choice me-2">
+                        <div class="btn btn-dark">
+                            <span><i class="fa-solid fa-book-open me-2 fc-gray" aria-hidden="true"></i>活動參與模式</span>
+                            <span class="ms-2 fc-yellow text-decoration-underline">${Type}</span>
+                        </div>
+                    </div>
+                    <div class="choice me-2">
+                        <div class="btn btn-dark">
+                            <span><i class="fa-solid fa-utensils me-2 fc-gray" aria-hidden="true"></i>飲食選擇</span>
+                            <span class="ms-2 fc-yellow text-decoration-underline">${Food}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="del-btn">
+                <a href="#" class="btnDeleteSelectedSection"><i class="fa-solid fa-trash-can fs-5" aria-hidden="true"></i></a>
+            </div>
+            <input type="hidden" name="RegisterSection[].RegisterSectionId" value="${SectionID}" />
+            <input type="hidden" name="RegisterSection[].IsVegin" value="${FoodBoolean}" />
+            <input type="hidden" name="RegisterSection[].RegisterSectionType" value="${Type}" />
+        </div>
+    </script>
+    <script>
+        $(document).ready(function(){
+
+            var panel = $('#panelSection');
+
+            $('.btnAddSection').click(function(){
+                var container = $(this).parents('div.modal-body'); console.log(container);
+
+                var mode = container.find('input[name*=mode]:checked');
+                var food = container.find('input[name*=food]:checked');
+                var section_id = container.find('input.hidSectionId').val();
+                var date_range = container.find('span.lbDateRange').text();
+                var modal_ele = $(this).parents('div.modal');
+                var modal = bootstrap.Modal.getInstance(modal_ele[0]);
+
+                var RegisteredSections = GetAllRegisterSection();
+                if (RegisteredSections.includes(section_id))
+                {
+                    alert('您已加入此活動日期的報名時段');
+                    return;
+                }
+
+                if(mode.length == 0) {
+                    alert('請選擇參與模式');
+                    return;
+                }
+                if (food.length == 0) {
+                    alert('請選擇飲食為葷食或素食');
+                    return;
+                }
+
+                panel.show();
+
+                var NewReg = $("#section-tmpl").tmpl({
+                    DateRange: date_range,
+                    Type: mode.val(),
+                    Food: food.val(),
+                    SectionID: section_id,
+                    FoodBoolean: food.val() == '素食' ? 'true' : 'false'
+                });
+
+                panel.find('.btnDeleteSelectedSection').click(function(){
+                    if(confirm('確認刪除?')) 
+                    {
+                        $(this).parents('.detailItem').remove();
+                    }
+                    return false;
+                });
+
+                panel.append(NewReg);
+
+                ReSortSection();
+
+                modal.hide();
+            });
+
+
+        });
+
+        function ReSortSection(){
+             $('#panelSection').find('.detailItem').each(function(index, ele){
+
+                 $(ele).find('input[type=hidden]').each(function(i, hidden){
+
+                     var o = $(hidden).prop('name'); 
+                         o = o.replace(/\[\d*\]/i,'['+index+']');
+
+                    $(hidden).prop('name', o);
+                 });
+             });
+        }
+
+        function GetAllRegisterSection() {
+            var ids = [];
+            $('#panelSection').find('.detailItem').each(function (index, ele) {
+                $(ele).find('input[type=hidden][name*=RegisterSectionId]').each(function () {
+                    ids.push($(this).val());
+                });
+            });
+            return ids;
+        }
+    </script>
+}
+
+
+

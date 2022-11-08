@@ -1,0 +1,150 @@
+﻿@using BASE.Extensions
+@model BASE.Models.PagerInfo
+
+@*@section CustomScripts
+    {
+    <script type="text/javascript">
+    $(document).ready(function () {
+    //$('#pager-Info-Search').val(true);
+    $('.pager-Info-Search').val(true);
+    Swal.fire({
+    title: 'Test123123',
+    text: 'Testtttttttt123123',
+    icon: 'info'
+    });
+    });
+
+    //頁數切換
+    function ChangeCurrentPage(page, e) {
+    $('.hiddenCurrentPage').val(page)
+
+    //var form = $("form").get(0);
+    var form = $("#frmList");
+    if (form != null) {
+    $('#hiddenSearchSource').val('2');
+    $('.pager-Info-Search').val(false);
+    if ($('#table-body').length == 1) {
+    $('#table-body').empty();
+    }
+    form.submit();
+    }
+    }
+
+    //每頁筆數變更
+    function ChangePageSize(page) {
+    var _pageCount = $(page).val();
+    $('.hiddenPageCount').val(_pageCount)
+
+    //var form = $("form").get(0);
+    var form = $("#frmList");
+    if (form != null) {
+    $('#hiddenSearchSource').val('2');
+    $('.pager-Info-Search').val(false);
+    if ($('#table-body').length == 1) {
+    $('#table-body').empty();
+    }
+    form.submit();
+    }
+    }
+    </script>
+    }*@
+@Html.PartialSectionScriptsAsync(
+    @<script type="text/javascript">
+             $(document).ready(function () {
+                 //$('#pager-Info-Search').val(true);
+                 $('.pager-Info-Search').val(true);
+
+             });
+
+             //頁數切換
+             function ChangeCurrentPage(page, e) {
+                 $('.hiddenCurrentPage').val(page)
+
+                 //var form = $("form").get(0);
+                 var form = $("#frm");
+                 if (form != null) {
+                     $('#hiddenSearchSource').val('2');
+                     $('.pager-Info-Search').val(false);
+                     if ($('#table-body').length == 1) {
+                         $('#table-body').empty();
+                     }
+                     form.submit();
+                 }
+             }
+
+             //每頁筆數變更
+             function ChangePageSize(page) {
+                 var _pageCount = $(page).val();
+                 $('.hiddenPageCount').val(_pageCount)
+
+                 //var form = $("form").get(0);
+                 var form = $("#frm");
+                 if (form != null) {
+                     $('#hiddenSearchSource').val('2');
+                     $('.pager-Info-Search').val(false);
+                     if ($('#table-body').length == 1) {
+                         $('#table-body').empty();
+                     }
+                     form.submit();
+                 }
+             }
+    </script>
+)
+
+
+
+<div id="divPargination" class="row align-items-center">
+    <div class="col-sm-12 col-md-8 col-lg-8">
+        <ul class="pagination">
+            @if (Model.isShowFirst)
+            {
+                <li class="page-item"><a class="page-link" href="#" title="首頁" onclick="ChangeCurrentPage(1, this)">首頁</a></li>
+            }
+            @if (Model.isShowPrevious)
+            {
+                <li class="page-item"><a class="page-link" href="#" title="上一頁" onclick="@(Html.Raw("ChangeCurrentPage("+ (Model.m_iPageIndex - 1).ToString() +", this)"))">上一頁</a></li>
+            }
+            @for (int i = Model.m_iPageMin; i <= Model.m_iPageMax; i++)
+            {
+                if (i == Model.m_iPageIndex)
+                {
+                    <li class="page-item active"><a class="page-link">@i</a></li>
+                }
+                else
+                {
+                     <li class="page-item"><a class="page-link" href="#" onclick="ChangeCurrentPage('@i', this)">@i</a></li>
+                }
+               
+            }
+            @if (Model.isShowNext)
+            {
+                <li class="page-item"><a class="page-link" href="#" title="下一頁" onclick="@(Html.Raw("ChangeCurrentPage("+ (Model.m_iPageIndex + 1).ToString() +", this)"))">下一頁</a></li>
+            }
+            @if (Model.isShowLast)
+            {
+                <li class="page-item"><a class="page-link" href="#" title="末頁" onclick="ChangeCurrentPage(@(Model.m_iPageTotal), this)">末頁</a></li>
+            }
+        </ul>
+    </div>
+    <div class="col-sm-12 col-md-4 col-lg-4 text-end bold">
+        <div class="row gy-2 gx-2 align-items-center float-end">
+            <div class="col-auto">
+                <label class="mr-2">[資料：@(Model.m_iDataCount)筆，共@(Model.m_iPageTotal)頁，目前第@(Model.m_iPageIndex)頁]</label>
+            </div>
+            <div class="col-auto">
+                每頁
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-sm" id="selectPageCount" onchange="ChangePageSize(this)">
+                    @foreach (var item in Model.m_iPageCountList)
+                    {
+                        <!option value="@item" @(item == Model.m_iPageCount? "selected": "")>@item</!option>
+                    }
+                </select>
+            </div>
+            <div class="col-auto">
+                筆
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,112 @@
+﻿@using BASE.Extensions
+@model BASE.Areas.Backend.Models.VM_Album
+@section CustomScripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+
+        function Delete(id) {
+            Swal.fire({
+                title: '提示訊息',
+                text: '你是否要刪除FAQ？',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '刪除',
+                cancelButtonText: '取消',
+            }).then((r) => {
+                if (r.isConfirmed) {
+
+                    $.blockUI();
+
+                    //確定刪除
+                    $.ajax({
+                        type: "Post",
+                        url: "@(Url.Action("AlbumDelete", "Album"))",
+                        dataType: "json",
+                        beforeSend: function (request) {
+                            request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
+                        },
+                        data: { id: id },
+                        success: function (result) {
+                            $.unblockUI();
+                            inform({
+                                plugin: result.alert_plugin,
+                                type: result.alert_type,
+                                title: result.message,
+                                content: result.messageDetail,
+                                redirect_url: ""
+                            });
+                        }
+                    });
+                } else {
+                    //任何方式的取消
+                    Swal.fire('刪除', '取消成功', 'success');
+                }
+            });
+        }
+
+    </script>
+}
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                @using (Html.BeginForm(FormMethod.Get, new { id = "frm", @autocomplete = "off" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageIndex, new { @class="hiddenCurrentPage" })
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageCount, new { @class="hiddenPageCount" })
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
+
+                    <div class="row g-3 align-items-end mb-3">
+                        <div class="col-12 col-md-auto">
+                            <a class="btn btn-primary" href="@(Url.Action("AlbumAdd", "Album"))">新增</a>
+                        </div>
+                    </div>
+                }
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>序號</th>
+                                <th>標題</th>
+                                <th>日期</th>
+                                <th>管理</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.AlbumExtendList != null && Model.AlbumExtendList.Count > 0)
+                            {
+                                foreach (var item in Model.AlbumExtendList)
+                                {
+                                    <tr>
+                                        <td>@(Model.AlbumExtendList.IndexOf(item) + 1)</td>
+                                        <td style="max-width:30vw;">@Html.Raw(item.Album.Title)</td>
+                                        <td style="max-width:30vw;">@Html.Raw(item.Album.DisplayDate.ToString("yyyy/MM/dd"))</td>
+                                        <td>
+                                            <a class="btn btn-primary" href="@(Url.Action("AlbumEdit", "Album", new { id =item.Album.Id }))">編輯</a>
+                                            <button type="button" class="btn btn-danger" onclick="Delete('@(item.Album.Id)')">刪除</button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="4">目前暫無資料</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (Model != null && Model.AlbumExtendList != null && Model.AlbumExtendList.Count > 0)
+                {
+                    @await Html.PartialAsync("_Pagination", Model.Search.PagerInfo)
+                }
+            </div>
+        </div>
+    </div>
+</div>

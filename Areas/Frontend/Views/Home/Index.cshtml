@@ -1,0 +1,458 @@
+﻿@section Css {
+    <style>
+
+    </style>
+    <!-- Owl Stylesheets -->
+    <link rel="stylesheet" href="~/areas/frontend/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/areas/frontend/css/owl.theme.default.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="~/areas/frontend/css/carousel.css" rel="stylesheet">
+    <link href="~/areas/frontend/css/style.css" rel="stylesheet">
+}
+
+
+@section Scripts {
+    <script src="~/areas/frontend/js/owl.carousel.js"></script>
+    <script type="text/javascript">
+        $('#link-owl').owlCarousel({
+            loop: false,
+            margin: 10,
+            dotsEach: true,
+            nav: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        });
+    </script>
+}
+
+
+<!-- ================================================== -->
+<!-- Banner 輪播 -->
+<!-- ================================================== -->
+<div class="container-fluid position-relative">
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="view carousel-item active">
+                <img src="~/areas/frontend/img/banner.png" class="d-block w-100">
+                <div class="mask">
+                    <div class="d-flex flex-column justify-content-center align-items-center h-100">
+                        <h2>企業人力資源提升及充電起飛計畫1</h2>
+                        <p>上課程不限時間、次數的收聽、觀看，給你最自由彈性的學習空間，為自己安排最舒適的學習進程。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/areas/frontend/img/banner.png" class="d-block w-100">
+                <div class="mask">
+                    <div class="d-flex flex-column justify-content-center align-items-center h-100">
+                        <h2>企業人力資源提升及充電起飛計畫2</h2>
+                        <p>上課程不限時間、次數的收聽、觀看，給你最自由彈性的學習空間，為自己安排最舒適的學習進程。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/areas/frontend/img/banner.png" class="d-block w-100">
+                <div class="mask">
+                    <div class="d-flex flex-column justify-content-center align-items-center h-100">
+                        <h2>企業人力資源提升及充電起飛計畫3</h2>
+                        <p>上課程不限時間、次數的收聽、觀看，給你最自由彈性的學習空間，為自己安排最舒適的學習進程。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/areas/frontend/img/banner.png" class="d-block w-100">
+                <div class="mask">
+                    <div class="d-flex flex-column justify-content-center align-items-center h-100">
+                        <h2>企業人力資源提升及充電起飛計畫4</h2>
+                        <p>上課程不限時間、次數的收聽、觀看，給你最自由彈性的學習空間，為自己安排最舒適的學習進程。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+<!-- ================================================== -->
+<!-- 圖片按鈕 -->
+<!-- ================================================== -->
+<div class="container imgbtnBox">
+    <img src="~/areas/frontend/img/circle.png" class="pic-circle d-none d-lg-block">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-12 col-md-4">
+            <a href="#" class="item">
+                <img src="~/areas/frontend/img/imgbtn/a.png" alt="" class="img-fluid">
+                <h3 class="fw-bold mt-3">活動報名<span class="ms-2 fc-gray"><i class="fa-solid fa-circle-arrow-right"></i></span></h3>
+                <small class="fc-gray">EVENT</small>
+            </a>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <a href="#" class="item">
+                <img src="~/areas/frontend/img/imgbtn/b.png" alt="" class="img-fluid">
+                <h3 class="fw-bold mt-3">諮詢預約<span class="ms-2 fc-gray"><i class="fa-solid fa-circle-arrow-right"></i></span></h3>
+                <small class="fc-gray">CONSULT</small>
+            </a>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <a href="#" class="item">
+                <img src="~/areas/frontend/img/imgbtn/c.png" alt="" class="img-fluid">
+                <h3 class="fw-bold mt-3">找資源<span class="ms-2 fc-gray"><i class="fa-solid fa-circle-arrow-right"></i></span></h3>
+                <small class="fc-gray">RESOURCE</small>
+            </a>
+        </div>
+    </div><!-- /.row -->
+</div>
+
+<!-- ================================================== -->
+<!-- 最新消息 -->
+<!-- ================================================== -->
+<div class="section pb-md-4 py-lg-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-12 d-flex justify-content-between">
+                <div class="section-title">
+                    <h2 class="fw-bold"><img src="~/areas/frontend/img/icon/photos.svg" class="me-2" alt="">最新消息</h2>
+                    <small class="ms-2 fc-gray fst-italic">HOT NEWS</small>
+                </div>
+                <div class="section-btn">
+                    <a class="btn btn-primary px-4 py-2 rounded-3" href="#">查看更多</a>
+                </div>
+            </div>
+            <div class="col-12 col-lg-5">
+                <div class="articleBox">
+                    <div class="card border-0 mb-3">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-12 col-md-4 text-center">
+                                <img src="~/areas/frontend/img/articleimg.png" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="card-body">
+                                    <a href="#" class="stretched-link">
+                                        <h4 class="card-title fw-bold">中研講堂臺東場科普演講開放報名</h4>
+                                    </a>
+                                    <div class="card-tag"><span class="tag-news">計畫消息</span></div>
+                                    <p class="card-text">臺灣是位於太平洋上的島嶼，然而我們對於大洋洲的文化、人與社會的關係以及身份認同有多少了解臺解臺解臺灣是位於太平洋上的島嶼，然而...</p>
+                                    <p class="card-text"><small class="text-muted">2022 .08 .17</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-7">
+                <div class="newsList">
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-start flex-column flex-md-row">
+                                <div class="d-flex">
+                                    <div class="date">2022 .05 .13</div>
+                                    <div class="card-tag mb-0 mx-3"><span class="tag-news">計畫消息</span></div>
+                                </div>
+                                <div class="title">
+                                    <a href="#" title="前往訊息內頁">來去臺東！中研講堂臺東場科普演講開放報名</a>
+                                </div>
+                            </div>
+                            <span class="moreicon"><i class="fa-solid fa-chevron-right"></i></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-start flex-column flex-md-row">
+                                <div class="d-flex">
+                                    <div class="date">2022 .05 .10</div>
+                                    <div class="card-tag mb-0 mx-3"><span class="tag-other">其他消息</span></div>
+                                </div>
+                                <div class="title">
+                                    <a href="#" title="前往訊息內頁">2021年大師講座—嘉蓓爾∙班莫教授 (永續科學中心)</a>
+                                </div>
+                            </div>
+                            <span class="moreicon"><i class="fa-solid fa-chevron-right"></i></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-start flex-column flex-md-row">
+                                <div class="d-flex">
+                                    <div class="date">2022 .05 .08</div>
+                                    <div class="card-tag mb-0 mx-3"><span class="tag-other">其他消息</span></div>
+                                </div>
+                                <div class="title">
+                                    <a href="#" title="前往訊息內頁">本院109年度下半年接受外界捐贈財物辦理情形 (總務處)</a>
+                                </div>
+                            </div>
+                            <span class="moreicon"><i class="fa-solid fa-chevron-right"></i></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-start flex-column flex-md-row">
+                                <div class="d-flex">
+                                    <div class="date">2022 .05 .10</div>
+                                    <div class="card-tag mb-0 mx-3"><span class="tag-other">其他消息</span></div>
+                                </div>
+                                <div class="title">
+                                    <a href="#" title="前往訊息內頁">國際研究生學程(TIGP)實習生計畫</a>
+                                </div>
+                            </div>
+                            <span class="moreicon"><i class="fa-solid fa-chevron-right"></i></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-start flex-column flex-md-row">
+                                <div class="d-flex">
+                                    <div class="date">2022 .05 .10 </div>
+                                    <div class="card-tag mb-0 mx-3"><span class="tag-news">計畫消息</span></div>
+                                </div>
+                                <div class="title">
+                                    <a href="#" title="前往訊息內頁">2021年大師講座—嘉蓓爾∙班莫教授 (永續科學中心)</a>
+                                </div>
+                            </div>
+                            <span class="moreicon"><i class="fa-solid fa-chevron-right"></i></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================== -->
+<!-- 熱門報名課程 -->
+<!-- ================================================== -->
+<div class="section pb-md-4 py-lg-5 courseSection">
+    <div class="container">
+        <div class="row courseBox align-items-center">
+            <div class="col-12 col-md-4 align-self-lg-center align-self-md-center">
+                <div class="card h-100 border-0 bg-transparent courseCard">
+                    <div class="card-body p-4">
+                        <img src="~/areas/frontend/img/icon/users.svg" alt="" class="d-block">
+                        <h5 class="card-title d-inline-block fw-bold fs-2 fc-white my-2">熱門報名課程</h5>
+                        <small class="d-inline-block ms-2 fc-gray fst-italic">COURSES</small>
+                        <p class="card-text fc-white">上課時間和價格很有彈性，此外，網站經常不定時推出優惠活動、努力了解使用者想法並做出改善。而客服也總是能非常即時且盡責地回覆問題，整體來說是很替學生著想的網站。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 align-self-lg-start align-self-md-center">
+                <div class="card h-100 courseItem">
+                    <img src="~/areas/frontend/img/course/1.png" class="card-img-top" alt="課程預覽圖">
+                    <div class="card-body">
+                        <h5 class="card-title">【化輸入為輸出】九堂課程教你輸出高品質內容</h5>
+                        <p class="card-text tripleline-ellipsis">SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="date">
+                            <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
+                            2022 / 08 / 10
+                        </div>
+                        <a href="#" class="more-btn stretched-link">
+                            了解更多
+                            <i class="fa-solid fa-arrow-right ms-2" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 align-self-lg-end align-self-md-center">
+                <div class="card h-100 courseItem">
+                    <img src="~/areas/frontend/img/course/2.png" class="card-img-top" alt="課程預覽圖">
+                    <div class="card-body">
+                        <h5 class="card-title">影音製作五小時就上手 帶你輕鬆VLOG！百萬YouTuber</h5>
+                        <p class="card-text tripleline-ellipsis">SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="date">
+                            <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
+                            2022 / 08 / 10
+                        </div>
+                        <a href="#" class="more-btn stretched-link">
+                            了解更多
+                            <i class="fa-solid fa-arrow-right ms-2" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row courseBox align-items-center">
+            <div class="col-12 col-md-4 align-self-lg-start align-self-md-center mt-minus">
+                <div class="card h-100 courseItem">
+                    <img src="~/areas/frontend/img/course/3.png" class="card-img-top" alt="課程預覽圖">
+                    <div class="card-body">
+                        <h5 class="card-title">【化輸入為輸出】九堂課程教你輸出高品質內容</h5>
+                        <p class="card-text tripleline-ellipsis">SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="date">
+                            <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
+                            2022 / 08 / 10
+                        </div>
+                        <a href="#" class="more-btn stretched-link">
+                            了解更多
+                            <i class="fa-solid fa-arrow-right ms-2" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 align-self-lg-start align-self-md-center">
+                <div class="card h-100 courseItem">
+                    <img src="~/areas/frontend/img/course/4.png" class="card-img-top" alt="課程預覽圖">
+                    <div class="card-body">
+                        <h5 class="card-title">【化輸入為輸出】九堂課程教你輸出高品質內容</h5>
+                        <p class="card-text tripleline-ellipsis">SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="date">
+                            <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
+                            2022 / 08 / 10
+                        </div>
+                        <a href="#" class="more-btn stretched-link">
+                            了解更多
+                            <i class="fa-solid fa-arrow-right ms-2" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 align-self-lg-end align-self-md-center">
+                <div class="card h-100 courseItem">
+                    <img src="~/areas/frontend/img/course/5.png" class="card-img-top" alt="課程預覽圖">
+                    <div class="card-body">
+                        <h5 class="card-title">影音製作五小時就上手 帶你輕鬆VLOG！百萬YouTuber</h5>
+                        <p class="card-text tripleline-ellipsis">SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="date">
+                            <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
+                            2022 / 08 / 10
+                        </div>
+                        <a href="#" class="more-btn stretched-link">
+                            了解更多
+                            <i class="fa-solid fa-arrow-right ms-2" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row courseBox align-items-center">
+            <div class="col-12 col-md-4 align-self-lg-start align-self-md-center mt-minus">
+                <div class="card h-100 courseItem">
+                    <img src="~/areas/frontend/img/course/6.png" class="card-img-top" alt="課程預覽圖">
+                    <div class="card-body">
+                        <h5 class="card-title">【化輸入為輸出】九堂課程教你輸出高品質內容</h5>
+                        <p class="card-text tripleline-ellipsis">SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="date">
+                            <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
+                            2022 / 08 / 10
+                        </div>
+                        <a href="#" class="more-btn stretched-link">
+                            了解更多
+                            <i class="fa-solid fa-arrow-right ms-2" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 align-self-lg-start align-self-md-center">
+                <div class="card h-100 courseItem">
+                    <img src="~/areas/frontend/img/course/7.png" class="card-img-top" alt="課程預覽圖">
+                    <div class="card-body">
+                        <h5 class="card-title">【化輸入為輸出】九堂課程教你輸出高品質內容</h5>
+                        <p class="card-text tripleline-ellipsis">SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="date">
+                            <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
+                            2022 / 08 / 10
+                        </div>
+                        <a href="#" class="more-btn stretched-link">
+                            了解更多
+                            <i class="fa-solid fa-arrow-right ms-2" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 align-self-lg-end align-self-md-center">
+                <div class="card moreBox">
+                    <div class="wrap-mask">
+                        <div class="card-body p-0 p-md-3 p-lg-5">
+                            <h5 class="card-title fs-1 fw-bold">查看更多</h5>
+                            <p class="card-text mt-3">型企業人力提升計畫; 充電再出發訓練計畫; 在職中高齡者及高齡者穩定就業訓練補助實施計畫，了解更多線上熱門課程</p>
+                            <a href="#" class="fc-white mt-5 stretched-link">
+                                <i class="fa-regular fa-circle-right fs-1" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================== -->
+<!-- 相關連結 -->
+<!-- ================================================== -->
+<div class="section pb-md-4 py-lg-5 mt-5 mt-md-0">
+    <div class="container linkBox">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title">
+                    <h2 class="fw-bold"><img src="~/areas/frontend/img/icon/link.svg" class="me-2" alt="">相關連結</h2>
+                    <small class="ms-2 fc-gray fst-italic">LINKS</small>
+                </div>
+            </div>
+            <div class="col-12 mt-5">
+                <div class="owl-carousel owl-theme" id="link-owl">
+                    <div class="item">
+                        <a href="#" title="客家委員會" target="_blank">
+                            <img src="~/areas/frontend/img/link/1.png" class="img-fluid" alt="客家委員會Logo">
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#" title="客家委員會客家文化發展中心" target="_blank">
+                            <img src="~/areas/frontend/img/link/2.png" class="img-fluid" alt="客家委員會客家文化發展中心Logo">
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#" title="客家美食" target="_blank">
+                            <img src="~/areas/frontend/img/link/3.png" class="img-fluid" alt="客家美食Logo">
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#" title="台北市文化局" target="_blank">
+                            <img src="~/areas/frontend/img/link/4.png" class="img-fluid" alt="台北市文化局Logo">
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#" title="客家委員會" target="_blank">
+                            <img src="~/areas/frontend/img/link/1.png" class="img-fluid" alt="客家委員會Logo">
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#" title="客家委員會客家文化發展中心" target="_blank">
+                            <img src="~/areas/frontend/img/link/2.png" class="img-fluid" alt="客家委員會客家文化發展中心Logo">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

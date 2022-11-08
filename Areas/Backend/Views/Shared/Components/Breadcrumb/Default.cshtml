@@ -1,0 +1,32 @@
+﻿@model BASE.Areas.Backend.Models.VM_Breadcrumb
+<div class="row row-cols-auto page-description">
+    <div class="col">
+        <h1 class="mb-4">@Context.Items["Title"]</h1>
+    </div>
+    <div class="col ms-auto">
+        @if (Model.BreadcrumbList.Count > 0)
+        {
+            <ol class="breadcrumb breadcrumb-container breadcrumb-separator-chevron">
+
+                @for (int i = Model.BreadcrumbList.Count - 1; i >= 0; i--)
+                {
+                    if (!string.IsNullOrEmpty(Model.BreadcrumbList[i].Url) && Model.currentmenu.MenuUrl != Model.BreadcrumbList[i].Url && (Model.BreadcrumbList[i].ShowInMenuSidebar || Model.BreadcrumbList[i].Level == 1))
+                    {
+                        <li class="breadcrumb-item"><a href="@(Model.BreadcrumbList[i].Url)">@(Model.BreadcrumbList[i].Title)</a></li>
+                    }
+                    else
+                    {
+                        <li class="breadcrumb-item active" aria-current="page">@(Model.BreadcrumbList[i].Title)</li>
+                    }
+
+                }
+
+            </ol>
+        }
+        @*<ol class="breadcrumb breadcrumb-container breadcrumb-separator-chevron">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Data</li>
+            </ol>*@
+    </div>
+</div>

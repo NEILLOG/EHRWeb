@@ -1,0 +1,95 @@
+﻿@using BASE.Service
+@model BASE.Areas.Frontend.Models.VM_Activity
+
+@await Html.PartialAsync("_BannerPartial")
+
+<!-- ================================================== -->
+<!-- 活動訊息 內頁-->
+<!-- ================================================== -->
+<div class="section pb-md-4 py-lg-5">
+    <div class="container">
+        <div class="row">
+            <!-- 左邊內容區塊 -->
+            <div class="col-lg-9 col-12">
+                <div class="activityPage mt-3 p-md-0 p-3">
+                    <h2>@Model.ActivityExtendItem.Header.Title</h2>
+                    <h3>@Model.ActivityExtendItem.Header.Subject</h3>
+
+                    <img src="@Model.ActivityExtendItem.FileInfo.FilePath" class="img-fluid">
+
+                    <h4><i class="fa-regular fa-paper-plane me-3 fc-green" aria-hidden="true"></i>活動簡介</h4>
+                    <p>
+                        @Html.Raw(System.Text.RegularExpressions.Regex.Replace(Model.ActivityExtendItem.Header.Description, "<.*?>", String.Empty))
+                    </p>
+                </div>
+            </div>
+
+            <!-- 右邊報名區塊 -->
+            <div class="col-lg-3 col-12">
+                <div class="activityInfo bg-white p-4">
+                    <div class="info-title">
+                        <i class="fa-solid fa-book-open me-2 fc-green" aria-hidden="true"></i>
+                        相關活動資訊
+                    </div>
+                    <div class="info-text row">
+                        <div class="text">活動主題：@Model.ActivityExtendItem.Header.Subject</div>
+                        <div class="text">活動地點：@Model.ActivityExtendItem.Header.Place</div>
+                        <div class="text">活動日期：</div>
+
+                        @foreach(var day in Model.ActivityExtendItem.Sections.GroupBy(x => x.Day))
+                        {
+                            <div class="dateBox col-12 col-md-6 col-lg-12">
+                                <div class="act-time">
+                                    <div class="act-date">
+                                        <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
+                                        @day.Key.ToString("yyyy / MM / dd")
+                                    </div>
+                                    @foreach(var time in day) 
+                                    {
+                                        <div class="mt-2">
+                                            <span class="bg-gray py-1 px-2 fs--1 rounded-pill">時段</span>
+                                            @time.StartTime.ToString(@"hh\:mm")
+                                            -
+                                            @time.EndTime.ToString(@"hh\:mm")
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <hr>
+                    <div class="info-title">
+                        <i class="fa-solid fa-user ms-1 me-2 fc-green" aria-hidden="true"></i>
+                        報名名額
+                    </div>
+                    <div class="info-text">
+                        <div><span class="fc-orange fw-bold fs-2">@Model.ActivityExtendItem.Header.Quota</span>人</div>
+                    </div>
+                    <hr>
+                    <div class="info-title">
+                        <i class="fa-solid fa-user-group me-2 fc-green" aria-hidden="true"></i>
+                        報名對象
+                    </div>
+                    <div class="info-text">
+                        <div>@Model.ActivityExtendItem.Header.RegisterFor</div>
+                    </div>
+                    <hr>
+                    <div class="info-title">
+                        <i class="fa-solid fa-circle-info ms-1 me-2 fc-green" aria-hidden="true"></i>
+                        講師資訊
+                    </div>
+                    <div class="info-text">
+                        <div>@Model.ActivityExtendItem.Header.LecturerInfo</div>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-5">
+                        <a class="btn btn-primary" href="@Url.Action("Register", new { id = EncryptService.AES.RandomizedEncrypt(Model.ActivityExtendItem.Header.Id) })">
+                            <i class="fa-solid fa-paper-plane me-2" aria-hidden="true"></i>馬上報名</a>
+                        <a class="btn btn-outline-primary" href="@Url.Action("List", new { id= Model.ActivityExtendItem.Header.Category})">
+                            <i class="fa-solid fa-chevron-left me-2" aria-hidden="true"></i>返回列表頁</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

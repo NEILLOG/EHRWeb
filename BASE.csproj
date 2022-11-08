@@ -1,0 +1,116 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>%24/EHR人力資源/SourceCode/原始檔</SccProjectName>
+    <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
+    <SccAuxPath>https://dev.azure.com/zhungei0158</SccAuxPath>
+    <SccLocalPath>.</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-BASE-59E0A960-8438-48E2-BAB0-B997C852C826</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>.</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Backend\Data\**" />
+    <Compile Remove="Areas\Backend\Views\Banner\**" />
+    <Compile Remove="Areas\Sample\**" />
+    <Compile Remove="wwwroot\lib\fontawesome-5-free\**" />
+    <Content Remove="Areas\Backend\Data\**" />
+    <Content Remove="Areas\Backend\Views\Banner\**" />
+    <Content Remove="Areas\Sample\**" />
+    <Content Remove="wwwroot\lib\fontawesome-5-free\**" />
+    <EmbeddedResource Remove="Areas\Backend\Data\**" />
+    <EmbeddedResource Remove="Areas\Backend\Views\Banner\**" />
+    <EmbeddedResource Remove="Areas\Sample\**" />
+    <EmbeddedResource Remove="wwwroot\lib\fontawesome-5-free\**" />
+    <EntityDeploy Remove="wwwroot\lib\fontawesome-5-free\**" />
+    <EntityDeploy Remove="Areas\Backend\Views\Banner\**" />
+    <None Remove="Areas\Backend\Data\**" />
+    <None Remove="Areas\Backend\Views\Banner\**" />
+    <None Remove="Areas\Sample\**" />
+    <None Remove="wwwroot\lib\fontawesome-5-free\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\dist\*" />
+    <Content Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\dist\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Backend\Controllers\BannerController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNetCore.NPOI" Version="1.2.3" />
+    <PackageReference Include="LinqKit" Version="1.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.4" />
+    <PackageReference Include="Quartz" Version="3.4.0" />
+    <PackageReference Include="Quartz.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Backend\Models\Enum\" />
+    <Folder Include="Areas\Backend\Views\Shared\Components\Breadcrumb\" />
+    <Folder Include="Areas\Backend\Views\Shared\Components\Footer\" />
+    <Folder Include="Models\DB\" />
+    <Folder Include="wwwroot\lib\fontawesome-free\" />
+    <Folder Include="wwwroot\upload\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Backend\Views\Album\AlbumAdd.cshtml" />
+    <None Include="Areas\Backend\Views\Album\AlbumEdit.cshtml" />
+    <None Include="Areas\Backend\Views\Album\AlbumList.cshtml" />
+    <None Include="wwwroot\lib\ckeditor5\ckeditor.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\dist\tooltip.min.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\LICENSE" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\README.md" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\src\sass\partials\mixins.scss" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\src\sass\partials\tooltip.scss" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\src\sass\partials\variables.scss" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\src\sass\styles.scss" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\src\styles.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\src\tooltip.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\src\utils\dom-utils.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\src\utils\index.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\src\utils\utils.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\webpack.config.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\.editorconfig" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\.prettierrc" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\dist\virtual-select.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\dist\virtual-select.min.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\LICENSE" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\postcss.config.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\README.md" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\src\sass\partials\animations.scss" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\src\sass\partials\mixins.scss" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\src\sass\partials\rtl.scss" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\src\sass\partials\variable.scss" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\src\sass\partials\virtual-select.scss" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\src\sass\styles.scss" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\src\styles.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\src\utils\dom-utils.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\src\utils\index.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\src\utils\utils.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\src\virtual-select.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\src\virtual-select.types.js" />
+    <None Include="wwwroot\lib\virtual-select-master\node_modules\virtual-select-plugin\webpack.config.js" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+</Project>
