@@ -13,6 +13,14 @@ namespace BASE.Models.DB
         /// </summary>
         public long Id { get; set; }
         /// <summary>
+        /// 外鍵: 計畫編號
+        /// </summary>
+        public string ProjectId { get; set; } = null!;
+        /// <summary>
+        /// 課程變更檔案
+        /// </summary>
+        public string FileId { get; set; } = null!;
+        /// <summary>
         /// 聯絡信箱
         /// </summary>
         public string Email { get; set; } = null!;

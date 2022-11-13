@@ -1,0 +1,141 @@
+﻿@using BASE.Service
+@model BASE.Areas.Frontend.Models.VM_ConsultRegister
+
+@await Html.PartialAsync("_BannerPartial")
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#frm').submit(function () {
+                checked = $("input.subjects:checked").length;
+                if (!checked) {
+                    alert("請選擇至少一個諮詢主題");
+                    return false;
+                }
+            });
+        });
+    </script>
+}
+
+<!-- ================================================== -->
+<!-- 諮詢輔導顧問 報名頁-->
+<!-- ================================================== -->
+<div class="section pb-md-4 py-lg-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-12">
+                <div class="registrationBox bg-white p-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="applicationBox bg-yellow p-3">
+                                <h3 class="fw-bold fc-green fs-4">勞動部桃竹苗分署-111年桃竹苗區域人力資源整合-諮詢輔導申請表</h3>
+                                <div>
+                                    本諮詢服務資源全程免費，將針對單位實際需求邀約顧問，提供1 對1 諮詢服務，故資源有限，將依照申請順序依次安排。
+                                </div>
+                                <div class="fc-orange mt-2">聯繫電話：03-4855368#1905</div>
+                            </div>
+                        </div>
+                    </div>
+                    <form id="frm" class="row g-3 justify-content-center mt-3" method="post">
+                        <div class="col-12">
+                            <label for="inputB" class="form-label">企業所在地<span class="fc-red ms-1">*</span></label>
+                            @Html.DropDownListFor(x => x.ExtendItem.Location, Model.ddlLocation, new { @class="form-select", required="required" })
+                        </div>
+                        <div class="col-12">
+                            <label for="inputA" class="form-label">企業名稱全銜<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.ExtendItem.Name, new { @class="form-control", placeholder="您的回答", required="required" })
+                        </div>
+                        <div class="col-12">
+                            <label for="inputD" class="form-label">企業統編<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.ExtendItem.BusinessId, new { @class="form-control", placeholder="您的回答", required="required" })
+                        </div>
+                        <div class="col-12">
+                            <label for="inputE" class="form-label">企業登記地址<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.ExtendItem.Address, new { @class="form-control", placeholder="您的回答", required="required" })
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-2" id="regis-form">
+                                <div class="mb-2">諮詢主題(可複選)<span class="fc-red ms-1">*</span></div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-AA" value="組織經營" name="CheckedSubjects">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-AA">組織經營</label>
+                                </div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-BB" value="人才培育" name="CheckedSubjects">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-BB">人才培育</label>
+                                </div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-CC" value="職能分析" name="CheckedSubjects">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-CC">職能分析</label>
+                                </div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-DD" value="員工職涯發展" name="CheckedSubjects">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-DD">員工職涯發展</label>
+                                </div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-EE" value="其他人資管理議題" name="CheckedSubjects">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-EE">其他人資管理議題</label>
+                                </div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-FF" value="不清楚問題屬性" name="CheckedSubjects">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-FF">不清楚問題屬性</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputF" class="form-label">問題陳述<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.ExtendItem.Description, new { @class="form-control",  placeholder="您的回答", aria_describedby="inputFHelp", required="required" })
+                            <div id="inputFHelp" class="form-text">※請陳述目前面臨狀況及希望達成之目標，或其他補充事項</div>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputG" class="form-label">預計可諮詢時間<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.ExtendItem.ConsultTime, new { @class="form-control",  placeholder="您的回答", aria_describedby="inputGHelp", required="required" })
+
+                            <div id="inputGHelp" class="form-text">※諮詢時間預先安排2 小時，請先行提供至少提供三個以上時間/時段，以利媒合顧問時間。回覆例如：每週三上午10-12 時、或3/18 下午14-16 時可以等)</div>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputH" class="form-label">輔導地址<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.ExtendItem.ConsultAddress, new { @class="form-control",  placeholder="您的回答", aria_describedby="inputHHelp", required="required" })
+                            <div id="inputHHelp" class="form-text">※若貴公司不便提供進場輔導，亦可於勞動部勞動力發展署桃竹苗分署進行諮詢輔導(地址：桃園市楊梅區秀才路851號)</div>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputI" class="form-label">聯繫人姓名<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.ExtendItem.ContactName, new { @class="form-control", placeholder="您的回答", required="required" })
+                        </div>
+                        <div class="col-12">
+                            <label for="inputI" class="form-label">聯繫人職稱<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.ExtendItem.ContactJobTitle, new { @class="form-control", placeholder="您的回答", required="required" })
+                        </div>
+                        <div class="col-12">
+                            <label for="inputI" class="form-label">聯絡人EMAIL<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.ExtendItem.ContactEmail, new { type="email", @class="form-control", placeholder="您的回答", required="required" })
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3 d-flex">
+                                <div>
+                                    <label for="exampleInputRandom2" class="form-label">驗證碼<span class="fc-red ms-1">*</span></label>
+                                    <input type="text" class="form-control" id="exampleInputRandom2" placeholder="請輸入驗證碼" required>
+                                </div>
+                                <div>
+                                    <canvas id="canvas2" width="120" height="45" class="ms-3 mt-4"></canvas>
+                                    <a href="#" id="changeImg2" title="重新產生驗證碼">重新產生</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 text-center">
+                            <div class="form-check form-switch form-CusSwitch">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" required>
+                                <label class="form-check-label" for="flexSwitchCheckDefault">我已詳讀<a class="fc-orange" type="button" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal" data-bs-dismiss="modal">個資宣告項目</a><span class="fc-red ms-1">*</span></label>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 mt-5">
+                            <button class="btn btn-outline-primary w-50" type="reset"><i class="fa-regular fa-circle-xmark me-2" aria-hidden="true"></i>清除重寫</button>
+                            <button class="btn btn-primary w-50" type="submit"><i class="fa-solid fa-check-to-slot me-2" aria-hidden="true"></i>馬上報名</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

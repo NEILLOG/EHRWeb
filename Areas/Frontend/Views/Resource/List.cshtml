@@ -1,0 +1,86 @@
+﻿@using BASE.Service
+@model BASE.Areas.Frontend.Models.VM_Project
+
+@await Html.PartialAsync("_BannerPartial")
+
+<form method="post" id="frm" autocomplete="off">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageIndex, new { @class="hiddenCurrentPage" })
+    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageCount, new { @class="hiddenPageCount" })
+    @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
+    @Html.HiddenFor(x => x.Search.Category)
+</form>
+
+
+
+
+<!-- ================================================== -->
+<!-- 企業資源專區 -->
+<!-- ================================================== -->
+<div class="section pb-md-4 py-lg-5">
+    <div class="container">
+        <div class="row">
+            <!-- 左邊按鈕區塊 -->
+            <div class="col-lg-3 col-12">
+                <div class="activityBtn bg-white p-3">
+                    <ul class="nav nav-tabs flex-column" id="resourceTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a href="@Url.Action("Map")" class="nav-link">
+                                <i class="fa-solid fa-map me-2" aria-hidden="true"></i>計畫資源地圖
+                            </a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li class="nav-item" role="presentation">
+                            <a href="@Url.Action("List", new { id = "企業訓練資源" })" class="nav-link @(Model.Search.Category == "企業訓練資源" ? "active" : "")">
+                                <i class="fa-solid fa-screwdriver-wrench me-2" aria-hidden="true"></i>企業訓練資源
+                            </a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li class="nav-item" role="presentation">
+                            <a href="@Url.Action("List", new { id = "就業服務資源" })" class="nav-link @(Model.Search.Category == "就業服務資源" ? "active" : "")">
+                                <i class="fa-solid fa-user-gear me-2" aria-hidden="true"></i>就業服務資源
+                            </a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li class="nav-item" role="presentation">
+                            <a href="@Url.Action("List", new { id = "紓困資源" })" class="nav-link @(Model.Search.Category == "紓困資源" ? "active" : "")">
+                                <i class="fa-solid fa-file-lines me-2" aria-hidden="true"></i>紓困資源
+                            </a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li class="nav-item" role="presentation">
+                            <a href="@Url.Action("List", new { id = "其他資源" })" class="nav-link @(Model.Search.Category == "其他資源" ? "active" : "")">
+                                <i class="fa-solid fa-magnifying-glass me-2" aria-hidden="true"></i>其他資源
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 右邊內容區塊 -->
+            <div class="col-lg-9 col-12">
+
+                <ul class="corp-resource">
+                    @foreach(var item in Model.ExtendList)
+                    {
+                        <li>
+                            <a href="@Url.Action("Detail", new { id = EncryptService.AES.RandomizedEncrypt(item.Id) })" class="item">
+                                <div>
+                                    <span class="tag">計畫名稱</span>
+                                    <span class="title fw-bold">@item.Name</span>
+                                </div>
+                                <div class="d-none d-md-block">
+                                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                </ul>
+
+                <div class="mt-5">
+                    @await Html.PartialAsync("_Pagination", Model.Search.PagerInfo)
+                </div>
+                  
+            </div>
+        </div>
+    </div>
+</div>

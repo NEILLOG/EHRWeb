@@ -1,0 +1,78 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@model BASE.Areas.Backend.Models.VM_Event
+@{
+}
+@section CustomScripts
+    {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("input").prop("disabled", true);
+
+            $('#frm').on('submit', function () {
+
+            });
+        });
+
+    </script>
+}
+
+    <div class="card">
+        <div class="card-body">
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.RegistrationExtendItem.register.CompanyName, "企業名稱", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.RegistrationExtendItem.register.CompanyName, new { @class="form-control"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.RegistrationExtendItem.register.CompanyLocation, "企業所在地", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.RegistrationExtendItem.register.CompanyLocation, new { @class="form-control"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.RegistrationExtendItem.register.CompanyType, "產業別", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.RegistrationExtendItem.register.CompanyType, new { @class="form-control"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.RegistrationExtendItem.register.Name, "姓名", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.RegistrationExtendItem.register.Name, new { @class="form-control"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.RegistrationExtendItem.register.JobTitle, "職稱", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.RegistrationExtendItem.register.JobTitle, new { @class="form-control"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.RegistrationExtendItem.register.Phone, "聯絡電話", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.RegistrationExtendItem.register.Phone, new { @class="form-control"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.RegistrationExtendItem.register.CellPhone, "手機", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.RegistrationExtendItem.register.CellPhone, new { @class="form-control"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.RegistrationExtendItem.register.Email, "電子郵件", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.RegistrationExtendItem.register.Email, new { @class="form-control"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.RegistrationExtendItem.register.CompanyEmpAmount, "公司員工人數", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.RegistrationExtendItem.register.CompanyEmpAmount, new { @class="form-control"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.RegistrationExtendItem.registerSection.RegisterSectionType, "課程參與模式", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.RegistrationExtendItem.registerSection.RegisterSectionType, new { @class="form-control"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.RegistrationExtendItem.registerSection.IsVegin, "飲食選擇", new { @class = "form-label" })
+                <input class="form-control" type="text" value="@(Model.RegistrationExtendItem.registerSection.IsVegin ? "葷":"素" )"/>
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.RegistrationExtendItem.register.InfoFrom, "訊息來源", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.RegistrationExtendItem.register.InfoFrom ,  new { @class="form-control"})
+
+            </div>
+            <div class="form-group">
+                <a class="btn btn-light" href="@(Url.Action("EventInfoRegistrationList", "Event", new { id = EncryptService.AES.RandomizedEncrypt(Model.RegistrationExtendItem.register.ActivityId) }))">回報名名單</a>
+            </div>
+            
+        </div>
+    </div>

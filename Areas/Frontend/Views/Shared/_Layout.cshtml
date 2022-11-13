@@ -14,6 +14,14 @@
     <!-- Custom styles for this template -->
     <link href="~/areas/frontend/css/style.css" rel="stylesheet" />
 
+    <!-- sweetalert2 -->
+    <script src="~/lib/sweetalert2/v11.x/dist/sweetalert2.all.min.js"></script>
+    <script>
+        Swal = Swal.mixin({
+            confirmButtonText: '確認'
+        })
+    </script>
+
     @RenderSection("Css", required: false)
 </head>
 <body>
@@ -35,7 +43,7 @@
         <nav id="headernav" class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container">
                 <h1 class="d-none">桃竹苗企業人力資源服務網</h1>
-                <a class="navbar-brand" href="index.html" title="桃竹苗企業人力資源服務網">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")" title="桃竹苗企業人力資源服務網">
                     <img src="~/areas/frontend/img/logo.png" alt="桃竹苗企業人力資源服務網" class="img-fluid">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +66,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
                                 <li><a class="dropdown-item" href="@Url.Action("List", "Activity")">活動訊息</a></li>
-                                <li><a class="dropdown-item" href="#">活動花絮</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("List", "Album")">活動花絮</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -66,15 +74,15 @@
                                 <img src="~/areas/frontend/img/icon/icon-c.png" class="me-2" alt="">企業資源專區
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                                <li><a class="dropdown-item" href="#">計畫資源地圖</a></li>
-                                <li><a class="dropdown-item" href="#">企業訓練資源</a></li>
-                                <li><a class="dropdown-item" href="#">就業服務資源</a></li>
-                                <li><a class="dropdown-item" href="#">紓困資源</a></li>
-                                <li><a class="dropdown-item" href="#">其他資源</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Map", "Resource")">計畫資源地圖</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("List", "Resource", new { id = "企業訓練資源"})">企業訓練資源</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("List", "Resource", new { id = "就業服務資源"})">就業服務資源</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("List", "Resource", new { id = "紓困資源"})">紓困資源</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("List", "Resource", new { id = "其他資源"})">其他資源</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="@Url.Action("Index", "Consult")">
                                 <img src="~/areas/frontend/img/icon/icon-d.png" class="me-2" alt="">諮詢輔導服務
                             </a>
                         </li>
@@ -83,9 +91,9 @@
                                 <img src="~/areas/frontend/img/icon/icon-e.png" class="me-2" alt="">人資小幫手
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown4">
-                                <li><a class="dropdown-item" href="#">HR知識充電站</a></li>
-                                <li><a class="dropdown-item" href="#">HR工具箱</a></li>
-                                <li><a class="dropdown-item" href="#">成功案例分享</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("List", "HR", new { id = "HR知識充電站"})">HR知識充電站</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Manual", "HR")">HR工具箱</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("List", "HR", new { id = "成功案例分享"})">成功案例分享</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -257,14 +265,28 @@
             }
         }
 
-        <script>
-            $(document).ready(function () {
-                $("#" + '@ModalName' + "_img").attr("src", "/areas/frontend/img/icon/" + '@Type' + ".png");
-                $("#" + '@ModalName' + "_title").html('@TempData["TempMsg"]');
-                $("#" + '@ModalName' + "_text").html('@TempData["TempMsgDetail"]');
-                $("#" + '@ModalName').modal('toggle');
-            });
-        </script>
+        switch ((string?)TempData["TempPlugin"])
+        {
+            case "toastr":
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        toastr["@Type"]("@TempData["TempMsg"]", "@TempData["TempMsgDetail"]");
+                    });
+                </script>
+                break;
+            default:
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        Swal.fire({
+                            title: '@TempData["TempMsg"]',
+                            text: '@TempData["TempMsgDetail"]',
+                            icon: '@Type'
+                        });
+                    });
+                </script>
+                break;
+        }
+
     }
 
     @RenderSection("Scripts", required: false)

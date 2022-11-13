@@ -22,5 +22,11 @@ namespace BASE.Models.DB
         /// </summary>
         public string Contents { get; set; } = null!;
         public bool IsPublish { get; set; }
+        public bool IsDelete { get; set; }
+        public string? FileId { get; set; }
+        public string CreateUser { get; set; } = null!;
+        public DateTime CreateDate { get; set; }
+        public string? ModifyUser { get; set; }
+        public DateTime? ModifyDate { get; set; }
     }
 }

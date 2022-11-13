@@ -326,7 +326,7 @@ namespace BASE.Models.DB
                     .HasMaxLength(200)
                     .HasComment("訊息來源");
 
-                entity.Property(e => e.IsValid).HasComment("是否審核通過");
+                entity.Property(e => e.IsValid).HasComment("是否審核通過(null預設；true通過；false不通過)");
 
                 entity.Property(e => e.JobTitle)
                     .HasMaxLength(200)
@@ -1121,6 +1121,23 @@ namespace BASE.Models.DB
 
                 entity.Property(e => e.Contents).HasComment("內容");
 
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CreateUser)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FileId)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("FileID");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifyUser)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Title)
                     .HasMaxLength(100)
                     .HasComment("標題");
@@ -1135,9 +1152,26 @@ namespace BASE.Models.DB
                     .IsUnicode(false)
                     .HasColumnName("ID");
 
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CreateUser)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.DisplayDate).HasColumnType("datetime");
 
+                entity.Property(e => e.FileId)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("FileID");
+
                 entity.Property(e => e.IsPublish).HasComment("是否上架");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifyUser)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Title).HasMaxLength(100);
             });
@@ -1479,6 +1513,10 @@ namespace BASE.Models.DB
 
                 entity.Property(e => e.Contents).HasComment("內容");
 
+                entity.Property(e => e.Description)
+                    .HasMaxLength(100)
+                    .HasComment("是哪一個頁面的OnePage");
+
                 entity.Property(e => e.ModifyDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifyUser)
@@ -1570,6 +1608,12 @@ namespace BASE.Models.DB
                     .HasMaxLength(300)
                     .HasComment("聯絡信箱");
 
+                entity.Property(e => e.FileId)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("FileID")
+                    .HasComment("課程變更檔案");
+
                 entity.Property(e => e.IsApprove).HasComment("是否同意; null: 尚未回覆, 1: 同意, 0:不同意");
 
                 entity.Property(e => e.ModifyDate)
@@ -1579,6 +1623,12 @@ namespace BASE.Models.DB
                 entity.Property(e => e.ModifyUser)
                     .HasMaxLength(10)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ProjectId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("ProjectID")
+                    .HasComment("外鍵: 計畫編號");
             });
 
             modelBuilder.Entity<TbPromotion>(entity =>

@@ -103,7 +103,11 @@ builder.Services.AddScoped<RelationLinkService>();
 builder.Services.AddScoped<NewsService>();
 builder.Services.AddScoped<YouTubeVideoService>();
 builder.Services.AddScoped<AlbumService>();
-
+//builder.Services.AddScoped<HrArticleService>();
+//builder.Services.AddScoped<HrPackageService>();
+//builder.Services.AddScoped<B_ContactUsService>();
+builder.Services.AddScoped<B_ProjectService>();
+builder.Services.AddScoped<B_ProjectModifyService>();
 
 //Frontend Servie
 builder.Services.AddScoped<BASE.Areas.Frontend.Service.NewsService>();
@@ -111,6 +115,9 @@ builder.Services.AddScoped<BASE.Areas.Frontend.Service.YouTubeService>();
 builder.Services.AddScoped<BASE.Areas.Frontend.Service.ActivityService>();
 builder.Services.AddScoped<BASE.Areas.Frontend.Service.AlbumService>();
 builder.Services.AddScoped<BASE.Areas.Frontend.Service.OnePageService>();
+builder.Services.AddScoped<BASE.Areas.Frontend.Service.ProjectService>();
+builder.Services.AddScoped<BASE.Areas.Frontend.Service.HRService>();
+builder.Services.AddScoped<BASE.Areas.Frontend.Service.ConsultService>();
 
 /* Quartz */
 builder.Services.AddQuartz(q =>
@@ -170,7 +177,7 @@ app.UseEndpoints(endpoints =>
     //預設路由
     endpoints.MapAreaControllerRoute(
         name: "default",
-        areaName: "Frontend",
+        areaName: "Backend",
         pattern: "{controller=Home}/{action=Index}/{id?}");
 
     //匹配所有Area路由

@@ -49,8 +49,7 @@ namespace BASE.Areas.Backend.Controllers
                 string eTear = (DateTime.Now.Year + 1).ToString();
 
                 //取資料
-                IQueryable<NewsExtend>? dataList = _newsService.GetNewsExtendList(ref _message).Where(x => x.News.DisplayDate >= Convert.ToDateTime(sYear + "/01/01") &&
-                                                                                                           x.News.DisplayDate < Convert.ToDateTime(eTear + "/01/01"));
+                IQueryable<NewsExtend>? dataList = _newsService.GetNewsExtendList(ref _message);
 
                 if (dataList != null && !string.IsNullOrEmpty(data.Search.sCategory))
                 { dataList = dataList.Where(x => x.News.Category == data.Search.sCategory); }
@@ -66,7 +65,7 @@ namespace BASE.Areas.Backend.Controllers
 
                 //分頁
                 if (dataList != null)
-                    data.NewsExtendList = await PagerInfoService.GetRange(dataList.OrderByDescending(x => x.News.IsKeepTop).ThenBy(x => x.News.CreateDate), data.Search.PagerInfo);
+                    data.NewsExtendList = await PagerInfoService.GetRange(dataList.OrderByDescending(x => x.News.IsKeepTop).ThenByDescending(x => x.News.CreateDate), data.Search.PagerInfo);
 
                 //操作紀錄
                 await _commonService.OperateLog(userinfo.UserID, Feature, Action, null, data);

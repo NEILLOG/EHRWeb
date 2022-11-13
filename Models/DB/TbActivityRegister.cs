@@ -57,7 +57,7 @@ namespace BASE.Models.DB
         /// </summary>
         public string InfoFrom { get; set; } = null!;
         /// <summary>
-        /// 是否審核通過
+        /// 是否審核通過(null預設；true通過；false不通過)
         /// </summary>
         public bool? IsValid { get; set; }
         public DateTime CreateDate { get; set; }

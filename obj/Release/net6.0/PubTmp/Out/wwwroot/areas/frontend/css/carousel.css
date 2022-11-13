@@ -1,0 +1,76 @@
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+  margin-bottom: 4rem;
+  margin-top: 4rem;
+}
+
+.carousel-indicators{
+  bottom: 15%;
+}
+
+.carousel-indicators [data-bs-target]{
+  background-color: #FFF; 
+  border: 5px solid transparent;
+  border-radius: 100%;
+  width: 11px;
+  height: 11px;
+  opacity: 1;
+  margin: 8px;
+
+}
+
+.carousel-indicators .active{
+  background-color: #FFF;
+  border: 5px solid #FD9019;
+}
+
+
+/*======  RWD ======*/
+
+/* tablets */
+@media (max-width: 992px) {   
+  .carousel-indicators{
+    bottom: 10%;
+  } 
+
+  .carousel-indicators [data-bs-target]{  
+    border: 3px solid transparent;  
+    width: 9px;
+    height: 9px;    
+    margin: 5px;
+
+  }
+
+  .carousel-indicators .active{    
+    border: 3px solid #FD9019;
+  }  
+}
+
+/* phones */
+@media (max-width: 576px) {   
+ .carousel-indicators{
+    bottom: 5%;
+  }
+
+  .carousel-indicators [data-bs-target]{    
+    border: 2px solid transparent;
+    width: 6px;
+    height: 6px;    
+    margin: 4px;
+
+  }
+
+  .carousel-indicators .active{    
+    border: 2px solid #FD9019;
+  }  
+
+  .carousel {
+    margin-bottom: 4rem;
+    margin-top: 7rem;
+}
+
+
+

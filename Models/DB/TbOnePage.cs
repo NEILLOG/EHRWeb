@@ -13,6 +13,10 @@ namespace BASE.Models.DB
         /// 內容
         /// </summary>
         public string Contents { get; set; } = null!;
+        /// <summary>
+        /// 是哪一個頁面的OnePage
+        /// </summary>
+        public string? Description { get; set; }
         public string? ModifyUser { get; set; }
         public DateTime? ModifyDate { get; set; }
     }

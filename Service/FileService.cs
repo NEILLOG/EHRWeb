@@ -87,7 +87,7 @@ namespace BASE.Service
                 Entity.FilePath = ralativepath;
                 Entity.Order = 1;
                 Entity.IsDelete = false;
-                Entity.CreateUser = userinfo.UserID;
+                Entity.CreateUser = userinfo == null ? "" : userinfo.UserID;
                 Entity.CreateDate = now;
                 var InsertResult = await Insert<TbFileInfo>(Entity, transaction);
 

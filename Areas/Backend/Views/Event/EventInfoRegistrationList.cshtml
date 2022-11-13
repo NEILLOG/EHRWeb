@@ -1,0 +1,345 @@
+﻿@using BASE.Extensions
+@model BASE.Areas.Backend.Models.VM_Event
+@section CustomScripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+
+        // 清除查詢條件
+        function clearSearch() {
+            // 群組下拉改為請選擇
+            document.getElementById("Search_sSection").selectedIndex = 0;
+            // 查詢清空
+            $('#Search_sCompanyName').val('');
+        }
+
+        // 全數審核通過
+        function AllApproved() {
+            Swal.fire({
+                title: '提示訊息',
+                text: '是否要全數審核通過？',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '確定',
+                cancelButtonText: '取消',
+            }).then((r) => {
+                if (r.isConfirmed) {
+
+                    $.blockUI();
+
+                    //確定刪除
+                    $.ajax({
+                        type: "Post",
+                        url: "@(Url.Action("AllApproved", "Event"))",
+                        dataType: "json",
+                        beforeSend: function (request) {
+                            request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
+                        },
+                        data: {
+                            id: $("#ActivityID").val(),
+                            sectioniId: $("#Search_sSection").val()
+                        },
+                        success: function (result) {
+                            $.unblockUI();
+                            inform({
+                                plugin: result.alert_plugin,
+                                type: result.alert_type,
+                                title: result.message,
+                                content: result.messageDetail,
+                                redirect_url: ""
+                            });
+                        }
+                    });
+                } else {
+                    //任何方式的取消
+                    Swal.fire('取消', '取消成功', 'success');
+                }
+            });
+        }
+
+        // 批次儲存審核結果
+        function ChangeVerifyStatus()
+        {
+            Swal.fire({
+                title: '提示訊息',
+                text: '是否儲存該頁審核結果？',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '確定',
+                cancelButtonText: '取消',
+            }).then((r) => {
+                if (r.isConfirmed) {
+                    $.blockUI();
+                    var arrRegistration = [];
+                    var arrVerify = [];
+                    // 取得頁面資訊
+                    var sTableName = document.getElementById("tb_Registration");
+                    for (var i = 0; i < $("#tb_Registration tr").length-1 ; i++) 
+                    {
+                        var registrationId = sTableName.children[i].children[10].children[0].value;
+                        arrRegistration.push(registrationId)
+                        var verifyStatus = sTableName.children[i].children[7].children[0].value;
+                        arrVerify.push(verifyStatus)   
+                    }
+
+                    //確定刪除
+                    $.ajax({
+                        type: "Post",
+                        url: "@(Url.Action("ChangeVerifyStatus", "Event"))",
+                        dataType: "json",
+                        beforeSend: function (request) {
+                            request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
+                        },
+                        data: {
+                            arrRegistration: arrRegistration,
+                            verifyStatus: arrVerify
+                        },
+                        success: function (result) {
+                            $.unblockUI();
+                            inform({
+                                plugin: result.alert_plugin,
+                                type: result.alert_type,
+                                title: result.message,
+                                content: result.messageDetail,
+                                redirect_url: ""
+                            });
+                        }
+                    });
+                } else {
+                    //任何方式的取消
+                    Swal.fire('取消', '取消成功', 'success');
+                }
+            });
+        }
+
+        // 簽到對話視窗data binding
+        function SettingSignin(rowID)
+        {
+            //-- 報名子表id
+            var egisterSectionID = $(`#RegistrationExtendList_${rowID}__registerSection_Id`).val();
+            $("#msRegisterSectionID").val(egisterSectionID)
+
+            //-- IsSigninAM欄位資料
+            var IsSigninAM = $(`#RegistrationExtendList_${rowID}__registerSection_IsSigninAm`).val();
+            document.getElementById('msSigninAM').innerHTML = IsSigninAM == "True" ? "已簽到" :"簽到";
+            document.getElementById("msSigninAM").disabled = IsSigninAM == "True" ? true : false;
+
+            //-- IsSigninPM欄位資料
+            var IsSigninPM = $(`#RegistrationExtendList_${rowID}__registerSection_IsSigninPm`).val();
+            document.getElementById('msSigninPM').innerHTML = IsSigninPM == "True" ? "已簽到" : "簽到";
+            document.getElementById("msSigninPM").disabled = IsSigninPM == "True" ? true : false;
+
+            $("#ModalSignin").modal('show');
+        }
+
+        // 簽到
+        function ActivitySignin(type)
+        {
+            Swal.fire({
+                title: '提示訊息',
+                text: '是否簽到?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '確定',
+                cancelButtonText: '取消',
+            }).then((r) => {
+                if (r.isConfirmed) {
+                    $.blockUI();
+
+                    //確定刪除
+                    $.ajax({
+                        type: "Post",
+                        url: "@(Url.Action("ActivitySignin", "Event"))",
+                        dataType: "json",
+                        beforeSend: function (request) {
+                            request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
+                        },
+                        data: {
+                            registerSectionID: $("#msRegisterSectionID").val(),
+                            type: type
+                        },
+                        success: function (result) {
+                            $.unblockUI();
+                            inform({
+                                plugin: result.alert_plugin,
+                                type: result.alert_type,
+                                title: result.message,
+                                content: result.messageDetail,
+                                redirect_url: ""
+                            });
+                        }
+                    });
+                } else {
+                    //任何方式的取消
+                    Swal.fire('取消', '取消成功', 'success');
+                }
+            });
+
+            $('#ModalSignin').modal('hide');
+        }
+    </script>
+}
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                @using (Html.BeginForm(FormMethod.Get, new { id = "frm", @autocomplete = "off" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x=>x.ActivityItem.Id,new{id="ActivityID"})
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageIndex, new { @class="hiddenCurrentPage" })
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageCount, new { @class="hiddenPageCount" })
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
+
+                    <div class="row g-3 align-items-end mb-3">
+                        <div class="col-12 col-md-auto ms-auto">
+                            <div class="input-group">
+                                @Html.LabelFor(x => x.ActivityItem.Subject, "活動主題", new { @class="input-group-text" })
+                                @Html.TextBoxFor(x => x.ActivityItem.Subject, new { @class="form-control",@readonly = "readonly" })
+                                
+                                @Html.LabelFor(x => x.Search.sSection, "活動日期", new { @class="input-group-text" })
+                                @Html.DropDownListFor(x=>x.Search.sSection,Model.ddlSection,new{@class="form-control"})
+
+                                @Html.LabelFor(x => x.Search.sCompanyName, "企業名稱", new { @class="input-group-text" })
+                                @Html.TextBoxFor(x => x.Search.sCompanyName, new {@class="form-control", placeholder = "請輸入企業名稱",type="text"})
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-auto">
+                            <button type="button" class="btn btn-danger float-end" onclick="clearSearch()">清除</button>
+                            <button type="submit" class="btn btn-primary float-end">查詢</button>
+                        </div>
+                    </div>
+                    <div class="row g-3 align-items-end mb-3" style="display:none">
+                        <div class="col-12 col-md-auto ms-auto">
+                            <a class="btn btn-success" href="@(Url.Action("EventInfoAdd", "Event"))">匯出excel</a>
+                            <a class="btn btn-success" href="@(Url.Action("EventInfoAdd", "Event"))">產生簽到表</a>
+                            <a class="btn btn-success" href="@(Url.Action("EventInfoAdd", "Event"))">產生QRCode</a>
+                        </div>
+                    </div>
+                }
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>序號</th>
+                                <th>企業名稱</th>
+                                <th>企業所在地</th>
+                                <th>產業別</th>
+                                <th>姓名</th>
+                                <th>職稱</th>
+                                <th>詳細資訊</th>
+                                <th>
+                                    審核<br />
+                                    <button type="button" class="btn btn-warning btn-sm" onclick="AllApproved();">全數審核通過</button>
+                                </th>
+                                <th>查看更多內容</th>
+                                <th>是否有簽到</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tb_Registration">
+                            @if (Model.RegistrationExtendList != null && Model.RegistrationExtendList.Count > 0)
+                            {
+                                for (int i = 0; i < Model.RegistrationExtendList.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@(i + 1)</td>
+                                        <td style="max-width:30vw;">@Model.RegistrationExtendList[i].register.CompanyName</td>
+                                        <td style="max-width:30vw;">@Model.RegistrationExtendList[i].register.CompanyLocation</td>
+                                        <td style="max-width:30vw;">@Model.RegistrationExtendList[i].register.CompanyType</td>
+                                        <td style="max-width:30vw;">@Model.RegistrationExtendList[i].register.Name</td>
+                                        <td style="max-width:30vw;">@Model.RegistrationExtendList[i].register.JobTitle</td>
+                                        <td style="max-width:30vw;">
+                                            <a class="btn btn-primary btn-sm" href="@(Url.Action("EventInfoRegistrationDetail", "Event", new { id = EncryptService.AES.RandomizedEncrypt(Model.RegistrationExtendList[i].register.Id.ToString()) }))">查看</a>
+                                        </td>
+                                        <td style="max-width:30vw;">
+                                            @*@Model.RegistrationExtendList[i].register.IsValid*@
+                                            @Html.DropDownListFor(x=>x.RegistrationExtendList[i].verifyStatus,Model.ddlVerify,new{ @class="form-control"})
+                                        </td>
+                                        <td style="max-width:30vw;">
+                                            <a class="btn btn-primary btn-sm" href="@(Url.Action("EventInfoRegistrationMore", "Event", new { id = EncryptService.AES.RandomizedEncrypt(Model.RegistrationExtendList[i].register.Id.ToString()) }))">查看</a>
+                                        </td>
+                                        <td style="max-width:30vw;">
+                                            <button type="button" class="btn btn-default btn-sm" onclick="SettingSignin('@i')">檢視</button>
+                                        </td>
+                                        @*隱藏註冊主表ID for 審核狀態使用*@
+                                        <td style="display:none">
+                                            @Html.HiddenFor(x=>x.RegistrationExtendList[i].register.Id)
+                                            @Html.HiddenFor(x=>x.RegistrationExtendList[i].registerSection.Id)
+                                            @Html.HiddenFor(x=>x.RegistrationExtendList[i].registerSection.IsSigninAm)
+                                            @Html.HiddenFor(x=>x.RegistrationExtendList[i].registerSection.IsSigninPm)
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td colspan="7"></td>
+                                    <td><button type="button" class="btn btn-success btn-sm" onclick="ChangeVerifyStatus()">儲存</button></td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr><td colspan="10">目前暫無資料</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (Model != null && Model.RegistrationExtendList != null && Model.RegistrationExtendList.Count > 0)
+                {
+                    @await Html.PartialAsync("_Pagination", Model.Search.PagerInfo)
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalSignin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">簽到檢視</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm(FormMethod.Get, new { id = "frm_madol", @autocomplete = "off" }))
+                {
+                    <input type="hidden" id="msRegisterSectionID" value="" />
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    @if(Model.ActivityItem.DateType == "全日")
+                                    {
+                                        <th>上午場</th>
+                                        <th>下午場</th>
+                                    }else
+                                    {
+                                        <th>本場次</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <button type="button" class="btn btn-degault" id="msSigninAM" onclick="ActivitySignin('AM')">簽到</button>
+                                    </td>
+                                    @if (Model.ActivityItem.DateType == "全日")
+                                    { 
+                                        <td><button type="button" class="btn btn-degault" id="msSigninPM" onclick="ActivitySignin('PM')">簽到</button></td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>

@@ -27,6 +27,21 @@ namespace BASE.Areas.Backend.Models.Extend
 
         /// <summary> 活動參與模式 </summary>
         public string sectionType { get; set; }
+        /// <summary> 判斷前端是否移除 </summary>
+        public bool isRemove { get; set; }
+    }
+
+    /// <summary> 活動報名extend </summary>
+    public class RegistrationExtend {
+
+        /// <summary> 活動報名資訊 </summary>
+        public TbActivityRegister register { get; set; }
+
+        /// <summary> 場次資訊子表 </summary>
+        public TbActivityRegisterSection registerSection { get; set; }
+
+        /// <summary> 審核結果 </summary>
+        public string verifyStatus { get; set; }
 
     }
 }

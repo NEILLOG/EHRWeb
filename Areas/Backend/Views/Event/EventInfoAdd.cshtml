@@ -7,6 +7,7 @@
 @section CustomScripts
     {
     <script type="text/javascript">
+        var rowCount = 0;
         $(document).ready(function () {
             @*檔案上傳物件*@
             $('.File').each(function () {
@@ -53,22 +54,23 @@
 
         // 新增場次
         function addSection() {
-            var currentRow = $("#tb_Section tr").length;
-
             var html = "";
-            html += "<tr>"
-            html += `<td><input class='form-control' type='date' data-parsley-required data-val='true' data-val-required='The sectionDay field is required.' id='EventInfoItem_sectionExtendList_${currentRow}__sectionDay' name='EventInfoItem.sectionExtendList[${currentRow}].sectionDay' placeholder='請輸入活動日期' value></td>`
-            html += `<td><input class='form-control' type='time' data-parsley-required data-val='true' data-val-required='The startTime field is required.' id='EventInfoItem_sectionExtendList_${currentRow}__startTime' name='EventInfoItem.sectionExtendList[${currentRow}].startTime' placeholder='請輸入時段起'></td>`
-            html += `<td><input class='form-control' type='time' data-parsley-required data-val='true' data-val-required='The endTime field is required.' id='EventInfoItem_sectionExtendList_${currentRow}__endTime' name='EventInfoItem.sectionExtendList[${currentRow}].endTime' placeholder='請輸入時段訖'></td>`
-            html += `<td><select onchange='CheckFIleUpload()' class='form-control ddlType' data-parsley-errors-container='#errors-container-1' data-parsley-required data-val='true' data-val-required='The sectionType field is required.' id='EventInfoItem_sectionExtendList_${currentRow}__sectionType' name='EventInfoItem.sectionExtendList[${currentRow}].sectionType'>`
+            html += `<tr id='tr_${rowCount}'>`
+            html += `<td><input class='form-control' type='date' data-parsley-required data-val='true' data-val-required='The sectionDay field is required.' id='EventInfoItem_sectionExtendList_${rowCount}__sectionDay' name='EventInfoItem.sectionExtendList[${rowCount}].sectionDay' placeholder='請輸入活動日期' value></td>`
+            html += `<td><input class='form-control' type='time' data-parsley-required data-val='true' data-val-required='The startTime field is required.' id='EventInfoItem_sectionExtendList_${rowCount}__startTime' name='EventInfoItem.sectionExtendList[${rowCount}].startTime' placeholder='請輸入時段起'></td>`
+            html += `<td><input class='form-control' type='time' data-parsley-required data-val='true' data-val-required='The endTime field is required.' id='EventInfoItem_sectionExtendList_${rowCount}__endTime' name='EventInfoItem.sectionExtendList[${rowCount}].endTime' placeholder='請輸入時段訖'></td>`
+            html += `<td><select onchange='CheckFIleUpload()' class='form-control ddlType' data-parsley-errors-container='#errors-container-1' data-parsley-required data-val='true' data-val-required='The sectionType field is required.' id='EventInfoItem_sectionExtendList_${rowCount}__sectionType' name='EventInfoItem.sectionExtendList[${rowCount}].sectionType'>`
             html += `<option value='實體'>實體</option><option value='線上'>線上</option><option value='實體+線上'>實體+線上</option>`
             html += `<select></td>`
+            html += `<td><button class='btn btn-danger' type='button' onclick="RemoveSection('${rowCount}')">刪除</button></td>`
+            html += `<input type='hidden' id='EventInfoItem_sectionExtendList_${rowCount}__isRemove' name='EventInfoItem.sectionExtendList[${rowCount}].isRemove' value='false'>`
             html += "</tr>"
             $("#tb_Section").append(html);
 
             // 預設新增 實體壓縮檔需上傳
             $("#div_EntityFile").show();
             $("#EntityFile").attr('data-parsley-required', '');
+            rowCount ++;
         }
 
         // 判斷壓縮檔上傳
@@ -111,6 +113,16 @@
                 $("#div_OnlineFile").hide();
                 $("#OnlineFile").attr('data-parsley-required', 'false');
             }
+        }
+
+        // 移除時段
+        function RemoveSection(parm)
+        {
+            $(`#EventInfoItem_sectionExtendList_${parm}__sectionDay`).attr('data-parsley-required', 'false');
+            $(`#EventInfoItem_sectionExtendList_${parm}__startTime`).attr('data-parsley-required', 'false');
+            $(`#EventInfoItem_sectionExtendList_${parm}__endTime`).attr('data-parsley-required', 'false');
+            $(`#EventInfoItem_sectionExtendList_${parm}__isRemove`).val(true);
+            $("#tr_" + parm).hide();
         }
 
     </script>
@@ -174,6 +186,7 @@
                                 <th>時段起</th>
                                 <th>時段訖</th>
                                 <th>活動參與模式</th>
+                                <th>管理</th>
                             </tr>
                         </thead>
                         <tbody id="tb_Section">

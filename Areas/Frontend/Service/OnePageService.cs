@@ -25,6 +25,7 @@ namespace BASE.Areas.Frontend.Service
             try
             {
                 TbOnePage? data = (from OnePageInfo in _context.TbOnePage
+                                   where OnePageInfo.Id == id
                                     select OnePageInfo).FirstOrDefault();
 
                 return data;

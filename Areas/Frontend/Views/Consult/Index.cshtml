@@ -1,0 +1,67 @@
+﻿@using BASE.Service
+@model BASE.Areas.Frontend.Models.VM_OnePage
+
+@await Html.PartialAsync("_BannerPartial")
+
+@section Scripts
+{
+    @if (TempData["CostomTempEmail"] != null)
+    {
+        <script>
+            $(document).ready(function () {
+                var myModal = new bootstrap.Modal(document.getElementById('regisDoneModal'));
+                myModal.show();
+            });
+        </script>
+    }
+}
+
+
+<!-- ================================================== -->
+<!-- 諮詢輔導顧問-->
+<!-- ================================================== -->
+<div class="section pb-md-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-12">
+                <div class="bg-white p-4">
+                    <div class="row">
+
+
+                        @Html.Raw(Model.ExtendItem.Contents)
+
+                        <div class="d-grid gap-2 mt-4">
+                            <a class="btn btn-primary" type="button" href="@Url.Action("Register")">
+                                <i class="fa-regular fa-hand-pointer me-2" aria-hidden="true"></i>馬上預約
+                            </a>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (TempData["CostomTempEmail"] != null) 
+{
+    <!-- 報名完成Modal -->
+    <div class="modal fade" id="regisDoneModal" tabindex="-1" aria-labelledby="regisDoneModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header border-0" id="regisDoneModalLabel">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="/areas/frontend/img/subs-done.png" class="img-fluid mt-n1" alt="" />
+                    <div class="fs-2 fw-bold mb-4">報 名 完 成</div>
+                    <img src="/areas/frontend/img/regis-done.png" class="img-fluid" alt="" />
+                    <p class="mt-4">恭喜您報名完成，<br>相關訊息會再寄到<span class="fc-blue">@TempData["CostomTempEmail"].ToString()</span>信箱。</p>
+                    <button type="button" class="btn btn-success mb-2 w-100" data-bs-dismiss="modal">確定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -8,13 +8,21 @@
     {
 
     <script type="text/javascript">
+        var rowCount = @Model.EventInfoItem.sectionExtendList.Count;
         $(document).ready(function () {
-                @*檔案上傳物件*@
-                $('.File').each(function () {
-                    $(this).FileInputCus({
-                        dropZoneEnabled: false
-                    });
+            
+            // 已審核通過不可編輯
+            if ('@Model.EventInfoItem.activity.IsValid' == 'True')
+            {
+                $('.input_activityInfo').prop("disabled", true);
+            }
+
+            @*檔案上傳物件*@
+            $('.File').each(function () {
+                $(this).FileInputCus({
+                    dropZoneEnabled: false
                 });
+            });
             if ('@Model.EventInfoItem.activity.Category' == '活動') {
                 $("#spLecturerInfo").hide();
                 $('#EventInfoItem_activity_LecturerInfo').attr('data-parsley-required', 'false');
@@ -56,22 +64,23 @@
 
         // 新增場次
         function addSection() {
-            var currentRow = $("#tb_Section tr").length;
-
             var html = "";
-            html += "<tr>"
-            html += `<td><input class='form-control sectionDate' data-parsley-required data-val='true' data-val-required='The sectionDay field is required.' id='EventInfoItem_sectionExtendList_${currentRow}__sectionDay' name='EventInfoItem.sectionExtendList[${currentRow}].sectionDay' placeholder='請輸入活動日期' type='text' value></td>`
-            html += `<td><input class='form-control sectionTime' data-parsley-required data-val='true' data-val-required='The startTime field is required.' id='EventInfoItem_sectionExtendList_${currentRow}__startTime' name='EventInfoItem.sectionExtendList[${currentRow}].startTime' placeholder='請輸入時段起' type='text'></td>`
-            html += `<td><input class='form-control sectionTime' data-parsley-required data-val='true' data-val-required='The endTime field is required.' id='EventInfoItem_sectionExtendList_${currentRow}__endTime' name='EventInfoItem.sectionExtendList[${currentRow}].endTime' placeholder='請輸入時段訖' type='text'></td>`
-            html += `<td><select onchange='CheckFIleUpload()' class='form-control ddlType' data-parsley-errors-container='#errors-container-1' data-parsley-required data-val='true' data-val-required='The sectionType field is required.' id='EventInfoItem_sectionExtendList_${currentRow}__sectionType' name='EventInfoItem.sectionExtendList[${currentRow}].sectionType'>`
+            html += `<tr id='tr_${rowCount}'>`
+            html += `<td><input class='form-control' type='date' data-parsley-required data-val='true' data-val-required='The sectionDay field is required.' id='EventInfoItem_sectionExtendList_${rowCount}__sectionDay' name='EventInfoItem.sectionExtendList[${rowCount}].sectionDay' placeholder='請輸入活動日期' value></td>`
+            html += `<td><input class='form-control' type='time' data-parsley-required data-val='true' data-val-required='The startTime field is required.' id='EventInfoItem_sectionExtendList_${rowCount}__startTime' name='EventInfoItem.sectionExtendList[${rowCount}].startTime' placeholder='請輸入時段起'></td>`
+            html += `<td><input class='form-control' type='time' data-parsley-required data-val='true' data-val-required='The endTime field is required.' id='EventInfoItem_sectionExtendList_${rowCount}__endTime' name='EventInfoItem.sectionExtendList[${rowCount}].endTime' placeholder='請輸入時段訖'></td>`
+            html += `<td><select onchange='CheckFIleUpload()' class='form-control ddlType' data-parsley-errors-container='#errors-container-1' data-parsley-required data-val='true' data-val-required='The sectionType field is required.' id='EventInfoItem_sectionExtendList_${rowCount}__sectionType' name='EventInfoItem.sectionExtendList[${rowCount}].sectionType'>`
             html += `<option value='實體'>實體</option><option value='線上'>線上</option><option value='實體+線上'>實體+線上</option>`
             html += `<select></td>`
+            html += `<td><button class='btn btn-danger' type='button' onclick="RemoveSection('${rowCount}')">刪除</button></td>`
+            html += `<input type='hidden' id='EventInfoItem_sectionExtendList_${rowCount}__isRemove' name='EventInfoItem.sectionExtendList[${rowCount}].isRemove' value='false'>`
             html += "</tr>"
             $("#tb_Section").append(html);
 
             // 預設新增 實體壓縮檔需上傳
             $("#div_EntityFile").show();
             $("#EntityFile").attr('data-parsley-required', '');
+            rowCount++;
         }
 
         // 判斷壓縮檔上傳
@@ -110,7 +119,16 @@
                 $("#div_OnlineFile").hide();
                 $("#OnlineFile").attr('data-parsley-required', 'false');
             }
+        }
 
+        // 移除時段
+        function RemoveSection(parm) {
+            console.log(parm)
+            $(`#EventInfoItem_sectionExtendList_${parm}__sectionDay`).attr('data-parsley-required', 'false');
+            $(`#EventInfoItem_sectionExtendList_${parm}__startTime`).attr('data-parsley-required', 'false');
+            $(`#EventInfoItem_sectionExtendList_${parm}__endTime`).attr('data-parsley-required', 'false');
+            $(`#EventInfoItem_sectionExtendList_${parm}__isRemove`).val(true);
+            $("#tr_" + parm).hide();
         }
 
     </script>
@@ -125,48 +143,48 @@
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.EventInfoItem.activity.Category, "類型：", new { @class = "form-label" })<br>
-                    @Html.RadioButtonFor(x=>x.EventInfoItem.activity.Category,"課程",new{ data_parsley_required = ""})課程
-                    @Html.RadioButtonFor(x=>x.EventInfoItem.activity.Category,"講座",new{ data_parsley_required = ""})講座
-                    @Html.RadioButtonFor(x=>x.EventInfoItem.activity.Category,"活動",new{ data_parsley_required = ""})活動
+                    @Html.RadioButtonFor(x=>x.EventInfoItem.activity.Category,"課程",new{ @class="input_activityInfo",data_parsley_required = ""})課程
+                    @Html.RadioButtonFor(x=>x.EventInfoItem.activity.Category,"講座",new{ @class="input_activityInfo",data_parsley_required = ""})講座
+                    @Html.RadioButtonFor(x=>x.EventInfoItem.activity.Category,"活動",new{ @class="input_activityInfo",data_parsley_required = ""})活動
                 </div>
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
-                    @Html.LabelFor(x => x.EventInfoItem.activity.Qid, "選擇所需的滿意度問卷", new { @class = "form-label" })
-                    @Html.DropDownListFor(x=>x.EventInfoItem.activity.Qid,Model.ddlQuiz,new{@class="form-control",id="ddlQuiz", data_parsley_required = "", data_parsley_errors_container="#errors-container-1" })
+                    @Html.LabelFor(x => x.EventInfoItem.activity.Qid, "選擇所需的滿意度問卷", new { @class = "form-label " })
+                    @Html.DropDownListFor(x=>x.EventInfoItem.activity.Qid,Model.ddlQuiz,new{@class="form-control input_activityInfo",id="ddlQuiz", data_parsley_required = "", data_parsley_errors_container="#errors-container-1" })
                     <div id="errors-container-1"></div>
                 </div>
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
-                    @Html.LabelFor(x => x.EventInfoItem.activity.RegStartDate, "報名區間", new { @class = "form-label" })
+                    @Html.LabelFor(x => x.EventInfoItem.activity.RegStartDate, "報名區間 ", new { @class = "form-label " })
                     <div class="row col-6">
                         <div class="col">
-                            @Html.TextBoxFor(x => x.EventInfoItem.activity.RegStartDate, "{0:yyyy-MM-dd}", new { @class="form-control",@type="date",placeholder = "年/月/日", data_parsley_required = ""})
+                            @Html.TextBoxFor(x => x.EventInfoItem.activity.RegStartDate, "{0:yyyy-MM-dd}", new { @class="form-control input_activityInfo",@type="date",placeholder = "年/月/日", data_parsley_required = ""})
                         </div>
                         <div class="col">
-                            @Html.TextBoxFor(x => x.EventInfoItem.activity.RegEndDate, "{0:yyyy-MM-dd}", new { @class="form-control",@type="date", placeholder = "年/月/日", data_parsley_required = ""})
+                            @Html.TextBoxFor(x => x.EventInfoItem.activity.RegEndDate, "{0:yyyy-MM-dd}", new { @class="form-control input_activityInfo",@type="date", placeholder = "年/月/日", data_parsley_required = ""})
                         </div>
                     </div>
                 </div>
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.EventInfoItem.activity.Title, "活動標題", new { @class = "form-label" })
-                    @Html.TextBoxFor(x => x.EventInfoItem.activity.Title, new { @class="form-control", placeholder = "請輸入活動標題", data_parsley_required = "" })
+                    @Html.TextBoxFor(x => x.EventInfoItem.activity.Title, new { @class="form-control input_activityInfo", placeholder = "請輸入活動標題", data_parsley_required = "" })
                 </div>
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.EventInfoItem.activity.Subject, "活動主題", new { @class = "form-label" })
-                    @Html.TextBoxFor(x => x.EventInfoItem.activity.Subject, new { @class="form-control", placeholder = "請輸入活動主題", data_parsley_required = "" })
+                    @Html.TextBoxFor(x => x.EventInfoItem.activity.Subject, new { @class="form-control input_activityInfo", placeholder = "請輸入活動主題", data_parsley_required = "" })
                 </div>
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.EventInfoItem.activity.DateType, "活動半/全日", new { @class = "form-label" })<br>
-                    @Html.RadioButtonFor(x=>x.EventInfoItem.activity.DateType,"半日",new{ data_parsley_required = ""})半日
-                    @Html.RadioButtonFor(x=>x.EventInfoItem.activity.DateType,"全日",new{ data_parsley_required = ""})全日
+                    @Html.RadioButtonFor(x=>x.EventInfoItem.activity.DateType,"半日",new{@class="input_activityInfo", data_parsley_required = ""})半日
+                    @Html.RadioButtonFor(x=>x.EventInfoItem.activity.DateType,"全日",new{@class="input_activityInfo", data_parsley_required = ""})全日
                 </div>
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.EventInfoItem.activity.Id, "活動日期、時段及活動參與模式", new { @class = "form-label" })
-                    <button type="button" class="btn btn-primary btn-sm" onclick="addSection()">新增</button>
+                    <button id="btn_AddSection" type="button" class="btn btn-primary btn-sm input_activityInfo" onclick="addSection()">新增</button>
                     <table class="table">
                         <thead>
                             <tr>
@@ -174,6 +192,7 @@
                                 <th>時段起</th>
                                 <th>時段訖</th>
                                 <th>活動參與模式</th>
+                                <th>管理</th>
                             </tr>
                         </thead>
                         <tbody id="tb_Section">
@@ -181,19 +200,21 @@
                             {
                                 for (var i = 0; i < Model.EventInfoItem.sectionExtendList.Count; i++)
                                 {
-                                    <tr>
+                                    <tr id="tr_@(i)">
                                         <td>
-                                            @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[i].sectionDay, "{0:yyyy-MM-dd}", new { @class="form-control",@type="date" ,placeholder = "請輸入活動日期",data_parsley_required = ""})
+                                            @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[i].sectionDay, "{0:yyyy-MM-dd}", new { @class="form-control input_activityInfo",@type="date" ,placeholder = "請輸入活動日期",data_parsley_required = ""})
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[i].startTime,"{0:hh:mm}", new { @class="form-control",@type="time", placeholder = "請輸入時段起",data_parsley_required = ""})
+                                            @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[i].startTime,"{0:hh:mm}", new { @class="form-control input_activityInfo",@type="time", placeholder = "請輸入時段起",data_parsley_required = ""})
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[i].endTime,"{0:hh:mm}", new { @class="form-control",@type="time", placeholder = "請輸入時段訖",data_parsley_required = ""})
+                                            @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[i].endTime,"{0:hh:mm}", new { @class="form-control input_activityInfo",@type="time", placeholder = "請輸入時段訖",data_parsley_required = ""})
                                         </td>
                                         <td>
-                                            @Html.DropDownListFor(x=>x.EventInfoItem.sectionExtendList[i].sectionType,Model.ddlEventType,new{@class="form-control", data_parsley_required = "", data_parsley_errors_container="#errors-container-1" })
+                                            @Html.DropDownListFor(x=>x.EventInfoItem.sectionExtendList[i].sectionType,Model.ddlEventType,new{@class="form-control input_activityInfo", data_parsley_required = "", data_parsley_errors_container="#errors-container-1" })
                                         </td>
+                                        <td><button class="btn btn-danger" type="button" onclick="RemoveSection('@i')">刪除</button></td>
+                                        @Html.HiddenFor(x=>x.EventInfoItem.sectionExtendList[i].isRemove,new{@Value=false})
                                     </tr>
                                 }
                             }
@@ -203,53 +224,52 @@
                 <div class="col-12 form-group mb-3">
                     <span class="red" id="spLecturerInfo">*</span>
                     @Html.LabelFor(x => x.EventInfoItem.activity.LecturerInfo, "講師資訊", new { @class = "form-label" })
-                    @Html.TextBoxFor(x => x.EventInfoItem.activity.LecturerInfo, new {@class="form-control", placeholder = "請輸入講師資訊", data_parsley_required = "" })
+                    @Html.TextBoxFor(x => x.EventInfoItem.activity.LecturerInfo, new {@class="form-control input_activityInfo", placeholder = "請輸入講師資訊", data_parsley_required = "" })
                 </div>
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.EventInfoItem.activity.ActivityImage, "活動圖片", new { @class = "form-label" })
-                    @Html.TextBoxFor(x => x.ActivityImageFile, new { @FileID = "ActivityImage", @class="form-control File", @type = "file", accept = ".pnf,.jpg,.jpeg", data_parsley_file_type="png,jpg,jpeg", data_parsley_errors_container="#ActivityImage-errors-container"  })
+                    @Html.TextBoxFor(x => x.ActivityImageFile, new { @FileID = "ActivityImage", @class="form-control File input_activityInfo", @type = "file", accept = ".pnf,.jpg,.jpeg", data_parsley_file_type="png,jpg,jpeg", data_parsley_errors_container="#ActivityImage-errors-container"  })
                     @Html.HiddenFor(x => x.EventInfoItem.activity.ActivityImage, new { @id ="ActivityImage" })
                     <div id="ActivityImage-errors-container"></div>
                 </div>
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.EventInfoItem.activity.Description, "活動簡介", new { @class = "form-label" })
-                    @Html.TextAreaFor(x => x.EventInfoItem.activity.Description, new { @class="form-control", placeholder = "請輸入活動簡介", data_parsley_required = ""})
+                    @Html.TextAreaFor(x => x.EventInfoItem.activity.Description, new { @class="form-control input_activityInfo", placeholder = "請輸入活動簡介", data_parsley_required = ""})
                 </div>
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.EventInfoItem.activity.Quota, "報名名額", new { @class = "form-label" })
-                    @Html.TextBoxFor(x => x.EventInfoItem.activity.Quota, new {@class="form-control", placeholder = "請輸入報名名額", data_parsley_required = "" })
+                    @Html.TextBoxFor(x => x.EventInfoItem.activity.Quota, new {@class="form-control input_activityInfo", placeholder = "請輸入報名名額", data_parsley_required = "" })
                 </div>
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.EventInfoItem.activity.RegisterFor, "報名對象", new { @class = "form-label" })
-                    @Html.TextBoxFor(x => x.EventInfoItem.activity.RegisterFor, new {@class="form-control", placeholder = "請輸入報名對象", data_parsley_required = "" })
+                    @Html.TextBoxFor(x => x.EventInfoItem.activity.RegisterFor, new {@class="form-control input_activityInfo", placeholder = "請輸入報名對象", data_parsley_required = "" })
                 </div>
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.EventInfoItem.activity.Place, "活動地點", new { @class = "form-label" })
-                    @Html.TextBoxFor(x => x.EventInfoItem.activity.Place, new {@class="form-control", placeholder = "請輸入活動地點", data_parsley_required = "" })
+                    @Html.TextBoxFor(x => x.EventInfoItem.activity.Place, new {@class="form-control input_activityInfo", placeholder = "請輸入活動地點", data_parsley_required = "" })
                 </div>
                 <div class="col-12 form-group mb-3" id="div_EntityFile" style="display:none">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.EventInfoItem.activity.FileForEntity, "上傳行前通知信壓縮檔(for實體參與者)", new { @class = "form-label" })
-                    @Html.TextBoxFor(x => x.EntityFile, new { @FileID = "FileForEntity", @class="form-control File", @type = "file", data_parsley_errors_container="#entity-errors-container" })
+                    @Html.TextBoxFor(x => x.EntityFile, new { @FileID = "FileForEntity", @class="form-control File input_activityInfo", @type = "file", data_parsley_errors_container="#entity-errors-container" })
                     @Html.HiddenFor(x => x.EventInfoItem.activity.FileForEntity, new { @id ="FileForEntity" })
                     <div id="entity-errors-container"></div>
                 </div>
                 <div class="col-12 form-group mb-3" id="div_OnlineFile" style="display:none">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.EventInfoItem.activity.FileForOnline, "上傳行前通知信壓縮檔(for線上參與者)", new { @class = "form-label" })
-                    @Html.TextBoxFor(x => x.OnlineFile, new { @FileID = "FileForOnline", @class="form-control File", @type = "file", data_parsley_errors_container="#online-errors-container" })
+                    @Html.TextBoxFor(x => x.OnlineFile, new { @FileID = "FileForOnline", @class="form-control File input_activityInfo", @type = "file", data_parsley_errors_container="#online-errors-container" })
                     @Html.HiddenFor(x => x.EventInfoItem.activity.FileForOnline, new { @id ="FileForOnline" })
                     <div id="online-errors-container"></div>
                 </div>
                 <div class="col-12 form-group mb-3">
-                    <span class="red">*</span>
                     @Html.LabelFor(x => x.EventInfoItem.activity.HandoutFile, "講義", new { @class = "form-label" })
-                    @Html.TextBoxFor(x => x.HandoutFile, new { @FileID = "HandoutFile", @class="form-control File", @type = "file", data_parsley_errors_container="#handout-errors-container" })
+                    @Html.TextBoxFor(x => x.HandoutFile, new { @id ="btn_HandoutFileUpload",@FileID = "HandoutFile", @class="form-control File", @type = "file", data_parsley_errors_container="#handout-errors-container" })
                     @Html.HiddenFor(x => x.EventInfoItem.activity.HandoutFile, new { @id ="HandoutFile" })
                     <div id="handout-errors-container"></div>
                 </div>

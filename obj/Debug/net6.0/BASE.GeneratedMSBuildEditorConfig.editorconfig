@@ -1,0 +1,296 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = BASE
+build_property.RootNamespace = BASE
+build_property.ProjectDir = D:\TFS\EHR人力資源\SourceCode\原始檔\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
+build_property.MSBuildProjectDirectory = D:\TFS\EHR人力資源\SourceCode\原始檔
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Account/AccountAdd.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xBY2NvdW50XEFjY291bnRBZGQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Account/AccountList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xBY2NvdW50XEFjY291bnRMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Account/PersonalManage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xBY2NvdW50XFBlcnNvbmFsTWFuYWdlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Advertise/AdvertiseAdd.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xBZHZlcnRpc2VcQWR2ZXJ0aXNlQWRkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Advertise/AdvertiseEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xBZHZlcnRpc2VcQWR2ZXJ0aXNlRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Advertise/AdvertiseList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xBZHZlcnRpc2VcQWR2ZXJ0aXNlTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Album/AlbumAdd.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xBbGJ1bVxBbGJ1bUFkZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Album/AlbumEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xBbGJ1bVxBbGJ1bUVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Album/AlbumList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xBbGJ1bVxBbGJ1bUxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Event/EventInfoAdd.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xFdmVudFxFdmVudEluZm9BZGQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Event/EventInfoAudit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xFdmVudFxFdmVudEluZm9BdWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Event/EventInfoEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xFdmVudFxFdmVudEluZm9FZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Event/EventInfoManage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xFdmVudFxFdmVudEluZm9NYW5hZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Event/EventInfoRegistrationDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xFdmVudFxFdmVudEluZm9SZWdpc3RyYXRpb25EZXRhaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Event/EventInfoRegistrationList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xFdmVudFxFdmVudEluZm9SZWdpc3RyYXRpb25MaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Event/EventInfoRegistrationMore.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xFdmVudFxFdmVudEluZm9SZWdpc3RyYXRpb25Nb3JlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/FAQ/FAQAdd.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xGQVFcRkFRQWRkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/FAQ/FAQEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xGQVFcRkFRRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/FAQ/FAQList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xGQVFcRkFRTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/FAQ/FAQSort.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xGQVFcRkFRU29ydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xIb21lXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Home/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xIb21lXExvZ2luLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/News/NewsAdd.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xOZXdzXE5ld3NBZGQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/News/NewsEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xOZXdzXE5ld3NFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/News/NewsList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xOZXdzXE5ld3NMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/ProjectModify/ProjectModifyList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xQcm9qZWN0TW9kaWZ5XFByb2plY3RNb2RpZnlMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Project/ProjectAdd.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xQcm9qZWN0XFByb2plY3RBZGQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Project/ProjectEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xQcm9qZWN0XFByb2plY3RFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Project/ProjectList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xQcm9qZWN0XFByb2plY3RMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Project/ProjectMap.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xQcm9qZWN0XFByb2plY3RNYXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/RelationLink/RelationLinkAdd.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xSZWxhdGlvbkxpbmtcUmVsYXRpb25MaW5rQWRkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/RelationLink/RelationLinkEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xSZWxhdGlvbkxpbmtcUmVsYXRpb25MaW5rRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/RelationLink/RelationLinkList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xSZWxhdGlvbkxpbmtcUmVsYXRpb25MaW5rTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Shared/Components/Breadcrumb/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xTaGFyZWRcQ29tcG9uZW50c1xCcmVhZGNydW1iXERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Shared/Components/Footer/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xTaGFyZWRcQ29tcG9uZW50c1xGb290ZXJcRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Shared/Components/Header/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xTaGFyZWRcQ29tcG9uZW50c1xIZWFkZXJcRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Shared/Components/MenuSidebar/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xTaGFyZWRcQ29tcG9uZW50c1xNZW51U2lkZWJhclxEZWZhdWx0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xTaGFyZWRcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xTaGFyZWRcX0xheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Shared/_Layout_SourceOnly.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xTaGFyZWRcX0xheW91dF9Tb3VyY2VPbmx5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xTaGFyZWRcX0xvZ2luUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Shared/_Pagination.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xTaGFyZWRcX1BhZ2luYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xTaGFyZWRcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/YouTubeVideo/YouTubeVideoAdd.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xZb3VUdWJlVmlkZW9cWW91VHViZVZpZGVvQWRkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/YouTubeVideo/YouTubeVideoEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xZb3VUdWJlVmlkZW9cWW91VHViZVZpZGVvRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/YouTubeVideo/YouTubeVideoList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xZb3VUdWJlVmlkZW9cWW91VHViZVZpZGVvTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xfVmlld0ltcG9ydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xfVmlld1N0YXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Activity/Detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcQWN0aXZpdHlcRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Activity/List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcQWN0aXZpdHlcTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Activity/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcQWN0aXZpdHlcUmVnaXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Album/List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcQWxidW1cTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Consult/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcQ29uc3VsdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Consult/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcQ29uc3VsdFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/HR/Detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcSFJcRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/HR/List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcSFJcTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/HR/Manual.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcSFJcTWFudWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/HR/Packages.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcSFJcUGFja2FnZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/News/Detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcTmV3c1xEZXRhaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/News/List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcTmV3c1xMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Resource/Detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcUmVzb3VyY2VcRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Resource/List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcUmVzb3VyY2VcTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Resource/Map.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcUmVzb3VyY2VcTWFwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Shared/_BannerPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcU2hhcmVkXF9CYW5uZXJQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Shared/_Pagination.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcU2hhcmVkXF9QYWdpbmF0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/YouTube/List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcWW91VHViZVxMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

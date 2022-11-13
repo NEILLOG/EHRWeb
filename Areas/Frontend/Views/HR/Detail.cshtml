@@ -1,0 +1,61 @@
+﻿@using BASE.Service
+@model BASE.Areas.Frontend.Models.VM_HR
+
+@await Html.PartialAsync("_BannerPartial")
+
+<!-- ================================================== -->
+<!-- 人資小幫手 -->
+<!-- ================================================== -->
+<div class="section pb-md-4 py-lg-5">
+    <div class="container">
+        <div class="row">
+            <!-- 左邊按鈕區塊 -->
+            <div class="col-lg-3 col-12">
+                <div class="activityBtn bg-white p-3">
+                    <ul class="nav nav-tabs flex-column" id="HRToolBoxTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a href="@Url.Action("List", new { id = "HR知識充電站"})" class="nav-link @(Model.ExtendItem.Header.Category == "HR知識充電站" ? "active" : "")">
+                                <i class="fa-solid fa-lightbulb me-2" aria-hidden="true"></i>HR知識充電站
+                            </a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <a class="btn w-100 collapsed" data-bs-toggle="collapse" href="#collapseHRtoolbox" role="button" aria-expanded="false" aria-controls="collapseHRtoolbox" id="hrtoolbox">
+                            <i class="fa-solid fa-screwdriver-wrench me-2" aria-hidden="true"></i>
+                            HR工具箱
+                            <i class="fa-solid fa-chevron-down ms-2" aria-hidden="true"></i>
+                        </a>
+                        <div class="collapse" id="collapseHRtoolbox">
+                            <ul class="nav nav-tabs flex-column" id="HRTab" role="tablist">
+                                <li><hr class="dropdown-divider"></li>
+                                <li class="nav-item" role="presentation">
+                                    <a href="@Url.Action("Manual")" class="nav-link">HR工具說明書</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a href="@Url.Action("Packages")" class="nav-link">HR材料包</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <hr class="dropdown-divider">
+                        <li class="nav-item" role="presentation">
+                            <a href="@Url.Action("List", new { id = "成功案例分享"})" class="nav-link @(Model.ExtendItem.Header.Category == "成功案例分享" ? "active" : "")">
+                                <i class="fa-solid fa-user-gear me-2" aria-hidden="true"></i>成功案例分享
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 右邊內容區塊 -->
+            <div class="col-lg-9 col-12">
+
+                <div class="tab-pane fade show active" id="HR-A" role="tabpanel" aria-labelledby="HR-A-tab">
+                    <div class="chargerContent">
+                        <h2 class="fc-green fw-bold mb-3">@Model.ExtendItem.Header.Title</h2>
+                        <img src="@Model.ExtendItem.FileInfo.FilePath" class="img-fluid" alt="">
+                        @Html.Raw(Model.ExtendItem.Header.Contents)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

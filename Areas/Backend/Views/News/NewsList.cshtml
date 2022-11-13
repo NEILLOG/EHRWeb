@@ -23,7 +23,7 @@
             }).then((r) => {
                 if (r.isConfirmed) {
 
-                    $.blockUI();
+                  //  $.blockUI();
 
                     //確定刪除
                     $.ajax({
@@ -35,7 +35,7 @@
                         },
                         data: { id: id },
                         success: function (result) {
-                            $.unblockUI();
+                           // $.unblockUI();
                             inform({
                                 plugin: result.alert_plugin,
                                 type: result.alert_type,
@@ -79,7 +79,7 @@
             }).then((r) => {
                 if (r.isConfirmed) {
 
-                    $.blockUI();
+                    //$.blockUI();
 
                     //確定變更狀態
                     $.ajax({
@@ -91,7 +91,7 @@
                         },
                         data: { id: id },
                         success: function (result) {
-                            $.unblockUI();
+                         //   $.unblockUI();
                             inform({
                                 plugin: result.alert_plugin,
                                 type: result.alert_type,
@@ -144,7 +144,7 @@
                     </div>
 
                     <div class="row g-3 align-items-end mb-3">
-                        <div class="col-12 col-md-auto">
+                        <div class="col-12 col-md-auto ms-auto">
                             <a class="btn btn-primary" href="@(Url.Action("NewsAdd", "News"))">新增</a>
                         </div>
                     </div>
@@ -189,7 +189,7 @@
                                         <td style="max-width:55vw;">@Status</td>
                                         <td>
                                             <a class="btn btn-primary" href="@(Url.Action("NewsEdit", "News", new { id =item.News.Id }))">編輯</a>
-                                            <button type="button" class="btn btn-primary" onclick="PublishChange('@(item.News.Id)')">@ButtonInfo</button>
+                                            <button type="button" class="btn btn-success" onclick="PublishChange('@(item.News.Id)')">@ButtonInfo</button>
                                             <button type="button" class="btn btn-danger" onclick="Delete('@(item.News.Id)')">刪除</button>
                                         </td>
                                     </tr>

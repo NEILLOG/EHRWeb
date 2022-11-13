@@ -243,7 +243,7 @@ input:checked + .slider:before {
                                         </td>
                                         <td>
                                             <a class="btn btn-primary" href="@(Url.Action("EventInfoEdit", "Event", new { id = EncryptService.AES.RandomizedEncrypt(item.activity.Id) }))">編輯</a>
-                                            <a class="btn btn-info" href="@(Url.Action("RegistrationList", "Event", new { id = EncryptService.AES.RandomizedEncrypt(item.activity.Id) }))">報名名單</a>
+                                            <a class="btn btn-info" href="@(Url.Action("EventInfoRegistrationList", "Event", new { id = EncryptService.AES.RandomizedEncrypt(item.activity.Id) }))">報名名單</a>
                                             @if (Model.GroupId == "G000000001")
                                             { // 分署承辦權限
                                                 <a class="btn btn-warning" href="@(Url.Action("EventInfoAudit", "Event", new { id = EncryptService.AES.RandomizedEncrypt(item.activity.Id) }))">審核</a>

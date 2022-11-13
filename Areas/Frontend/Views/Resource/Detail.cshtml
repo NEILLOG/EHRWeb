@@ -1,0 +1,126 @@
+﻿@using BASE.Service
+@model BASE.Areas.Frontend.Models.VM_Project
+
+@await Html.PartialAsync("_BannerPartial")
+
+
+@section Scripts {
+    <!-- Parsley -->
+    <script src="~/lib/Parsley/v2.9.2/dist/parsley.min.js" asp-append-version="true"></script>
+    <script src="~/lib/Parsley/v2.9.2/dist/i18n/zh_tw.js" asp-append-version="true"></script>
+    <script src="~/lib/Parsley/parsley-custom.js" asp-append-version="true"></script>
+}
+
+@section Css {
+    <link href="~/lib/Parsley/v2.9.2/dist/parsley.css" rel="stylesheet" />
+}
+
+<!-- ================================================== -->
+<!-- 企業資源專區 -->
+<!-- ================================================== -->
+<div class="section pb-md-4 py-lg-5">
+    <div class="container">
+        <div class="row">
+            <!-- 左邊按鈕區塊 -->
+            <div class="col-lg-3 col-12">
+                <div class="activityBtn bg-white p-3">
+                    <ul class="nav nav-tabs flex-column" id="resourceTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a href="@Url.Action("Map")" class="nav-link">
+                                <i class="fa-solid fa-map me-2" aria-hidden="true"></i>計畫資源地圖
+                            </a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li class="nav-item" role="presentation">
+                            <a href="@Url.Action("List", new { id = "企業訓練資源" })" class="nav-link @(Model.ExtendItem.Category == "企業訓練資源" ? "active" : "")">
+                                <i class="fa-solid fa-screwdriver-wrench me-2" aria-hidden="true"></i>企業訓練資源
+                            </a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li class="nav-item" role="presentation">
+                            <a href="@Url.Action("List", new { id = "就業服務資源" })" class="nav-link @(Model.ExtendItem.Category == "就業服務資源" ? "active" : "")">
+                                <i class="fa-solid fa-user-gear me-2" aria-hidden="true"></i>就業服務資源
+                            </a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li class="nav-item" role="presentation">
+                            <a href="@Url.Action("List", new { id = "紓困資源" })" class="nav-link @(Model.ExtendItem.Category == "紓困資源" ? "active" : "")">
+                                <i class="fa-solid fa-file-lines me-2" aria-hidden="true"></i>紓困資源
+                            </a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li class="nav-item" role="presentation">
+                            <a href="@Url.Action("List", new { id = "其他資源" })" class="nav-link @(Model.ExtendItem.Category == "其他資源" ? "active" : "")">
+                                <i class="fa-solid fa-magnifying-glass me-2" aria-hidden="true"></i>其他資源
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 右邊內容區塊 -->
+            <div class="col-lg-9 col-12">
+                    
+                <div class="resource_form bg-white p-3">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-lg-10 col-md-8 col-12">
+                            <label for="inputA" class="form-label">計畫</label>
+                            <input type="text" class="form-control" id="inputA" placeholder="@Model.ExtendItem.Name" disabled>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-12 mt-md-5 mt-2">
+                            <a href="@Model.ExtendItem.Link" target="_blank" class="btn btn-info w-100"><i class="fa-solid fa-arrow-up-right-from-square me-2" aria-hidden="true"></i>計畫連結</a>
+                        </div>
+                        <div class="col-12">
+                            <label for="exampleFormControlTextarea2" class="form-label">目的</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" placeholder="@Model.ExtendItem.Purpose" disabled></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label for="Textarea2" class="form-label">申請對象</label>
+                            <textarea class="form-control" id="Textarea2" rows="2" placeholder="@Model.ExtendItem.Target" disabled></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label for="exampleFormControlTextarea1" class="form-label">內容</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="@Model.ExtendItem.Contact" disabled></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputG" class="form-label">聯繫窗口</label>
+                            <input type="text" class="form-control" id="inputG" placeholder="@Model.ExtendItem.Contact" disabled>
+                        </div>
+                    </div>
+
+                    <form action="@Url.Action("Modify")" method="post" class="row g-3 mt-2 align-items-center" enctype="multipart/form-data" data-parsley-validate="">
+                        @Html.AntiForgeryToken()
+                        <div class="col-12">
+                            <div class="applicationBox bg-yellow p-3">
+                                <div class="fw-bold"><i class="fa-solid fa-triangle-exclamation me-2 fc-yellow" aria-hidden="true"></i>課程臨時變更申請</div>
+                                <div>
+                                    提醒：事業單位有不可歸責之因素，致課程取消或日期臨時變動，至遲於開課前一小時以傳真/e-mail/網頁上傳檔案通知變更。
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="fileBox bg-blue p-3 fc-blue">
+                                <div class="fw-bold"><i class="fa-solid fa-download me-2 fc-blue" aria-hidden="true"></i>課程臨時變更申請表.doc</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <label for="inputI" class="form-label sr-only">EMAIL</label>
+                            @Html.TextBoxFor(x => x.ModifyItem.Email, new { type="email", @class="form-control", placeholder="請輸入Email", required = "required" })
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <label for="formFile" class="form-label sr-only">上傳檔案</label>
+                            @Html.TextBoxFor(x => x.ModifyFile, new { @FileID = "FileId", @class="form-control File", @type = "file", accept = ".pnf,.jpg,.jpeg", data_parsley_file_type="png,jpg,jpeg", data_parsley_errors_container="#ActivityImage-errors-container" })
+                            <div id="ActivityImage-errors-container"></div>
+                        </div>
+                        <div class="col-md-2 col-12">
+                            @Html.HiddenFor(x => x.ModifyItem.ProjectId)
+                            <button class="btn btn-success w-100" type="submit">送出</button>
+                        </div>
+                    </form>
+
+                    </div>
+                </div>
+                    
+            </div>
+        </div>
+    </div>
+</div>

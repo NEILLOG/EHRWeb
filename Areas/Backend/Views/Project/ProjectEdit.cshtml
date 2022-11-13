@@ -1,0 +1,90 @@
+﻿@model BASE.Areas.Backend.Models.VM_Project
+@section CustomScripts{
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            document.getElementById("ddlContact").onchange = function () {
+                var val = this.value;
+
+                //確定變更狀態
+                $.ajax({
+                    type: "Post",
+                    url: "@(Url.Action("ProjectContactChange", "Project"))",
+                    dataType: "json",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
+                    },
+                    data: { id: val },
+                    success: function (result) {
+                        $('#ProjectExtendItem_Project_Contact').html(result);
+
+                    }
+                });
+
+            };
+        });
+
+    </script>
+}
+
+    <div class="card">
+        <div class="card-body">
+        @using (Html.BeginForm(FormMethod.Post, new { id = "frm", @autocomplete = "off", @enctype = "multipart/form-data", @data_parsley_validate = "" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.ProjectExtendItem.Project.Name, "計畫名稱：", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.ProjectExtendItem.Project.Name, new { @class="form-control", placeholder = "", data_parsley_required = "" })
+                </div>
+
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.ProjectExtendItem.Project.Category, "計畫所屬類別：", new { @class = "form-label" })
+                    @Html.DropDownListFor(x=>x.ProjectExtendItem.Project.Category,Model.ddlCategory,new{@class="form-control",id="ddlCategory", data_parsley_required = "", data_parsley_errors_container="#errors-container-1" })
+                </div>
+
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.ProjectExtendItem.Project.Link, "計畫連結：", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.ProjectExtendItem.Project.Link, new { @class="form-control", placeholder = "", data_parsley_required = "" })
+                </div>
+
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.ProjectExtendItem.Project.Purpose, "目的：", new { @class = "form-label" })
+                    @Html.TextAreaFor(x => x.ProjectExtendItem.Project.Purpose, new { @class = "form-control" })
+                </div>
+
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.ProjectExtendItem.Project.Target, "申請對象：", new { @class = "form-label" })
+                    @Html.TextAreaFor(x => x.ProjectExtendItem.Project.Target, new { @class = "form-control" })
+                </div>
+
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.ProjectExtendItem.Project.Contents, "內容：", new { @class = "form-label" })
+                    @Html.TextAreaFor(x => x.ProjectExtendItem.Project.Contents, new { @class = "form-control" })
+                </div>
+
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.ProjectExtendItem.Project.Contact, "聯繫窗口：", new { @class = "form-label" })
+                    @Html.DropDownList("ddlContact",Model.ddlContact,new{@class="form-control",id="ddlContact", data_parsley_required = "", data_parsley_errors_container="#errors-container-1" })
+                    @Html.TextAreaFor(x => x.ProjectExtendItem.Project.Contact, new { @class = "form-control" })
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">儲存</button>
+                    <a class="btn btn-light" href="@(Url.Action("ProjectList", "Project"))">取消</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

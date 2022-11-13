@@ -157,11 +157,18 @@
                     @Html.HiddenFor(x => x.EventInfoItem.activity.FileForOnline, new { @id ="FileForOnline" })
                     <div id="online-errors-container"></div>
                 </div>
+                <div class="col-12 form-group mb-3">
+                    @Html.LabelFor(x => x.EventInfoItem.activity.HandoutFile, "講義", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.HandoutFile, new { @FileID = "HandoutFile", @class="form-control File", @type = "file", data_parsley_errors_container="#handout-errors-container" })
+                    @Html.HiddenFor(x => x.EventInfoItem.activity.HandoutFile, new { @id ="HandoutFile" })
+                    <div id="handout-errors-container"></div>
+                </div>
 
                 <div class="form-group">
                     @if (Model.EventInfoItem.activity.IsValid)
                     {// 已經通過
-                        <button type="submit" class="btn btn-warning">退回待修改</button>
+                        @*<button type="submit" class="btn btn-warning">退回待修改</button>*@
+                        <button type="submit" class="btn btn-primary" disabled="disabled">已通過</button>
                     }else
                     {// 審核通過
                         <button type="submit" class="btn btn-primary">審核通過</button>

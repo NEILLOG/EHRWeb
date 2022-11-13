@@ -105,7 +105,7 @@
                     @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
 
                     <div class="row g-3 align-items-end mb-3">
-                        <div class="col-12 col-md-auto">
+                        <div class="col-12 col-md-auto ms-auto">
                             <a class="btn btn-primary" href="@(Url.Action("YouTubeVideoAdd", "YouTubeVideo"))">新增</a>
                         </div>
                     </div>
@@ -150,7 +150,7 @@
                                         <td style="max-width:55vw;">@Status</td>
                                         <td>
                                             <a class="btn btn-primary" href="@(Url.Action("YouTubeVideoEdit", "YouTubeVideo", new { id =item.YouTubeVideo.Id }))">編輯</a>
-                                            <button type="button" class="btn btn-primary" onclick="PublishChange('@(item.YouTubeVideo.Id)')">@ButtonInfo</button>
+                                            <button type="button" class="btn btn-success" onclick="PublishChange('@(item.YouTubeVideo.Id)')">@ButtonInfo</button>
                                             <button type="button" class="btn btn-danger" onclick="Delete('@(item.YouTubeVideo.Id)')">刪除</button>
                                         </td>
                                     </tr>

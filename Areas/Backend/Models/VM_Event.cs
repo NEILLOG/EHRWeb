@@ -1,12 +1,13 @@
 ﻿using BASE.Areas.Backend.Models.Base;
 using BASE.Areas.Backend.Models.Extend;
+using BASE.Models.DB;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BASE.Areas.Backend.Models
 {
     public class VM_Event
     {
-        /// <summary> 活動訊息 </summary>
+        /// <summary> 活動訊息extend </summary>
         public EventInfoExtend EventInfoItem { get; set; }
         
         /// <summary> 活動訊息列表 </summary>
@@ -14,6 +15,16 @@ namespace BASE.Areas.Backend.Models
 
         /// <summary>活動管理_查詢參數</summary>
         public VM_EventQueryParam Search { get; set; } = new VM_EventQueryParam();
+
+        /// <summary> 活動訊息主表 </summary>
+        public TbActivity ActivityItem { get; set; }
+
+        /// <summary> 活動報名名單 </summary>
+        public List<RegistrationExtend> RegistrationExtendList { get; set; }
+
+
+        /// <summary> 報名企業詳細資訊 </summary>
+        public RegistrationExtend RegistrationExtendItem { get; set; }
 
         /// <summary> 群組Id </summary>
         public string GroupId { get; set; }
@@ -27,6 +38,12 @@ namespace BASE.Areas.Backend.Models
 
         /// <summary> 活動參與模式 </summary>
         public List<SelectListItem> ddlEventType { get; set; }
+
+        /// <summary> 活動時段 </summary>
+        public List<SelectListItem> ddlSection { get; set; }
+
+        /// <summary> 審核狀態 </summary>
+        public List<SelectListItem> ddlVerify { get; set; }
 
         #endregion
 
@@ -65,6 +82,16 @@ namespace BASE.Areas.Backend.Models
         public string? sTime { get; set; }
         /// <summary> 時間區間訖 </summary>
         public string? eTime { get; set; }
+
+
+        /// <summary> 活動訊息主表ID </summary>
+        public string activityId { get; set; }
+
+        /// <summary> 活動時段 </summary>
+        public string sSection { get; set; }
+
+        /// <summary> 企業名稱 </summary>
+        public string sCompanyName { get; set; }
 
     }
 }
