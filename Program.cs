@@ -177,7 +177,7 @@ app.UseEndpoints(endpoints =>
     //預設路由
     endpoints.MapAreaControllerRoute(
         name: "default",
-        areaName: "Backend",
+        areaName: "Frontend",
         pattern: "{controller=Home}/{action=Index}/{id?}");
 
     //匹配所有Area路由
