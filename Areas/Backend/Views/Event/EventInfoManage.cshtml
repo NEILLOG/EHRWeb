@@ -175,7 +175,7 @@ input:checked + .slider:before {
                     @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
 
                     <div class="row g-3 align-items-end mb-3">
-                        <div class="col-12 col-md-auto ms-auto">
+                        <div class="col-12 col-md-auto">
                             <div class="input-group">
                                 @Html.LabelFor(x => x.Search.sCategory, "類型", new { @class="input-group-text" })
                                 @Html.DropDownListFor(x=>x.Search.sCategory,Model.ddlCategory,new{@class="form-control"})

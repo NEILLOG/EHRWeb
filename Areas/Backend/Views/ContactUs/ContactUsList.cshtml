@@ -1,0 +1,112 @@
+﻿@using BASE.Extensions
+@model BASE.Areas.Backend.Models.VM_ContactUs
+@section CustomScripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+
+        var exampleModal = document.getElementById('exampleModal')
+        exampleModal.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            var button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            var recipient = button.getAttribute('data-bs-whatever')
+
+            document.getElementById("txtResponse").value = recipient
+        })
+
+        // 匯出帳號列表
+        function Export() {
+            $('#frm').attr('action', '@(Url.Action("ContactUsExport", "ContactUs"))').attr('method', 'post');
+            $('#frm').submit();
+        }
+    </script>
+}
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                @using (Html.BeginForm(FormMethod.Get, new { id = "frm", @autocomplete = "off" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageIndex, new { @class="hiddenCurrentPage" })
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageCount, new { @class="hiddenPageCount" })
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
+
+                    <div class="row g-3 align-items-end mb-3">
+                        <div class="col-12 col-md-auto ms-auto">
+                            <button type="button" class="btn btn-success" onclick="Export()">匯出Excel</button>
+                        </div>
+                    </div>
+                }
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>序號</th>
+                                <th>姓名</th>
+                                <th>信箱</th>
+                                <th>建議內容</th>
+                                <th>留言時間</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.ContactUsList != null && Model.ContactUsList.Count > 0)
+                            {
+                                foreach (var item in Model.ContactUsList)
+                                {
+                                    <tr>
+                                        <td>@(Model.ContactUsList.IndexOf(item) + 1)</td>
+                                        <td>@Html.Raw(item.Name)</td>
+                                        <td>@Html.Raw(item.Email)</td>
+
+
+                                        @if (item.Response.Length <= 10)
+                                        { <td> @Html.Raw(item.Response)</td>}
+                                        else
+                                        {
+                                            <td>
+                                                @Html.Raw(item.Response.Substring(0,10))....
+                                                <span>   </span>
+                                                <button type = "button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@(item.Response)">更多</button>
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="col-12 form-group mb-3">
+                                                                @* <input type="text" class="form-control" disabled>*@
+                                                                    <textarea cols="60" rows="10" id="txtResponse" disabled></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        }
+                                        <td>@Html.Raw(item.CreateDate.ToString("yyyy-MM-dd"))</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="4">目前暫無資料</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (Model != null && Model.ContactUsList != null && Model.ContactUsList.Count > 0)
+                {
+                    @await Html.PartialAsync("_Pagination", Model.Search.PagerInfo)
+                }
+            </div>
+        </div>
+    </div>
+</div>

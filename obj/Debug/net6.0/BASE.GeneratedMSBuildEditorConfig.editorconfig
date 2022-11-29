@@ -5,6 +5,7 @@ build_property.UsingMicrosoftNETSdkWeb = true
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = BASE
 build_property.RootNamespace = BASE
@@ -49,6 +50,30 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Album/AlbumList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xBbGJ1bVxBbGJ1bUxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Consult/ConsultEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xDb25zdWx0XENvbnN1bHRFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Consult/ConsultIntro.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xDb25zdWx0XENvbnN1bHRJbnRyby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Consult/ConsultList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xDb25zdWx0XENvbnN1bHRMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Consult/ConsultManage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xDb25zdWx0XENvbnN1bHRNYW5hZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Consult/CounselingHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xDb25zdWx0XENvdW5zZWxpbmdIaXN0b3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/ContactUs/ContactUsList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xDb250YWN0VXNcQ29udGFjdFVzTGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Event/EventInfoAdd.cshtml]
@@ -103,6 +128,34 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xIb21lXExvZ2luLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/HrArticle/HrArticleAdd.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xIckFydGljbGVcSHJBcnRpY2xlQWRkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/HrArticle/HrArticleEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xIckFydGljbGVcSHJBcnRpY2xlRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/HrArticle/HrArticleList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xIckFydGljbGVcSHJBcnRpY2xlTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/HrPackage/HrManual.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xIclBhY2thZ2VcSHJNYW51YWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/HrPackage/HrPackageAdd.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xIclBhY2thZ2VcSHJQYWNrYWdlQWRkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/HrPackage/HrPackageEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xIclBhY2thZ2VcSHJQYWNrYWdlRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/HrPackage/HrPackageList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xIclBhY2thZ2VcSHJQYWNrYWdlTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/News/NewsAdd.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xOZXdzXE5ld3NBZGQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -133,6 +186,34 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Project/ProjectMap.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xQcm9qZWN0XFByb2plY3RNYXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Promote/PromoteManage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xQcm9tb3RlXFByb21vdGVNYW5hZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Promote/PromoteSendMail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xQcm9tb3RlXFByb21vdGVTZW5kTWFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Quiz/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xRdWl6XEFkZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Quiz/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xRdWl6XEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Quiz/List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xRdWl6XExpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Quiz/Preview.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xRdWl6XFByZXZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Quiz/_EditorPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xRdWl6XF9FZGl0b3JQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/RelationLink/RelationLinkAdd.cshtml]
@@ -211,8 +292,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcQWN0aXZpdHlcRGV0YWlsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Activity/HealthUpload.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcQWN0aXZpdHlcSGVhbHRoVXBsb2FkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Activity/List.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcQWN0aXZpdHlcTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Activity/Quiz.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcQWN0aXZpdHlcUXVpei5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Activity/QuizView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcQWN0aXZpdHlcUXVpelZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Activity/Register.cshtml]
@@ -229,6 +322,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Consult/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcQ29uc3VsdFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/ContactUs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcQ29udGFjdFVzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Home/Index.cshtml]
@@ -269,6 +366,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Resource/Map.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcUmVzb3VyY2VcTWFwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Resource/SurveyUpload.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcUmVzb3VyY2VcU3VydmV5VXBsb2FkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Shared/_BannerPartial.cshtml]

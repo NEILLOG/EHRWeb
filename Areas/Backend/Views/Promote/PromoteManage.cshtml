@@ -1,0 +1,146 @@
+﻿@using BASE.Extensions
+@model BASE.Areas.Backend.Models.VM_Promote
+@section CustomScripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+
+        // 清除查詢條件
+        function clearSearch() {
+            // 群組下拉改為請選擇
+            document.getElementById("Search_NumCompanies").selectedIndex = 0;
+            // 群組下拉改為請選擇
+            document.getElementById("Search_Plan").selectedIndex = 0;
+        }
+
+        const import_file = () => {
+            $('#import_file_selector').click();
+        }
+
+        $('#import_file_selector').on('change', function () {
+            Swal.fire({
+                title: '提示訊息',
+                text: '是否確定匯入？',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '確定',
+                cancelButtonText: '取消',
+            }).then((r) => {
+                if (r.isConfirmed) {
+                    console.log($(this)[0].files[0])
+                    var formData = new FormData();
+                    formData.append('file', $(this)[0].files[0]); // myFile is the input type="file" control
+
+                    $.blockUI();
+
+                    $.ajax({
+                        type: "Post",
+                        url: "@(Url.Action("PromoteImport", "Promote"))",
+                        data: formData,
+                        processData: false,  // tell jQuery not to process the data
+                        contentType: false,  // tell jQuery not to set contentType
+                        beforeSend: function (request) {
+                            request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
+                        },
+                        success: function (result) {
+                            $.unblockUI();
+                            inform({
+                                plugin: result.alert_plugin,
+                                type: result.alert_type,
+                                title: result.message,
+                                content: result.messageDetail,
+                                redirect_url: ""
+                            });
+                        }
+                    });
+                } else {
+                    //任何方式的取消
+                    Swal.fire('匯入', '取消成功', 'success');
+                    $('#import_file_selector').val('');
+                }
+            });
+        });
+
+    </script>
+}
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                @using (Html.BeginForm(FormMethod.Get, new { id = "frm", @autocomplete = "off" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageIndex, new { @class="hiddenCurrentPage" })
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageCount, new { @class="hiddenPageCount" })
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
+
+                    <div class="row g-3 align-items-end mb-3">
+                        <div class="col-12 col-md-auto">
+                            <div class="input-group">
+                                @Html.LabelFor(x => x.Search.NumCompanies, "企業人數", new { @class="input-group-text" })
+                                @Html.DropDownListFor(x=>x.Search.NumCompanies ,Model.ddlNumCompanies ,new{@class="form-control"})
+
+                                @Html.LabelFor(x => x.Search.Plan, "計畫", new { @class="input-group-text" })
+                                @Html.DropDownListFor(x=>x.Search.Plan ,Model.ddlPlan ,new{@class="form-control"})
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-auto">
+                            <button type="button" class="btn btn-danger float-end" onclick="clearSearch()">清除</button>
+                            <button type="submit" class="btn btn-primary float-end">查詢</button>
+                        </div>
+                    </div>
+                    <div class="row g-3 align-items-end mb-3">
+                        <div class="col-12 col-md-auto">
+                            <a class="btn btn-success" onclick="import_file();">匯入企業/計畫清單</a>
+                            @Html.TextBoxFor(x=>x.ImportFile, new { type="file", @class="d-none", id="import_file_selector", accept=".xlsx" })
+                        </div>
+                        <div class="col-12 col-md-auto ms-auto">
+                            <a class="btn btn-success" href="@(Url.Action("PromoteSendMail", "Promote",new{EmpoyeeAmount = Model.Search.NumCompanies,plan = Model.Search.Plan}))">寄信</a>
+                        </div>
+                    </div>
+                }
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>項次</th>
+                                <th>企業名稱</th>
+                                <th>信箱</th>
+                                <th>企業人數</th>
+                                <th>計畫</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.PromotionList != null && Model.PromotionList.Count > 0)
+                            {
+                                foreach (var item in Model.PromotionList)
+                                {
+                                    <tr>
+                                        <td>@(Model.PromotionList.IndexOf(item) + 1)</td>
+                                        <td style="max-width:30vw;">@item.CompanyName</td>
+                                        <td style="max-width:30vw;">@item.Email</td>
+                                        <td style="max-width:30vw;">@item.EmpoyeeAmount</td>
+                                        <td style="max-width:30vw;">@item.Project</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="5">目前暫無資料</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (Model != null && Model.PromotionList != null && Model.PromotionList.Count > 0)
+                {
+                    @await Html.PartialAsync("_Pagination", Model.Search.PagerInfo)
+                }
+            </div>
+        </div>
+    </div>
+</div>

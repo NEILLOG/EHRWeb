@@ -20,7 +20,8 @@
                     },
                     data: { id: val },
                     success: function (result) {
-                        $('#ProjectExtendItem_Project_Contact').html(result);
+                        var OldText = document.getElementById("ProjectExtendItem_Project_Contact").value;
+                        $('#ProjectExtendItem_Project_Contact').html(OldText + result);
 
                     }
                 });

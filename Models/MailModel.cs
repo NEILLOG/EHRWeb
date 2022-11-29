@@ -86,8 +86,15 @@ namespace BASE.Models
             return new { ToList, CCList, BccList };
         }
 
+        public String GetToList()
+        {
+            return String.Join(";", this.ToList.Select(x => x.Email));
+        }
 
-
+        public String GetCCList()
+        {
+            return String.Join(";", this.CCList.Select(x => x.Email));
+        }
     }
 
     /// <summary>

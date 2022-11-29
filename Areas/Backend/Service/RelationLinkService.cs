@@ -67,7 +67,7 @@ namespace BASE.Areas.Backend.Service
         /// <param name="ErrMsg"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IQueryable<RelationLinkExtend>? GetRelationLinkExtendItem(ref string ErrMsg, int id)
+        public IQueryable<RelationLinkExtend>? GetRelationLinkExtendItem(ref string ErrMsg, long id)
         {
             try
             {

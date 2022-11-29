@@ -1,0 +1,137 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@model BASE.Areas.Backend.Models.VM_Consult
+@{
+}
+@section CustomScripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        @*檔案上傳物件*@
+                $('.File').each(function () {
+                    $(this).FileInputCus({
+                        dropZoneEnabled: false
+                    });
+                });
+
+            $('#frm').on('submit', function () {
+
+            });
+        });
+
+    </script>
+}
+    <div class="card">
+        <div class="card-body">
+        @using (Html.BeginForm(FormMethod.Post, new { id = "frm", @autocomplete = "off", @enctype = "multipart/form-data", @data_parsley_validate = "" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.ConsultExtendItem.ConsultRegister.Location, "企業所在地", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.ConsultExtendItem.ConsultRegister.Location, new { @class="form-control", disabled="disabled"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.ConsultExtendItem.ConsultRegister.Name, "企業名稱", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.ConsultExtendItem.ConsultRegister.Name, new { @class="form-control", disabled="disabled"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.ConsultExtendItem.ConsultRegister.BusinessId, "企業統編", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.ConsultExtendItem.ConsultRegister.BusinessId, new { @class="form-control", disabled="disabled"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.ConsultExtendItem.ConsultRegister.Address, "企業登記地址", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.ConsultExtendItem.ConsultRegister.Address, new { @class="form-control", disabled="disabled"})
+            </div>
+            <div class="col-8 form-group mb-3">
+                @Html.LabelFor(x => x.ConsultExtendItem.textOfSubject, "諮詢主題", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.ConsultExtendItem.textOfSubject, new { @class="form-control", disabled="disabled"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.ConsultExtendItem.ConsultRegister.Description, "問題描述", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.ConsultExtendItem.ConsultRegister.Description, new { @class="form-control", disabled="disabled"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.ConsultExtendItem.ConsultRegister.ConsultTime, "預計可諮詢時間", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.ConsultExtendItem.ConsultRegister.ConsultTime, new { @class="form-control", disabled="disabled"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.ConsultExtendItem.ConsultRegister.ConsultAddress, "輔導地址", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.ConsultExtendItem.ConsultRegister.ConsultAddress, new { @class="form-control", disabled="disabled"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.ConsultExtendItem.ConsultRegister.ContactName, "姓名", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.ConsultExtendItem.ConsultRegister.ContactName, new { @class="form-control", disabled="disabled"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.ConsultExtendItem.ConsultRegister.ContactJobTitle, "職稱", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.ConsultExtendItem.ConsultRegister.ContactJobTitle, new { @class="form-control", disabled="disabled"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.ConsultExtendItem.ConsultRegister.ContactPhone, "連絡電話", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.ConsultExtendItem.ConsultRegister.ContactPhone, new { @class="form-control", disabled="disabled"})
+            </div>
+            <div class="col-6 form-group mb-3">
+                @Html.LabelFor(x => x.ConsultExtendItem.ConsultRegister.ContactEmail, "電子郵件", new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.ConsultExtendItem.ConsultRegister.ContactEmail, new { @class="form-control", disabled="disabled"})
+            </div>
+
+            <div class="col-12 form-group mb-3">
+                <span class="red">*</span>
+                @Html.LabelFor(x => x.ConsultExtendItem.ConsultRegister.AssignAdviser1, "指派顧問", new { @class = "form-label" })
+                <div class="row col-8">
+                    <div class="col">
+                        @Html.DropDownListFor(x=>x.ConsultExtendItem.ConsultRegister.AssignAdviser1,Model.ddlConsult,new{@class="form-control", data_parsley_required = "", data_parsley_errors_container="#errors-container-1"})
+                        <div id="errors-container-1"></div>
+                    </div>
+                    <div class="col">
+                        @Html.DropDownListFor(x=>x.ConsultExtendItem.ConsultRegister.AssignAdviser2,Model.ddlConsult,new{@class="form-control"})
+                    </div>
+                    <div class="col">
+                        @Html.DropDownListFor(x=>x.ConsultExtendItem.ConsultRegister.AssignAdviser3,Model.ddlConsult,new{@class="form-control"})
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-4 form-group mb-3">
+                <span class="red">*</span>
+                @Html.LabelFor(x => x.ConsultExtendItem.ConsultRegister.AssignAdviserAssistant, "指派輔導助理", new { @class = "form-label" })
+                @Html.DropDownListFor(x=>x.ConsultExtendItem.ConsultRegister.AssignAdviserAssistant,Model.ddlAssistant,new{@class="form-control", data_parsley_required = "", data_parsley_errors_container="#errors-container-4"})
+                <div id="errors-container-4"></div>
+            </div>
+
+            <div class="col-6 form-group mb-3">
+                <span class="red">*</span>
+                @Html.LabelFor(x => x.ConsultExtendItem.ConsultRegister.ReAssignDate, "協調後可輔導的日期", new { @class = "form-label" })
+                <div class="row col-6">
+                    <div class="col">
+                        @Html.TextBoxFor(x => x.ConsultExtendItem.ConsultRegister.ReAssignDate, "{0:yyyy-MM-dd}", new { @class="form-control",@type="date",placeholder = "年/月/日", data_parsley_required = ""})
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 form-group mb-3">
+                <span class="red">*</span>
+                @Html.LabelFor(x => x.ConsultExtendItem.ConsultRegister.ReAssignTime, "協調後可輔導的時段", new { @class = "form-label" })
+                <div class="row col-6">
+                    <div class="col">
+                        @Html.TextBoxFor(x => x.ConsultExtendItem.ConsultRegister.ReAssignTime, new { @class="form-control",@type="time", data_parsley_required = ""})
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-2 form-group mb-3">
+                <span class="red">*</span>
+                @Html.LabelFor(x => x.ConsultExtendItem.sApprove, "審核", new { @class = "form-label" })
+                @Html.DropDownListFor(x=>x.ConsultExtendItem.sApprove,Model.ddlAudit,new{@class="form-control", data_parsley_required = "", data_parsley_errors_container="#errors-container-5"})
+                <div id="errors-container-5"></div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">儲存</button>
+                <a class="btn btn-light" href="@(Url.Action("ConsultList", "Consult"))">回上一頁</a>
+            </div>
+        }
+    </div>
+</div>

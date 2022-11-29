@@ -21,6 +21,12 @@ namespace BASE.Areas.Backend.Models
         /// <summary> 編輯頁面使用的AUA8 </summary>
         public string editAua8 { get; set; }
 
+        #region 檔案
+        /// <summary>檔案上傳</summary>
+        public IFormFile ImportFile { get; set; }
+
+        #endregion
+
         #region 下拉選單
         /// <summary> 群組 </summary>
         public List<SelectListItem> ddlGroup { get; set; }

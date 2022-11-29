@@ -21,6 +21,8 @@ namespace BASE.Areas.Backend.Models
         public List<SelectListItem> ddlApprove = new List<SelectListItem>() { new SelectListItem() { Text = "請選擇", Value = "" },
                                                                                new SelectListItem() { Text = "同意", Value = "同意" },
                                                                                new SelectListItem() { Text = "不同意", Value = "不同意" } };
+
+        public IFormFile? ProjectModifyFile { get; set; }
     }
 
     /// <summary>FAQ_查詢參數</summary>

@@ -47,17 +47,16 @@ namespace BASE.Areas.Frontend.Service
                     {
                         dataList = dataList.Where(x => x.Header.Title.Contains(vmParam.Keyword) || x.Header.Contents.Contains(vmParam.Keyword));
                     }
+
+                    if (!String.IsNullOrEmpty(vmParam.Category))
+                        switch (vmParam.Category)
+                        {
+                            case "計畫消息":
+                            case "其他消息":
+                                dataList = dataList.Where(x => x.Header.Category == vmParam.Category);
+                                break;
+                        }
                 }
-
-                if (!String.IsNullOrEmpty(vmParam.Category))
-                    switch (vmParam.Category)
-                    {
-                        case "計畫消息":
-                        case "其他消息":
-                            dataList = dataList.Where(x => x.Header.Category == vmParam.Category);
-                            break;
-                    }
-
                 return dataList;
             }
             catch (Exception ex)

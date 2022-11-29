@@ -45,6 +45,7 @@ namespace BASE.Models.DB
         public virtual DbSet<TbLog> TbLog { get; set; } = null!;
         public virtual DbSet<TbLoginRecord> TbLoginRecord { get; set; } = null!;
         public virtual DbSet<TbMailLog> TbMailLog { get; set; } = null!;
+        public virtual DbSet<TbMailQueue> TbMailQueue { get; set; } = null!;
         public virtual DbSet<TbMenuBack> TbMenuBack { get; set; } = null!;
         public virtual DbSet<TbMenuFront> TbMenuFront { get; set; } = null!;
         public virtual DbSet<TbNews> TbNews { get; set; } = null!;
@@ -59,6 +60,7 @@ namespace BASE.Models.DB
         public virtual DbSet<TbRelationLink> TbRelationLink { get; set; } = null!;
         public virtual DbSet<TbScheduleLog> TbScheduleLog { get; set; } = null!;
         public virtual DbSet<TbScheduleLogDetail> TbScheduleLogDetail { get; set; } = null!;
+        public virtual DbSet<TbSubScript> TbSubScript { get; set; } = null!;
         public virtual DbSet<TbSystemSetting> TbSystemSetting { get; set; } = null!;
         public virtual DbSet<TbUserInGroup> TbUserInGroup { get; set; } = null!;
         public virtual DbSet<TbUserInfo> TbUserInfo { get; set; } = null!;
@@ -259,6 +261,10 @@ namespace BASE.Models.DB
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
+                entity.Property(e => e.QuizDescription)
+                    .HasMaxLength(200)
+                    .HasComment("原始問項(落地資料)，避免後來異動後無法察看結果；其餘ID欄位僅用於紀錄，不拿來用於查詢");
+
                 entity.Property(e => e.QuizId)
                     .HasMaxLength(10)
                     .IsUnicode(false)
@@ -322,9 +328,17 @@ namespace BASE.Models.DB
                     .HasMaxLength(500)
                     .HasComment("電子郵件");
 
+                entity.Property(e => e.FileIdHealth)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("FileID_Health")
+                    .HasComment("健康聲明回傳檔案");
+
                 entity.Property(e => e.InfoFrom)
                     .HasMaxLength(200)
                     .HasComment("訊息來源");
+
+                entity.Property(e => e.IsBackup).HasComment("是否為備取(寄信判斷用)");
 
                 entity.Property(e => e.IsValid).HasComment("是否審核通過(null預設；true通過；false不通過)");
 
@@ -616,6 +630,8 @@ namespace BASE.Models.DB
                 entity.HasKey(e => e.Pid)
                     .HasName("PK_TbOperateLog");
 
+                entity.HasIndex(e => e.UserId, "IX_TbBackendOperateLog_UserID");
+
                 entity.Property(e => e.Pid).HasColumnName("PID");
 
                 entity.Property(e => e.Action).HasMaxLength(20);
@@ -810,6 +826,13 @@ namespace BASE.Models.DB
                     .HasMaxLength(50)
                     .HasComment("聯繫人姓名");
 
+                entity.Property(e => e.ContactPhone).HasMaxLength(50);
+
+                entity.Property(e => e.CounselingLogFile)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasComment("輔導紀錄檔案");
+
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Description).HasComment("問題陳述");
@@ -835,15 +858,28 @@ namespace BASE.Models.DB
                     .HasComment("協調後可輔導的日期");
 
                 entity.Property(e => e.ReAssignTime).HasComment("協調後可輔導的時段");
+
+                entity.Property(e => e.RequireSurveyFile)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasComment("企業需求調查表回傳檔案");
+
+                entity.Property(e => e.SatisfySurveyFile)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasComment("滿意度調查檔案");
+
+                entity.Property(e => e.SigninFormFile)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasComment("已填寫簽到表");
             });
 
             modelBuilder.Entity<TbContactUs>(entity =>
             {
                 entity.HasComment("聯絡我們");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
@@ -1043,6 +1079,8 @@ namespace BASE.Models.DB
                     .HasName("PK_TB_GroupRight");
 
                 entity.HasComment("群組權限");
+
+                entity.HasIndex(e => e.MenuId, "IX_TbGroupRight_MenuID");
 
                 entity.Property(e => e.GroupId)
                     .HasMaxLength(10)
@@ -1325,6 +1363,74 @@ namespace BASE.Models.DB
                 entity.Property(e => e.Sender).HasMaxLength(100);
 
                 entity.Property(e => e.Title).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<TbMailQueue>(entity =>
+            {
+                entity.HasComment("信件");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .HasComment("主鍵");
+
+                entity.Property(e => e.Contents).HasComment("信件內容，可包含HTML");
+
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CreateUser)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FileId1)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("FileID_1")
+                    .HasComment("附件檔案");
+
+                entity.Property(e => e.FileId2)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("FileID_2")
+                    .HasComment("附件檔案");
+
+                entity.Property(e => e.FileId3)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("FileID_3")
+                    .HasComment("附件檔案");
+
+                entity.Property(e => e.IsSend).HasComment("是否已發送");
+
+                entity.Property(e => e.MailFrom)
+                    .HasMaxLength(500)
+                    .HasComment("寄件者");
+
+                entity.Property(e => e.MailTo)
+                    .HasMaxLength(500)
+                    .HasComment("收件者，限定一位");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifyUser)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PlanSendDate)
+                    .HasColumnType("datetime")
+                    .HasComment("預計發送日期；若無排定日期，則盡快發送");
+
+                entity.Property(e => e.RelationId)
+                    .HasMaxLength(100)
+                    .HasColumnName("RelationID")
+                    .HasComment("關聯資料主鍵；用於當例如取消活動時，要一併刪除使用");
+
+                entity.Property(e => e.SendDate)
+                    .HasColumnType("datetime")
+                    .HasComment("實際發送日期");
+
+                entity.Property(e => e.Subject)
+                    .HasMaxLength(300)
+                    .HasComment("信件主旨");
             });
 
             modelBuilder.Entity<TbMenuBack>(entity =>
@@ -1637,6 +1743,19 @@ namespace BASE.Models.DB
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
+                entity.Property(e => e.Applicant)
+                    .HasMaxLength(20)
+                    .HasComment("申請人");
+
+                entity.Property(e => e.BusinessId)
+                    .HasMaxLength(20)
+                    .HasColumnName("BusinessID")
+                    .HasComment("統一編號");
+
+                entity.Property(e => e.CompanyLocation)
+                    .HasMaxLength(20)
+                    .HasComment("企業所在地");
+
                 entity.Property(e => e.CompanyName)
                     .HasMaxLength(200)
                     .HasComment("公司名稱");
@@ -1648,7 +1767,7 @@ namespace BASE.Models.DB
                 entity.Property(e => e.EmpoyeeAmount).HasComment("企業人數");
 
                 entity.Property(e => e.Project)
-                    .HasMaxLength(50)
+                    .HasMaxLength(100)
                     .HasComment("計畫");
             });
 
@@ -1691,7 +1810,19 @@ namespace BASE.Models.DB
                     .HasColumnName("ID")
                     .HasComment("主鍵");
 
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CreateUser)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Description).HasComment("問卷描述");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifyUser)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)
@@ -1703,8 +1834,8 @@ namespace BASE.Models.DB
                 entity.HasComment("問卷選項");
 
                 entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .HasComment("流水號主鍵");
+                    .ValueGeneratedNever()
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.FillDirection)
                     .HasMaxLength(200)
@@ -1716,7 +1847,12 @@ namespace BASE.Models.DB
 
                 entity.Property(e => e.QuizDescription)
                     .HasMaxLength(200)
-                    .HasComment("標題, 問題描述");
+                    .HasComment("若類型為標題，則用來儲存標題列文字；若類型為其他，則儲存問題描述");
+
+                entity.Property(e => e.QuizId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("QuizID");
 
                 entity.Property(e => e.Type).HasComment("題目類型: 1:標題 2:簡答題 3:單選 4:複選");
             });
@@ -1815,6 +1951,19 @@ namespace BASE.Models.DB
                     .HasComment("詳細資訊");
             });
 
+            modelBuilder.Entity<TbSubScript>(entity =>
+            {
+                entity.HasComment("訂閱服務");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .HasComment("流水號主鍵");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(500)
+                    .HasComment("訂閱信箱；若重複訂閱，則自動覆蓋成最後一次選的訂閱項目");
+            });
+
             modelBuilder.Entity<TbSystemSetting>(entity =>
             {
                 entity.HasKey(e => e.Pid)
@@ -1837,6 +1986,8 @@ namespace BASE.Models.DB
                     .HasName("PK_UserInGroup");
 
                 entity.HasComment("後台帳號所屬群組");
+
+                entity.HasIndex(e => e.GroupId, "IX_TbUserInGroup_GroupID");
 
                 entity.Property(e => e.UserId)
                     .HasMaxLength(10)
@@ -2034,6 +2185,8 @@ namespace BASE.Models.DB
                     .HasName("PK_TB_UserRight");
 
                 entity.HasComment("使用者權限(後台帳號)");
+
+                entity.HasIndex(e => e.MenuId, "IX_TbUserRight_MenuID");
 
                 entity.Property(e => e.UserId)
                     .HasMaxLength(10)

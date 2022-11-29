@@ -29,7 +29,14 @@ namespace BASE.Areas.Backend.Service
                                                       where Project.IsDelete == false
                                                       select new ProjectExtend
                                                       {
-                                                          Project = Project
+                                                          Project = Project,
+                                                          ReID= Project.Name == "企業人力資源提升計畫" ? "PJ00000006" :
+                                                                Project.Name == "充電起飛計畫" ? "PJ00000005" :
+                                                                Project.Name == "小型企業人力提升計畫" ? "PJ00000004" :
+                                                                Project.Name == "在職中高齡者及高齡者穩定就業訓練補助實施計畫" ? "PJ00000003" :
+                                                                Project.Name == "中高齡者退休後再就業準備訓練補助實施計畫" ? "PJ00000002" :
+                                                                Project.Name == "充電再出發訓練計畫" ? "PJ00000001" :
+                                                                Project.Id
                                                       });
                 return dataList;
             }
@@ -77,7 +84,9 @@ namespace BASE.Areas.Backend.Service
             List<TbUserInfo> listUser = (from User in _context.TbUserInfo
                                          join UserGroup in _context.TbUserInGroup on User.UserId equals UserGroup.UserId
                                          join Group in _context.TbGroupInfo on UserGroup.GroupId equals Group.GroupId
-                                         where Group.GroupName == "彙管承辦"
+                                         where Group.GroupName == "彙管承辦" &&
+                                               User.IsDelete == false &&
+                                               Group.IsDelete == false
                                          select User).ToList();
             Data.Add(new SelectListItem() { Text = "請選擇", Value = "" });
 
@@ -101,13 +110,35 @@ namespace BASE.Areas.Backend.Service
             try
             {
                 IQueryable<OnePageExtend>? dataList = (from OnePage in _context.TbOnePage
-                                                       where  OnePage.Id == id
+                                                       where OnePage.Id == id
                                                        select new OnePageExtend
                                                        {
                                                            OnePage = OnePage
                                                        });
 
                 return dataList;
+            }
+            catch (Exception ex)
+            {
+                ErrMsg = ex.ToString();
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Project列表
+        /// </summary>
+        /// <param name="ErrMsg"></param>
+        /// <returns></returns>
+        public int? GetProjectMAXSort(ref String ErrMsg)
+        {
+            try
+            {
+                var dataList = (from Project in _context.TbProject
+                                where Project.IsDelete == false
+                                select Project.Sort);
+
+                return dataList.Max();
             }
             catch (Exception ex)
             {
@@ -127,8 +158,8 @@ namespace BASE.Areas.Backend.Service
             try
             {
                 string strId = (from OnePage in _context.TbOnePage
-                                   where OnePage.Description == Description
-                                   select OnePage.Id).FirstOrDefault().ToString();
+                                where OnePage.Description == Description
+                                select OnePage.Id).FirstOrDefault().ToString();
 
                 return strId;
             }

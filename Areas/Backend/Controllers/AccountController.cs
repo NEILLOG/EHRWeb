@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging.Abstractions;
+using NPOI.SS.UserModel;
 
 namespace BASE.Areas.Backend.Controllers
 {
@@ -19,16 +20,22 @@ namespace BASE.Areas.Backend.Controllers
         private readonly AccountService _accountService;
         private readonly AllCommonService _allCommonService;
         private readonly CommonService _commonService;
+        private readonly ExportService _exportService;
+        private readonly ImportService _importService;
         private readonly IConfiguration _config;
 
         public AccountController(AccountService accountService,
             AllCommonService allCommonService,
             CommonService commonService,
+            ExportService exportService,
+            ImportService importService,
             IConfiguration configuration)
         {
             _allCommonService = allCommonService;
             _commonService = commonService;
             _accountService = accountService;
+            _exportService = exportService;
+            _importService = importService;
             _config = configuration;
         }
 
@@ -150,7 +157,6 @@ namespace BASE.Areas.Backend.Controllers
                     item.UserName = datapost.AccountExtendItem.account.UserName;
                     item.Phone = datapost.AccountExtendItem.account.Phone;
                     item.Email = datapost.AccountExtendItem.account.Email;
-                    item.IsActive = datapost.AccountExtendItem.account.IsActive;
                     item.IsActive = datapost.AccountExtendItem.account.IsActive;
                     item.IsDelete = false;
                     item.CellPhone = datapost.AccountExtendItem.account.CellPhone;
@@ -737,6 +743,83 @@ namespace BASE.Areas.Backend.Controllers
             return Json(result);
         }
 
+        /// <summary>
+        /// 匯出帳號列表
+        /// </summary>
+        /// <returns></returns>
+        [BackendCheckLogin("Menu000003", "DOWNLOAD")]
+        [ValidateAntiForgeryToken]
+        [RequestFormLimits(ValueCountLimit = int.MaxValue)] // post form data 大小限制 
+        [HttpPost]
+        public async Task<IActionResult> AccountExport(VM_Account data)
+        {
+            UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
+            string Feature = "帳號管理", Action = "匯出";
+
+            // 最終動作成功與否
+            bool isSuccess = false;
+
+            // 例外錯誤發生，特別記錄至 TbLog
+            bool unCaughtError = false;
+
+            ActionResultModel<MemoryStream> result = new ActionResultModel<MemoryStream>();
+            string FileName = "帳號列表_" + DateTime.Today.ToString("yyyyMMdd");
+            
+            try
+            {
+                IQueryable<AccountExtend>? dataList = _accountService.GetAccountExtendList(ref _message, data.Search);
+                
+                if (dataList != null)
+                    result = _exportService.AccountExcel(dataList);
+
+                if (!result.IsSuccess)
+                {
+                    TempData["TempMsgDetail"] = "發生技術性錯誤，請聯絡技術人員或稍後再試一次";
+                    _message += result.Message;
+                    unCaughtError = true;
+                }
+
+                isSuccess = result.IsSuccess;
+            }
+            catch (Exception ex)
+            {
+                TempData["TempMsgType"] = MsgTypeEnum.error;
+                TempData["TempMsg"] = "伺服器連線異常，請檢查您的網路狀態後再試一次！";
+
+                _message += ex.ToString();
+                unCaughtError = true;
+            }
+            if (isSuccess)
+            {
+                TempData["TempMsgType"] = MsgTypeEnum.success;
+                TempData["TempMsg"] = "匯出成功";
+
+            }
+            else
+            {
+                TempData["TempMsgType"] = MsgTypeEnum.error;
+                TempData["TempMsg"] = TempData["TempMsg"] ?? "匯出失敗";
+
+                if (unCaughtError)
+                {
+                    await _allCommonService.Error_Record("Backend", Feature + "-" + Action, _message);
+                }
+            }
+
+            //操作紀錄
+            string response = (TempData["TempMsg"] == null ? "" : TempData["TempMsg"].ToString()) + "\r\n" + (TempData["TempMsgDetail"] == null ? "" : TempData["TempMsgDetail"].ToString());
+            await _commonService.OperateLog(userinfo.UserID, Feature, Action, null, null, _message, response, isSuccess);
+
+            if (isSuccess)
+            {
+                return File(result.Data.ToArray(), "application/vnd.ms-excel", FileName + ".xlsx");
+            }
+            else
+            {
+                return RedirectToAction("AccountList");
+            }
+        }
+
         #endregion
 
         #region 個人資料管理
@@ -1049,6 +1132,270 @@ namespace BASE.Areas.Backend.Controllers
 
             return View(data);
         }
+        #endregion
+
+        #region 匯入顧問
+
+        /// <summary>
+        /// 匯入顧問資料
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        [BackendCheckLogin("Menu000003", "DOWNLOAD")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConsultantImport(IFormFile file)
+        {
+            JsonResponse<string> result = new JsonResponse<string>();
+            UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
+            string Feature = "帳號管理", Action = "資料匯入";
+
+            DateTime dtnow = DateTime.Now;
+
+            // 最終動作成功與否
+            bool isSuccess = false;
+
+            // 例外錯誤發生，特別記錄至 TbLog
+            bool unCaughtError = false;
+
+            try
+            {
+                bool hasError = false;
+
+                /* 欄位數 */
+                int column_num = 16;
+
+                // 取得 附檔名
+                string extension = Path.GetExtension(file.FileName);
+                // 取得 Workbook 實例
+                var wb = _importService.ReadExcel(extension, file);
+
+                if (wb.IsSuccess == false || wb.Data == null)
+                {
+                    result.MessageDetail = "檔案讀取失敗";
+                    _message += wb.Message;
+                    hasError = true;
+                }
+                else
+                {
+                    List<TbUserInfo> insert_UserInfo = new List<TbUserInfo>();
+                    List<TbUserInGroup> insert_UserInGroup = new List<TbUserInGroup>();
+                    List<TbUserRight> insert_UserRight = new List<TbUserRight>();
+                    // 若帳號已存在則須更新
+                    List<TbUserInfo> update_UserInfo = new List<TbUserInfo>();
+
+                    for (int i = 0; i < wb.Data.NumberOfSheets; i++)
+                    {
+                        // 取得 sheet
+                        var sheet = wb.Data.GetSheetAt(i);
+
+                        // sheet 名稱
+                        string sheetName = sheet.SheetName;
+
+                        VM_AccountQueryParam vmAccountQueryParam = new VM_AccountQueryParam();
+                        vmAccountQueryParam.sGroup = "G000000004";
+                        // 取得目前顧問群組下的所有帳號
+                        IQueryable<AccountExtend>? dataList = _accountService.GetAccountExtendList(ref _message, vmAccountQueryParam);
+                        List<AccountExtend> existList = dataList.ToList();
+
+                        // 取得群組權限
+                        List<TbGroupRight> listGroup = new List<TbGroupRight>();
+                        listGroup = _accountService.Lookup<TbGroupRight>(ref _message, x => x.GroupId == "G000000004").ToList();
+
+                        // 取得專業領域選項
+                        List<TbBasicColumn> skillColumns = _accountService.Lookup<TbBasicColumn>(ref _message, x => x.BacolCode == "professionalField").ToList();
+
+                        for (int row = 1; row <= sheet.PhysicalNumberOfRows; row++)
+                        {
+                            // 驗證不是空白列
+                            IRow sheetRow = sheet.GetRow(row);
+
+                            /* row 的欄位數對才處理 */
+                            if (sheetRow != null)
+                            {
+                                if (sheetRow.PhysicalNumberOfCells == column_num)
+                                {
+                                    string account = sheetRow.GetCell(0).ToString();
+                                    string aua8 = sheetRow.GetCell(1).ToString();
+                                    string name = sheetRow.GetCell(2).ToString();
+                                    string phone = sheetRow.GetCell(3).ToString();
+                                    string email = sheetRow.GetCell(4).ToString();
+                                    string cellphone = sheetRow.GetCell(5).ToString();
+                                    string sex = sheetRow.GetCell(6).ToString();
+                                    string IDNumber = sheetRow.GetCell(7).ToString();
+                                    string Industry = sheetRow.GetCell(8).ToString();
+                                    string ServiceUnit = sheetRow.GetCell(9).ToString();
+                                    string ContactAddr = sheetRow.GetCell(10).ToString();
+                                    string PermanentAddr = sheetRow.GetCell(11).ToString();
+                                    string Education = sheetRow.GetCell(12).ToString();
+                                    string Expertise = sheetRow.GetCell(13).ToString();
+                                    string JobTitle = sheetRow.GetCell(14).ToString();
+                                    string Skill = sheetRow.GetCell(15).ToString();
+
+                                    /* 檢查必填項 */
+                                    if (StringExtensions.CheckIsNullOrEmpty(account, name, aua8, email, phone, cellphone, sex, Skill))
+                                    {
+                                        result.MessageDetail += $"第 {i + 1} 活頁簿，第 {row + 1} 列帳號、信箱、姓名、電話、手機、密碼、性別與專業領域須必填，已略過\n";
+                                        hasError = true;
+                                    }
+                                    else
+                                    {
+                                        string skillCode = "";
+                                        // 處理專業領域文字轉代碼
+                                        if (!string.IsNullOrEmpty(Skill))
+                                        {
+                                            List<string> listSkillText = new List<string>();
+                                            listSkillText = Skill.Split(',').ToList();
+                                            List<string> listSkillCode = new List<string>();
+                                            listSkillCode = skillColumns.Where(x => listSkillText.Contains(x.Title)).Select(x => x.BacolId).ToList();
+
+                                            foreach (var itemSkill in listSkillCode)
+                                            {
+                                                skillCode = string.IsNullOrEmpty(skillCode) ? skillCode + itemSkill : skillCode + "," + itemSkill;
+                                            }
+                                        }
+
+                                        AccountExtend existItem = existList.Where(x => x.account.Account == account).FirstOrDefault();
+                                        if (existItem != null && existItem.account != null)
+                                        {// 需要更新的顧問資料
+                                            existItem.account.Aua8 = EncryptService.AES.Base64Encrypt(aua8);
+                                            existItem.account.UserName = name;
+                                            existItem.account.Phone = phone;
+                                            existItem.account.Email = email;
+                                            existItem.account.CellPhone = cellphone;
+                                            existItem.account.Sex = sex == "男" ? "M" : "F";
+                                            existItem.account.IdNumber = IDNumber;
+                                            existItem.account.Industry = Industry;
+                                            existItem.account.ServiceUnit = ServiceUnit;
+                                            existItem.account.ContactAddr = ContactAddr;
+                                            existItem.account.PermanentAddr = PermanentAddr;
+                                            existItem.account.Education = Education;
+                                            existItem.account.Expertise = Expertise;
+                                            existItem.account.JobTitle = JobTitle;
+                                            existItem.account.Skill = skillCode;
+                                            existItem.account.ModifyDate = dtnow;
+                                            existItem.account.ModifyUser = userinfo.UserID;
+
+                                            update_UserInfo.Add(existItem.account);
+                                        }
+                                        else {
+                                            TbUserInfo newUser = new TbUserInfo();
+                                            newUser.UserId = await _allCommonService.IDGenerator<TbUserInfo>();
+                                            newUser.Account = account;
+                                            newUser.Aua8 = EncryptService.AES.Base64Encrypt(aua8);
+                                            newUser.UserName = name;
+                                            newUser.Phone = phone;
+                                            newUser.Email = email;
+                                            newUser.IsActive = true;
+                                            newUser.IsDelete = false;
+                                            newUser.CellPhone = cellphone;
+                                            newUser.Sex = sex == "男" ? "M" : "F";
+                                            newUser.JobTitle = JobTitle;
+                                            newUser.IdNumber = IDNumber;
+                                            newUser.Industry = Industry;
+                                            newUser.ServiceUnit = ServiceUnit;
+                                            newUser.ContactAddr = ContactAddr;
+                                            newUser.PermanentAddr = PermanentAddr;
+                                            newUser.Education = Education;
+                                            newUser.Expertise = Expertise;
+                                            newUser.Skill = skillCode;
+                                            newUser.CreateDate = dtnow;
+                                            newUser.CreateUser = userinfo.UserID;
+                                            insert_UserInfo.Add(newUser);
+
+
+                                            // 新增對應的USER群組
+                                            TbUserInGroup newUserInGroup = new TbUserInGroup();
+                                            newUserInGroup.UserId = newUser.UserId;
+                                            newUserInGroup.GroupId = "G000000004";
+                                            insert_UserInGroup.Add(newUserInGroup);
+
+                                            // 新增對應的USER 權限
+                                            foreach (var itemGroupRight in listGroup)
+                                            {
+                                                TbUserRight newUserRight = new TbUserRight();
+                                                newUserRight.UserId = newUser.UserId;
+                                                newUserRight.MenuId = itemGroupRight.MenuId;
+                                                newUserRight.Enabled = itemGroupRight.Enabled;
+                                                newUserRight.AddEnabled = itemGroupRight.AddEnabled;
+                                                newUserRight.UploadEnabled = itemGroupRight.UploadEnabled;
+                                                newUserRight.ModifyEnabled = itemGroupRight.ModifyEnabled;
+                                                newUserRight.DownloadEnabled = itemGroupRight.DownloadEnabled;
+                                                newUserRight.DeleteEnabled = itemGroupRight.DeleteEnabled;
+                                                newUserRight.ViewEnabled = itemGroupRight.ViewEnabled;
+
+                                                insert_UserRight.Add(newUserRight);
+                                            }
+
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    result.MessageDetail += $"第 {i + 1} 活頁簿，第 {row + 1} 列欄位數目不正確，已略過\n";
+                                    hasError = true;
+                                }
+                            }
+                        }
+                    }
+
+                    if (!hasError)
+                    {
+                        using (var transaction = _accountService.GetTransaction())
+                        {
+                            try
+                            {
+                                /* 更新此次處理結果 */
+                                await _accountService.UpdateRange(update_UserInfo, transaction);
+
+                                /* 新增此次處理結果 */
+                                await _accountService.InsertRange(insert_UserInfo, transaction);
+                                await _accountService.InsertRange(insert_UserInGroup, transaction);
+                                await _accountService.InsertRange(insert_UserRight, transaction);
+                                transaction.Commit();
+                                isSuccess = true;
+                            }
+                            catch (Exception ex)
+                            {
+                                _message += ex.ToString();
+                                TempData["TempMsgDetail"] = "發生技術性錯誤，請聯絡技術人員或稍後再試一次";
+                                unCaughtError = true;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = "伺服器連線異常，請檢查您的網路狀態後再試一次！";
+
+                _message += ex.ToString();
+                unCaughtError = true;
+            }
+
+            if (isSuccess)
+            {
+                result.alert_type = "success";
+                result.Message = "匯入成功";
+            }
+            else
+            {
+                result.alert_type = "error";
+                result.Message = result.Message ?? "匯入失敗";
+
+                if (unCaughtError)
+                {
+                    await _allCommonService.Error_Record("Backend", Feature + "-" + Action, _message);
+                }
+            }
+
+            string response = result.Message + "\r\n" + result.MessageDetail;
+
+            await _commonService.OperateLog(userinfo.UserID, Feature, Action, null, null, _message, response, isSuccess);
+
+            return Json(result);
+        }
+
         #endregion
     }
 }

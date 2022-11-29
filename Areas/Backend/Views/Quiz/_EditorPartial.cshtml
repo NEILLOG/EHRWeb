@@ -1,0 +1,166 @@
+﻿<script type="text/x-jquery-tmpl" id="tmpl-row">
+    <tr>
+        <td>${TypeString}</td>
+        <td>${QuizDescription}</td>
+        <td>
+            <input type="hidden" name="ExtendItem.Lines[].ID" class="hidId" value="${ID}">
+            <input type="hidden" name="ExtendItem.Lines[].Type" class="hidType" value="${Type}">
+            <input type="hidden" name="ExtendItem.Lines[].QuizDescription" class="hidQuizDescription" value="${QuizDescription}">
+            <input type="hidden" name="ExtendItem.Lines[].FillDirection" class="hidFillDirection" value="${FillDirection}">
+            <input type="hidden" name="ExtendItem.Lines[].Options" class="hidOptions" value="${Options}">
+            <input type="hidden" name="ExtendItem.Lines[].IsRequired" class="hidIsRequired" value="${IsRequired}">
+            <button type="button" class="btn btn-primary btnEdit">編輯</button>
+            <button type="button" class="btn btn-danger btnDelete">刪除</button>
+        </td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmpl-option">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control option" placeholder="請輸入選項" value="${option}">
+        <button class="btn btn-outline-danger btnDeleteOption" type="button"><i class="material-icons">delete</i>刪除</button>
+    </div>
+</script>
+    
+<!-- 標題 -->
+<div class="modal fade" id="mdOptionTitle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">新增標題</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="form-group">
+                    <label for="" class="form-label">新增標題</label>
+                    <input type="text" id="txtTitle" class="form-control" placeholder="請輸入標題" />
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSaveTitle" class="btn btn-primary">儲存</button>
+                <button type="button" class="btn btn-secondary btnCancelTitle" data-bs-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 簡答 -->
+<div class="modal fade" id="mdOptionText" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">新增簡答</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="" class="form-label">問題描述</label>
+                    <input type="text" class="form-control" placeholder="請輸入問題描述" id="txtQuizDescriptionText" />
+                </div>
+
+                <div class="form-group mt-2">
+                    <label for="" class="form-label">填寫說明(選填)</label>
+                    <input type="text" class="form-control" placeholder="請輸入填寫說明" id="txtFillDirectionText" />
+                </div>
+
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" id="isRequiredText">
+                    <label class="form-check-label" for="isRequiredText">此題是否為必填</label>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSaveText">儲存</button>
+                <button type="button" class="btn btn-secondary btnCancelText" data-bs-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 單選 -->
+<div class="modal fade" id="mdOptionRadio" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">新增單選</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group mb-2">
+                    <label for="" class="form-label">問題描述</label>
+                    <input type="text" class="form-control" placeholder="請輸入問題描述" id="txtQuizDescriptionRadio" />
+                </div>
+
+                <div class="form-group mb-2">
+                    <label for="" class="form-label">填寫說明(選填)</label>
+                    <input type="text" class="form-control" placeholder="請輸入填寫說明" id="txtFillDirectionRadio" />
+                </div>
+
+                <div class="form-group">
+                    <label for="" class="form-label">選項</label>
+                    <div id="containerRadio">
+
+                    </div>
+
+                    <button type="button" class="btn btn-primary" id="btnAddOptionRadio"><i class="material-icons">add</i>新增</button>
+                </div>
+
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" id="isRequiredRadio">
+                    <label class="form-check-label" for="isRequiredRadio">此題是否為必填</label>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSaveRadio">儲存</button>
+                <button type="button" class="btn btn-secondary btnCancelRadio" data-bs-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 複選 -->
+<div class="modal fade" id="mdOptionCheckbox" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">新增複選</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group mb-2">
+                    <label for="" class="form-label">問題描述</label>
+                    <input type="text" class="form-control" placeholder="請輸入問題描述" id="txtQuizDescriptionCheckbox" />
+                </div>
+
+                <div class="form-group mb-2">
+                    <label for="" class="form-label">填寫說明(選填)</label>
+                    <input type="text" class="form-control" placeholder="請輸入填寫說明" id="txtFillDirectionCheckbox" />
+                </div>
+
+                <div class="form-group">
+                    <label for="" class="form-label">選項</label>
+                     <div id="containerCheckbox">
+
+                    </div>
+
+                    <button type="button" class="btn btn-primary" id="btnAddOptionCheckbox"><i class="material-icons">add</i>新增</button>
+                </div>
+
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" id="isRequiredCheckbox">
+                    <label class="form-check-label" for="isRequiredCheckbox">此題是否為必填</label>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSaveCheckbox">儲存</button>
+                <button type="button" class="btn btn-secondary btnCancelCheckbox" data-bs-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>

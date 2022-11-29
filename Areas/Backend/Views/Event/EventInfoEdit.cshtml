@@ -72,7 +72,7 @@
             html += `<td><select onchange='CheckFIleUpload()' class='form-control ddlType' data-parsley-errors-container='#errors-container-1' data-parsley-required data-val='true' data-val-required='The sectionType field is required.' id='EventInfoItem_sectionExtendList_${rowCount}__sectionType' name='EventInfoItem.sectionExtendList[${rowCount}].sectionType'>`
             html += `<option value='實體'>實體</option><option value='線上'>線上</option><option value='實體+線上'>實體+線上</option>`
             html += `<select></td>`
-            html += `<td><button class='btn btn-danger' type='button' onclick="RemoveSection('${rowCount}')">刪除</button></td>`
+            html += `<td><button class='btn btn-danger input_activityInfo' type='button' onclick="RemoveSection('${rowCount}')">刪除</button></td>`
             html += `<input type='hidden' id='EventInfoItem_sectionExtendList_${rowCount}__isRemove' name='EventInfoItem.sectionExtendList[${rowCount}].isRemove' value='false'>`
             html += "</tr>"
             $("#tb_Section").append(html);
@@ -213,7 +213,7 @@
                                         <td>
                                             @Html.DropDownListFor(x=>x.EventInfoItem.sectionExtendList[i].sectionType,Model.ddlEventType,new{@class="form-control input_activityInfo", data_parsley_required = "", data_parsley_errors_container="#errors-container-1" })
                                         </td>
-                                        <td><button class="btn btn-danger" type="button" onclick="RemoveSection('@i')">刪除</button></td>
+                                        <td><button class="btn btn-danger input_activityInfo" type="button" onclick="RemoveSection('@i')">刪除</button></td>
                                         @Html.HiddenFor(x=>x.EventInfoItem.sectionExtendList[i].isRemove,new{@Value=false})
                                     </tr>
                                 }

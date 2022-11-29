@@ -1,4 +1,7 @@
-﻿@section Css {
+﻿@using BASE.Service
+@model BASE.Areas.Frontend.Models.VM_Index
+
+@section Css {
     <style>
 
     </style>
@@ -42,48 +45,32 @@
 <div class="container-fluid position-relative">
     <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            @{ int ad_count = 0; }
+            @foreach(var item in Model.Ads)
+            {
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="@ad_count" 
+                        @(ad_count == 0 ? "class=active" : "" ) aria-current="@(ad_count == 0 ? "true" : "" )" aria-label="Slide @(ad_count)"></button>
+                ad_count++;
+            }
         </div>
         <div class="carousel-inner">
-            <div class="view carousel-item active">
-                <img src="~/areas/frontend/img/banner.png" class="d-block w-100">
-                <div class="mask">
-                    <div class="d-flex flex-column justify-content-center align-items-center h-100">
-                        <h2>企業人力資源提升及充電起飛計畫1</h2>
-                        <p>上課程不限時間、次數的收聽、觀看，給你最自由彈性的學習空間，為自己安排最舒適的學習進程。</p>
+
+            @{ Boolean first = true; }
+            @foreach(var item in Model.Ads)
+            {
+                <div class="carousel-item @(first ? "view active" : "") ">
+                    <img src="@item.FileInfo.FilePath" class="d-block w-100">
+                    <div class="mask">
+                        <div class="d-flex flex-column justify-content-center align-items-center h-100">
+                            @if (!String.IsNullOrEmpty(item.Header.Title))
+                            {
+                                <h2>@item.Header.Title</h2>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="carousel-item">
-                <img src="~/areas/frontend/img/banner.png" class="d-block w-100">
-                <div class="mask">
-                    <div class="d-flex flex-column justify-content-center align-items-center h-100">
-                        <h2>企業人力資源提升及充電起飛計畫2</h2>
-                        <p>上課程不限時間、次數的收聽、觀看，給你最自由彈性的學習空間，為自己安排最舒適的學習進程。</p>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="~/areas/frontend/img/banner.png" class="d-block w-100">
-                <div class="mask">
-                    <div class="d-flex flex-column justify-content-center align-items-center h-100">
-                        <h2>企業人力資源提升及充電起飛計畫3</h2>
-                        <p>上課程不限時間、次數的收聽、觀看，給你最自由彈性的學習空間，為自己安排最舒適的學習進程。</p>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="~/areas/frontend/img/banner.png" class="d-block w-100">
-                <div class="mask">
-                    <div class="d-flex flex-column justify-content-center align-items-center h-100">
-                        <h2>企業人力資源提升及充電起飛計畫4</h2>
-                        <p>上課程不限時間、次數的收聽、觀看，給你最自由彈性的學習空間，為自己安排最舒適的學習進程。</p>
-                    </div>
-                </div>
-            </div>
+                first = false;
+            }
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -103,7 +90,7 @@
     <img src="~/areas/frontend/img/circle.png" class="pic-circle d-none d-lg-block">
     <div class="row justify-content-center align-items-center">
         <div class="col-12 col-md-4">
-            <a href="#" class="item">
+            <a href="@Url.Action("List", "Activity")" class="item">
                 <img src="~/areas/frontend/img/imgbtn/a.png" alt="" class="img-fluid">
                 <h3 class="fw-bold mt-3">活動報名<span class="ms-2 fc-gray"><i class="fa-solid fa-circle-arrow-right"></i></span></h3>
                 <small class="fc-gray">EVENT</small>
@@ -111,7 +98,7 @@
         </div>
 
         <div class="col-12 col-md-4">
-            <a href="#" class="item">
+            <a href="@Url.Action("Index", "Consult")" class="item">
                 <img src="~/areas/frontend/img/imgbtn/b.png" alt="" class="img-fluid">
                 <h3 class="fw-bold mt-3">諮詢預約<span class="ms-2 fc-gray"><i class="fa-solid fa-circle-arrow-right"></i></span></h3>
                 <small class="fc-gray">CONSULT</small>
@@ -119,7 +106,7 @@
         </div>
 
         <div class="col-12 col-md-4">
-            <a href="#" class="item">
+            <a href="@Url.Action("List", "RResource")" class="item">
                 <img src="~/areas/frontend/img/imgbtn/c.png" alt="" class="img-fluid">
                 <h3 class="fw-bold mt-3">找資源<span class="ms-2 fc-gray"><i class="fa-solid fa-circle-arrow-right"></i></span></h3>
                 <small class="fc-gray">RESOURCE</small>
@@ -140,24 +127,27 @@
                     <small class="ms-2 fc-gray fst-italic">HOT NEWS</small>
                 </div>
                 <div class="section-btn">
-                    <a class="btn btn-primary px-4 py-2 rounded-3" href="#">查看更多</a>
+                    <a class="btn btn-primary px-4 py-2 rounded-3" href="@Url.Action("List", "News")">查看更多</a>
                 </div>
             </div>
             <div class="col-12 col-lg-5">
                 <div class="articleBox">
                     <div class="card border-0 mb-3">
                         <div class="row g-0 align-items-center">
+                            @{
+                                var LastNews = Model.News.FirstOrDefault();
+                            }
                             <div class="col-12 col-md-4 text-center">
-                                <img src="~/areas/frontend/img/articleimg.png" class="img-fluid rounded-start" alt="...">
+                                <img src="@LastNews.FileInfo.FilePath" class="img-fluid rounded-start" alt="...">
                             </div>
                             <div class="col-12 col-md-8">
                                 <div class="card-body">
-                                    <a href="#" class="stretched-link">
-                                        <h4 class="card-title fw-bold">中研講堂臺東場科普演講開放報名</h4>
+                                    <a href="@Url.Action("Detail", "News", new { id = EncryptService.AES.RandomizedEncrypt(LastNews.Header.Id) })" class="stretched-link">
+                                        <h4 class="card-title fw-bold">@LastNews.Header.Title</h4>
                                     </a>
                                     <div class="card-tag"><span class="tag-news">計畫消息</span></div>
-                                    <p class="card-text">臺灣是位於太平洋上的島嶼，然而我們對於大洋洲的文化、人與社會的關係以及身份認同有多少了解臺解臺解臺灣是位於太平洋上的島嶼，然而...</p>
-                                    <p class="card-text"><small class="text-muted">2022 .08 .17</small></p>
+                                    <p class="card-text">@(LastNews.Header.Contents.Length > 60 ? LastNews.Header.Contents.Substring(0,60)+"..." : LastNews.Header.Contents)</p>
+                                    <p class="card-text"><small class="text-muted">@LastNews.Header.DisplayDate.ToString("yyyy .MM .dd")</small></p>
                                 </div>
                             </div>
                         </div>
@@ -167,66 +157,23 @@
             <div class="col-12 col-lg-7">
                 <div class="newsList">
                     <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-start flex-column flex-md-row">
-                                <div class="d-flex">
-                                    <div class="date">2022 .05 .13</div>
-                                    <div class="card-tag mb-0 mx-3"><span class="tag-news">計畫消息</span></div>
+                        @foreach(var item in Model.News)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-start flex-column flex-md-row">
+                                    <div class="d-flex">
+                                        <div class="date">@item.Header.DisplayDate.ToString("yyyy .MM .dd")</div>
+                                        <div class="card-tag mb-0 mx-3">
+                                            <span class="@(item.Header.Category == "其他消息" ? "tag-other" : "tag-news")">@item.Header.Category</span>
+                                        </div>
+                                    </div>
+                                    <div class="title">
+                                        <a href="@Url.Action("Detail", "News", new { id = EncryptService.AES.RandomizedEncrypt(item.Header.Id) })" title="前往訊息內頁">@(LastNews.Header.Contents.Length > 30 ? LastNews.Header.Contents.Substring(0, 30) + "..." : LastNews.Header.Contents)</a>
+                                    </div>
                                 </div>
-                                <div class="title">
-                                    <a href="#" title="前往訊息內頁">來去臺東！中研講堂臺東場科普演講開放報名</a>
-                                </div>
-                            </div>
-                            <span class="moreicon"><i class="fa-solid fa-chevron-right"></i></span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-start flex-column flex-md-row">
-                                <div class="d-flex">
-                                    <div class="date">2022 .05 .10</div>
-                                    <div class="card-tag mb-0 mx-3"><span class="tag-other">其他消息</span></div>
-                                </div>
-                                <div class="title">
-                                    <a href="#" title="前往訊息內頁">2021年大師講座—嘉蓓爾∙班莫教授 (永續科學中心)</a>
-                                </div>
-                            </div>
-                            <span class="moreicon"><i class="fa-solid fa-chevron-right"></i></span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-start flex-column flex-md-row">
-                                <div class="d-flex">
-                                    <div class="date">2022 .05 .08</div>
-                                    <div class="card-tag mb-0 mx-3"><span class="tag-other">其他消息</span></div>
-                                </div>
-                                <div class="title">
-                                    <a href="#" title="前往訊息內頁">本院109年度下半年接受外界捐贈財物辦理情形 (總務處)</a>
-                                </div>
-                            </div>
-                            <span class="moreicon"><i class="fa-solid fa-chevron-right"></i></span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-start flex-column flex-md-row">
-                                <div class="d-flex">
-                                    <div class="date">2022 .05 .10</div>
-                                    <div class="card-tag mb-0 mx-3"><span class="tag-other">其他消息</span></div>
-                                </div>
-                                <div class="title">
-                                    <a href="#" title="前往訊息內頁">國際研究生學程(TIGP)實習生計畫</a>
-                                </div>
-                            </div>
-                            <span class="moreicon"><i class="fa-solid fa-chevron-right"></i></span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-start flex-column flex-md-row">
-                                <div class="d-flex">
-                                    <div class="date">2022 .05 .10 </div>
-                                    <div class="card-tag mb-0 mx-3"><span class="tag-news">計畫消息</span></div>
-                                </div>
-                                <div class="title">
-                                    <a href="#" title="前往訊息內頁">2021年大師講座—嘉蓓爾∙班莫教授 (永續科學中心)</a>
-                                </div>
-                            </div>
-                            <span class="moreicon"><i class="fa-solid fa-chevron-right"></i></span>
-                        </li>
+                                <span class="moreicon"><i class="fa-solid fa-chevron-right"></i></span>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -239,7 +186,44 @@
 <!-- ================================================== -->
 <div class="section pb-md-4 py-lg-5 courseSection">
     <div class="container">
+
         <div class="row courseBox align-items-center">
+            @*//實際*@
+            @{
+                //採用不規則排列，故逐一取出再逐一放入處理
+                var activry1 = Model.Activities.Count >= 1 ? Model.Activities[0] : null;
+                var activry2 = Model.Activities.Count >= 2 ? Model.Activities[1] : null;
+                var activry3 = Model.Activities.Count >= 3 ? Model.Activities[2] : null;
+                var activry4 = Model.Activities.Count >= 4 ? Model.Activities[3] : null;
+                var activry5 = Model.Activities.Count >= 5 ? Model.Activities[4] : null;
+                var activry6 = Model.Activities.Count >= 6 ? Model.Activities[5] : null;
+                var activry7 = Model.Activities.Count >= 7 ? Model.Activities[6] : null;
+            }
+
+            @functions {
+                private void RenderActivity(BASE.Areas.Frontend.Models.Extend.ActivityExtend m)
+                {
+                    <div class="card h-100 courseItem">
+                        <img src="@m.FileInfo.FilePath" class="card-img-top" alt="課程預覽圖">
+                        <div class="card-body">
+                            <h5 class="card-title">@m.Header.Title</h5>
+                            <p class="card-text tripleline-ellipsis">@m.Header.Description</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="date">
+                                <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
+                                @m.Header.RegStartDate.ToString("yyyy / MM / dd")
+                            </div>
+                            <a href="@Url.Action("Detail", "Activity", new { id = EncryptService.AES.RandomizedEncrypt(m.Header.Id) })" class="more-btn stretched-link">
+                                了解更多
+                                <i class="fa-solid fa-arrow-right ms-2" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                }
+            }
+
+            @*//插圖*@
             <div class="col-12 col-md-4 align-self-lg-center align-self-md-center">
                 <div class="card h-100 border-0 bg-transparent courseCard">
                     <div class="card-body p-4">
@@ -251,144 +235,48 @@
                 </div>
             </div>
             <div class="col-12 col-md-4 align-self-lg-start align-self-md-center">
-                <div class="card h-100 courseItem">
-                    <img src="~/areas/frontend/img/course/1.png" class="card-img-top" alt="課程預覽圖">
-                    <div class="card-body">
-                        <h5 class="card-title">【化輸入為輸出】九堂課程教你輸出高品質內容</h5>
-                        <p class="card-text tripleline-ellipsis">SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="date">
-                            <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
-                            2022 / 08 / 10
-                        </div>
-                        <a href="#" class="more-btn stretched-link">
-                            了解更多
-                            <i class="fa-solid fa-arrow-right ms-2" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </div>
+                @{ 
+                    if(activry1 != null) RenderActivity(activry1); 
+                }
             </div>
             <div class="col-12 col-md-4 align-self-lg-end align-self-md-center">
-                <div class="card h-100 courseItem">
-                    <img src="~/areas/frontend/img/course/2.png" class="card-img-top" alt="課程預覽圖">
-                    <div class="card-body">
-                        <h5 class="card-title">影音製作五小時就上手 帶你輕鬆VLOG！百萬YouTuber</h5>
-                        <p class="card-text tripleline-ellipsis">SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="date">
-                            <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
-                            2022 / 08 / 10
-                        </div>
-                        <a href="#" class="more-btn stretched-link">
-                            了解更多
-                            <i class="fa-solid fa-arrow-right ms-2" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </div>
+                @{
+                    if (activry2 != null) RenderActivity(activry2);
+                }
             </div>
         </div>
 
         <div class="row courseBox align-items-center">
             <div class="col-12 col-md-4 align-self-lg-start align-self-md-center mt-minus">
-                <div class="card h-100 courseItem">
-                    <img src="~/areas/frontend/img/course/3.png" class="card-img-top" alt="課程預覽圖">
-                    <div class="card-body">
-                        <h5 class="card-title">【化輸入為輸出】九堂課程教你輸出高品質內容</h5>
-                        <p class="card-text tripleline-ellipsis">SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="date">
-                            <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
-                            2022 / 08 / 10
-                        </div>
-                        <a href="#" class="more-btn stretched-link">
-                            了解更多
-                            <i class="fa-solid fa-arrow-right ms-2" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </div>
+                @{
+                    if (activry3 != null) RenderActivity(activry3);
+                }
             </div>
             <div class="col-12 col-md-4 align-self-lg-start align-self-md-center">
-                <div class="card h-100 courseItem">
-                    <img src="~/areas/frontend/img/course/4.png" class="card-img-top" alt="課程預覽圖">
-                    <div class="card-body">
-                        <h5 class="card-title">【化輸入為輸出】九堂課程教你輸出高品質內容</h5>
-                        <p class="card-text tripleline-ellipsis">SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="date">
-                            <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
-                            2022 / 08 / 10
-                        </div>
-                        <a href="#" class="more-btn stretched-link">
-                            了解更多
-                            <i class="fa-solid fa-arrow-right ms-2" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </div>
+                @{
+                    if (activry4 != null) RenderActivity(activry4);
+                }
             </div>
             <div class="col-12 col-md-4 align-self-lg-end align-self-md-center">
-                <div class="card h-100 courseItem">
-                    <img src="~/areas/frontend/img/course/5.png" class="card-img-top" alt="課程預覽圖">
-                    <div class="card-body">
-                        <h5 class="card-title">影音製作五小時就上手 帶你輕鬆VLOG！百萬YouTuber</h5>
-                        <p class="card-text tripleline-ellipsis">SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="date">
-                            <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
-                            2022 / 08 / 10
-                        </div>
-                        <a href="#" class="more-btn stretched-link">
-                            了解更多
-                            <i class="fa-solid fa-arrow-right ms-2" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </div>
+                @{
+                    if (activry5 != null) RenderActivity(activry5);
+                }
             </div>
         </div>
 
         <div class="row courseBox align-items-center">
             <div class="col-12 col-md-4 align-self-lg-start align-self-md-center mt-minus">
-                <div class="card h-100 courseItem">
-                    <img src="~/areas/frontend/img/course/6.png" class="card-img-top" alt="課程預覽圖">
-                    <div class="card-body">
-                        <h5 class="card-title">【化輸入為輸出】九堂課程教你輸出高品質內容</h5>
-                        <p class="card-text tripleline-ellipsis">SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="date">
-                            <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
-                            2022 / 08 / 10
-                        </div>
-                        <a href="#" class="more-btn stretched-link">
-                            了解更多
-                            <i class="fa-solid fa-arrow-right ms-2" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </div>
+                @{
+                    if (activry6 != null) RenderActivity(activry6);
+                }
             </div>
             <div class="col-12 col-md-4 align-self-lg-start align-self-md-center">
-                <div class="card h-100 courseItem">
-                    <img src="~/areas/frontend/img/course/7.png" class="card-img-top" alt="課程預覽圖">
-                    <div class="card-body">
-                        <h5 class="card-title">【化輸入為輸出】九堂課程教你輸出高品質內容</h5>
-                        <p class="card-text tripleline-ellipsis">SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程SEO教學 + pressplay知識互動教學讓每個學員從學SEO網路技能身價倍增立即訂閱SEO教學課程</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="date">
-                            <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
-                            2022 / 08 / 10
-                        </div>
-                        <a href="#" class="more-btn stretched-link">
-                            了解更多
-                            <i class="fa-solid fa-arrow-right ms-2" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </div>
+                @{
+                    if (activry7 != null) RenderActivity(activry7);
+                }
             </div>
+
+            @*//查看更多*@
             <div class="col-12 col-md-4 align-self-lg-end align-self-md-center">
                 <div class="card moreBox">
                     <div class="wrap-mask">
@@ -403,6 +291,7 @@
                 </div>
             </div>
         </div>
+    
     </div>
 </div>
 
@@ -421,36 +310,14 @@
             </div>
             <div class="col-12 mt-5">
                 <div class="owl-carousel owl-theme" id="link-owl">
-                    <div class="item">
-                        <a href="#" title="客家委員會" target="_blank">
-                            <img src="~/areas/frontend/img/link/1.png" class="img-fluid" alt="客家委員會Logo">
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="#" title="客家委員會客家文化發展中心" target="_blank">
-                            <img src="~/areas/frontend/img/link/2.png" class="img-fluid" alt="客家委員會客家文化發展中心Logo">
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="#" title="客家美食" target="_blank">
-                            <img src="~/areas/frontend/img/link/3.png" class="img-fluid" alt="客家美食Logo">
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="#" title="台北市文化局" target="_blank">
-                            <img src="~/areas/frontend/img/link/4.png" class="img-fluid" alt="台北市文化局Logo">
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="#" title="客家委員會" target="_blank">
-                            <img src="~/areas/frontend/img/link/1.png" class="img-fluid" alt="客家委員會Logo">
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="#" title="客家委員會客家文化發展中心" target="_blank">
-                            <img src="~/areas/frontend/img/link/2.png" class="img-fluid" alt="客家委員會客家文化發展中心Logo">
-                        </a>
-                    </div>
+                    @foreach(var item in Model.RelationLinks)
+                    {
+                        <div class="item">
+                            <a href="@item.Header.Link" title="@item.Header.Title" target="_blank">
+                                <img src="@item.FileInfo.FilePath" class="img-fluid" alt="@item.Header.Title">
+                            </a>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

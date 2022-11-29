@@ -5,6 +5,7 @@ using BASE.Service.Base;
 using System.Linq.Expressions;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using NPOI.SS.Formula.Functions;
 
 namespace BASE.Areas.Backend.Service
 {
@@ -84,8 +85,11 @@ namespace BASE.Areas.Backend.Service
                     {
                         DateTime startDate = Convert.ToDateTime(vmParam.sTime);
                         DateTime endDate = Convert.ToDateTime(vmParam.eTime);
-                        dataList = dataList.Where(x => (startDate < x.activity.RegStartDate && endDate < x.activity.RegStartDate) == false
-                                                    || (startDate > x.activity.RegEndDate && endDate > x.activity.RegEndDate) == false).ToList();
+                        dataList = dataList.Where(x => (x.activity.RegStartDate >= startDate && x.activity.RegStartDate <= endDate) 
+                                                     ||(x.activity.RegEndDate >= startDate && x.activity.RegEndDate <= endDate)
+                                                     || (x.activity.RegStartDate <= startDate && endDate <= x.activity.RegEndDate)
+                                                     || (x.activity.RegStartDate >= startDate && endDate >= x.activity.RegEndDate)
+                                                     ).ToList();
                     }
                 }
                 return dataList;
@@ -189,10 +193,15 @@ namespace BASE.Areas.Backend.Service
                                                            join registerSection in _context.TbActivityRegisterSection
                                                            on register.Id equals registerSection.RegisterId
 
+                                                           join FileInfo in _context.TbFileInfo 
+                                                           on register.FileIdHealth equals FileInfo.FileId into FileInfo1
+                                                           from FileInfo in FileInfo1.DefaultIfEmpty()
+
                                                            select new RegistrationExtend
                                                            {
                                                                register = register,
-                                                               registerSection = registerSection
+                                                               registerSection = registerSection,
+                                                               File_Health = FileInfo
                                                            });
 
                 return dataList;

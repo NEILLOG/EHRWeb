@@ -117,7 +117,8 @@
                                         <td>@(Model.ProjectExtendList.IndexOf(item) + 1)</td>
                                         <td>@Html.Raw(item.Project.Name)</td>
                                         <td>@Html.Raw(item.Project.Category)</td>
-                                        @if (Model.MainProject.Contains(item.Project.Name))
+                                        @*@if (Model.MainProject.Contains(item.Project.Name))*@
+                                        @if (Model.FixedProjectIds.Contains(item.Project.Id))
                                         {
                                             <td><a class="btn btn-primary" href="@(Url.Action("ProjectModifyList", "ProjectModify", new { id =item.Project.Id }))">管理</a></td>
                                         }
@@ -127,7 +128,8 @@
                                         }
                                         <td>
                                             <a class="btn btn-primary" href="@(Url.Action("ProjectEdit", "Project", new { id =item.Project.Id }))">編輯</a>
-                                            @if (!Model.MainProject.Contains(item.Project.Name))
+                                            @*@if (!Model.MainProject.Contains(item.Project.Name))*@
+                                            @if (!Model.FixedProjectIds.Contains(item.Project.Id))
                                             {
                                                 <button type="button" class="btn btn-danger" onclick="Delete('@(item.Project.Id)')">刪除</button>
                                             }

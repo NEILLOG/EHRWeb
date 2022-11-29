@@ -4,6 +4,12 @@
     {
     <script type="text/javascript">
         $(document).ready(function () {
+        @*檔案上傳物件*@
+                $('.File').each(function () {
+                    $(this).FileInputCus({
+                        dropZoneEnabled: false
+                    });
+                });
         });
 
         function ApproveSave(id) {
@@ -19,7 +25,7 @@
             }).then((r) => {
                 if (r.isConfirmed) {
 
-                    // $.blockUI();
+                     $.blockUI();
 
                     //確定變更狀態
                     $.ajax({
@@ -31,7 +37,7 @@
                         },
                         data: { id: id, ApproveStatus: document.getElementById("ddlApprove").value },
                         success: function (result) {
-                            //  $.unblockUI();
+                              $.unblockUI();
                             inform({
                                 plugin: result.alert_plugin,
                                 type: result.alert_type,
@@ -47,6 +53,7 @@
                 }
             });
         }
+
     </script>
 }
 
@@ -76,19 +83,29 @@
                         <tbody>
                             @if (Model != null && Model.ProjectModifyExtendList != null && Model.ProjectModifyExtendList.Count > 0)
                             {
+                                int i = 0;
                                 foreach (var item in Model.ProjectModifyExtendList)
                                 {
+
                                     <tr>
                                         <td>@(Model.ProjectModifyExtendList.IndexOf(item) + 1)</td>
                                         <td>@Html.Raw(item.ProjectModify.Email)</td>
                                         <td>@Html.Raw(item.ProjectModify.CreateDate.ToString("yyyy-MM-dd"))</td>
                                         <td>@Html.Raw(item.ProjectModify.CreateDate.ToString("HH:mm"))</td>
-                                        <td><button type="button" class="btn btn-primary" onclick="">查看</button></td>
+
+                                        <td>
+                                            @{
+                                                string DownloadName = string.Empty;
+                                                if (Model.ProjectModifyExtendList[i].FileName != null && Model.ProjectModifyExtendList[i].FileName.Split('.').Length > 1)
+                                                { DownloadName = Model.ProjectModifyExtendList[i].FileName.Split('.')[0]; }
+                                            }
+                                            <a class="btn btn-sm btn-default " title="下載檔案" href="@Model.ProjectModifyExtendList[i].FilePath" download="@(DownloadName)" target="_blank"><i class="bi-download"></i></a>
+                                        </td>
+
                                         <td style="max-width:100vw;">
                                             @if (item.ProjectModify.IsApprove == null)
                                             {
                                                 @Html.DropDownListFor(x=>x.IsApprove,Model.ddlApprove,new{@class="form-control",id="ddlApprove", data_parsley_required = "", data_parsley_errors_container="#errors-container-1" })
-                                                // <a class="btn btn-primary" href="@(Url.Action("ProjectModifyList", "ProjectModify", new { id =item.ProjectModify.Id }))" data-form-method="post">儲存並寄送通知</a>
                                                 <button type="button" class="btn btn-success" onclick="ApproveSave('@(item.ProjectModify.Id)')">儲存並寄送通知</button>
                                             }
                                             else
@@ -115,6 +132,7 @@
                                         <td>@ModifyDate</td>
                                         <td>@ModifyTime</td>
                                     </tr>
+                                    i++;
                                 }
                             }
                             else
@@ -124,6 +142,7 @@
                         </tbody>
                     </table>
                 </div>
+
                 @if (Model != null && Model.ProjectModifyExtendList != null && Model.ProjectModifyExtendList.Count > 0)
                 {
                     @await Html.PartialAsync("_Pagination", Model.Search.PagerInfo)

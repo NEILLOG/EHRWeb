@@ -50,7 +50,7 @@ namespace BASE.Areas.Backend.Controllers
 
                 //分頁
                 if (dataList != null)
-                    data.AlbumExtendList = await PagerInfoService.GetRange(dataList.OrderBy(x => x.Album.DisplayDate).ThenByDescending(x => x.Album.CreateDate), data.Search.PagerInfo);
+                    data.AlbumExtendList = await PagerInfoService.GetRange(dataList.OrderByDescending(x => x.Album.CreateDate), data.Search.PagerInfo);
 
                 //操作紀錄
                 await _commonService.OperateLog(userinfo.UserID, Feature, Action, null, data);

@@ -65,7 +65,7 @@ namespace BASE.Areas.Backend.Controllers
 
                 //分頁
                 if (dataList != null)
-                    data.NewsExtendList = await PagerInfoService.GetRange(dataList.OrderByDescending(x => x.News.IsKeepTop).ThenByDescending(x => x.News.CreateDate), data.Search.PagerInfo);
+                    data.NewsExtendList = await PagerInfoService.GetRange(dataList.OrderByDescending(x => x.News.IsKeepTop).ThenByDescending(x => x.News.DisplayDate), data.Search.PagerInfo);
 
                 //操作紀錄
                 await _commonService.OperateLog(userinfo.UserID, Feature, Action, null, data);
@@ -150,7 +150,7 @@ namespace BASE.Areas.Backend.Controllers
                             //相關檔案
                             if (datapost.RelatedFile != null)
                             {
-                                var photo_upload = await _fileService.FileUploadAsync(datapost.RelatedFile, "NewsRelatedFiles/" + item.Id, "NewsRelatedFiles", item.FileId, null, transaction);
+                                var photo_upload = await _fileService.FileUploadAsync(datapost.RelatedFile, "NewsFiles/" + item.Id, "NewsFiles", item.FileId, null, transaction);
                                 if (photo_upload.IsSuccess == true && !string.IsNullOrEmpty(photo_upload.FileID))
                                 {
                                     item.FileId = photo_upload.FileID;
@@ -378,7 +378,7 @@ namespace BASE.Areas.Backend.Controllers
                                 //相關檔案
                                 if (datapost.RelatedFile != null)
                                 {
-                                    var photo_upload = await _fileService.FileUploadAsync(datapost.RelatedFile, "NewsRelatedFiles/" + item.Id, "NewsRelatedFiles", item.FileId, null, transaction);
+                                    var photo_upload = await _fileService.FileUploadAsync(datapost.RelatedFile, "NewsFiles/" + item.Id, "NewsFiles", item.FileId, null, transaction);
                                     if (photo_upload.IsSuccess == true && !string.IsNullOrEmpty(photo_upload.FileID))
                                     {
                                         item.FileId = photo_upload.FileID;

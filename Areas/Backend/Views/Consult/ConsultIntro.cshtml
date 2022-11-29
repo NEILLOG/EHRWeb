@@ -1,0 +1,76 @@
+﻿@model BASE.Areas.Backend.Models.VM_Consult
+@{
+}
+@section CustomScripts
+    {
+    <script src="~/lib/ckeditor5/ckeditor.js"></script>
+
+    <script type="text/javascript">
+        let ck5_editor;
+        $(document).ready(function () {
+            ClassicEditor
+                .create(document.querySelector('#ck5'), {
+                    simpleUpload: {
+                        // The URL that the images are uploaded to.
+                        uploadUrl: '/Backend/File/CK5_FileUpload',
+
+                        // Enable the XMLHttpRequest.withCredentials property.
+                        withCredentials: true,
+
+                        // Headers sent along with the XMLHttpRequest to the upload server.
+                        headers: {
+                            'X-XSRF-TOKEN': $('input[name="__X-XSRFVerificationToken"]').val(),
+                            "X-Requested-With": "XMLHttpRequest"
+                        }
+                    }
+                })
+                .then(editor => {
+                    /* console.log(editor);*/
+                    ck5_editor = editor;
+                })
+                .catch(error => {
+                    /* console.error(error);*/
+                });
+
+            $('#frm').on('submit', function () {
+                let ck5_content = ck5_editor.getData();
+
+                if (ck5_content == '') {
+                    toastr['error']('請填入內容!');
+                    return false;
+                } else {
+                    $.blockUI();
+                    return true;
+                }
+            });
+        });
+
+    </script>
+
+    <script type="text/javascript">
+
+
+    </script>
+}
+
+    <div class="card">
+        <div class="card-body">
+        @using (Html.BeginForm(FormMethod.Post, new { id = "frm", @autocomplete = "off", @enctype = "multipart/form-data", @data_parsley_validate = "" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x=>x.consultIntro.Contents , "內容", new { @class = "form-label" })
+                    @Html.TextAreaFor(x => x.consultIntro.Contents, new { id="ck5", @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">儲存</button>
+                    <a class="btn btn-light" href="@(Url.Action("NewsList", "News"))">取消</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

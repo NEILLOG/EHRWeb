@@ -1,0 +1,42 @@
+﻿@using BASE.Extensions
+@model BASE.Areas.Backend.Models.VM_Promote
+@section CustomScripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#frm').on('submit', function () {
+                //alert("寄信囉");
+                //return false;
+            });
+        });
+    </script>
+}
+
+    <div class="card">
+        <div class="card-body">
+        @using (Html.BeginForm(FormMethod.Post, new { id = "frm", @autocomplete = "off", @enctype = "multipart/form-data", @data_parsley_validate = "" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(x => x.Search.NumCompanies)
+            @Html.HiddenFor(x => x.Search.Plan)
+            <div class="row">
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.MailSubject, "主旨", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.MailSubject, new { @class="form-control", placeholder = "請輸入寄信主旨", data_parsley_required = "" })
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.MailContent, "內容", new { @class = "form-label" })
+                    @Html.TextAreaFor(x => x.MailContent, new { @class="form-control", placeholder = "請輸入信件內容", data_parsley_required = "" , @rows = 10})
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">寄送</button>
+                    <a class="btn btn-light" href="@(Url.Action("PromoteManage", "Promote"))">取消</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

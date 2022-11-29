@@ -4,6 +4,13 @@
     {
     <script type="text/javascript">
         $(document).ready(function () {
+        @*檔案上傳物件*@
+                $('.File').each(function () {
+                    $(this).FileInputCus({
+                        dropZoneEnabled: false,
+                        previewFileType: 'false'
+                    });
+                });
         });
     </script>
 }
@@ -26,14 +33,21 @@
                                 <td style="max-width:30vw;">1</td>
                                 <td style="max-width:30vw;">健康申明調查表</td>
                                 <td style="max-width:30vw;">
-                                        <button type="button" class="btn btn-primary btn-sm">查看</button>
+                                    @if (Model.RegistrationExtendItem.File_Health == null)
+                                    {
+                                        <button type="button" class="btn btn-warning btn-sm" disabled="disabled">參與者未回填</button>
+                                    }else
+                                    {
+                                        <a class="btn btn-primary btn-sm" href="@Model.RegistrationExtendItem.File_Health.FilePath" title="點擊下載健康申明調查表">查看</a>
+                                    }
                                 </td>
                             </tr>
                             <tr>
                                 <td style="max-width:30vw;">2</td>
                                 <td style="max-width:30vw;">滿意度問卷</td>
                                 <td style="max-width:30vw;">
-                                    <button type="button" class="btn btn-primary btn-sm">查看</button>
+                                    <a class="btn btn-primary btn-sm" href="~/Frontend/Activity/QuizView/@EncryptService.AES.RandomizedEncrypt(Model.RegistrationExtendItem.register.Id.ToString())" title="(另開新視窗)前台滿意度問卷" target="_blank">查看</a>
+                                    @*<button type="button" class="btn btn-primary btn-sm">查看</button>*@
                                 </td>
                             </tr>
                         </tbody>

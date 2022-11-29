@@ -13,6 +13,7 @@ namespace BASE.Models.DB
         /// 計畫名稱
         /// </summary>
         public string Name { get; set; } = null!;
+        public int? Sort { get; set; }
         /// <summary>
         /// 計畫所屬類別
         /// </summary>

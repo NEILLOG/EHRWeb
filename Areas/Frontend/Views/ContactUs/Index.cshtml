@@ -1,0 +1,85 @@
+﻿@using BASE.Service
+@model BASE.Areas.Frontend.Models.VM_ContactUs
+
+@await Html.PartialAsync("_BannerPartial")
+
+<!-- ================================================== -->
+<!-- 聯絡我們 -->
+<!-- ================================================== -->
+<div class="section pb-md-4 py-lg-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-12">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="contactBox bg-white p-4">
+                            <div class="item">
+                                <div class="icon"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></div>
+                                <div class="info">
+                                    <div class="title fw-bold">地址</div>
+                                    <div class="detail">326020桃園市楊梅區秀才路851號</div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="icon"><i class="fa-solid fa-phone" aria-hidden="true"></i></div>
+                                <div class="info">
+                                    <div class="title fw-bold">電話</div>
+                                    <div class="detail">(03)4855368 分機1901、1905</div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="icon"><i class="fa-solid fa-globe" aria-hidden="true"></i></div>
+                                <div class="info">
+                                    <div class="title fw-bold">服務時間</div>
+                                    <div class="detail">週一至週五 8:00-12:00、13:00-17:00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="applicationBox bg-yellow p-3 mt-3">
+                            <h3 class="fw-bold fs-5"><i class="fa-solid fa-face-smile me-2 fc-yellow" aria-hidden="true"></i> 親愛的企業，您好</h3>
+                            <div>
+                                歡迎您使用本網站各項服務，若您對網站功能及服務有任何疑問或建議，歡迎您使用本客服信箱，請填寫下列資訊，我們將會盡速回覆給您，謝謝。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="registrationBox bg-white p-4 mt-3">
+                        <form action="" class="row g-3 justify-content-center" method="post">
+                            <div class="col-md-6 col-12">
+                                <label for="inputA" class="form-label">姓名<span class="fc-red ms-1">*</span></label>
+                                @Html.TextBoxFor(x => x.ExtendItem.Name, new { @class="form-control",  placeholder="您的回答", required="required" })
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <label for="inputB" class="form-label">E-mail<span class="fc-red ms-1">*</span></label>
+                                @Html.TextBoxFor(x => x.ExtendItem.Email, new { @class="form-control",  placeholder="您的回答", type="email",  required="required" })
+                            </div>
+                            <div class="col-12">
+                                <label for="exampleFormControlTextarea1" class="form-label">內容<span class="fc-red ms-1">*</span></label>
+                                @Html.TextAreaFor(x => x.ExtendItem.Response, 5, 100, new { @class="form-control", required="required" })
+                            </div>
+                            <div class="col-12">
+                                <div class="mb-3 d-flex">
+                                    <div>
+                                        <label for="exampleInputRandom2" class="form-label">驗證碼<span class="fc-red ms-1">*</span></label>
+                                        <input type="text" class="form-control" id="exampleInputRandom2" placeholder="請輸入驗證碼">
+                                    </div>
+                                    <div>
+                                        <canvas id="canvas2" width="120" height="45" class="ms-3 mt-4"></canvas>
+                                        <a href="#" id="changeImg2" title="重新產生驗證碼">重新產生</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2 mt-5">
+                                <button class="btn btn-outline-primary w-50" type="reset"><i class="fa-regular fa-circle-xmark me-2" aria-hidden="true"></i>清除重寫</button>
+                                <button class="btn btn-primary w-50" type="submit"><i class="fa-solid fa-check-to-slot me-2" aria-hidden="true"></i>確定送出</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

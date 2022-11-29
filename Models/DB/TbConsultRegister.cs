@@ -49,6 +49,7 @@ namespace BASE.Models.DB
         /// 聯繫人職稱
         /// </summary>
         public string ContactJobTitle { get; set; } = null!;
+        public string ContactPhone { get; set; } = null!;
         /// <summary>
         /// 聯絡人EMAIL
         /// </summary>
@@ -82,6 +83,23 @@ namespace BASE.Models.DB
         /// 是否審核通過
         /// </summary>
         public bool? IsApprove { get; set; }
+        public bool IsClose { get; set; }
+        /// <summary>
+        /// 輔導紀錄檔案
+        /// </summary>
+        public string? CounselingLogFile { get; set; }
+        /// <summary>
+        /// 已填寫簽到表
+        /// </summary>
+        public string? SigninFormFile { get; set; }
+        /// <summary>
+        /// 企業需求調查表回傳檔案
+        /// </summary>
+        public string? RequireSurveyFile { get; set; }
+        /// <summary>
+        /// 滿意度調查檔案
+        /// </summary>
+        public string? SatisfySurveyFile { get; set; }
         public string? ModifyUser { get; set; }
         public DateTime? ModifyDate { get; set; }
     }

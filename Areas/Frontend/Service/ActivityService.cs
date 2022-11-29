@@ -21,10 +21,6 @@ namespace BASE.Areas.Frontend.Service
             _allCommonService = allCommonService;
         }
 
-        /// <summary>
-        /// 取得最新消息列表
-        /// </summary>
-        /// <returns></returns>
         public IQueryable<ActivityExtend>? GetActivityList(ref String ErrMsg, VM_ActivityQueryParam? vmParam)
         {
             try

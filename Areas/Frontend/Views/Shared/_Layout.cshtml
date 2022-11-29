@@ -34,8 +34,8 @@
                     <div class="col-5 topLinks">
                         <a class="slink" href="@Url.Action("Index", "Home")" title="回首頁">回首頁</a>
                         <a class="slink" href="#" title="網站導覽">網站導覽</a>
-                        <a class="slink" href="#" title="聯絡我們">聯絡我們</a>
-                        <a class="subscribe-btn" href="#" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> 訂閱服務</a>
+                        <a class="slink" href="@Url.Action("Index", "ContactUs")" title="聯絡我們">聯絡我們</a>
+                        <a class="subscribe-btn" href="#" type="button" data-bs-toggle="modal" data-bs-target="#modelSubscript"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> 訂閱服務</a>
                     </div>
                 </div>
             </div>
@@ -147,40 +147,41 @@
     </div>
 
     <!-- 訂閱Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modelSubscript" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header" id="exampleModalLabel">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
+
                     <img src="~/areas/frontend/img/subs-done.png" class="img-fluid mt-n1" alt="">
                     <div class="fs-2 fw-bold">訂閱服務</div>
                     <img src="~/areas/frontend/img/subscribe.png" class="img-fluid" alt="">
                     <form class="text-start">
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Email<span class="fc-red ms-1">*</span></label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="請輸入Email">
+                            <label for="txtSubscriptEmail" class="form-label">Email<span class="fc-red ms-1">*</span></label>
+                            <input type="email" class="form-control" id="txtSubscriptEmail" placeholder="請輸入Email" required>
                         </div>
                         <div class="mb-3" id="subs-form">
                             <div class="mb-2">訂閱內容<span class="fc-red ms-1">*</span></div>
                             <div class="form-check form-check-inline CusCheckbox-form">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox-1" value="option-1" name="sort">
+                                <input class="form-check-input ckbSubScriptType" type="checkbox" id="inlineCheckbox-1" value="Activity" name="sort">
                                 <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-1">課程/活動訊息</label>
                             </div>
                             <div class="form-check form-check-inline CusCheckbox-form">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox-2" value="option-2" name="sort">
+                                <input class="form-check-input ckbSubScriptType" type="checkbox" id="inlineCheckbox-2" value="ProjectNews" name="sort">
                                 <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-2">計畫消息</label>
                             </div>
                         </div>
                         <div class="mb-3 form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                            <label class="form-check-label" for="flexSwitchCheckDefault">使用訂閱服務之<a class="fc-orange" type="button" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">條款及隱私權規範</a><span class="fc-red ms-1">*</span></label>
+                            <input class="form-check-input" type="checkbox" id="ckbRule" required>
+                            <label class="form-check-label" for="ckbRule">使用訂閱服務之<a class="fc-orange" type="button" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">條款及隱私權規範</a><span class="fc-red ms-1">*</span></label>
                         </div>
                         <div class="mb-3 d-flex">
                             <div>
-                                <label for="exampleInputRandom1" class="form-label">驗證碼<span class="fc-red">*</span></label>
-                                <input type="text" class="form-control" id="exampleInputRandom1" placeholder="請輸入驗證碼">
+                                <label for="txtValidNum" class="form-label">驗證碼<span class="fc-red">*</span></label>
+                                <input type="text" class="form-control" id="txtValidNum" placeholder="請輸入驗證碼" required>
                             </div>
                             <div>
                                 <canvas id="canvas" width="120" height="45" class="ms-3 mt-4"></canvas>
@@ -188,8 +189,9 @@
                             </div>
                         </div>
                     </form>
-                    <button type="button" class="btn btn-success mb-2 w-100">確定</button>
+                    <button type="button" class="btn btn-success mb-2 w-100" id="btnSendSubscript">確定</button>
                     <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">取消</button>
+                    @Html.AntiForgeryToken()
                 </div>
             </div>
         </div>
@@ -198,6 +200,53 @@
     <script src="~/areas/frontend/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+    <script>
+        $(document).ready(function(){
+            $('#btnSendSubscript').click(function(){
+                var token = $(this).siblings('input:hidden[name="__X-XSRFVerificationToken"]').val();
+                var email = $('#txtSubscriptEmail').val();
+                var validnum = $('#txtValidNum').val();
+                var rule = $('#ckbRule');
+                var checks = [];
+                $('.ckbSubScriptType').each(function () {
+                    if (this.checked)
+                        checks.push($(this).val());
+                });
+
+                if(email == '')
+                    Swal.fire('請輸入您的訂閱信箱');
+                else if(checks.length <= 0)
+                    Swal.fire('請選擇至少一個訂閱項目');
+                else if(validnum == '')
+                    Swal.fire('請輸入驗證碼');
+                else if(!rule.is(':checked'))
+                    Swal.fire('請確認您是否同意我們的條款及隱私權規範');
+                else
+                {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("ajaxSubscript", "Home")',
+                        data: {
+                            email: email,
+                            types: checks
+                        },
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("X-XSRF-TOKEN", token);
+                        },
+                        success: function (response) {
+                            Swal.fire({
+                                icon: response.isSuccess ? 'success' : 'error',
+                                text: response.message,
+                            }).then((result) => {
+                                if (response.isSuccess)
+                                    location.reload();
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 
     <script>
         $(function () {

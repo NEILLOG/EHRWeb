@@ -3,6 +3,19 @@
 
 @await Html.PartialAsync("_BannerPartial")
 
+@section Scripts
+{
+    @if (TempData["CostomTempEmail"] != null)
+    {
+        <script>
+            $(document).ready(function () {
+                var myModal = new bootstrap.Modal(document.getElementById('regisDoneModal'));
+                myModal.show();
+            });
+        </script>
+    }
+}
+
 <!-- ================================================== -->
 <!-- 活動訊息 內頁-->
 <!-- ================================================== -->
@@ -89,6 +102,25 @@
                             <i class="fa-solid fa-chevron-left me-2" aria-hidden="true"></i>返回列表頁</a>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 報名完成Modal -->
+<div class="modal fade" id="regisDoneModal" tabindex="-1" aria-labelledby="regisDoneModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-0" id="regisDoneModalLabel">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="~/areas/frontend/img/subs-done.png" class="img-fluid mt-n1" alt="" />
+                <div class="fs-2 fw-bold mb-4">報 名 完 成</div>
+                <img src="~/areas/frontend/img/regis-done.png" class="img-fluid" alt="" />
+                <p class="mt-4">恭喜您報名完成，<br>相關訊息會再寄到<span class="fc-blue">@TempData["CostomTempEmail"] </span>信箱。</p>
+                <button type="button" class="btn btn-success mb-2 w-100" data-bs-dismiss="modal">確定</button>
             </div>
         </div>
     </div>

@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using BASE.Models;
 using System.Data.Entity;
 using NPOI.SS.Formula.Functions;
+using static Humanizer.In;
 
 namespace BASE.Areas.Backend.Controllers
 {
@@ -20,16 +21,19 @@ namespace BASE.Areas.Backend.Controllers
         private readonly CommonService _commonService;
         private readonly B_ProjectModifyService _ProjectModifyService;
         private readonly FileService _fileService;
+        private readonly MailService _mailService;
 
         public ProjectModifyController(AllCommonService allCommonService,
             FileService fileService,
             CommonService commonService,
-            B_ProjectModifyService ProjectModifyService)
+            B_ProjectModifyService ProjectModifyService,
+            MailService mailService)
         {
             _allCommonService = allCommonService;
             _fileService = fileService;
             _commonService = commonService;
             _ProjectModifyService = ProjectModifyService;
+            _mailService = mailService;
         }
 
         /// <summary>
@@ -198,10 +202,8 @@ namespace BASE.Areas.Backend.Controllers
             }
         }
 
-
-
         /// <summary>
-        /// ProjectModify上下架狀態變更
+        /// 儲存並寄送通知
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -243,13 +245,44 @@ namespace BASE.Areas.Backend.Controllers
                     }
                     else
                     {
-                        if (ApproveStatus == "同意")
-                        { item.IsApprove = true; }
-                        else if (ApproveStatus == "不同意")
-                        { item.IsApprove = false; }
-                        //item.ModifyUser = userinfo.UserID;
-                        item.ModifyDate = dtnow;
+                        if (ApproveStatus != null)
+                        {
+                            var GetProjectInfo = _ProjectModifyService.GetProjectCATE(item.ProjectId);
+                            string tmpTime = item.CreateDate.Year.ToString() + "年" + item.CreateDate.Month.ToString() + "月" + item.CreateDate.Day.ToString() + "日 " + item.CreateDate.Hour.ToString() + "：" + item.CreateDate.Minute.ToString();
 
+                            if (ApproveStatus == "同意")
+                            {
+                                item.IsApprove = true;
+                                await _mailService.SendEmail(new MailViewModel()
+                                {
+                                    ToList = new List<MailAddressInfo>() { new MailAddressInfo(item.Email) },
+                                    Subject = "勞動部勞動力發展署桃竹苗分署-" + GetProjectInfo.Name + "-課程臨時變更成功通知信",
+                                    Body = "親愛的事業單位承辦人您好<br />" +
+                                           "您於" + tmpTime + "上傳之課程臨時變更申請書，分署已核示完畢並同意變更，麻煩您收到此通知信件後上「補助企業辦理員工訓練課程」系統查看該堂課程是否已完成變更，以維護您的權益。<br />" +
+                                           "<br />" +
+                                           "敬祝順心平安<br />" +
+                                           GetProjectInfo.Name + "_專案辦公室<br />" +
+                                           "諮詢電話" + GetProjectInfo.Contact
+                                }) ;
+                            }
+                            else if (ApproveStatus == "不同意")
+                            { item.IsApprove = false;
+                                await _mailService.SendEmail(new MailViewModel()
+                                {
+                                    ToList = new List<MailAddressInfo>() { new MailAddressInfo(item.Email) },
+                                    Subject = "勞動部勞動力發展署桃竹苗分署-" + GetProjectInfo.Name + "-課程臨時變更不同意通知信",
+                                    Body = "親愛的事業單位承辦人您好<br />" +
+                                               "您於" + tmpTime + "上傳之課程臨時變更申請書，分署已核示完畢，惟查您申請的變更時間已逾開課時間前1小時，恕未能同意該堂課程變更申請。<br />" +
+                                               "<br />" +
+                                               "提醒您，依計畫規定，事業單位有不可歸責之因素，致訓練課程取消或日期需臨時異動，至遲應於原定開課前一小時，將變更文件傳真或寄發電子郵件等方式至分署。<br />" +
+                                               "<br />" +
+                                               "敬祝順心平安<br />" +
+                                               GetProjectInfo.Name + "_專案辦公室<br />" +
+                                               "諮詢電話" + GetProjectInfo.Contact
+                                });
+                            }
+                            item.ModifyDate = dtnow;
+                        }
                         using (var transaction = _ProjectModifyService.GetTransaction())
                         {
                             try

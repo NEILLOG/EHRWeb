@@ -23,7 +23,7 @@ namespace BASE.Models.DB
         /// <summary>
         /// 選項主鍵編號
         /// </summary>
-        public long QuizOptionId { get; set; }
+        public Guid QuizOptionId { get; set; }
         /// <summary>
         /// 簡答題文字
         /// </summary>
@@ -33,5 +33,9 @@ namespace BASE.Models.DB
         /// </summary>
         public string? SelctedOption { get; set; }
         public DateTime CreateDate { get; set; }
+        /// <summary>
+        /// 原始問項(落地資料)，避免後來異動後無法察看結果；其餘ID欄位僅用於紀錄，不拿來用於查詢
+        /// </summary>
+        public string QuizDescription { get; set; } = null!;
     }
 }

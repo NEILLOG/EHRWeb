@@ -47,7 +47,7 @@ namespace BASE.Areas.Backend.Controllers
 
                 //分頁
                 if (dataList != null)
-                    data.YouTubeVideoExtendList = await PagerInfoService.GetRange(dataList.OrderByDescending(x => x.YouTubeVideo.CreateDate), data.Search.PagerInfo);
+                    data.YouTubeVideoExtendList = await PagerInfoService.GetRange(dataList.OrderByDescending(x => x.YouTubeVideo.DisplayDate), data.Search.PagerInfo);
 
                 //操作紀錄
                 await _commonService.OperateLog(userinfo.UserID, Feature, Action, null, data);

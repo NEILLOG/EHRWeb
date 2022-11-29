@@ -8,5 +8,6 @@ namespace BASE.Areas.Backend.Models.Extend
     {
         public TbProject Project { get; set; } = null!;
 
+        public string ReID { get; set; } = null!;
     }
 }

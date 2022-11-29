@@ -189,7 +189,15 @@
                                         <td style="max-width:55vw;">@Status</td>
                                         <td>
                                             <a class="btn btn-primary" href="@(Url.Action("NewsEdit", "News", new { id =item.News.Id }))">編輯</a>
-                                            <button type="button" class="btn btn-success" onclick="PublishChange('@(item.News.Id)')">@ButtonInfo</button>
+                                            @if(ButtonInfo=="上架")
+                                            {
+                                                <button type="button" class="btn btn-success" onclick="PublishChange('@(item.News.Id)')">上架</button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-outline-success" onclick="PublishChange('@(item.News.Id)')">下架</button>
+                                            }
+                                            
                                             <button type="button" class="btn btn-danger" onclick="Delete('@(item.News.Id)')">刪除</button>
                                         </td>
                                     </tr>

@@ -97,7 +97,9 @@
                         },
                         data: {
                             arrRegistration: arrRegistration,
-                            verifyStatus: arrVerify
+                            verifyStatus: arrVerify,
+                            activityID: $("#ActivityID").val(),
+                            sectionID: $("#Search_sSection").val()
                         },
                         success: function (result) {
                             $.unblockUI();
@@ -184,6 +186,25 @@
 
             $('#ModalSignin').modal('hide');
         }
+
+        // 匯出報到名單
+        function Export() {
+            $('#frm').attr('action', '@(Url.Action("EventRegistrationExport", "Event"))').attr('method', 'post');
+            $('#frm').submit();
+        }
+
+        // 匯出簽到表
+        function EventSigninExport() {
+            $('#frm').attr('action', '@(Url.Action("EventSigninExport", "Event"))').attr('method', 'post');
+            $('#frm').submit();
+        }
+
+        // 匯出QRCODE
+        function GenerateQRcode() {
+            $('#frm').attr('action', '@(Url.Action("GenerateQRcode", "Event"))').attr('method', 'post');
+            $('#frm').submit();
+        }
+
     </script>
 }
 
@@ -195,12 +216,14 @@
                 {
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(x=>x.ActivityItem.Id,new{id="ActivityID"})
+                    @Html.HiddenFor(x=>x.ActivityItem.Title)
+                    @Html.HiddenFor(x=>x.ActivityItem.Place)
                     @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageIndex, new { @class="hiddenCurrentPage" })
                     @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageCount, new { @class="hiddenPageCount" })
                     @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
 
                     <div class="row g-3 align-items-end mb-3">
-                        <div class="col-12 col-md-auto ms-auto">
+                        <div class="col-12 col-md-auto ">
                             <div class="input-group">
                                 @Html.LabelFor(x => x.ActivityItem.Subject, "活動主題", new { @class="input-group-text" })
                                 @Html.TextBoxFor(x => x.ActivityItem.Subject, new { @class="form-control",@readonly = "readonly" })
@@ -217,11 +240,11 @@
                             <button type="submit" class="btn btn-primary float-end">查詢</button>
                         </div>
                     </div>
-                    <div class="row g-3 align-items-end mb-3" style="display:none">
+                    <div class="row g-3 align-items-end mb-3">
                         <div class="col-12 col-md-auto ms-auto">
-                            <a class="btn btn-success" href="@(Url.Action("EventInfoAdd", "Event"))">匯出excel</a>
-                            <a class="btn btn-success" href="@(Url.Action("EventInfoAdd", "Event"))">產生簽到表</a>
-                            <a class="btn btn-success" href="@(Url.Action("EventInfoAdd", "Event"))">產生QRCode</a>
+                            <button type="button" class="btn btn-success" onclick="Export()">匯出Excel</button>
+                            <button type="button" class="btn btn-success" onclick="EventSigninExport()">匯出簽到表</button>
+                            <button type="button" class="btn btn-success" onclick="GenerateQRcode()">QRCode</button>
                         </div>
                     </div>
                 }
@@ -261,8 +284,14 @@
                                             <a class="btn btn-primary btn-sm" href="@(Url.Action("EventInfoRegistrationDetail", "Event", new { id = EncryptService.AES.RandomizedEncrypt(Model.RegistrationExtendList[i].register.Id.ToString()) }))">查看</a>
                                         </td>
                                         <td style="max-width:30vw;">
-                                            @*@Model.RegistrationExtendList[i].register.IsValid*@
-                                            @Html.DropDownListFor(x=>x.RegistrationExtendList[i].verifyStatus,Model.ddlVerify,new{ @class="form-control"})
+                                            @if (Model.RegistrationExtendList[i].verifyStatus == "1")
+                                            {
+                                                @Html.DropDownListFor(x=>x.RegistrationExtendList[i].verifyStatus,Model.ddlVerify,new{ @class="form-control",@disabled = "disabled"})
+                                                @Html.HiddenFor(x=>x.RegistrationExtendList[i].verifyStatus)
+                                            }else
+                                            {
+                                                @Html.DropDownListFor(x=>x.RegistrationExtendList[i].verifyStatus,Model.ddlVerify,new{ @class="form-control"})
+                                            }
                                         </td>
                                         <td style="max-width:30vw;">
                                             <a class="btn btn-primary btn-sm" href="@(Url.Action("EventInfoRegistrationMore", "Event", new { id = EncryptService.AES.RandomizedEncrypt(Model.RegistrationExtendList[i].register.Id.ToString()) }))">查看</a>

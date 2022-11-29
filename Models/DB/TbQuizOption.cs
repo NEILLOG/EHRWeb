@@ -8,16 +8,14 @@ namespace BASE.Models.DB
     /// </summary>
     public partial class TbQuizOption
     {
-        /// <summary>
-        /// 流水號主鍵
-        /// </summary>
-        public long Id { get; set; }
+        public Guid Id { get; set; }
+        public string QuizId { get; set; } = null!;
         /// <summary>
         /// 題目類型: 1:標題 2:簡答題 3:單選 4:複選
         /// </summary>
         public byte Type { get; set; }
         /// <summary>
-        /// 標題, 問題描述
+        /// 若類型為標題，則用來儲存標題列文字；若類型為其他，則儲存問題描述
         /// </summary>
         public string QuizDescription { get; set; } = null!;
         /// <summary>

@@ -9,7 +9,7 @@
         function Delete(id) {
             Swal.fire({
                 title: '提示訊息',
-                text: '你是否要刪除FAQ？',
+                text: '你是否要刪除YouTube影片？',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -150,7 +150,14 @@
                                         <td style="max-width:55vw;">@Status</td>
                                         <td>
                                             <a class="btn btn-primary" href="@(Url.Action("YouTubeVideoEdit", "YouTubeVideo", new { id =item.YouTubeVideo.Id }))">編輯</a>
-                                            <button type="button" class="btn btn-success" onclick="PublishChange('@(item.YouTubeVideo.Id)')">@ButtonInfo</button>
+                                            @if (ButtonInfo == "上架")
+                                            {
+                                                <button type="button" class="btn btn-success" onclick="PublishChange('@(item.YouTubeVideo.Id)')">上架</button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-outline-success" onclick="PublishChange('@(item.YouTubeVideo.Id)')">下架</button>
+                                            }
                                             <button type="button" class="btn btn-danger" onclick="Delete('@(item.YouTubeVideo.Id)')">刪除</button>
                                         </td>
                                     </tr>

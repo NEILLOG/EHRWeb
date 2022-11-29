@@ -148,7 +148,14 @@
                                             <a class="btn btn-primary" href="@(Url.Action("RelationLinkEdit", "RelationLink", new { id =item.RelationLink.Id }))">編輯</a>
                                             <a class="btn btn-info" href="@(Url.Action("RelationLinkMoveUp", "RelationLink", new { id =item.RelationLink.Sort }))">上移</a>
                                             <a class="btn btn-warning" href="@(Url.Action("RelationLinkMoveDown", "RelationLink", new { id =item.RelationLink.Sort }))">下移</a>
-                                            <button type="button" class="btn btn-success" onclick="PublishChange('@(item.RelationLink.Id)')">@ButtonInfo</button>
+                                            @if (ButtonInfo == "上架")
+                                            {
+                                                <button type="button" class="btn btn-success" onclick="PublishChange('@(item.RelationLink.Id)')">上架</button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-outline-success" onclick="PublishChange('@(item.RelationLink.Id)')">下架</button>
+                                            }
                                             <button type="button" class="btn btn-danger" onclick="Delete('@(item.RelationLink.Id)')">刪除</button>
                                         </td>
                                     </tr>

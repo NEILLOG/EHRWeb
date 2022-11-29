@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using BASE.Models;
 using System.Data.Entity;
 using NPOI.SS.Formula.Functions;
-using BASE.Areas.Frontend.Service;
+//using BASE.Areas.Frontend.Service;
 
 namespace BASE.Areas.Backend.Controllers
 {
@@ -21,16 +21,19 @@ namespace BASE.Areas.Backend.Controllers
         private readonly CommonService _commonService;
         private readonly B_ProjectService _ProjectService;
         private readonly FileService _fileService;
+        private readonly IConfiguration _configuration;
 
         public ProjectController(AllCommonService allCommonService,
             FileService fileService,
             CommonService commonService,
-            B_ProjectService ProjectService)
+            B_ProjectService ProjectService,
+            IConfiguration configuration)
         {
             _allCommonService = allCommonService;
             _fileService = fileService;
             _commonService = commonService;
             _ProjectService = ProjectService;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -57,8 +60,9 @@ namespace BASE.Areas.Backend.Controllers
 
                 //分頁
                 if (dataList != null)
-                    data.ProjectExtendList = await PagerInfoService.GetRange(dataList.OrderByDescending(x => x.Project.CreateDate), data.Search.PagerInfo);
+                    data.ProjectExtendList = await PagerInfoService.GetRange(dataList.OrderBy(x => x.Project.Sort).ThenByDescending(x => x.ReID), data.Search.PagerInfo);
 
+                data.FixedProjectIds = _configuration.GetSection("Custom:FixedProjectIds").Get<List<string>>();
                 //操作紀錄
                 await _commonService.OperateLog(userinfo.UserID, Feature, Action, null, data);
             }
@@ -259,13 +263,13 @@ namespace BASE.Areas.Backend.Controllers
 
             if (isSuccess)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("ProjectMap");
             }
             else
             {
                 if (item == null)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ProjectMap");
                 }
                 else
                 {
@@ -322,6 +326,12 @@ namespace BASE.Areas.Backend.Controllers
                 {
                     item.Id = await _allCommonService.IDGenerator<TbProject>();
                     item.Name = datapost.ProjectExtendItem.Project.Name;
+                    List<string> ProjectID = _configuration.GetSection("Custom:FixedProjectIds").Get<List<string>>();
+                    //if (datapost.MainProject.Contains(item.Name))
+                    if (ProjectID.Contains(item.Id))
+                    { item.Sort = 0; }
+                    else
+                    { item.Sort = 1; }
                     item.Category = datapost.ProjectExtendItem.Project.Category;
                     item.Link = datapost.ProjectExtendItem.Project.Link;
                     item.Purpose = datapost.ProjectExtendItem.Project.Purpose;
@@ -716,7 +726,7 @@ namespace BASE.Areas.Backend.Controllers
         [BackendCheckLogin("Menu000020", "MODIFY")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ProjectContactChange(string id)
+        public async Task<IActionResult> ProjectContactChange(string id, string OldText)
         {
             JsonResponse<TbUserInfo> result = new JsonResponse<TbUserInfo>();
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
@@ -732,6 +742,7 @@ namespace BASE.Areas.Backend.Controllers
 
             string decrypt_id = (id ?? "").ToString();
 
+            string strReturn = OldText;
             try
             {
                 if (string.IsNullOrEmpty(decrypt_id))
@@ -752,6 +763,11 @@ namespace BASE.Areas.Backend.Controllers
                     else
                     {
                         isSuccess = true;
+                        if (string.IsNullOrEmpty(OldText) || !OldText.Contains(result.Datas.Phone))
+                        {
+                            strReturn += result.Datas.Phone + ";";
+                        }
+
                         //result.Datas = new TbUserInfo();
                         //result.Datas.Phone = item.Phone;
                     }
@@ -783,9 +799,9 @@ namespace BASE.Areas.Backend.Controllers
 
             //操作紀錄
             string response = result.Message + "\r\n" + result.MessageDetail;
-            await _commonService.OperateLog(userinfo.UserID, Feature, Action, decrypt_id, id.ToString(), _message, response, isSuccess);
+            await _commonService.OperateLog(userinfo.UserID, Feature, Action, decrypt_id, (id ?? "").ToString(), _message, response, isSuccess);
 
-            return Json(result.Datas.Phone);
+            return Json(strReturn);
         }
 
     }

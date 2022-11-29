@@ -1,6 +1,8 @@
-﻿using BASE.Models;
+﻿using BASE.Areas.Backend.Models;
+using BASE.Models;
 using BASE.Models.DB;
 using BASE.Service.Base;
+using NPOI.SS.Formula.Functions;
 using System.Net;
 using System.Net.Mail;
 using System.Text.Json;
@@ -16,6 +18,45 @@ namespace BASE.Service
             IConfiguration configuration) : base(context)
         {
             _configuration = configuration;
+        }
+
+        /// <summary>
+        /// 預約時間寄信; 附件請使用<see cref="BASE.Models.DB.TbFileInfo"/>之ID傳入，請勿使用原參數<see cref="Models.MailViewModel"/>之附件欄位
+        /// </summary>
+        /// <param name="data">信件內文(附件不可包含)</param>
+        /// <param name="CreateUser">使用者ID</param>
+        /// <param name="PlanSendDate">預計寄送時間；若須即時寄信請使用<see cref="SendEmail"/></param>
+        /// <param name="RelationId">關聯編號，例如是某活動所寄送的信件，則傳入活動之主鍵編號；注意，僅限傳入手動編號之主鍵，自動int流水號請勿傳入</param>
+        /// <param name="FileID_1">寄送檔案編號1</param>
+        /// <param name="FileID_2">寄送檔案編號2</param>
+        /// <param name="FileID_3">寄送檔案編號3</param>
+        /// <returns>是否成功</returns>
+        public async Task<Boolean> ReserveSendEmail(MailViewModel data, String CreateUser, DateTime PlanSendDate, String RelationId = "", String FileID_1 = "", String FileID_2 = "", String FileID_3 = "")
+        {
+            try
+            {
+                TbMailQueue model = new TbMailQueue();
+                var from = new MailAddress(_configuration.GetValue<string>("MailSettings:FormAddress"), _configuration.GetValue<string>("MailSettings:FormName"));
+                model.MailFrom = from.Address;
+                model.MailTo = data.GetToList();
+                model.Subject = data.Subject;
+                model.Contents = data.Body;
+                model.FileId1 = FileID_1;
+                model.FileId2 = FileID_2;
+                model.FileId3 = FileID_3;
+                model.CreateUser = CreateUser;
+                model.CreateDate = DateTime.Now;
+                model.PlanSendDate = PlanSendDate;
+                model.RelationId = RelationId;
+
+                await Insert(model);
+
+                return true;
+            }   
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         /// <summary>

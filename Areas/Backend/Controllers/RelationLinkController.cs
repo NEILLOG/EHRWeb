@@ -216,7 +216,7 @@ namespace BASE.Areas.Backend.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [BackendCheckLogin("Menu000012", "MODIFY")]
-        public async Task<IActionResult> RelationLinkEdit(int id)
+        public async Task<IActionResult> RelationLinkEdit(long id)
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
             string Feature = "相關連結編輯", Action = "檢視";

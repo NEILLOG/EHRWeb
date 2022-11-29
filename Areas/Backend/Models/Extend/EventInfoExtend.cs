@@ -43,5 +43,8 @@ namespace BASE.Areas.Backend.Models.Extend
         /// <summary> 審核結果 </summary>
         public string verifyStatus { get; set; }
 
+        /// <summary> 健康申明調查表 </summary>
+        public TbFileInfo? File_Health { get; set; }
+
     }
 }

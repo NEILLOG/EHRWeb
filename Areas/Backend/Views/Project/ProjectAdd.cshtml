@@ -9,7 +9,7 @@
         $(function () {
             document.getElementById("ddlContact").onchange = function () {
                 var val = this.value;
-               
+                var OldText = document.getElementById("ProjectExtendItem_Project_Contact").value;
                 //確定變更狀態
                 $.ajax({
                     type: "Post",
@@ -18,21 +18,24 @@
                     beforeSend: function (request) {
                         request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
                     },
-                    data: { id: val },
+                    data: { id: val, OldText: OldText },
                     success: function (result) {
-                    $('#ProjectExtendItem_Project_Contact').html(result);
+                        console.log(result);
+                        $('#ProjectExtendItem_Project_Contact').val('')
+                var html = result;
+                        $('#ProjectExtendItem_Project_Contact').val(html)
 
                     }
                 });
-               
+
             };
         });
 
     </script>
 }
 
-<div class="card">
-    <div class="card-body">
+    <div class="card">
+        <div class="card-body">
         @using (Html.BeginForm(FormMethod.Post, new { id = "frm", @autocomplete = "off", @enctype = "multipart/form-data", @data_parsley_validate = "" }))
         {
             @Html.AntiForgeryToken()

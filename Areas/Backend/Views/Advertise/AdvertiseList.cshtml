@@ -19,7 +19,7 @@
             }).then((r) => {
                 if (r.isConfirmed) {
 
-                    $.blockUI();
+                  //  $.blockUI();
 
                     //確定刪除
                     $.ajax({
@@ -31,7 +31,7 @@
                         },
                         data: { id: id },
                         success: function (result) {
-                            $.unblockUI();
+                         //   $.unblockUI();
                             inform({
                                 plugin: result.alert_plugin,
                                 type: result.alert_type,
@@ -61,7 +61,7 @@
             }).then((r) => {
                 if (r.isConfirmed) {
 
-                    $.blockUI();
+                  //  $.blockUI();
 
                     //確定變更狀態
                     $.ajax({
@@ -73,7 +73,7 @@
                         },
                         data: { id: id },
                         success: function (result) {
-                            $.unblockUI();
+                         //   $.unblockUI();
                             inform({
                                 plugin: result.alert_plugin,
                                 type: result.alert_type,
@@ -147,7 +147,14 @@
                                             <a class="btn btn-primary" href="@(Url.Action("AdvertiseEdit", "Advertise", new { id =item.Advertise.Id }))">編輯</a>
                                             <a class="btn btn-info" href="@(Url.Action("AdvertiseMoveUp", "Advertise", new { id =item.Advertise.Sort }))">上移</a>
                                             <a class="btn btn-warning" href="@(Url.Action("AdvertiseMoveDown", "Advertise", new { id =item.Advertise.Sort }))">下移</a>
-                                            <button type="button" class="btn btn-success" onclick="PublishChange('@(item.Advertise.Id)')">@ButtonInfo</button>
+                                            @if (ButtonInfo == "上架")
+                                            {
+                                                <button type="button" class="btn btn-success" onclick="PublishChange('@(item.Advertise.Id)')">上架</button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-outline-success" onclick="PublishChange('@(item.Advertise.Id)')">下架</button>
+                                            }
                                             <button type="button" class="btn btn-danger" onclick="Delete('@(item.Advertise.Id)')">刪除</button>
                                         </td>
                                     </tr>

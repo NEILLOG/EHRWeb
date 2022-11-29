@@ -23,7 +23,8 @@ namespace BASE.Areas.Backend.Models
         public List<string>? SortList { get; set; }
 
         /// <summary>六大計畫 List</summary>
-        public List<string> MainProject = new List<string>() { "企業人力資源提升計畫", "充電起飛計畫", "充電再出發訓練計畫", "小型企業人力提升計畫", "在職中高齡者及高齡者穩定就業訓練補助實施計畫", "中高齡者退休後再就業準備訓練補助實施計畫" };
+        //  public List<string> MainProject = new List<string>() { "企業人力資源提升計畫", "充電起飛計畫", "充電再出發訓練計畫", "小型企業人力提升計畫", "在職中高齡者及高齡者穩定就業訓練補助實施計畫", "中高齡者退休後再就業準備訓練補助實施計畫" };
+        public List<string> FixedProjectIds = new List<string>();
 
         /// <summary> 所屬類別 </summary>
         public List<SelectListItem> ddlCategory = new List<SelectListItem>() { new SelectListItem() { Text = "請選擇", Value = "" },

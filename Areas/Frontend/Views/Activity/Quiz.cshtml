@@ -1,0 +1,240 @@
+﻿@model BASE.Areas.Frontend.Models.VM_Quiz
+
+@section Scripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#frm').on('submit', function () {
+
+                var isValid = true;
+                $('.checkboxs.required').each(function(i, ele){
+                    var container = $(ele);
+                    var quiz = container.siblings('.form-label').clone()    //clone the element
+                        .children() //select all the children
+                        .remove()   //remove all the children
+                        .end()  //again go back to selected element
+                        .text();
+
+                    if(container.find('input[type=checkbox]:checked').length <= 0){
+                        alert('請選擇' + quiz.trim());
+                        isValid = false;
+                    }
+                });
+
+                console.log(isValid);
+                if(isValid)
+                {
+                    //取得所有答題結果
+                    var models = [];
+
+                    var RegisterID = $('#hidRegisterID').val();
+                    var QuizID = $('#hidQuizID').val();
+
+                    $('.aQuiz').each(function(i, ele){
+                        var type = $(ele).data('quzi-type');
+
+                        var QuizOptionID = $(ele).find('.hidQuizOptionID').val();
+                        var QuizDescription = $(ele).find('.hidQuizDescription').val();
+                        var ResponseText = '';
+
+                        switch(type){
+                            case 2:
+                                ResponseText= $(ele).find('input[type=text]').val();
+                                console.log(ResponseText);
+                                break;
+                            case 3:
+                                ResponseText = $(ele).find('input[type=radio]:checked').val();
+                                console.log(ResponseText);
+                                break;
+                            case 4:
+                                var checks = []; 
+                                $(ele).find('input[type=checkbox]:checked').each(function(a, b){ 
+                                    checks.push($(b).prop('value'));
+                                });
+                                ResponseText = checks.join('|');
+                                console.log(ResponseText);
+                                break;
+                        }
+
+                        models.push({
+                            RegisterID: RegisterID,
+                            QuizID: QuizID,
+                            QuizOptionID: QuizOptionID,
+                            ResponseText: ResponseText,
+                            QuizDescription : QuizDescription
+                        });
+
+                    });
+
+                    console.log(models);
+
+                    var token = $('#frm').find('input:hidden[name="__X-XSRFVerificationToken"]').val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("ajaxQuiz", "Activity")',
+                        data: { 
+                            data : models,
+                            QuizID: QuizID,
+                            RegisterID: RegisterID
+                        },
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("X-XSRF-TOKEN", token);
+                        },
+                        success: function (response) {
+                            Swal.fire({
+                                icon: response.isSuccess ? 'success' : 'error',
+                                text: response.message,
+                            }).then((result) => {
+                                if (response.isSuccess)
+                                    location.href='@Url.Action("Index", "Home")';
+                            });
+                        }
+                    });
+
+                }
+
+                return false;
+            });
+        });
+    </script>
+}
+
+@section Css{
+    <style>
+        .red { color: red; }
+    </style>
+}
+
+
+@await Html.PartialAsync("_BannerPartial")
+
+<div class="section pb-md-4 py-lg-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-12">
+                <div class="registrationBox bg-white p-4">
+                    <div class="row">
+                        <div class="col-12 text-center border-bottom rb-title">
+                            <h2 class="fc-green fw-bold"><span>@Model.ExtendItem.Header.Name</span></h2>
+                            <small>@Html.Raw(Model.ExtendItem.Header.Description)</small>
+                        </div>
+                    </div>
+                    <form action="" id="frm" method="post" class="row g-3 mt-2 align-items-center" enctype="multipart/form-data" data-parsley-validate="">
+                        @Html.AntiForgeryToken()
+
+                        @using (Html.BeginForm(FormMethod.Post, new { id = "frm", @autocomplete = "off", @enctype = "multipart/form-data", @data_parsley_validate = "" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+
+                                @foreach (var line in Model.ExtendItem.Lines)
+                                {
+                                    switch (line.Type)
+                                    {
+                                        case 1:
+                                            <div class="col-12 mb-3">
+                                                <h5>@line.QuizDescription</h5>
+                                            </div>
+                                            break;
+                                        case 2:
+                                            <div class="col-12 form-group mb-3 aQuiz" data-quzi-type="2">
+
+                                                <span class="form-label">
+                                                    @if (line.IsRequired)
+                                                    {
+                                                        <span class="red">*</span>
+                                                    }
+                                                    @line.QuizDescription
+                                                </span>
+                                                @if (!String.IsNullOrEmpty(line.FillDirection))
+                                                {
+                                                    <span style="color:#666; font-size:small">@line.FillDirection</span>
+                                                }
+                                                <input type="text" class="form-control" @(line.IsRequired ? "required" : "") />
+                                                <input type="hidden" class="hidQuizOptionID" value="@line.Id">
+                                                <input type="hidden" class="hidQuizDescription" value="@line.QuizDescription">
+                                            </div>
+                                            break;
+                                        case 3:
+                                            <div class="col-12 form-group mb-3 aQuiz" data-quzi-type="3">
+                                                <span class="form-label">
+                                                    @if (line.IsRequired)
+                                                    {
+                                                        <span class="red">*</span>
+                                                    }
+                                                    @line.QuizDescription
+                                                </span>
+                                                @if (!String.IsNullOrEmpty(line.FillDirection))
+                                                {
+                                                    <span style="color:#666; font-size:small">@line.FillDirection</span>
+                                                }
+                                                @{
+                                                    var options = line.Options.Split("|").ToList();
+                                                    var count = 1;
+                                                }
+                                                
+                                                @foreach (var option in options)
+                                                {
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" value="@option" type="radio" name="@line.Id" id="@(line.Id)_@count" @(line.IsRequired ? "required" : "")>
+                                                        <label class="form-check-label" for="@(line.Id)_@count">@option</label>
+                                                    </div>
+                                                    count++;
+                                                }
+                                                <input type="hidden" class="hidQuizOptionID" value="@line.Id">
+                                                <input type="hidden" class="hidQuizDescription" value="@line.QuizDescription">
+                                            </div>
+                                            break;
+                                        case 4:
+                                            <div class="col-12 form-group mb-3 aQuiz" data-quzi-type="4">
+                                                <span class="form-label">
+                                                    @if (line.IsRequired)
+                                                    {
+                                                        <span class="red">*</span>
+                                                    }
+                                                    @line.QuizDescription
+                                                </span>
+                                                @if (!String.IsNullOrEmpty(line.FillDirection))
+                                                {
+                                                    <span style="color:#666; font-size:small">@line.FillDirection</span>
+                                                }
+                                                @{
+                                                    var ckbs = line.Options.Split("|").ToList();
+                                                    var count2 = 1;
+                                                }
+
+                                                <div class="checkboxs @(line.IsRequired ? "required" : "")">
+                                                @foreach (var ckb in ckbs)
+                                                {
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" value="@ckb" type="checkbox" name="@line.Id" id="@(line.Id)_@count2">
+                                                        <label class="form-check-label" for="@(line.Id)_@count2">@ckb</label>
+                                                    </div>
+                                                    count2++;
+                                                }
+                                                </div>
+                                                <input type="hidden" class="hidQuizOptionID" value="@line.Id">
+                                                <input type="hidden" class="hidQuizDescription" value="@line.QuizDescription">
+                                            </div>
+                                            break;
+                                    }
+                                }
+
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="form-group">
+                                    <button class="btn btn-success w-100" type="submit">送出</button>
+                                </div>
+                            </div>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Hidden("hidRegisterID", Model.RegisterID)
+@Html.Hidden("hidQuizID", Model.QuizID)

@@ -56,6 +56,61 @@
             // 使用者查詢清空
             $('#Search_Keyword').val('');
         }
+        // 匯出帳號列表
+        function Export() {
+            $('#frm').attr('action', '@(Url.Action("AccountExport", "Account"))').attr('method', 'post');
+            $('#frm').submit();
+        }
+
+        const import_file = () => {
+            $('#import_file_selector').click();
+        }
+
+        $('#import_file_selector').on('change', function () {
+            Swal.fire({
+                title: '提示訊息',
+                text: '是否確定匯入？',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '確定',
+                cancelButtonText: '取消',
+            }).then((r) => {
+                if (r.isConfirmed) {
+                    console.log($(this)[0].files[0])
+                    var formData = new FormData();
+                    formData.append('file', $(this)[0].files[0]); // myFile is the input type="file" control
+
+                    $.blockUI();
+
+                    $.ajax({
+                        type: "Post",
+                        url: "@(Url.Action("ConsultantImport", "Account"))",
+                        data: formData,
+                        processData: false,  // tell jQuery not to process the data
+                        contentType: false,  // tell jQuery not to set contentType
+                        beforeSend: function (request) {
+                            request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
+                        },
+                        success: function (result) {
+                            $.unblockUI();
+                            inform({
+                                plugin: result.alert_plugin,
+                                type: result.alert_type,
+                                title: result.message,
+                                content: result.messageDetail,
+                                redirect_url: ""
+                            });
+                        }
+                    });
+                } else {
+                    //任何方式的取消
+                    Swal.fire('匯入', '取消成功', 'success');
+                    $('#import_file_selector').val('');
+                }
+            });
+        });
     </script>
 }
 
@@ -71,7 +126,7 @@
                     @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
 
                     <div class="row g-3 align-items-end mb-3">
-                        <div class="col-12 col-md-auto ms-auto">
+                        <div class="col-12 col-md-auto">
                             <div class="input-group">
                                 @Html.LabelFor(x => x.Search.sGroup, "帳號群組", new { @class="input-group-text" })
                                 @Html.DropDownListFor(x=>x.Search.sGroup,Model.ddlGroup,new{@class="form-control"})
@@ -85,9 +140,14 @@
                         </div>
                     </div>
                     <div class="row g-3 align-items-end mb-3">
+                        <div class="col-12 col-md-auto ">
+                            <a class="btn btn-primary" href="@Url.Action("DownloadFile", "Common",new{filePath="Sample\\",fileName= EncryptService.AES.Encrypt("Sample_Consultant.xls")})" title="下載國立臺灣大學校友證代辦委託書.doc">下載顧問範例檔案</a>
+                            <a class="btn btn-success" onclick="import_file();">匯入顧問資料</a>
+                            @Html.TextBoxFor(x=>x.ImportFile, new { type="file", @class="d-none", id="import_file_selector", accept=".xlsx" })
+                        </div>
                         <div class="col-12 col-md-auto ms-auto">
                             <a class="btn btn-primary" href="@(Url.Action("AccountAdd", "Account"))">新增</a>
-                            <a class="btn btn-success " href="@(Url.Action("FAQSort", "FAQ"))">匯出Excel</a>
+                            <button type="button" class="btn btn-success" onclick="Export()">匯出Excel</button>
                         </div>
                     </div>
                 }

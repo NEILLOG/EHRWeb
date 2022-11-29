@@ -63,5 +63,13 @@ namespace BASE.Models.DB
         public DateTime CreateDate { get; set; }
         public string? ModifyUser { get; set; }
         public DateTime? ModifyDate { get; set; }
+        /// <summary>
+        /// 健康聲明回傳檔案
+        /// </summary>
+        public string? FileIdHealth { get; set; }
+        /// <summary>
+        /// 是否為備取(寄信判斷用)
+        /// </summary>
+        public bool? IsBackup { get; set; }
     }
 }

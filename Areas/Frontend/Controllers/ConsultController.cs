@@ -15,6 +15,7 @@ using BASE.Areas.Frontend.Service;
 using BASE.Models;
 using BASE.Areas.Frontend.Models.Extend;
 using BASE.Areas.Backend.Service;
+using ConsultService = BASE.Areas.Frontend.Service.ConsultService;
 
 namespace BASE.Areas.Frontend.Controllers
 {

@@ -1,0 +1,136 @@
+﻿@using BASE.Extensions
+@model BASE.Areas.Backend.Models.VM_Consult
+@section CustomScripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @*檔案上傳物件*@
+            $('.File').each(function () {
+                $(this).FileInputCus({
+                    dropZoneEnabled: false,
+                    previewFileType: 'false'
+                });
+            });
+
+            // 是否可以編輯結案狀態
+            // 已結案不可編輯
+            var notChangeStatus = false;
+            if ('@Model.ConsultExtendItem.sClose' != '1')
+            {
+                // 尚未上傳企業需求調查表
+                if ('@Model.ConsultExtendItem.ConsultRegister.RequireSurveyFile' == "") {
+                    isChangeClose = true;
+                }
+
+                // 尚未上傳滿意度問卷
+                if ('@Model.ConsultExtendItem.ConsultRegister.SatisfySurveyFile' == "") {
+                    isChangeClose = true;
+                }
+
+                // 尚未上傳輔導紀錄
+                if ('@Model.ConsultExtendItem.ConsultRegister.CounselingLogFile' == "") {
+                    isChangeClose = true;
+                }
+
+                // 尚未上傳簽到表
+                if ('@Model.ConsultExtendItem.ConsultRegister.SigninFormFile' == "") {
+                    isChangeClose = true;
+                }
+            }else{
+                isChangeClose = true;
+            }
+            
+            // 是否禁止變更結案狀態
+            $('#ddlClose').prop("disabled", isChangeClose);
+        });
+    </script>
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            @using (Html.BeginForm(FormMethod.Post, new { id = "frm", @autocomplete = "off", @enctype = "multipart/form-data", @data_parsley_validate = "" }))
+            {
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>項次</th>
+                                    <th>表單名稱</th>
+                                    <th>功能</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="max-width:30vw;">1</td>
+                                    <td style="max-width:30vw;">企業需求調查表</td>
+                                    <td style="max-width:30vw;">
+                                        @if (Model.ConsultExtendItem.RequireSurveyFile == null)
+                                        {
+                                            <button type="button" class="btn btn-warning btn-sm" disabled="disabled">企業尚未填寫</button>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-warning btn-sm" href="@Model.ConsultExtendItem.RequireSurveyFile.FilePath" title="點擊下載企業需求調查表">查看</a>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="max-width:30vw;">2</td>
+                                    <td style="max-width:30vw;">滿意度問卷</td>
+                                    <td style="max-width:30vw;">
+                                        @if (Model.ConsultExtendItem.SatisfySurveyFile == null)
+                                        {
+                                            <button type="button" class="btn btn-warning btn-sm" disabled="disabled">企業尚未填寫</button>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-warning btn-sm" href="@Model.ConsultExtendItem.SatisfySurveyFile.FilePath" title="點擊下載滿意度問卷">查看</a>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="max-width:30vw;">3</td>
+                                    <td style="max-width:30vw;">歷史輔導紀錄</td>
+                                    <td style="max-width:30vw;">
+                                        <a class="btn btn-primary btn-sm" href="@(Url.Action("CounselingHistory", "Consult", new { id = EncryptService.AES.RandomizedEncrypt(Model.ConsultExtendItem.ConsultRegister.BusinessId) }))">查看</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="max-width:30vw;">4</td>
+                                    <td style="max-width:30vw;">輔導紀錄</td>
+                                    <td style="max-width:5vw;">
+                                        @Html.TextBoxFor(x => x.CounselingLogFile, new { @FileID = "FileCounselingLog", @class="form-control File ", @type = "file"})
+                                        @Html.HiddenFor(x => x.ConsultExtendItem.ConsultRegister.CounselingLogFile, new { @id ="FileCounselingLog" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="max-width:30vw;">5</td>
+                                    <td style="max-width:30vw;">已填寫完之簽到表</td>
+                                    <td style="max-width:30vw;">
+                                        @Html.TextBoxFor(x => x.SigninFormFile, new { @FileID = "FileSigninForm", @class="form-control File ", @type = "file"})
+                                        @Html.HiddenFor(x => x.ConsultExtendItem.ConsultRegister.SigninFormFile, new { @id ="FileSigninForm" })
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    @if (Model.GroupId == "G000000001")
+                    {
+                        <div class="col-2 form-group mb-3">
+                            <span class="red">*</span>
+                            @Html.LabelFor(x => x.ConsultExtendItem.sApprove, "是否結案", new { @class = "form-label" })
+                            @Html.DropDownListFor(x=>x.ConsultExtendItem.sClose,Model.ddlClose,new{@id="ddlClose", @class="form-control", data_parsley_required = "", data_parsley_errors_container="#errors-container-5"})
+                            <div id="errors-container-5"></div>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">儲存</button>
+                        <a class="btn btn-light" href="@(Url.Action("ConsultList", "Consult"))">回上一頁</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

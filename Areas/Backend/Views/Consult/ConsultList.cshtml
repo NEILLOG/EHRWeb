@@ -1,0 +1,115 @@
+﻿@using BASE.Extensions
+@model BASE.Areas.Backend.Models.VM_Consult
+@section CustomScripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+
+        // 清除查詢條件
+        function clearSearch() {
+            // 查詢清空
+            $('#Search_Keyword').val('');
+        }
+
+        // 匯出諮詢輔導報到名單
+        function Export() {
+            $('#frm').attr('action', '@(Url.Action("ConsultRegistrationExport", "Consult"))').attr('method', 'post');
+            $('#frm').submit();
+        }
+
+        // 匯出諮詢輔導報到名單
+        function ExportSignin(params) {
+            $("#ConsultRegisterId").val(params)
+            $('#frm').attr('action', '@(Url.Action("ConsultSigninExport", "Consult"))').attr('method', 'post');
+            $('#frm').submit();
+        }
+    </script>
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                @using (Html.BeginForm(FormMethod.Get, new { id = "frm", @autocomplete = "off" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.ConsultRegisterId)
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageIndex, new { @class="hiddenCurrentPage" })
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_iPageCount, new { @class="hiddenPageCount" })
+                    @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
+
+                    <div class="row g-3 align-items-end mb-3">
+                        <div class="col-12 col-md-auto">
+                            <div class="input-group">
+                                @Html.LabelFor(x => x.Search.Keyword, "企業名稱", new { @class="input-group-text" })
+                                @Html.TextBoxFor(x => x.Search.Keyword, new {@class="form-control", placeholder = "請輸入企業名稱",type="text"})
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-auto">
+                            <button type="button" class="btn btn-danger float-end" onclick="clearSearch()">清除</button>
+                            <button type="submit" class="btn btn-primary float-end">查詢</button>
+                        </div>
+                    </div>
+                    <div class="row g-3 align-items-end mb-3" >
+                        <div class="col-12 col-md-auto ms-auto">
+                            <button type="button" class="btn btn-success" onclick="Export()">匯出Excel</button>
+                        </div>
+                    </div>
+                }
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>序號</th>
+                                <th>企業名稱</th>
+                                <th>諮詢主題</th>
+                                <th>顧問</th>
+                                <th>輔導助理</th>
+                                <th>指派及審核</th>
+                                <th>管理</th>
+                                <th>匯出簽到表</th>
+                                <th>狀態</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ConsultExtendList != null && Model.ConsultExtendList.Count > 0)
+                            {
+                                for (int i = 0; i < Model.ConsultExtendList.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@(i + 1)</td>
+                                        <td style="max-width:30vw;">@Model.ConsultExtendList[i].ConsultRegister.Name</td>
+                                        <td style="max-width:30vw;">@Model.ConsultExtendList[i].textOfSubject</td>
+                                        <td style="max-width:30vw;">@Model.ConsultExtendList[i].ConsultantList</td>
+                                        <td style="max-width:30vw;">@Model.ConsultExtendList[i].Assistant</td>
+                                        <td style="max-width:30vw;">
+                                            <a class="btn btn-primary btn-sm" href="@(Url.Action("ConsultEdit", "Consult", new { id = EncryptService.AES.RandomizedEncrypt(Model.ConsultExtendList[i].ConsultRegister.Id.ToString())}))">編輯</a>
+                                        </td>
+                                        <td style="max-width:30vw;">
+                                            <a class="btn btn-primary btn-sm" href="@(Url.Action("ConsultManage", "Consult", new { id = EncryptService.AES.RandomizedEncrypt(Model.ConsultExtendList[i].ConsultRegister.Id.ToString()) }))">管理</a>
+                                        </td>
+                                        <td style="max-width:30vw;">
+                                            @*<a class="btn btn-success btn-sm" href="@(Url.Action("ConsultSigninExport", "Consult", new { id = EncryptService.AES.RandomizedEncrypt(Model.ConsultExtendList[i].ConsultRegister.Id.ToString()) }))">匯出簽到表</a>*@
+                                            <button type="button" class="btn btn-success" onclick="ExportSignin('@Model.ConsultExtendList[i].ConsultRegister.Id.ToString()')">匯出簽到表</button>
+                                        </td>
+                                        <td style="max-width:30vw;">@(Model.ConsultExtendList[i].ConsultRegister.IsClose == true ? "已結案" : "未結案")</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="9">目前暫無資料</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (Model != null && Model.ConsultExtendList != null && Model.ConsultExtendList.Count > 0)
+                {
+                    @await Html.PartialAsync("_Pagination", Model.Search.PagerInfo)
+                }
+            </div>
+        </div>
+    </div>
+</div>
