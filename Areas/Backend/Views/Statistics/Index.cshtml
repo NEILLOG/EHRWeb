@@ -1,0 +1,227 @@
+﻿@using BASE.Extensions
+@model BASE.Areas.Backend.Models.VM_Statistics
+
+<style>
+    .switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  top: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: green;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+</style>
+@section CustomScripts
+{
+    <!-- echart -->
+    <script src="~/js/echarts.js"></script>
+    <script src="~/areas/backend/js/echartStatistics.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // 類型
+            $('#Search_Type').change(function () {
+                if ($(this).val() == "1") {
+                    $("#Activicty").show();
+                    $("#Counsult").hide();
+                    $('#Search_ConYear').val('');
+                    $('#TotalCount').val('');
+                } else if ($(this).val() == "2") {
+                    $("#Activicty").hide();
+                    $("#Counsult").show();
+                    // 下拉改為請選擇
+                    $('#Search_ActivityName').empty();
+                    $("<option></option>")
+                        .val("")
+                        .text("請選擇")
+                        .appendTo($('#Search_ActivityName'));
+                    // 查詢清空
+                    $('#Search_ActYear').val('');
+                    $('#Search_ActivityName').val('');
+                    $('#Search_Filter').val('');
+                } else {
+                    $("#Activicty").hide();
+                    $("#Counsult").hide();
+                    clearSearch();
+                }
+            });
+
+            $('#Search_ActYear').change(function () {
+                var ActYear = $(this).val();
+                // 取得該年度活動資料
+                $.ajax({
+                    type: "Post",
+                    url: "@(Url.Action("GetActivity", "Statistics"))",
+                    dataType: "json",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
+                    },
+                    data: { year: ActYear },
+                    success: function (result) {
+                        $('#Search_ActivityName').empty();
+                        $.each(result, function (i, item) {
+                            $("<option></option>")
+                                .val(item.value)
+                                .text(item.text)
+                                .appendTo($('#Search_ActivityName'));
+                        });
+                    },
+                    error: function (xhr) {
+                        alert(xhr.responseText);
+                    }
+                });
+            });
+
+            $('#Search_ConYear').change(function () {
+                var ConYear = $(this).val();
+                // 取得該年度諮詢輔導資料
+                $.ajax({
+                    type: "Post",
+                    url: "@(Url.Action("GetConsultCount", "Statistics"))",
+                    dataType: "json",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
+                    },
+                    data: { year: ConYear },
+                    success: function (result) {
+                        $("#TotalCount").val(result);
+                    },
+                    error: function (xhr) {
+                        alert(xhr.responseText);
+                    }
+                });
+            });
+        });
+
+        
+
+        // 清除查詢條件
+        function clearSearch() {
+            // 下拉改為請選擇
+            $('#Search_ActivityName').empty();
+            $("<option></option>")
+                .val("")
+                .text("請選擇")
+                .appendTo($('#Search_ActivityName'));
+            // 查詢清空
+            $('#Search_ActYear').val('');
+            $('#Search_ActivityName').val('');
+            $('#Search_Filter').val('');
+            $('#Search_ConYear').val('');
+            $('#Search_Type').val('');
+            $('#TotalCount').val('');
+        }
+
+        function onSearch() {
+            // 判斷必填
+            if ($('#Search_Type').val() == "1") {
+                if ($("#Search_ActYear").val() == "" || $("#Search_ActivityName").val() == "" || $("#Search_Filter").val() == "") {
+                    toastr['error']("請檢查年度、活動名稱及篩選條件皆有選擇");
+                    return false;
+                }
+
+                // 處理圖表
+                ActivityChart($('#Search_ActYear').val(), $('#Search_ActivityName').val(), $('#Search_ActivityName').find("option:selected").text(), $('#Search_Filter').val(), $('#Search_Filter').find("option:selected").text());
+            }
+            else if ($('#Search_Type').val() == "2") {
+                if ($("#Search_ConYear").val() == "") {
+                    toastr['error']("請檢查年度已選擇");
+                    return false;
+                }
+
+                // 處理圖表
+                ConsultChart($('#Search_ConYear').val());
+            }
+            else {
+                toastr['error']("請先選擇類型");
+                return false;
+            }           
+        }
+        
+    </script>
+}
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                @using (Html.BeginForm(FormMethod.Post, new { id = "frm", @autocomplete = "off" }))
+                {
+                    @Html.AntiForgeryToken()
+                   
+                    <div class="row g-3 align-items-end mb-3">
+                        <div class="col-12 col-md-auto ms-auto">
+                            <div class="input-group">
+                                @Html.LabelFor(x => x.Search.Type, "類型", new { @class="input-group-text" })
+                                @Html.DropDownListFor(x=>x.Search.Type,Model.ddlType,new{@class="form-control"})
+                            </div>
+                            <div class="input-group" id="Activicty" style="display:none">
+                                @Html.LabelFor(x => x.Search.ActYear, "年度", new { @class="input-group-text" })
+                                @Html.DropDownListFor(x=>x.Search.ActYear,Model.ddlYear,new{@class="form-control"})
+                                @Html.LabelFor(x => x.Search.ActivityName, "活動名稱", new { @class="input-group-text" })
+                                @Html.DropDownListFor(x=>x.Search.ActivityName,Model.ddlActivityName,new{@class="form-control"})
+                                @Html.LabelFor(x => x.Search.Filter, "篩選條件", new { @class="input-group-text" })
+                                @Html.DropDownListFor(x=>x.Search.Filter,Model.ddlFilter,new{@class="form-control"})
+                            </div>
+                            <div class="input-group" id="Counsult" style="display:none">
+                                @Html.LabelFor(x => x.Search.ConYear, "年度", new { @class="input-group-text" })
+                                @Html.DropDownListFor(x=>x.Search.ConYear,Model.ddlYear,new{@class="form-control"})
+                                @Html.LabelFor(x => x.TotalCount, "總申請家數", new { @class="input-group-text" })
+                                @Html.TextBoxFor(x => x.TotalCount, new { @class="form-control", @disabled = "disabled" })
+                             </div>
+                        </div>
+                        <div class="col-12 col-md-auto">
+                            <button type="button" class="btn btn-danger float-end" onclick="clearSearch()">清除</button>
+                            <button type="button" class="btn btn-primary float-end" onclick="onSearch()">查詢</button>
+                        </div>
+                    </div>                   
+                }
+
+                <div class="table-responsive">
+                    <div id="ChartDIV" style="width: 100%;height:500px;"></div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>

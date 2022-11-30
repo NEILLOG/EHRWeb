@@ -75,6 +75,7 @@
     <None Include="Areas\Backend\Views\Album\AlbumAdd.cshtml" />
     <None Include="Areas\Backend\Views\Album\AlbumEdit.cshtml" />
     <None Include="Areas\Backend\Views\Album\AlbumList.cshtml" />
+    <None Include="Areas\Backend\Views\Statistics\Index.cshtml" />
     <None Include="wwwroot\lib\ckeditor5\ckeditor.js" />
     <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\dist\tooltip.min.js" />
     <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\LICENSE" />
