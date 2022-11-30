@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "/xcSr48bLboMRl0hByAh1ut3lbCIeJ1J51Docv/pU7Y=",
+  "Hash": "7Vfz/QlWC6BIf/dfefTkjLw4ROxrC60y/zsXN6oKkZY=",
   "Source": "BASE",
   "BasePath": "_content/BASE",
   "Mode": "Default",
@@ -54755,6 +54755,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\RelationLinkImageFiles\\0\\221127040224369275QPRZ9.jpg"
+    },
+    {
+      "Identity": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\Upload\\SatisfySurveyFile\\20221130214621\\2211300946212876611G7NQ.png",
+      "SourceId": "BASE",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\",
+      "BasePath": "_content/BASE",
+      "RelativePath": "Upload/SatisfySurveyFile/20221130214621/2211300946212876611G7NQ.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\SatisfySurveyFile\\20221130214621\\2211300946212876611G7NQ.png"
     }
   ]
 }

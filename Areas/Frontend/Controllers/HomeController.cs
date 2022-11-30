@@ -36,7 +36,7 @@ namespace BASE.Areas.Frontend.Controllers
 
         public async Task<IActionResult> Index()
         {
-            String id = "1"; id = EncryptService.AES.RandomizedEncrypt(id);
+            String id = "2"; id = EncryptService.AES.RandomizedEncrypt(id);
 
             VM_Index data = new VM_Index();
 

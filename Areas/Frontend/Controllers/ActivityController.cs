@@ -25,18 +25,21 @@ namespace BASE.Areas.Frontend.Controllers
         private readonly FileService _fileService;
         private readonly ActivityService _activityService;
         private readonly QuizService _quizService;
+        private readonly MailService _mailService;
 
         public ActivityController(IConfiguration configuration,
             AllCommonService allCommonService,
             ActivityService activtyService,
             FileService fileService,
-            QuizService quizService)
+            QuizService quizService,
+            MailService mailService)
         {
             _conf = configuration;
             _allCommonService = allCommonService;
             _activityService = activtyService;
             _fileService = fileService;
             _quizService = quizService;
+            _mailService = mailService;
         }
 
         public async Task<IActionResult> List(String id = "")
@@ -214,6 +217,37 @@ namespace BASE.Areas.Frontend.Controllers
             if (isSuccess)
             {
                 TempData["CostomTempEmail"] = main.Email;
+
+                var activity = _activityService.GetActivityExtendItem(ref _message, decrypt_id);
+                var activity_user = _allCommonService.Lookup<TbUserInfo>(ref _message, x => x.UserId == activity.Header.CreateUser).FirstOrDefault();
+
+                //日期格式:○月○日  ○:○-○:○ (實體/線上 )、○月○日  ○:○-○:○ (實體/線上 )···
+                var dateFormat = @"{0} {1}-{2}({3})";
+                var dateString = new List<string>();
+                foreach (var item in data.RegisterSection)
+                {
+                    var section = activity.Sections.Where(x => x.Id == item.RegisterSectionId).First();
+
+                    dateString.Add(String.Format(dateFormat, 
+                        section.Day.ToString("MM月dd日"),
+                        section.StartTime.ToString(@"hh\:mm"),
+                        section.EndTime.ToString(@"hh\:mm"),
+                        section.SectionType
+                    ));
+                }
+
+                await _mailService.SendEmail(new MailViewModel()
+                {
+                    Subject = String.Format(MailTmeplate.Activity.REGISTER_SUCCESS_CONTNET, activity.Header.Title, activity.Header.Subject),
+                    Body = String.Format(MailTmeplate.Activity.REGISTER_SUCCESS_CONTNET,
+                                            data.Main.Name,
+                                            activity.Header.Title,
+                                            activity.Header.Subject,
+                                            String.Join("<br />", dateString),
+                                            activity_user.Email
+                                            ),
+                    ToList = new List<MailAddressInfo>() { new MailAddressInfo(main.Email) }
+                });
             }
             else
             {

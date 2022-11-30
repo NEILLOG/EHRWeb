@@ -35,12 +35,13 @@ namespace BASE.Areas.Backend.Service
                 // 取得活動日期字串
                 foreach (var item in dataList)
                 {
-                    List<string> listActivityDate = new List<string>();
-                    listActivityDate = Lookup<TbActivitySection>(ref _Msg, x => x.ActivityId == item.activity.Id).Select(x => x.Day.ToString()).Distinct().ToList();
+                    List<TbActivitySection> listActivitySection = new List<TbActivitySection>();
+                    listActivitySection = Lookup<TbActivitySection>(ref _Msg, x => x.ActivityId == item.activity.Id).OrderBy(x=>x.Day).Distinct().ToList();
                     string strActivityDate = "";
-                    foreach (var itemActivityDate in listActivityDate)
+                    foreach (var itemActivityDate in listActivitySection)
                     {
-                        strActivityDate = String.IsNullOrEmpty(strActivityDate) ? strActivityDate + itemActivityDate : String.Concat(strActivityDate, "、", itemActivityDate);
+                        item.listActivitySection.Add(itemActivityDate);
+                        strActivityDate = String.IsNullOrEmpty(strActivityDate) ? strActivityDate + itemActivityDate.Day.ToString("yyyy-MM-dd") : String.Concat(strActivityDate, "、", itemActivityDate.Day.ToString("yyyy-MM-dd"));
                     }
                     item.activityDateList = strActivityDate;
                 }
@@ -67,30 +68,69 @@ namespace BASE.Areas.Backend.Service
                     }
 
                     // 日期搜尋僅有開始日期
-                    if ((!string.IsNullOrEmpty(vmParam.sTime) && string.IsNullOrEmpty(vmParam.eTime)))
+                    if (!string.IsNullOrEmpty(vmParam.sTime) && string.IsNullOrEmpty(vmParam.eTime))
                     {
-                        DateTime startDaet = Convert.ToDateTime(vmParam.sTime);
-                        dataList = dataList.Where(x => x.activity.RegStartDate <= startDaet && x.activity.RegEndDate >= startDaet).ToList();
+                        List<string> listContainActivity = new List<string>();
+                        DateTime startDate = Convert.ToDateTime(vmParam.sTime);
+                        
+                        foreach (var item in dataList)
+                        {
+                            foreach (var itemSection in item.listActivitySection)
+                            {
+                                if (itemSection.Day >= startDate)
+                                {
+                                    listContainActivity.Add(item.activity.Id);
+                                    break;
+                                }
+                            }
+                        }
+
+                        dataList = dataList.Where(x => listContainActivity.Contains(x.activity.Id)).ToList();
                     }
 
                     // 日期搜尋僅有結束日期
                     if (string.IsNullOrEmpty(vmParam.sTime) && !string.IsNullOrEmpty(vmParam.eTime))
                     {
-                        DateTime endDaet = Convert.ToDateTime(vmParam.eTime);
-                        dataList = dataList.Where(x => x.activity.RegStartDate <= endDaet && x.activity.RegEndDate >= endDaet).ToList();
+                        List<string> listContainActivity = new List<string>();
+
+                        DateTime endDate = Convert.ToDateTime(vmParam.eTime);
+                        foreach (var item in dataList)
+                        {
+                            foreach (var itemSection in item.listActivitySection)
+                            {
+                                if (itemSection.Day <= endDate)
+                                {
+                                    listContainActivity.Add(item.activity.Id);
+                                    break;
+                                }
+                            }
+                        }
+                        dataList = dataList.Where(x => listContainActivity.Contains(x.activity.Id)).ToList();
+
                     }
 
-                    // 日期搜尋起訖皆有
+                    // 日期搜尋僅有結束日期
                     if (!string.IsNullOrEmpty(vmParam.sTime) && !string.IsNullOrEmpty(vmParam.eTime))
                     {
+                        List<string> listContainActivity = new List<string>();
+
                         DateTime startDate = Convert.ToDateTime(vmParam.sTime);
                         DateTime endDate = Convert.ToDateTime(vmParam.eTime);
-                        dataList = dataList.Where(x => (x.activity.RegStartDate >= startDate && x.activity.RegStartDate <= endDate) 
-                                                     ||(x.activity.RegEndDate >= startDate && x.activity.RegEndDate <= endDate)
-                                                     || (x.activity.RegStartDate <= startDate && endDate <= x.activity.RegEndDate)
-                                                     || (x.activity.RegStartDate >= startDate && endDate >= x.activity.RegEndDate)
-                                                     ).ToList();
+                        foreach (var item in dataList)
+                        {
+                            foreach (var itemSection in item.listActivitySection)
+                            {
+                                if (itemSection.Day >= startDate && itemSection.Day <= endDate)
+                                {
+                                    listContainActivity.Add(item.activity.Id);
+                                    break;
+                                }
+                            }
+                        }
+                        dataList = dataList.Where(x => listContainActivity.Contains(x.activity.Id)).ToList();
+
                     }
+
                 }
                 return dataList;
             }

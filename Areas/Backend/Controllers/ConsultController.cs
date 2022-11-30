@@ -496,6 +496,25 @@ namespace BASE.Areas.Backend.Controllers
                         });
                     }
 
+                    //-- 發送滿意度問卷調查通知信
+                    if (item.ReAssignDate.HasValue)
+                    {
+                        //主旨
+                        string sSubject = "【勞動部桃竹苗分署人力資源整合服務計畫_諮詢服務】請協助填寫滿意度調查，謝謝您！";
+
+                        //內容
+                        string sContent = string.Format("{0}{1}{2}您好：<br /><br />", item.Name, item.ContactName, item.ContactJobTitle);
+                        sContent += "有關今日諮詢輔導服務，再請您協助填寫滿意度調查表：https://forms.gle/cQBjsCbewak9BVrr6<br />希望您能提供寶貴的意見，供我們做未來服務參考，謝謝您的協助！<br /><br />";
+                        sContent += "敬祝 事事順心!";
+
+                        //寄送預約信件
+                        await _mailService.ReserveSendEmail(new MailViewModel()
+                        {
+                            ToList = new List<MailAddressInfo>() { new MailAddressInfo(item.ContactEmail) },
+                            Subject = sSubject,
+                            Body = sContent
+                        }, userinfo.UserID, item.ReAssignDate.Value.AddDays(1), "ConsultSatisfy");
+                    }
                 }
 
                 TempData["TempMsgType"] = MsgTypeEnum.success;

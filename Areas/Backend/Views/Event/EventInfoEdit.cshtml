@@ -10,7 +10,9 @@
     <script type="text/javascript">
         var rowCount = @Model.EventInfoItem.sectionExtendList.Count;
         $(document).ready(function () {
-            
+
+            CheckFIleUpload();
+
             // 已審核通過不可編輯
             if ('@Model.EventInfoItem.activity.IsValid' == 'True')
             {
@@ -79,7 +81,13 @@
 
             // 預設新增 實體壓縮檔需上傳
             $("#div_EntityFile").show();
-            $("#EntityFile").attr('data-parsley-required', '');
+            if($("#FileForEntity").val() != "")
+            {
+                $("#EntityFile").attr('data-parsley-required', 'false');
+            }else
+            {
+                $("#EntityFile").attr('data-parsley-required', '');
+            }
             rowCount++;
         }
 
@@ -106,7 +114,15 @@
             // 若為實體模式，實體壓縮檔必須上傳
             if (isEntity) {
                 $("#div_EntityFile").show();
-                $("#EntityFile").attr('data-parsley-required', '');
+
+                if($("#FileForEntity").val() != "")
+                {
+                    $("#EntityFile").attr('data-parsley-required', 'false');
+                }else
+                {
+                    $("#EntityFile").attr('data-parsley-required', '');
+                }
+
             } else {
                 $("#div_EntityFile").hide();
                 $("#EntityFile").attr('data-parsley-required', 'false');

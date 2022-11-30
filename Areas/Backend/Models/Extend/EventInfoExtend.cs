@@ -13,6 +13,8 @@ namespace BASE.Areas.Backend.Models.Extend
         /// <summary> 活動日期列表 </summary>
         public string activityDateList { get; set; }
 
+        /// <summary> 活動報名時段列表 </summary>
+        public List<TbActivitySection> listActivitySection { get; set; } = new List<TbActivitySection>();
     }
 
     /// <summary> 活動場次extend </summary>

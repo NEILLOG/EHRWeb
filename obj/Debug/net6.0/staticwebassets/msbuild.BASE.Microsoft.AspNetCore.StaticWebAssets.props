@@ -50560,5 +50560,21 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Upload\RelationLinkImageFiles\0\221127040224369275QPRZ9.jpg))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Upload\SatisfySurveyFile\20221130214621\2211300946212876611G7NQ.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>BASE</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/BASE</BasePath>
+      <RelativePath>Upload/SatisfySurveyFile/20221130214621/2211300946212876611G7NQ.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Upload\SatisfySurveyFile\20221130214621\2211300946212876611G7NQ.png))</OriginalItemSpec>
+    </StaticWebAsset>
   </ItemGroup>
 </Project>
