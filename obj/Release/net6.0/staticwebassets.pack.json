@@ -5,8 +5,24 @@
       "PackagePath": "staticwebassets\\Sample\\ActivitySignin.docx"
     },
     {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\Sample\\Modify1.doc",
+      "PackagePath": "staticwebassets\\Sample\\Modify1.doc"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\Sample\\Modify2.doc",
+      "PackagePath": "staticwebassets\\Sample\\Modify2.doc"
+    },
+    {
       "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\Sample\\Sample_Consultant.xls",
       "PackagePath": "staticwebassets\\Sample\\Sample_Consultant.xls"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\Sample\\Sample_Proof.docx",
+      "PackagePath": "staticwebassets\\Sample\\Sample_Proof.docx"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\Sample\\附件五_諮詢服務滿意度調查.docx",
+      "PackagePath": "staticwebassets\\Sample\\附件五_諮詢服務滿意度調查.docx"
     },
     {
       "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\Upload\\ActivityPhoto\\Act0000000\\2211031021092572203N4NZ.jpg",
@@ -109,6 +125,10 @@
       "PackagePath": "staticwebassets\\Upload\\AdvertiseImageFiles\\0\\2211271113095279741XX8P.jpg"
     },
     {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\Upload\\AlbumImageFiles\\News000014\\22120409292060191955CR7.png",
+      "PackagePath": "staticwebassets\\Upload\\AlbumImageFiles\\News000014\\22120409292060191955CR7.png"
+    },
+    {
       "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\Upload\\Consult\\1\\221119045933066816W65HL.docx",
       "PackagePath": "staticwebassets\\Upload\\Consult\\1\\221119045933066816W65HL.docx"
     },
@@ -127,6 +147,10 @@
     {
       "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\Upload\\NewsFiles\\News000001\\221127031620637995LBLG8.png",
       "PackagePath": "staticwebassets\\Upload\\NewsFiles\\News000001\\221127031620637995LBLG8.png"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\Upload\\NewsFiles\\News000013\\221203111427748655QC55E.png",
+      "PackagePath": "staticwebassets\\Upload\\NewsFiles\\News000013\\221203111427748655QC55E.png"
     },
     {
       "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\Upload\\RelationLinkImageFiles\\0\\221127035909727306R225F.png",
@@ -3103,6 +3127,10 @@
     {
       "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\areas\\frontend\\img\\resource\\image.png",
       "PackagePath": "staticwebassets\\areas\\frontend\\img\\resource\\image.png"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\areas\\frontend\\img\\speaker.png",
+      "PackagePath": "staticwebassets\\areas\\frontend\\img\\speaker.png"
     },
     {
       "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\areas\\frontend\\img\\subs-done.png",
@@ -12567,6 +12595,54 @@
     {
       "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\lib\\jquery\\v3.6.0\\dist\\jquery.slim.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\v3.6.0\\dist\\jquery.slim.min.map"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\lib\\lightbox\\css\\lightbox.css",
+      "PackagePath": "staticwebassets\\lib\\lightbox\\css\\lightbox.css"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\lib\\lightbox\\css\\lightbox.min.css",
+      "PackagePath": "staticwebassets\\lib\\lightbox\\css\\lightbox.min.css"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\lib\\lightbox\\images\\close.png",
+      "PackagePath": "staticwebassets\\lib\\lightbox\\images\\close.png"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\lib\\lightbox\\images\\loading.gif",
+      "PackagePath": "staticwebassets\\lib\\lightbox\\images\\loading.gif"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\lib\\lightbox\\images\\next.png",
+      "PackagePath": "staticwebassets\\lib\\lightbox\\images\\next.png"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\lib\\lightbox\\images\\prev.png",
+      "PackagePath": "staticwebassets\\lib\\lightbox\\images\\prev.png"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\lib\\lightbox\\js\\lightbox-plus-jquery.js",
+      "PackagePath": "staticwebassets\\lib\\lightbox\\js\\lightbox-plus-jquery.js"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\lib\\lightbox\\js\\lightbox-plus-jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\lightbox\\js\\lightbox-plus-jquery.min.js"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\lib\\lightbox\\js\\lightbox-plus-jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\lightbox\\js\\lightbox-plus-jquery.min.map"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\lib\\lightbox\\js\\lightbox.js",
+      "PackagePath": "staticwebassets\\lib\\lightbox\\js\\lightbox.js"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\lib\\lightbox\\js\\lightbox.min.js",
+      "PackagePath": "staticwebassets\\lib\\lightbox\\js\\lightbox.min.js"
+    },
+    {
+      "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\lib\\lightbox\\js\\lightbox.min.map",
+      "PackagePath": "staticwebassets\\lib\\lightbox\\js\\lightbox.min.map"
     },
     {
       "Id": "D:\\TFS\\EHR人力資源\\SourceCode\\原始檔\\wwwroot\\lib\\sortable\\Sortable.js",

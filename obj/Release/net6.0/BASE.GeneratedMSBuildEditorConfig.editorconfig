@@ -20,12 +20,20 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xBY2NvdW50XEFjY291bnRBZGQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Account/AccountEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xBY2NvdW50XEFjY291bnRFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Account/AccountList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xBY2NvdW50XEFjY291bnRMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Account/PersonalManage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xBY2NvdW50XFBlcnNvbmFsTWFuYWdlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Account/UserOperateRecord.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xBY2NvdW50XFVzZXJPcGVyYXRlUmVjb3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Advertise/AdvertiseAdd.cshtml]
@@ -288,6 +296,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xfVmlld1N0YXJ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Activity/Checkin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcQWN0aXZpdHlcQ2hlY2tpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Activity/Detail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcQWN0aXZpdHlcRGV0YWlsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -334,6 +346,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/ContactUs/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcQ29udGFjdFVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Home/Accessible.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRnJvbnRlbmRcVmlld3NcSG9tZVxBY2Nlc3NpYmxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Frontend/Views/Home/Index.cshtml]

@@ -119,6 +119,21 @@ namespace BASE.Areas.Frontend.Controllers
 
             string decrypt_id = EncryptService.AES.RandomizedDecrypt(id);
 
+            var FixedProjectIds = _conf.GetSection("Custom:FixedProjectIds").Get<List<string>>();
+            if (FixedProjectIds.Contains(decrypt_id))
+            {
+                data.IsShowModifyArea = true;
+                switch (decrypt_id)
+                {
+                    case "PJ00000002":
+                        data.SampleFilePath = "/sample/modify1.doc";
+                        break;
+                    default:
+                        data.SampleFilePath = "/sample/modify2.doc";
+                        break;
+                }
+            }
+
             try
             {
                 data.ExtendItem = _proejctService.GetItem(ref _message, decrypt_id);

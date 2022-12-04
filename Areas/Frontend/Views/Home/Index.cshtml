@@ -168,7 +168,7 @@
                                         </div>
                                     </div>
                                     <div class="title">
-                                        <a href="@Url.Action("Detail", "News", new { id = EncryptService.AES.RandomizedEncrypt(item.Header.Id) })" title="前往訊息內頁">@(LastNews.Header.Contents.Length > 30 ? LastNews.Header.Contents.Substring(0, 30) + "..." : LastNews.Header.Contents)</a>
+                                        <a href="@Url.Action("Detail", "News", new { id = EncryptService.AES.RandomizedEncrypt(item.Header.Id) })" title="前往訊息內頁">@(item.Header.Title.Length > 30 ? item.Header.Title.Substring(0, 30) + "..." : item.Header.Title)</a>
                                     </div>
                                 </div>
                                 <span class="moreicon"><i class="fa-solid fa-chevron-right"></i></span>

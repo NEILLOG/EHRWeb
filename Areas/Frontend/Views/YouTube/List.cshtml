@@ -19,7 +19,7 @@
             @foreach (var item in Model.DataList)
             {
                 <div class="col">
-                    <a class="card h-100" href="#">
+                    <a class="card h-100" href="https://www.youtube.com/watch?v=@item.YouTubeId" target="_blank">
                         <div style="overflow:hidden; border-top-right-radius: 10px; border-top-left-radius: 10px;">
                             <iframe width="100%" style="min-height:320px;" src="https://www.youtube.com/embed/@item.YouTubeId"
                                 title="YouTube video player" frameborder="0"

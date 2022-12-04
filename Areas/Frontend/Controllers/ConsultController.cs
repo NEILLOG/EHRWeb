@@ -64,6 +64,8 @@ namespace BASE.Areas.Frontend.Controllers
 
         public async Task<IActionResult> Register()
         {
+            HttpContext.Session.Set(Backend.Models.SessionStruct.VerifyCode.Consult, new ValidImageHelper().RandomCode(5));
+
             VM_ConsultRegister data = new VM_ConsultRegister();
          
             try
@@ -89,27 +91,36 @@ namespace BASE.Areas.Frontend.Controllers
             bool isSuccess = false; // 最終動作成功與否
             bool unCaughtError = false; // 例外錯誤發生，特別記錄至 TbLog
 
-            try
+            String code = HttpContext.Session.Get<String>(Backend.Models.SessionStruct.VerifyCode.Consult);
+
+            if (code == datapost.VerifyCode)
             {
-                datapost.ExtendItem.CreateDate = DateTime.Now;
-                datapost.ExtendItem.ConsultSubjects = String.Join(",", datapost.CheckedSubjects);
                 try
                 {
-                    await _consultService.Insert(datapost.ExtendItem);
-                    isSuccess = true;
+                    datapost.ExtendItem.CreateDate = DateTime.Now;
+                    datapost.ExtendItem.ConsultSubjects = String.Join(",", datapost.CheckedSubjects);
+                    try
+                    {
+                        await _consultService.Insert(datapost.ExtendItem);
+                        isSuccess = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        _message += ex.ToString();
+                        TempData["TempMsgDetail"] = "發生技術性錯誤，請聯絡技術人員或稍後再試一次";
+                        unCaughtError = true;
+                    }
                 }
                 catch (Exception ex)
                 {
+                    TempData["TempMsg"] = "伺服器連線異常，請檢查您的網路狀態後再試一次！";
                     _message += ex.ToString();
-                    TempData["TempMsgDetail"] = "發生技術性錯誤，請聯絡技術人員或稍後再試一次";
                     unCaughtError = true;
                 }
             }
-            catch (Exception ex)
+            else
             {
-                TempData["TempMsg"] = "伺服器連線異常，請檢查您的網路狀態後再試一次！";
-                _message += ex.ToString();
-                unCaughtError = true;
+                TempData["TempMsg"] = "驗證碼錯誤";
             }
 
 

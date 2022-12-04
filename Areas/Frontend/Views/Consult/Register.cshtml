@@ -7,6 +7,13 @@
 {
     <script>
         $(document).ready(function () {
+
+            $('.PlayValidCode').click(function () {
+                var audio = document.getElementById("player1");
+                audio.play();
+                return false;
+            });
+
             $('#frm').submit(function () {
                 checked = $("input.subjects:checked").length;
                 if (!checked) {
@@ -56,30 +63,35 @@
                         </div>
                         <div class="col-12">
                             <div class="mb-2" id="regis-form">
+
                                 <div class="mb-2">諮詢主題(可複選)<span class="fc-red ms-1">*</span></div>
                                 <div class="form-check form-check-inline CusCheckbox-form">
                                     <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-AA" value="組織經營" name="CheckedSubjects">
                                     <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-AA">組織經營</label>
                                 </div>
                                 <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-BB" value="人才培育" name="CheckedSubjects">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-BB">人才培育</label>
+                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-BB" value="組織轉型" name="CheckedSubjects">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-BB">組織轉型</label>
                                 </div>
                                 <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-CC" value="職能分析" name="CheckedSubjects">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-CC">職能分析</label>
+                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-CC" value="人才培育" name="CheckedSubjects">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-CC">人才培育</label>
                                 </div>
                                 <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-DD" value="員工職涯發展" name="CheckedSubjects">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-DD">員工職涯發展</label>
+                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-DD" value="職能分析" name="CheckedSubjects">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-DD">職能分析</label>
                                 </div>
                                 <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-EE" value="其他人資管理議題" name="CheckedSubjects">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-EE">其他人資管理議題</label>
+                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-EE" value="員工職涯發展" name="CheckedSubjects">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-EE">員工職涯發展</label>
                                 </div>
                                 <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-FF" value="不清楚問題屬性" name="CheckedSubjects">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-FF">不清楚問題屬性</label>
+                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-FF" value="人力資源管理" name="CheckedSubjects">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-FF">人力資源管理</label>
+                                </div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-GG" value="勞資關係及法令" name="CheckedSubjects">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-GG">勞資關係及法令</label>
                                 </div>
                             </div>
                         </div>
@@ -108,6 +120,10 @@
                             @Html.TextBoxFor(x => x.ExtendItem.ContactJobTitle, new { @class="form-control", placeholder="您的回答", required="required" })
                         </div>
                         <div class="col-12">
+                            <label for="inputI" class="form-label">聯絡人電話<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.ExtendItem.ContactPhone, new { type="text", @class="form-control", placeholder="您的回答", required="required" })
+                        </div>
+                        <div class="col-12">
                             <label for="inputI" class="form-label">聯絡人EMAIL<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.ExtendItem.ContactEmail, new { type="email", @class="form-control", placeholder="您的回答", required="required" })
                         </div>
@@ -115,11 +131,14 @@
                             <div class="mb-3 d-flex">
                                 <div>
                                     <label for="exampleInputRandom2" class="form-label">驗證碼<span class="fc-red ms-1">*</span></label>
-                                    <input type="text" class="form-control" id="exampleInputRandom2" placeholder="請輸入驗證碼" required>
+                                    @Html.TextBoxFor(x => x.VerifyCode, new { @class="form-control", placeholder="請輸入驗證碼", required="required"})
                                 </div>
                                 <div>
-                                    <canvas id="canvas2" width="120" height="45" class="ms-3 mt-4"></canvas>
-                                    <a href="#" id="changeImg2" title="重新產生驗證碼">重新產生</a>
+                                    <audio id="player1" controls src="@Url.Action("TTS", "Home", new { id = "Consult" })" style="display:none;"></audio>
+                                    <img id="LoginCode" src="@Url.Action("GetValidateCode", "Home", new { id = "Consult" } )" class="w-40 ml-3 mt-4" alt="圖片驗證碼" />
+                                    <a href="#" class="PlayValidCode" title="播放圖片驗證碼">
+                                        <img src="~/areas/frontend/img/speaker.png" alt="播放圖片驗證碼" />
+                                    </a>
                                 </div>
                             </div>
                         </div>

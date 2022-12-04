@@ -32,7 +32,11 @@
 
                     <h4><i class="fa-regular fa-paper-plane me-3 fc-green" aria-hidden="true"></i>活動簡介</h4>
                     <p>
-                        @Html.Raw(System.Text.RegularExpressions.Regex.Replace(Model.ActivityExtendItem.Header.Description, "<.*?>", String.Empty))
+                        @{
+                            String content = System.Text.RegularExpressions.Regex.Replace(Model.ActivityExtendItem.Header.Description, "<.*?>", String.Empty);
+                                   content = content.Replace(Environment.NewLine, "<br />");
+                        }
+                        @Html.Raw(content)
                     </p>
                 </div>
             </div>

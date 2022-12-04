@@ -5,9 +5,8 @@
         /// <summary>活動</summary>
         public class Activity 
         {
-            /// <summary>報名成功主旨</summary>
+            //報名成功
             public static String REGISTER_SUCCESS_SUBJECT = "勞動部勞動力發展署桃竹苗分署-{0}–{1}報名完成通知信 (本郵件由系統自動寄發，請勿直接回覆此郵件)";
-            /// <summary>報名成功內容</summary>
             public static String REGISTER_SUCCESS_CONTNET = @"
                 <p>{0} 您好</p>
                 <p>您已完成報名程序，以下是您報名的活動資訊<br />
@@ -27,6 +26,26 @@
                 諮詢電話02-23660812 #164、#127  03-4855368#1905
                 </p>
             ";
+            
+            //滿意度
+            public static String SATISFACTION_SUBJECT = "【活動滿意度問卷】桃竹苗分署{0}{1}–{2}";
+            public static String SATISFACTION_CONTNET = @"
+                <p>敬愛的學員，您好：<br />
+                感謝您於 {0} 參加勞動部勞動力發展署桃竹苗分署主辦之{1}–{2}。</p>
+
+                <p>為優化活動品質，桃竹苗分署邀請您填寫本次活動滿意度調查問卷，作為未來活動規劃與改善之參考，敬請協助填寫，謝謝您！</p>
+
+                <p>{0} 滿意度問卷調查連結：</p>
+                <p><a href=""{3}"">網址連結</a></p>
+
+                <p>附件：課程講義、其他服務資源資訊</p>
+
+                <p>若有任何問題，歡迎來電或來信詢問<br />
+                敬祝 順心平安<br />
+                勞動部勞動力發展署桃竹苗分署<br />
+                桃竹苗區域運籌人力資源整合服務計畫_專案辦公室<br />
+                諮詢電話02-23660812 #164、#127  03-4855368#1905
+                </p>";
         }
         /// <summary>諮詢服務</summary>
         public class Consult {

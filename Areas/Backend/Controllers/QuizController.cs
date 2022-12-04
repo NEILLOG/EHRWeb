@@ -37,23 +37,6 @@ namespace BASE.Areas.Backend.Controllers
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
 
-            //直接測試寄信
-            //await _mailService.SendEmail(new MailViewModel()
-            //{
-            //    ToList = new List<MailAddressInfo>() { new MailAddressInfo("zhungei@gmail.com") },
-            //    Subject = "測試信主旨",
-            //    Body = "測試寄信"
-            //});
-
-            ////寄送預約信件
-            //await _mailService.ReserveSendEmail(new MailViewModel()
-            //{
-            //    ToList = new List<MailAddressInfo>() { new MailAddressInfo("zhungei@gmail.com") },
-            //    Subject = "測試信主旨",
-            //    Body = "測試寄信"
-            //}, userinfo.UserID, DateTime.Now, "test_id");
-
-
             string Feature = "問卷管理", Action = "檢視";
 
             try

@@ -126,6 +126,19 @@
                         @using (Html.BeginForm(FormMethod.Post, new { id = "frm", @autocomplete = "off", @enctype = "multipart/form-data", @data_parsley_validate = "" }))
                         {
                             @Html.AntiForgeryToken()
+                            
+                             <div class="row">
+                                <div class="col-12">
+                                    <h3>@Model.ExtendItem.Header.Name</h3>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    @Html.Raw(Model.ExtendItem.Header.Description)
+                                </div>
+                            </div>
+
                             <div class="row">
 
                                 @foreach (var line in Model.ExtendItem.Lines)

@@ -1,0 +1,242 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@model BASE.Areas.Backend.Models.VM_Account
+@{
+}
+@section CustomScripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // 取得目前顧問群組ID設定
+            var ConsultantGroupID = @Json.Serialize(Configuration["Site:ConsultantGroupID"]);
+            if ('@Model.Search.sGroup' == ConsultantGroupID) {
+                $("#spPhone").hide();
+                $('#txtPhone').attr('data-parsley-required', 'false');
+                $("#divConsultant").show();
+            }
+            $('#ddlGroup').change(function () {
+                if ($(this).val() == ConsultantGroupID) {
+                    $("#spPhone").hide();
+                    $('#txtPhone').attr('data-parsley-required', 'false');
+                    $("#divConsultant").show();
+                } else {
+                    $("#spPhone").show();
+                    $('#txtPhone').attr('data-parsley-required', 'true');
+                    $("#divConsultant").hide();
+                }
+            })
+
+            $('#frm').on('submit', function () {
+                var strMsg = "";
+
+                //檢查群組
+                if (document.getElementById("ddlGroup").value == "") {
+                    strMsg += "請選擇群組";
+                }
+                if (document.getElementById("ddlGroup").value == ConsultantGroupID) {
+                    // 性別
+                    var bFlag = false;
+                    var gender = document.getElementsByName('AccountExtendItem.account.Sex');
+                    for (var i = 0; i < gender.length; i++) {
+                        if (gender[i].checked) {
+                            bFlag = true;
+                            break;
+                        }
+                    }
+                    if (!bFlag) strMsg += "請選擇性別";
+
+                    // 專業領域
+                    if (!$("input[type='checkbox']").is(':checked')) strMsg += "請選擇專業領域";
+
+                }
+
+                if (strMsg != "") {
+                    toastr['error'](strMsg);
+                    return false;
+                }
+            });
+        });
+
+        // 新增經歷
+        function addEXP() {
+            var currentRow = $("#tb_EXP tr").length;
+
+            var html = "";
+            html += "<tr>"
+            html += `<td><input class='form-control' id='AccountExtendItem_listUserEXP_${currentRow}__ServDepartment' name='AccountExtendItem.listUserEXP[${currentRow}].ServDepartment' placeholder='請輸入服務 /輔導單位' type='text'></td>`
+            html += `<td><input class='form-control' id='AccountExtendItem_listUserEXP_${currentRow}__JobTitle' name='AccountExtendItem.listUserEXP[${currentRow}].JobTitle' placeholder='請輸入職稱' type='text'></td>`
+            html += `<td><input class='form-control' id='AccountExtendItem_listUserEXP_${currentRow}__Durinration' name='AccountExtendItem.listUserEXP[${currentRow}].Durinration' placeholder='請輸入服務期間' type='text'></td>`
+            html += "</tr>"
+            $("#tb_EXP").append(html);
+        }
+    </script>
+}
+
+    <div class="card">
+        <div class="card-body">
+        @using (Html.BeginForm(FormMethod.Post, new { id = "frm", @autocomplete = "off", @enctype = "multipart/form-data", @data_parsley_validate = "" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.Search.sGroup, "群組", new { @class = "form-label" })
+                    @Html.DropDownListFor(x=>x.Search.sGroup,Model.ddlGroup,new{@class="form-control",id="ddlGroup"})
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.AccountExtendItem.account.UserName, "姓名", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.AccountExtendItem.account.UserName, new { @class="form-control", placeholder = "請輸入姓名", data_parsley_required = "" })
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.AccountExtendItem.account.Account, "帳號", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.AccountExtendItem.account.Account, new { @class="form-control", placeholder = "請輸入帳號", data_parsley_required = ""})
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.AccountExtendItem.account.Email, "信箱", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.AccountExtendItem.account.Email, new { @class="form-control", placeholder = "請輸入信箱", data_parsley_required = "" })
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span id="spPhone" class="red">*</span>
+                    @Html.LabelFor(x => x.AccountExtendItem.account.Phone, "電話(分機)", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.AccountExtendItem.account.Phone, new {id="txtPhone", @class="form-control", placeholder = "請輸入電話", data_parsley_required = "" })
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.AccountExtendItem.account.CellPhone, "手機", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.AccountExtendItem.account.CellPhone, new { @class="form-control", placeholder = "請輸入手機", data_parsley_required = "" })
+                </div>
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.editAua8, "密碼", new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.editAua8, new {@class="form-control", placeholder = "請輸入密碼", data_parsley_required = ""})
+                </div>
+
+                @*若群組選擇為"顧問"，則需再顯示以下欄位：從"性別"欄位，到"專業領域"欄位*@
+                <div id="divConsultant" class="col-12 form-group mb-3" style="display:none">
+                    <div class="col-12 form-group mb-3">
+                        <span class="red">*</span>
+                        @Html.LabelFor(x => x.AccountExtendItem.account.Sex, "性別", new { @class = "form-label" })<br>
+                        @Html.RadioButtonFor(x=>x.AccountExtendItem.account.Sex,"M",new{@id="sex_Male"})男
+                        @Html.RadioButtonFor(x=>x.AccountExtendItem.account.Sex,"F",new{@id="sex_Female"})女 <br>
+                    </div>
+                    <div class="col-12 form-group mb-3">
+                        @Html.LabelFor(x => x.AccountExtendItem.account.JobTitle, "職稱", new { @class = "form-label" })
+                        @Html.TextBoxFor(x => x.AccountExtendItem.account.JobTitle, new { @class="form-control", placeholder = "請輸入職稱"})
+                    </div>
+                    <div class="col-12 form-group mb-3">
+                        @Html.LabelFor(x => x.AccountExtendItem.account.IdNumber, "身分證號", new { @class = "form-label" })
+                        @Html.TextBoxFor(x => x.AccountExtendItem.account.IdNumber, new { @class="form-control", placeholder = "請輸入身分證號", })
+                    </div>
+                    <div class="col-12 form-group mb-3">
+                        @Html.LabelFor(x => x.AccountExtendItem.account.Industry, "產/行業", new { @class = "form-label" })
+                        @Html.TextBoxFor(x => x.AccountExtendItem.account.Industry, new { @class="form-control", placeholder = "請輸入產/行業"})
+                    </div>
+                    <div class="col-12 form-group mb-3">
+                        @Html.LabelFor(x => x.AccountExtendItem.account.ServiceUnit, "服務單位", new { @class = "form-label" })
+                        @Html.TextBoxFor(x => x.AccountExtendItem.account.ServiceUnit, new { @class="form-control", placeholder = "請輸入服務單位"})
+                    </div>
+                    <div class="col-12 form-group mb-3">
+                        @Html.LabelFor(x => x.AccountExtendItem.account.ContactAddr, "通訊地址", new { @class = "form-label" })
+                        @Html.TextBoxFor(x => x.AccountExtendItem.account.ContactAddr, new { @class="form-control", placeholder = "請輸入通訊地址"})
+                    </div>
+                    <div class="col-12 form-group mb-3">
+                        @Html.LabelFor(x => x.AccountExtendItem.account.PermanentAddr, "戶籍地址", new { @class = "form-label" })
+                        @Html.TextBoxFor(x => x.AccountExtendItem.account.PermanentAddr, new { @class="form-control", placeholder = "請輸入戶籍地址"})
+                    </div>
+                    <div class="col-12 form-group mb-3">
+                        @Html.LabelFor(x => x.AccountExtendItem.account.Education, "學歷", new { @class = "form-label" })
+                        @Html.TextAreaFor(x => x.AccountExtendItem.account.Education, new { @class="form-control", placeholder = "請輸入學歷"})
+                    </div>
+                    <div class="col-12 form-group mb-3">
+                        @Html.LabelFor(x => x.AccountExtendItem.account.Expertise, "專長", new { @class = "form-label" })
+                        @Html.TextAreaFor(x => x.AccountExtendItem.account.Expertise, new { @class="form-control", placeholder = "請輸入專長"})
+                    </div>
+                    <div class="col-12 form-group mb-3">
+                    @Html.LabelFor(x => x.AccountExtendItem.account.Skill, "經歷", new { @class = "form-label" })
+                        <button type="button" class="btn btn-primary btn-sm" onclick="addEXP()">新增</button>
+                        <table class="table">
+                        <thead>
+                            <tr>
+                                <th>服務/輔導單位</th>
+                                <th>職稱</th>
+                                <th>服務期間</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tb_EXP">
+                            @if (Model.AccountExtendItem.listUserEXP != null && Model.AccountExtendItem.listUserEXP.Count > 0)
+                            {
+                                for (var i = 0; i < Model.AccountExtendItem.listUserEXP.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.AccountExtendItem.listUserEXP[i].ServDepartment, new { @class="form-control", placeholder = "請輸入服務/輔導單位"})
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.AccountExtendItem.listUserEXP[i].JobTitle, new { @class="form-control", placeholder = "請輸入職稱"})
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(x => x.AccountExtendItem.listUserEXP[i].Durinration, new { @class="form-control", placeholder = "請輸入服務期間"})
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            @*<tr>
+                        <td>
+                        @Html.TextBoxFor(x => x.AccountExtendItem.listUserEXP[0].ServDepartment, new { @class="form-control", placeholder = "請輸入服務/輔導單位"})
+                        </td>
+                        <td>
+                        @Html.TextBoxFor(x => x.AccountExtendItem.listUserEXP[0].JobTitle, new { @class="form-control", placeholder = "請輸入職稱"})
+                        </td>
+                        <td>
+                        @Html.TextBoxFor(x => x.AccountExtendItem.listUserEXP[0].Durinration, new { @class="form-control", placeholder = "請輸入服務期間"})
+                        </td>
+                        </tr>*@
+                        </tbody>
+                    </table>
+                    </div>
+                    <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                        @Html.LabelFor(x => x.AccountExtendItem.account.Skill, "專業領域(可複選)", new { @class = "form-label" })<br />
+                        @for (int i = 0; i < Model.chbProfessionalField.Count; i++)
+                        {
+                            @Html.CheckBoxFor(x => x.chbProfessionalField[i].Selected,new{@class="chbSkill"})
+                            @Html.HiddenFor(x=>x.chbProfessionalField[i].Value)
+                            @Model.chbProfessionalField[i].Text
+                            <br />
+                        }
+                    </div>
+                </div>
+                @*若群組選擇為"顧問"，則需再顯示以下欄位：從"性別"欄位，到"專業領域"欄位 end*@
+                <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
+                    @Html.LabelFor(x => x.AccountExtendItem.account.IsActive, "是否啟用", new { @class = "form-label" })<br>
+                    @if (Model.AccountExtendItem.accountGroup.GroupId == "G000000001")
+                    {
+                        @Html.RadioButtonFor(x=>x.AccountExtendItem.account.IsActive,true,new{@id="isAction", data_parsley_required = "",disabled="disabled"})
+                        <span>是</span>
+                        @Html.RadioButtonFor(x=>x.AccountExtendItem.account.IsActive,false,new{@id="notAction", data_parsley_required = "",disabled="disabled"})
+                        <span>否</span>
+                        @Html.HiddenFor(x=>x.AccountExtendItem.account.IsActive)
+                    }
+                    else
+                    {
+                        @Html.RadioButtonFor(x=>x.AccountExtendItem.account.IsActive,true,new{@id="isAction", data_parsley_required = ""})
+                        <span>是</span>
+                        @Html.RadioButtonFor(x=>x.AccountExtendItem.account.IsActive,false,new{@id="notAction", data_parsley_required = ""})
+                        <span>否</span>
+                    }
+                    <br>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">儲存</button>
+                    <a class="btn btn-light" href="@(Url.Action("AccountList", "Account"))">取消</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -38,6 +38,19 @@ namespace BASE.Areas.Backend.Service
                     {
                         dataList = dataList.Where(x => x.Header.Name.Contains(vmParam.Keyword));
                     }
+
+                    if(!String.IsNullOrEmpty(vmParam.sTime))
+                    {
+                        DateTime.TryParse(vmParam.sTime, out var sTime);
+                        dataList = dataList.Where(x => x.Header.CreateDate > sTime);
+                    }
+
+                    if (!String.IsNullOrEmpty(vmParam.eTime))
+                    {
+                        DateTime.TryParse(vmParam.eTime, out var eTime);
+                        dataList = dataList.Where(x => x.Header.CreateDate < eTime.AddDays(1));
+                    }
+
                 }
                 return dataList;
             }

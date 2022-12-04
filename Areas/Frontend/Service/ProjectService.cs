@@ -4,6 +4,7 @@ using BASE.Models.DB;
 using BASE.Models.Enums;
 using BASE.Service;
 using BASE.Service.Base;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace BASE.Areas.Frontend.Service
@@ -25,8 +26,8 @@ namespace BASE.Areas.Frontend.Service
             try
             {
                 IQueryable<TbProject>? dataList = (from ProejctInfo in _context.TbProject.Where(x => !x.IsDelete)
-                                                    orderby ProejctInfo.CreateDate descending
-                                                    select ProejctInfo
+                                                   orderby ProejctInfo.Sort ascending, ProejctInfo.CreateDate descending
+                                                   select ProejctInfo
                                                     );
 
                 if (!String.IsNullOrEmpty(vmParam.Category))

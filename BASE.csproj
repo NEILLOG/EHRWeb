@@ -60,6 +60,7 @@
     <PackageReference Include="Quartz" Version="3.4.0" />
     <PackageReference Include="Quartz.AspNetCore" Version="3.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+    <PackageReference Include="System.Speech" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,6 +69,7 @@
     <Folder Include="Areas\Backend\Views\Shared\Components\Footer\" />
     <Folder Include="Models\DB\" />
     <Folder Include="wwwroot\lib\fontawesome-free\" />
+    <Folder Include="wwwroot\lib\lightbox\" />
     <Folder Include="wwwroot\upload\" />
   </ItemGroup>
 
@@ -75,7 +77,6 @@
     <None Include="Areas\Backend\Views\Album\AlbumAdd.cshtml" />
     <None Include="Areas\Backend\Views\Album\AlbumEdit.cshtml" />
     <None Include="Areas\Backend\Views\Album\AlbumList.cshtml" />
-    <None Include="Areas\Backend\Views\Statistics\Index.cshtml" />
     <None Include="wwwroot\lib\ckeditor5\ckeditor.js" />
     <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\dist\tooltip.min.js" />
     <None Include="wwwroot\lib\virtual-select-master\node_modules\tooltip-plugin\LICENSE" />

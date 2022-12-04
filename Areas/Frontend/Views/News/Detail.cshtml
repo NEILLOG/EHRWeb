@@ -24,7 +24,13 @@
                         <img src="@Model.NewsExtendItem.FileInfo.FilePath" class="img-fluid" alt="最新消息圖片">
                     }
 
-                    @Html.Raw(System.Text.RegularExpressions.Regex.Replace(Model.NewsExtendItem.Header.Contents, "<.*?>", String.Empty))
+                    <div>
+                        @{
+                            String content = System.Text.RegularExpressions.Regex.Replace(Model.NewsExtendItem.Header.Contents, "<.*?>", String.Empty);
+                                   content = content.Replace(Environment.NewLine, "<br />");
+                        }
+                        @Html.Raw(content)
+                    </div>
                 </div>
             </div>
         </div>

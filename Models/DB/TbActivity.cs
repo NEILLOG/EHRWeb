@@ -92,5 +92,9 @@ namespace BASE.Models.DB
         /// 上傳講義
         /// </summary>
         public string? HandoutFile { get; set; }
+        /// <summary>
+        /// 此活動是否已經發布10天前活動通知
+        /// </summary>
+        public bool? IsSend10dayNotify { get; set; }
     }
 }

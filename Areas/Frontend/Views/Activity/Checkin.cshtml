@@ -1,0 +1,47 @@
+﻿@using BASE.Service
+@model BASE.Areas.Frontend.Models.VM_Checkin
+
+@section Scripts {
+}
+
+@section Css {
+}
+
+@await Html.PartialAsync("_BannerPartial")
+
+<div class="section pb-md-4 py-lg-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-12">
+                <div class="registrationBox bg-white p-4">
+                    <div class="row">
+                        <div class="col-12 text-center border-bottom rb-title">
+                            <h2 class="fc-green fw-bold"><span>活動簽到</span></h2>
+                            <small>請輸入您報名的Email及姓名以進行簽到</small>
+                        </div>
+                    </div>
+                    <form action="" method="post" class="row g-3 mt-2 align-items-center" enctype="multipart/form-data" data-parsley-validate="">
+                        @Html.AntiForgeryToken()
+
+                        <div class="col-md-12">
+                            <p>您本次簽到的活動為: @Model.Activity.Title</p>
+                            <p>報名場次為: @Model.Section.Day.ToString("yyyy / MM / dd") @Model.Section.StartTime.ToString(@"hh\:mm") ~ @Model.Section.EndTime.ToString(@"hh\:mm")</p>
+                        </div>
+
+                        <div class="col-md-4 col-12 form-group">
+                            <label for="inputD" class="form-label">報名姓名<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.Name, new { @class="form-control", placeholder="請輸入姓名", required="required"})
+                        </div>
+                        <div class="col-md-8 col-12">
+                            <label for="inputEmail4" class="form-label">報名電子郵件<span class="fc-red ms-1">*</span></label>
+                            @Html.TextBoxFor(x => x.Email, new { @class="form-control", placeholder="請輸入電子郵件", type="email", required="required"})
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-success w-100" type="submit">簽到</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

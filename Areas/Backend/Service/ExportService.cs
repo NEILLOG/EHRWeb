@@ -570,6 +570,51 @@ namespace BASE.Areas.Backend.Service
             return result;
         }
 
+        /// <summary>
+        /// 出席學員證明(Word)
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public ActionResultModel<MemoryStream> ProofWord(ProofExportExtend item)
+        {
+            ActionResultModel<MemoryStream> result = new ActionResultModel<MemoryStream>();
+
+            try
+            {
+                string filePath = _fileService.MapPath("Sample/Sample_Proof.docx");
+                using (FileStream stream = File.OpenRead(filePath))
+                {
+                    XWPFDocument doc = new XWPFDocument(stream);
+
+                    //段落
+                    foreach (var para in doc.Paragraphs)
+                    {
+                        ReplaceKeyObjet(para, item);
+                    }
+
+                    // 將word寫入MemoryStream
+                    MemoryStream ms = new MemoryStream();
+                    //doc.Write(ms);
+                    
+                    FileStream file = new FileStream("E:\\TEST.docx", FileMode.Create, FileAccess.Write);
+                    doc.Write(file);
+                    file.Close();
+
+                    ms.Close();
+                    ms.Dispose();
+
+                    result.Data = ms;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.IsSuccess = false;
+            }
+            return result;
+        }
+
         private static void ReplaceKeyObjet(XWPFParagraph para, object model)
         {
             Type t = model.GetType();

@@ -86,7 +86,7 @@ namespace BASE.Areas.Frontend.Service
                 IQueryable<HRPackageExtend>? dataList = (from HRPackageInfo in _context.TbHrPackage.Where(x => !x.IsDelete && x.IsPublish)
                                                          join FileInfo in _context.TbFileInfo.Where(x => !x.IsDelete) on HRPackageInfo.FileId equals FileInfo.FileId into HR_File
                                                          from FileInfo in HR_File.DefaultIfEmpty()
-                                                         orderby HRPackageInfo.CreateDate descending
+                                                         orderby HRPackageInfo.Sort ascending
                                                          select new HRPackageExtend
                                                          {
                                                              Header = HRPackageInfo,

@@ -1,19 +1,12 @@
 ﻿using BASE.Areas.Frontend.Models;
+using BASE.Areas.Frontend.Models.Extend;
+using BASE.Areas.Frontend.Service;
+using BASE.Extensions;
+using BASE.Models;
+using BASE.Models.DB;
+using BASE.Models.Enums;
 using BASE.Service;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using BASE.Extensions;
-using BASE.Filters;
-using BASE.Models.Enums;
-using BASE.Models.DB;
-using Microsoft.EntityFrameworkCore;
-using System.Text.Encodings.Web;
-using System.Text.Unicode;
-using System.Reflection;
-using BASE.Areas.Frontend.Service;
-using BASE.Models;
-using BASE.Areas.Frontend.Models.Extend;
 using NPOI.SS.Formula.Functions;
 
 namespace BASE.Areas.Frontend.Controllers
@@ -115,12 +108,15 @@ namespace BASE.Areas.Frontend.Controllers
 
         public async Task<IActionResult> Register(string id)
         {
+            HttpContext.Session.Set(Backend.Models.SessionStruct.VerifyCode.Activity, new ValidImageHelper().RandomCode(5));
+
             VM_ActivityReigster data = new VM_ActivityReigster();
 
             string decrypt_id = EncryptService.AES.RandomizedDecrypt(id);
 
             try
             {
+                data.Header = _allCommonService.Lookup<TbActivity>(ref _message, x => x.Id == decrypt_id).FirstOrDefault();
                 data.Sections = _activityService.GetSections(ref _message, decrypt_id).ToList();
                 data.id = id;
             }
@@ -144,75 +140,85 @@ namespace BASE.Areas.Frontend.Controllers
             TbActivityRegister? main = new TbActivityRegister();
             List<TbActivityRegisterSection>? RegSections = new List<TbActivityRegisterSection>();
 
-            try
+            String code = HttpContext.Session.Get<String>(Backend.Models.SessionStruct.VerifyCode.Activity);
+           
+            data.Sections = _activityService.GetSections(ref _message, decrypt_id).ToList();
+
+            if (code == data.VerifyCode)
             {
-                data.Sections = _activityService.GetSections(ref _message, decrypt_id).ToList();
-
-                if (data.Main == null || data.RegisterSection == null || data.RegisterSection.Count() <= 0)
+                try
                 {
-                    TempData["TempMsg"] = "資料回傳有誤，請重新操作！";
-                }
-
-                main.CompanyName = data.Main.CompanyName;
-                main.CompanyLocation = data.Main.CompanyLocation;
-                main.CompanyType = data.Main.CompanyType;
-                main.Name = data.Main.Name;
-                main.JobTitle = data.Main.JobTitle;
-                main.Phone = data.Main.Phone;
-                main.CellPhone = data.Main.CellPhone;
-                main.Email = data.Main.Email;
-                main.CompanyEmpAmount = data.Main.CompanyEmpAmount;
-                main.InfoFrom = String.Join(",", data.ckbsInfoFrom);
-                main.ActivityId = decrypt_id; //給解密後的ID
-                main.CreateDate = DateTime.Now;
-
-                foreach (var item in data.RegisterSection)
-                {
-                    TbActivityRegisterSection m = new TbActivityRegisterSection();
-                    m.ActivityId = decrypt_id;  //給解密後的ID
-                    m.RegisterSectionId = item.RegisterSectionId;
-                    m.RegisterSectionType = item.RegisterSectionType;
-                    m.IsVegin = item.IsVegin;
-
-                    RegSections.Add(m);
-                }
-
-                using (var transaction = _activityService.GetTransaction())
-                {
-                    try
+                    if (data.Main == null || data.RegisterSection == null || data.RegisterSection.Count() <= 0)
                     {
-                        //新增
-                        await _activityService.Insert(main, transaction);
-                        //target_id = main.Id; //新增後的主鍵存起來
+                        TempData["TempMsg"] = "資料回傳有誤，請重新操作！";
+                    }
 
-                        //新增場次
-                        foreach (var reg in RegSections)
+                    main.CompanyName = data.Main.CompanyName;
+                    main.CompanyLocation = data.Main.CompanyLocation;
+                    main.CompanyType = data.Main.CompanyType;
+                    main.Name = data.Main.Name;
+                    main.JobTitle = data.Main.JobTitle;
+                    main.Phone = data.Main.Phone;
+                    main.CellPhone = data.Main.CellPhone;
+                    main.Email = data.Main.Email;
+                    main.CompanyEmpAmount = data.Main.CompanyEmpAmount;
+                    main.InfoFrom = String.Join(",", data.ckbsInfoFrom);
+                    main.ActivityId = decrypt_id; //給解密後的ID
+                    main.CreateDate = DateTime.Now;
+
+                    foreach (var item in data.RegisterSection)
+                    {
+                        TbActivityRegisterSection m = new TbActivityRegisterSection();
+                        m.ActivityId = decrypt_id;  //給解密後的ID
+                        m.RegisterSectionId = item.RegisterSectionId;
+                        m.RegisterSectionType = item.RegisterSectionType;
+                        m.IsVegin = item.IsVegin;
+
+                        RegSections.Add(m);
+                    }
+
+                    using (var transaction = _activityService.GetTransaction())
+                    {
+                        try
                         {
-                            reg.RegisterId = main.Id;
-                            await _activityService.Insert(reg, transaction);
+                            //新增
+                            await _activityService.Insert(main, transaction);
+                            //target_id = main.Id; //新增後的主鍵存起來
+
+                            //新增場次
+                            foreach (var reg in RegSections)
+                            {
+                                reg.RegisterId = main.Id;
+                                await _activityService.Insert(reg, transaction);
+                            }
+
+                            transaction.Commit();
+                            isSuccess = true;
                         }
+                        catch (Exception ex)
+                        {
+                            _message += ex.ToString();
+                            TempData["TempMsgDetail"] = "發生技術性錯誤，請聯絡技術人員或稍後再試一次";
+                            unCaughtError = true;
+                        }
+                    }
 
-                        transaction.Commit();
-                        isSuccess = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        _message += ex.ToString();
-                        TempData["TempMsgDetail"] = "發生技術性錯誤，請聯絡技術人員或稍後再試一次";
-                        unCaughtError = true;
-                    }
+
                 }
-                
-                
-            }
-            catch (Exception ex)
+                catch (Exception ex)
+                {
+                    TempData["TempMsg"] = "伺服器連線異常，請檢查您的網路狀態後再試一次！";
+
+                    _message += ex.ToString();
+                    unCaughtError = true;
+                }
+            } 
+            else
             {
-                TempData["TempMsg"] = "伺服器連線異常，請檢查您的網路狀態後再試一次！";
-
-                _message += ex.ToString();
-                unCaughtError = true;
+                data.Header = _allCommonService.Lookup<TbActivity>(ref _message, x => x.Id == decrypt_id).FirstOrDefault();
+                data.Sections = _activityService.GetSections(ref _message, decrypt_id).ToList();
+                TempData["TempMsg"] = "驗證碼錯誤";
             }
-
 
             if (isSuccess)
             {
@@ -238,7 +244,7 @@ namespace BASE.Areas.Frontend.Controllers
 
                 await _mailService.SendEmail(new MailViewModel()
                 {
-                    Subject = String.Format(MailTmeplate.Activity.REGISTER_SUCCESS_CONTNET, activity.Header.Title, activity.Header.Subject),
+                    Subject = String.Format(MailTmeplate.Activity.REGISTER_SUCCESS_SUBJECT, activity.Header.Title, activity.Header.Subject),
                     Body = String.Format(MailTmeplate.Activity.REGISTER_SUCCESS_CONTNET,
                                             data.Main.Name,
                                             activity.Header.Title,
@@ -555,6 +561,164 @@ namespace BASE.Areas.Frontend.Controllers
             }
 
             return Json(new { IsSuccess = isSuccess, Message = Message });
+        }
+
+
+        //簽到
+        public async Task<IActionResult> Checkin(string aid, string sid)
+        {
+            string ActivityId = EncryptService.AES.RandomizedDecrypt(aid);
+            string SectionId = EncryptService.AES.RandomizedDecrypt(sid);
+            Int64.TryParse(SectionId, out long _SectionId);
+
+            VM_Checkin data = new VM_Checkin();
+
+            try
+            {
+                var activity = _allCommonService.Lookup<TbActivity>(ref _message, x => x.Id == ActivityId).FirstOrDefault();
+                if (activity == null)
+                    throw new Exception("找不到此活動編號");
+
+                var section = _allCommonService.Lookup<TbActivitySection>(ref _message, x => x.Id == _SectionId && x.ActivityId == ActivityId).FirstOrDefault();
+                if (section == null)
+                    throw new Exception("找不到此場次編號，或此活動不包含此場次編號");
+
+                data.Section = section;
+                data.Activity = activity;
+
+            }
+            catch (Exception ex)
+            {
+                TempData["TempMsgType"] = MsgTypeEnum.error;
+                TempData["TempMsg"] = ex.Message ?? "儲存失敗";
+
+                return RedirectToAction("Index", "Home", new { area = "Frontend" });
+            }
+
+            return View(data);
+
+        }
+
+
+        //簽到
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Checkin(string aid, string sid, VM_Checkin datapost)
+        {
+            string ActivityId = EncryptService.AES.RandomizedDecrypt(aid);
+            string SectionId = EncryptService.AES.RandomizedDecrypt(sid);
+            Int64.TryParse(SectionId, out long _SectionId);
+
+            string Feature = "簽到", Action = "新增";
+
+            // 最終動作成功與否
+            bool isSuccess = false;
+
+            // 例外錯誤發生，特別記錄至 TbLog
+            bool unCaughtError = false;
+
+            try
+            {
+                try
+                {
+                    var activity = _allCommonService.Lookup<TbActivity>(ref _message, x => x.Id == ActivityId).FirstOrDefault();
+                    if (activity == null)
+                        throw new ValidException("找不到此活動編號");
+
+                    var section = _allCommonService.Lookup<TbActivitySection>(ref _message, x => x.Id == _SectionId && x.ActivityId == ActivityId).FirstOrDefault();
+                    if (section == null)
+                        throw new ValidException("找不到此場次編號，或此活動不包含此場次編號");
+
+                    datapost.Section = section;
+                    datapost.Activity = activity;
+
+                    var register = _allCommonService.Lookup<TbActivityRegister>(ref _message, x => x.Name == datapost.Name &&
+                                                                                                   x.Email == datapost.Email &&
+                                                                                                   x.ActivityId == ActivityId).FirstOrDefault();
+                    if (register == null)
+                        throw new ValidException("找不到您的報名資料，請再確認");
+
+                    var register_section = _allCommonService.Lookup<TbActivityRegisterSection>(ref _message, x => x.RegisterSectionId == _SectionId && x.ActivityId == ActivityId).FirstOrDefault();
+                    if (register == null)
+                        throw new ValidException("找不到您的報名場次資料，請再確認");
+
+                    if (DateTime.Now.Hour < 12)
+                    {
+                        register_section.IsSigninAm = true;
+                        register_section.SigninDateAm = DateTime.Now;
+                    }
+                    else
+                    {
+                        register_section.IsSigninPm = true;
+                        register_section.SigninDatePm = DateTime.Now;
+                    }
+
+                    register_section.ModifyDate = DateTime.Now;
+                    register_section.ModifyUser = "QRCode簽到";
+
+                    //更新簽到日
+                    await _fileService.Update(register_section);
+
+                    //寄送問卷調查通知
+                    await _mailService.SendEmail(new MailViewModel()
+                    {
+                        Subject = String.Format(MailTmeplate.Activity.SATISFACTION_SUBJECT, section.Day.ToString("yyyy / MM / dd"), activity.Title, activity.Subject),
+                        Body = String.Format(MailTmeplate.Consult.REQUIRED_SURVEY_CONTNET,
+                                       section.Day.ToString("yyyy / MM / dd"),
+                                       activity.Title, 
+                                       activity.Subject,
+                                       Url.Action("Quiz", "Activity", new { id = EncryptService.AES.RandomizedEncrypt(register.Id.ToString()) }, Request.Scheme)
+                                       ),
+                        ToList = new List<MailAddressInfo>() { new MailAddressInfo(register.Email) }
+                    });
+
+                    isSuccess = true;
+                }
+                catch(ValidException ex)
+                {
+                    TempData["TempMsg"] = ex.Message;
+                }
+                catch (Exception ex)
+                {
+                    _message += ex.ToString();
+                    TempData["TempMsgDetail"] = "發生技術性錯誤，請聯絡技術人員或稍後再試一次";
+                    unCaughtError = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["TempMsg"] = "伺服器連線異常，請檢查您的網路狀態後再試一次！";
+
+                _message += ex.ToString();
+                unCaughtError = true;
+            }
+
+
+            if (isSuccess)
+            {
+                TempData["TempMsgType"] = MsgTypeEnum.success;
+                TempData["TempMsg"] = "簽到成功";
+            }
+            else
+            {
+                TempData["TempMsgType"] = MsgTypeEnum.error;
+                TempData["TempMsg"] = TempData["TempMsg"] ?? "儲存失敗";
+
+                if (unCaughtError)
+                {
+                    await _allCommonService.Error_Record("Frontend", Feature + "-" + Action, _message);
+                }
+            }
+
+            if (isSuccess)
+            {
+                return RedirectToAction("Detail", new { id = EncryptService.AES.RandomizedEncrypt(ActivityId) }); //導向回活動頁面
+            }
+            else
+            {
+                return View(datapost);
+            }
+
         }
     }
 }

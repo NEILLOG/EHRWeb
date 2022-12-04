@@ -45,7 +45,6 @@ namespace BASE.Models.DB
         public virtual DbSet<TbLog> TbLog { get; set; } = null!;
         public virtual DbSet<TbLoginRecord> TbLoginRecord { get; set; } = null!;
         public virtual DbSet<TbMailLog> TbMailLog { get; set; } = null!;
-        public virtual DbSet<TbMailQueue> TbMailQueue { get; set; } = null!;
         public virtual DbSet<TbMenuBack> TbMenuBack { get; set; } = null!;
         public virtual DbSet<TbMenuFront> TbMenuFront { get; set; } = null!;
         public virtual DbSet<TbNews> TbNews { get; set; } = null!;
@@ -203,6 +202,10 @@ namespace BASE.Models.DB
                 entity.Property(e => e.IsDelete).HasComment("是否已註記刪除");
 
                 entity.Property(e => e.IsPublish).HasComment("是否開放報名");
+
+                entity.Property(e => e.IsSend10dayNotify)
+                    .HasDefaultValueSql("((0))")
+                    .HasComment("此活動是否已經發布10天前活動通知");
 
                 entity.Property(e => e.IsValid).HasComment("是否審核通過");
 
@@ -1361,76 +1364,6 @@ namespace BASE.Models.DB
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Sender).HasMaxLength(100);
-
-                entity.Property(e => e.Title).HasMaxLength(100);
-            });
-
-            modelBuilder.Entity<TbMailQueue>(entity =>
-            {
-                entity.HasComment("信件");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .HasComment("主鍵");
-
-                entity.Property(e => e.Contents).HasComment("信件內容，可包含HTML");
-
-                entity.Property(e => e.CreateDate).HasColumnType("datetime");
-
-                entity.Property(e => e.CreateUser)
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FileId1)
-                    .HasMaxLength(15)
-                    .IsUnicode(false)
-                    .HasColumnName("FileID_1")
-                    .HasComment("附件檔案");
-
-                entity.Property(e => e.FileId2)
-                    .HasMaxLength(15)
-                    .IsUnicode(false)
-                    .HasColumnName("FileID_2")
-                    .HasComment("附件檔案");
-
-                entity.Property(e => e.FileId3)
-                    .HasMaxLength(15)
-                    .IsUnicode(false)
-                    .HasColumnName("FileID_3")
-                    .HasComment("附件檔案");
-
-                entity.Property(e => e.IsSend).HasComment("是否已發送");
-
-                entity.Property(e => e.MailFrom)
-                    .HasMaxLength(500)
-                    .HasComment("寄件者");
-
-                entity.Property(e => e.MailTo)
-                    .HasMaxLength(500)
-                    .HasComment("收件者，限定一位");
-
-                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifyUser)
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PlanSendDate)
-                    .HasColumnType("datetime")
-                    .HasComment("預計發送日期；若無排定日期，則盡快發送");
-
-                entity.Property(e => e.RelationId)
-                    .HasMaxLength(100)
-                    .HasColumnName("RelationID")
-                    .HasComment("關聯資料主鍵；用於當例如取消活動時，要一併刪除使用");
-
-                entity.Property(e => e.SendDate)
-                    .HasColumnType("datetime")
-                    .HasComment("實際發送日期");
-
-                entity.Property(e => e.Subject)
-                    .HasMaxLength(300)
-                    .HasComment("信件主旨");
             });
 
             modelBuilder.Entity<TbMenuBack>(entity =>

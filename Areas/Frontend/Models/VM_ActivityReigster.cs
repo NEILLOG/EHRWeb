@@ -9,6 +9,9 @@ namespace BASE.Areas.Frontend.Models
 {
     public class VM_ActivityReigster
     {
+        /// <summary>活動主檔資料</summary>
+        public TbActivity Header { get; set; }
+
         //註冊主表
         public TbActivityRegister? Main { get; set; }
 
@@ -89,7 +92,10 @@ namespace BASE.Areas.Frontend.Models
         /// </summary>
         public String id { get; set; }
 
-        
+        /// <summary>
+        /// 驗證碼
+        /// </summary>
+        public string VerifyCode { get; set; }
     }
 
 }

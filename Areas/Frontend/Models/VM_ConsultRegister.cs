@@ -27,8 +27,8 @@ namespace BASE.Areas.Frontend.Models
                 };
             }
         }
-    }
 
- 
+        public String VerifyCode { get ; set; }
+    }
 
 }

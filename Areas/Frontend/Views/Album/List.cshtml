@@ -10,6 +10,13 @@
     @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
 </form>
 
+@section Scripts {
+    <script src="~/lib/lightbox/js/lightbox.min.js"></script>
+}
+
+@section Css {
+    <link href="~/lib/lightbox/css/lightbox.min.css" rel="stylesheet" />
+}
 
 
 <!-- ================================================== -->
@@ -80,7 +87,9 @@
                             {
                                 <div class="col">
                                     <div class="card h-100">
-                                        <a href="#"><img src="@item.FileInfo.FilePath" class="card-img-top" alt=""></a>
+
+                                        <a href="@item.FileInfo.FilePath" data-lightbox="image-@item.Header.Id" data-title="活動圖片: @item.Header.Title"><img src="@item.FileInfo.FilePath" class="card-img-top" alt=""></a>
+
                                         <div class="card-body">
                                             <div class="date mb-3">
                                                 <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>

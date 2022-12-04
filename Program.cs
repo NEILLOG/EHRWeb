@@ -111,7 +111,6 @@ builder.Services.AddScoped<B_ProjectService>();
 builder.Services.AddScoped<B_ProjectModifyService>();
 builder.Services.AddScoped<PromoteService>();
 builder.Services.AddScoped<QuizService>();
-builder.Services.AddScoped<StatisticsService>();
 
 //Frontend Servie
 builder.Services.AddScoped<BASE.Areas.Frontend.Service.NewsService>();

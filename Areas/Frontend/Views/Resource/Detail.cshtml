@@ -79,7 +79,7 @@
                         </div>
                         <div class="col-12">
                             <label for="exampleFormControlTextarea1" class="form-label">內容</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="@Model.ExtendItem.Contact" disabled></textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="@Model.ExtendItem.Contents" disabled></textarea>
                         </div>
                         <div class="col-12">
                             <label for="inputG" class="form-label">聯繫窗口</label>
@@ -87,35 +87,39 @@
                         </div>
                     </div>
 
-                    <form action="@Url.Action("Modify")" method="post" class="row g-3 mt-2 align-items-center" enctype="multipart/form-data" data-parsley-validate="">
-                        @Html.AntiForgeryToken()
-                        <div class="col-12">
-                            <div class="applicationBox bg-yellow p-3">
-                                <div class="fw-bold"><i class="fa-solid fa-triangle-exclamation me-2 fc-yellow" aria-hidden="true"></i>課程臨時變更申請</div>
-                                <div>
-                                    提醒：事業單位有不可歸責之因素，致課程取消或日期臨時變動，至遲於開課前一小時以傳真/e-mail/網頁上傳檔案通知變更。
+
+                    @if (Model.IsShowModifyArea)
+                    {
+                        <form action="@Url.Action("Modify")" method="post" class="row g-3 mt-2 align-items-center" enctype="multipart/form-data" data-parsley-validate="">
+                            @Html.AntiForgeryToken()
+                            <div class="col-12">
+                                <div class="applicationBox bg-yellow p-3">
+                                    <div class="fw-bold"><i class="fa-solid fa-triangle-exclamation me-2 fc-yellow" aria-hidden="true"></i>課程臨時變更申請</div>
+                                    <div>
+                                        提醒：事業單位有不可歸責之因素，致課程取消或日期臨時變動，至遲於開課前一小時以傳真/e-mail/網頁上傳檔案通知變更。
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="fileBox bg-blue p-3 fc-blue">
-                                <div class="fw-bold"><i class="fa-solid fa-download me-2 fc-blue" aria-hidden="true"></i>課程臨時變更申請表.doc</div>
+                            <div class="col-12">
+                                <div class="fileBox bg-blue p-3 fc-blue">
+                                    <div class="fw-bold"><a href="@Model.SampleFilePath" download><i class="fa-solid fa-download me-2 fc-blue" aria-hidden="true"></i>課程臨時變更申請表.doc</a></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4 col-12">
-                            <label for="inputI" class="form-label sr-only">EMAIL</label>
-                            @Html.TextBoxFor(x => x.ModifyItem.Email, new { type="email", @class="form-control", placeholder="請輸入Email", required = "required" })
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <label for="formFile" class="form-label sr-only">上傳檔案</label>
-                            @Html.TextBoxFor(x => x.ModifyFile, new { @FileID = "FileId", @class="form-control File", @type = "file", accept = ".pnf,.jpg,.jpeg", data_parsley_file_type="png,jpg,jpeg", data_parsley_errors_container="#ActivityImage-errors-container" })
-                            <div id="ActivityImage-errors-container"></div>
-                        </div>
-                        <div class="col-md-2 col-12">
-                            @Html.HiddenFor(x => x.ModifyItem.ProjectId)
-                            <button class="btn btn-success w-100" type="submit">送出</button>
-                        </div>
-                    </form>
+                            <div class="col-md-4 col-12">
+                                <label for="inputI" class="form-label sr-only">EMAIL</label>
+                                @Html.TextBoxFor(x => x.ModifyItem.Email, new { type="email", @class="form-control", placeholder="請輸入Email", required = "required" })
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <label for="formFile" class="form-label sr-only">上傳檔案</label>
+                                @Html.TextBoxFor(x => x.ModifyFile, new { @FileID = "FileId", @class="form-control File", @type = "file", accept = ".pnf,.jpg,.jpeg,.docx,.doc", data_parsley_file_type="png,jpg,jpeg,doc,docx", data_parsley_errors_container="#ActivityImage-errors-container" })
+                                <div id="ActivityImage-errors-container"></div>
+                            </div>
+                            <div class="col-md-2 col-12">
+                                @Html.HiddenFor(x => x.ModifyItem.ProjectId)
+                                <button class="btn btn-success w-100" type="submit">送出</button>
+                            </div>
+                        </form>
+                    }
 
                     </div>
                 </div>

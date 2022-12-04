@@ -26,5 +26,10 @@ namespace BASE.Areas.Backend.Models
         /// <summary>關鍵字</summary>
         public string? Keyword { get; set; }
 
+        /// <summary> 時間區間起 </summary>
+        public string? sTime { get; set; }
+        /// <summary> 時間區間訖 </summary>
+        public string? eTime { get; set; }
+
     }
 }

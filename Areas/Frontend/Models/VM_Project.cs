@@ -21,6 +21,13 @@ namespace BASE.Areas.Frontend.Models
 
         public IFormFile? ModifyFile { get; set; }
 
+        /// <summary>是否顯示變更管理區塊</summary>
+        public Boolean IsShowModifyArea { get; set; }
+        /// <summary>
+        /// 變更申請檔案下載連結
+        /// </summary>
+        public String SampleFilePath { get; set; }
+
     }
 
     /// <summary>列表_查詢參數</summary>

@@ -27,6 +27,7 @@ namespace BASE.Areas.Frontend.Service
                 List<AdExtend> allDataList = (from ad in _context.TbAdvertise.Where(x => !x.IsDelete && x.IsPublish)
                                                 join FileInfo in _context.TbFileInfo.Where(x => !x.IsDelete) on ad.FileId equals FileInfo.FileId into ad_File
                                                 from FileInfo in ad_File.DefaultIfEmpty()
+                                                orderby ad.Sort ascending
                                                 select new AdExtend
                                                 {
                                                     Header = ad,

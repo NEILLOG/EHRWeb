@@ -1,0 +1,112 @@
+﻿@using BASE.Service
+
+@await Html.PartialAsync("_BannerPartial")
+
+<div class="section pb-md-4 py-lg-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-12">
+                <div class="registrationBox bg-white p-4">
+
+                    <div class="row">
+                        <div class="col-12 text-center border-bottom rb-title">
+                            <h2 class="fc-green fw-bold"><span>網站導覽說明</span></h2>
+                            <small>無障礙導覽</small>
+                        </div>
+                    </div>
+                  
+                    <div class="row">
+                        <div class="col-12 py-3">
+                        <p>本網站依照「無障礙網頁開發規範」原則設計， 遵循無障礙網站設計之規範提供網頁導盲磚(:::)、網站導覽 (Site Navigator)、鍵盤快速鍵 (Access Key) 等設計方式。 下列為本網站使用鍵盤快速鍵 (Access Key) 操作方式說明：</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="guide_list">
+                                <li class="list-unstyled"><span class="badge bg-primary">Alt + U</span> <span>上方功能區塊，包含回首頁、網站導覽、聯絡我們、訂閱服務</span></li>
+                                <li class="list-unstyled"><span class="badge bg-primary">Alt + M</span> <span>主要功能選單區塊，移至網頁主要功能選單位置。</span></li>
+                                <li class="list-unstyled"><span class="badge bg-primary">Alt + C</span> <span>中央內容區塊，為本頁主要內容區。</span></li>
+                                <li class="list-unstyled"><span class="badge bg-primary">Alt + L</span> <span>左方功能區塊，為子選單列表。</span></li>
+                                <li class="list-unstyled"><span class="badge bg-primary">Alt + R</span> <span>右方內容區塊，為本頁的主要內容區。</span></li>
+                                <li class="list-unstyled"><span class="badge bg-primary">Alt + Z</span> <span>網站地圖區塊，包含快速選單。</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-2 col-sm-4 col-12 mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    首頁
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><a href="@Url.Action("Index", "Home")">首頁</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-4 col-12 mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    最新消息
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><a href="@Url.Action("List", "News")">最新消息</a></li>
+                                    <li class="list-group-item"><a href="@Url.Action("List", "YouTube")">Youtube影片</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-4 col-12 mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    活動訊息
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><a href="@Url.Action("List", "Activity")">線上報名</a></li>
+                                    <li class="list-group-item"><a href="@Url.Action("List", "Album")">活動花絮</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-4 col-12 mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    企業資源專區
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><a href="@Url.Action("Map", "Resource")">計畫資源地圖</a></li>
+                                    <li class="list-group-item"><a href="@Url.Action("List", "Resource", new { id = "企業訓練資源"})">企業訓練資源</a></li>
+                                    <li class="list-group-item"><a href="@Url.Action("List", "Resource", new { id = "就業服務資源"})">就業服務資源</a></li>
+                                    <li class="list-group-item"><a href="@Url.Action("List", "Resource", new { id = "紓困資源"})">紓困資源</a></li>
+                                    <li class="list-group-item"><a href="@Url.Action("List", "Resource", new { id = "其他資源"})">其他資源</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-4 col-12 mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    諮詢輔導服務
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><a href="@Url.Action("Index", "Consult")">線上報名</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-4 col-12 mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    人資小幫手
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><a href="@Url.Action("List", "HR", new { id = "HR知識充電站"})">HR知識充電站</a></li>
+                                    <li class="list-group-item"><a href="@Url.Action("Manual", "HR")">HR工具箱</a></li>
+                                    <li class="list-group-item"><a href="@Url.Action("List", "HR", new { id = "成功案例分享"})">成功案例分享</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -9,6 +9,16 @@
             ///<summary>目前登入使用者menu資訊</summary>
             public static string Menu = "Menu";
         }
+
+        public struct VerifyCode
+        {
+            /// <summary>報名活動</summary>
+            public static string Activity = "Activity";
+            /// <summary>諮詢輔導</summary>
+            public static string Consult = "Consult";
+            /// <summary>訂閱服務</summary>
+            public static string Subscript = "Subscript";
+        }
     }
 
     public class UserSessionModel

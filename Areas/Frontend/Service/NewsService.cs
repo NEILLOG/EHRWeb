@@ -29,11 +29,15 @@ namespace BASE.Areas.Frontend.Service
             DateTime dtnow = DateTime.Now;
             try
             {
+                Int32 Year = DateTime.Now.Year;
+
                 IQueryable<NewsExtend>? dataList = (from NewsInfo in _context.TbNews.Where(x => !x.IsDelete && x.IsPublish)
 
                                                     join FileInfo in _context.TbFileInfo.Where(x => !x.IsDelete) on NewsInfo.FileId equals FileInfo.FileId into News_File
                                                     from FileInfo in News_File.DefaultIfEmpty()
-                                                    
+
+                                                    where NewsInfo.DisplayDate.Year == Year
+
                                                     orderby NewsInfo.IsKeepTop descending, NewsInfo.DisplayDate descending
                                                     select new NewsExtend
                                                     {

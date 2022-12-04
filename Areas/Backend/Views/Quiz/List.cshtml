@@ -2,8 +2,12 @@
 @model BASE.Areas.Backend.Models.VM_Quiz
 @section CustomScripts
 {
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#Search_sTime").datepicker({ dateFormat: 'yy/mm/dd' });
+        $("#Search_eTime").datepicker({ dateFormat: 'yy/mm/dd' });
     });
 
     function Delete(id) {
@@ -64,12 +68,16 @@
                     <div class="row g-3 align-items-end mb-3">
                         <div class="col-12 col-md-auto">
                             <a class="btn btn-primary" href="@(Url.Action("Add", "Quiz"))">新增</a>
-                            <a class="btn btn-primary " href="@(Url.Action("Sort", "Quiz"))">排序</a>
                         </div>
                         <div class="col-12 col-md-auto ms-auto">
                             <div class="input-group">
                                 @Html.LabelFor(x => x.Search.Keyword, "關鍵字", new { @class="input-group-text" })
                                 @Html.TextBoxFor(x => x.Search.Keyword, new { @type="text", @class="form-control", @placeholder="請輸入關鍵字", @aria_label="關鍵字" })
+
+                                @Html.LabelFor(x => x.Search.sTime, "時間區間", new { @class="input-group-text" })
+                                @Html.TextBoxFor(x => x.Search.sTime, new {@class="form-control", placeholder = "請輸入時間起",type="text"})
+                                @Html.TextBoxFor(x => x.Search.eTime, new {@class="form-control", placeholder = "請輸入時間起",type="text"})
+
                             </div>
                         </div>
                         <div class="col-12 col-md-auto">
@@ -96,7 +104,7 @@
                                    <tr>
                                         <td>@(Model.ExtendList.IndexOf(item) + 1)</td>
                                        <td style="max-width:30vw;">@Html.Raw(item.Header.Name.Replace("\r\n", "<br>"))</td>                                       
-                                       <td style="max-width:55vw;">@Html.Raw(item.Header.Name)</td>
+                                       <td style="max-width:55vw;">@item.Header.CreateDate.ToShortDateString()</td>
                                        <td>
                                            <a class="btn btn-primary" href="@(Url.Action("Edit", "Quiz", new { id = EncryptService.AES.RandomizedEncrypt(item.Header.Id) }))">編輯</a>
                                            <button type="button" class="btn btn-danger" onclick="Delete('@(EncryptService.AES.RandomizedEncrypt(item.Header.Id))')">刪除</button>

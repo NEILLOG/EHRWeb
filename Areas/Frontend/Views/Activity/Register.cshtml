@@ -3,8 +3,6 @@
 
 @await Html.PartialAsync("_BannerPartial")
 
-
-
 <!-- ================================================== -->
 <!-- 活動訊息 報名頁-->
 <!-- ================================================== -->
@@ -19,42 +17,42 @@
                             <small>請填寫以下報名表單，請注意必填欄位，確認後送出。</small>
                         </div>
                     </div>
-                    <form method="post" class="row g-3 justify-content-center mt-3">
+                    <form id="frm" method="post" class="row g-3 justify-content-center mt-3">
                         <div class="col-md-4">
                             <label for="inputA" class="form-label">企業名稱<span class="fc-red ms-1">*</span></label>
-                            @Html.TextBoxFor(x => x.Main.CompanyName, new { @class="form-control", placeholder="請輸入企業名稱"})
+                            @Html.TextBoxFor(x => x.Main.CompanyName, new { @class="form-control", placeholder="請輸入企業名稱", required="required"})
                         </div>
                         <div class="col-md-4">
                             <label for="inputB" class="form-label">企業所在地<span class="fc-red ms-1">*</span></label>
-                            @Html.DropDownListFor(x => x.Main.CompanyLocation, Model.ddlCompanyLocation, new { @class="form-select" })
+                            @Html.DropDownListFor(x => x.Main.CompanyLocation, Model.ddlCompanyLocation, new { @class="form-select", required="required" })
                         </div>
                         <div class="col-md-4">
                             <label for="inputC" class="form-label">產業別<span class="fc-red ms-1">*</span></label>
-                            @Html.DropDownListFor(x => x.Main.CompanyType, Model.ddlCompanyType, new { @class="form-select" })
+                            @Html.DropDownListFor(x => x.Main.CompanyType, Model.ddlCompanyType, new { @class="form-select", required="required" })
                         </div>
                         <div class="col-md-4">
                             <label for="inputD" class="form-label">姓名<span class="fc-red ms-1">*</span></label>
-                            @Html.TextBoxFor(x => x.Main.Name, new { @class="form-control", placeholder="請輸入姓名"})
+                            @Html.TextBoxFor(x => x.Main.Name, new { @class="form-control", placeholder="請輸入姓名", required="required"})
                         </div>
                         <div class="col-md-4">
                             <label for="inputE" class="form-label">職稱<span class="fc-red ms-1">*</span></label>
-                            @Html.TextBoxFor(x => x.Main.JobTitle, new { @class="form-control", placeholder="請輸入職稱"})
+                            @Html.TextBoxFor(x => x.Main.JobTitle, new { @class="form-control", placeholder="請輸入職稱", required="required"})
                         </div>
                         <div class="col-md-4">
                             <label for="inputF" class="form-label">連絡電話<span class="fc-red ms-1">*</span></label>
-                            @Html.TextBoxFor(x => x.Main.Phone, new { @class="form-control", placeholder="請輸入連絡電話"})
+                            @Html.TextBoxFor(x => x.Main.Phone, new { @class="form-control", placeholder="請輸入連絡電話", required="required"})
                         </div>
                         <div class="col-md-4">
                             <label for="inputG" class="form-label">手機<span class="fc-red ms-1">*</span></label>
-                            @Html.TextBoxFor(x => x.Main.CellPhone, new { @class="form-control", placeholder="請輸入手機"})
+                            @Html.TextBoxFor(x => x.Main.CellPhone, new { @class="form-control", placeholder="請輸入手機", required="required"})
                         </div>
                         <div class="col-md-4">
                             <label for="inputEmail4" class="form-label">電子郵件<span class="fc-red ms-1">*</span></label>
-                            @Html.TextBoxFor(x => x.Main.Email, new { @class="form-control", placeholder="請輸入電子郵件", type="email"})
+                            @Html.TextBoxFor(x => x.Main.Email, new { @class="form-control", placeholder="請輸入電子郵件", type="email", required="required"})
                         </div>
                         <div class="col-md-4">
                             <label for="inputH" class="form-label">公司員工人數<span class="fc-red ms-1">*</span></label>
-                            @Html.DropDownListFor(x => x.Main.CompanyEmpAmount, Model.ddlCompanyEmpAmount, new { @class="form-select" })
+                            @Html.DropDownListFor(x => x.Main.CompanyEmpAmount, Model.ddlCompanyEmpAmount, new { @class="form-select", required="required" })
                         </div>
                         <div class="col-12">
                             <div class="mb-2" id="regis-form">
@@ -83,38 +81,54 @@
 
                         <div class="col-12">
                             <div class="mb-2" id="regis-form">
+
                                 <div class="mb-2">訊息來源<span class="fc-red ms-1">*</span></div>
                                 <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-AA" value="朋友介紹" name="ckbsInfoFrom">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-AA">朋友介紹</label>
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-AA" value="桃分署/就業中心" name="ckbsInfoFrom">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-AA">桃分署/就業中心</label>
                                 </div>
                                 <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-BB" value="網站廣告" name="ckbsInfoFrom">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-BB">網站廣告</label>
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-BB" value="中小企總官網/EDM" name="ckbsInfoFrom">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-BB">中小企總官網/EDM</label>
                                 </div>
                                 <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-CC" value="Google搜尋" name="ckbsInfoFrom">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-CC">Google搜尋</label>
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-CC" value="工業區" name="ckbsInfoFrom">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-CC">工業區</label>
                                 </div>
                                 <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-DD" value="同事介紹" name="ckbsInfoFrom">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-DD">同事介紹</label>
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-DD" value="公(工)協會" name="ckbsInfoFrom">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-DD">公(工)協會</label>
                                 </div>
                                 <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-EE" value="相關網站" name="activityChoice">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-EE">相關網站</label>
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-EE" value="朋友/同事/社團介紹" name="ckbsInfoFrom">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-EE">朋友/同事/社團介紹</label>
+                                </div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-FF" value="報章雜誌" name="ckbsInfoFrom">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-FF">報章雜誌</label>
+                                </div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-GG" value="網路廣告" name="ckbsInfoFrom">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-GG">網路廣告</label>
+                                </div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox-HH" value="其他" name="ckbsInfoFrom">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-HH">其他</label>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="mb-3 d-flex">
                                 <div>
-                                    <label for="exampleInputRandom2" class="form-label">驗證碼<span class="fc-red ms-1">*</span></label>
-                                    <input type="text" class="form-control" id="exampleInputRandom2" placeholder="請輸入驗證碼">
+                                    <label class="form-label">驗證碼<span class="fc-red ms-1">*</span></label>
+                                    @Html.TextBoxFor(x => x.VerifyCode, new { @class="form-control", placeholder="請輸入驗證碼", required="required" })
                                 </div>
                                 <div>
-                                    <canvas id="canvas2" width="120" height="45" class="ms-3 mt-4"></canvas>
-                                    <a href="#" id="changeImg2" title="重新產生驗證碼">重新產生</a>
+                                    <audio id="player1" controls src="@Url.Action("TTS", "Home", new { id = "Activity" })" style="display:none;"></audio>
+                                    <img id="LoginCode" src="@Url.Action("GetValidateCode", "Home", new { id = "Activity" } )" class="w-40 ml-3 mt-4" alt="圖片驗證碼" />
+                                    <a href="#" class="PlayValidCode" title="播放圖片驗證碼">
+                                        <img src="~/areas/frontend/img/speaker.png" alt="播放圖片驗證碼" />
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -193,17 +207,20 @@
                                 </div>
                             }
                         </div>
-                        <div class="mb-3" id="food-form">
-                            <div class="mb-2 fw-bold"><i class="fa-solid fa-utensils me-2 fc-gray" aria-hidden="true"></i>飲食選擇<span class="fc-red ms-1">*</span></div>
-                            <div class="form-check form-check-inline CusCheckbox-form">
-                                <input class="form-check-input" type="radio" id="inlineCheckbox-meat@(day.Id)" value="葷食" name="food@(day.Id)">
-                                <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-meat@(day.Id)">葷食</label>
+                        @if (Model.Header.DateType == "全日")
+                        {
+                            <div class="mb-3" id="food-form">
+                                <div class="mb-2 fw-bold"><i class="fa-solid fa-utensils me-2 fc-gray" aria-hidden="true"></i>飲食選擇<span class="fc-red ms-1">*</span></div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input" type="radio" id="inlineCheckbox-meat@(day.Id)" value="葷食" name="food@(day.Id)">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-meat@(day.Id)">葷食</label>
+                                </div>
+                                <div class="form-check form-check-inline CusCheckbox-form">
+                                    <input class="form-check-input" type="radio" id="inlineCheckbox-vegetarian@(day.Id)" value="素食" name="food@(day.Id)">
+                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-vegetarian@(day.Id)">素食</label>
+                                </div>
                             </div>
-                            <div class="form-check form-check-inline CusCheckbox-form">
-                                <input class="form-check-input" type="radio" id="inlineCheckbox-vegetarian@(day.Id)" value="素食" name="food@(day.Id)">
-                                <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-vegetarian@(day.Id)">素食</label>
-                            </div>
-                        </div>
+                        }
                     </div>
                     <button type="button" class="btn btn-success mb-2 w-100 btnAddSection">確定</button>
                     <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">取消</button>
@@ -213,6 +230,8 @@
         </div>
     </div>
 }
+
+@Html.Hidden("hidDayType", Model.Header.DateType)
 
 
 <!-- 個資宣告項目Modal -->
@@ -252,7 +271,7 @@
                             <span class="ms-2 fc-yellow text-decoration-underline">${Type}</span>
                         </div>
                     </div>
-                    <div class="choice me-2">
+                    <div class="choice me-2 FoodLabel">
                         <div class="btn btn-dark">
                             <span><i class="fa-solid fa-utensils me-2 fc-gray" aria-hidden="true"></i>飲食選擇</span>
                             <span class="ms-2 fc-yellow text-decoration-underline">${Food}</span>
@@ -271,11 +290,44 @@
     <script>
         $(document).ready(function(){
 
+            
+
+            $('#frm').submit(function () {
+                var isVerify = false;
+                var validnum = $('#VerifyCode').val();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ajaxValidVerify", "Home")',
+                    async: false,
+                    data: { UserInput: validnum, type: 'Activity' },
+                    success: function (response) {
+                        isVerify = response.isSuccess;
+                    }
+                });
+                if (isVerify == false) {
+                    Swal.fire('驗證碼錯誤');
+                    return false;
+                }
+
+                if (GetAllRegisterSection().length <=0){
+                    Swal.fire('請至少選擇一個活動場次');
+                    return false;
+                }
+
+            });
+
+            $('.PlayValidCode').click(function () {
+                var audio = document.getElementById("player1");
+                    audio.play();
+                return false;
+            });
+
             var panel = $('#panelSection');
 
             $('.btnAddSection').click(function(){
                 var container = $(this).parents('div.modal-body'); console.log(container);
 
+                var daytype = $('#hidDayType').val();
                 var mode = container.find('input[name*=mode]:checked');
                 var food = container.find('input[name*=food]:checked');
                 var section_id = container.find('input.hidSectionId').val();
@@ -286,16 +338,16 @@
                 var RegisteredSections = GetAllRegisterSection();
                 if (RegisteredSections.includes(section_id))
                 {
-                    alert('您已加入此活動日期的報名時段');
+                    Swal.fire('您已加入此活動日期的報名時段');
                     return;
                 }
 
                 if(mode.length == 0) {
-                    alert('請選擇參與模式');
+                    Swal.fire('請選擇參與模式');
                     return;
                 }
-                if (food.length == 0) {
-                    alert('請選擇飲食為葷食或素食');
+                if (food.length == 0 && daytype == '全日') {
+                    Swal.fire('請選擇飲食為葷食或素食');
                     return;
                 }
 
@@ -304,10 +356,14 @@
                 var NewReg = $("#section-tmpl").tmpl({
                     DateRange: date_range,
                     Type: mode.val(),
-                    Food: food.val(),
+                    Food: daytype == '全日' ? food.val() : null,
                     SectionID: section_id,
                     FoodBoolean: food.val() == '素食' ? 'true' : 'false'
                 });
+
+                if (daytype == '半日') {
+                    NewReg.find('.FoodLabel').remove();
+                }
 
                 panel.find('.btnDeleteSelectedSection').click(function(){
                     if(confirm('確認刪除?')) 
@@ -324,6 +380,7 @@
                 modal.hide();
             });
 
+                
 
         });
 

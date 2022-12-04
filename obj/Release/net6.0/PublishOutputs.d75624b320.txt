@@ -400,6 +400,7 @@ D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\System
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\System.Runtime.Caching.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\System.Security.Cryptography.ProtectedData.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\System.Security.Permissions.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\System.Speech.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\System.Windows.Extensions.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\cs\Microsoft.CodeAnalysis.resources.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\de\Microsoft.CodeAnalysis.resources.dll
@@ -575,4 +576,5 @@ D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\runtim
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Speech.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll

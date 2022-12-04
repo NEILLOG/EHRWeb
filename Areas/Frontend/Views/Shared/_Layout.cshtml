@@ -184,8 +184,11 @@
                                 <input type="text" class="form-control" id="txtValidNum" placeholder="請輸入驗證碼" required>
                             </div>
                             <div>
-                                <canvas id="canvas" width="120" height="45" class="ms-3 mt-4"></canvas>
-                                <a href="#" id="changeImg" title="重新產生驗證碼">重新產生</a>
+                                <audio id="playerSubscript" controls src="@Url.Action("TTS", "Home", new { id = "Subscript" })" style="display:none;"></audio>
+                                <img id="LoginCode" src="@Url.Action("GetValidateCode", "Home", new { id = "Subscript" } )" class="w-40 ml-3 mt-4" alt="圖片驗證碼" />
+                                <a href="#" class="PlayValidCodeSubscript" title="播放圖片驗證碼">
+                                    <img src="~/areas/frontend/img/speaker.png" alt="播放圖片驗證碼" />
+                                </a>
                             </div>
                         </div>
                     </form>
@@ -200,8 +203,18 @@
     <script src="~/areas/frontend/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+    @{
+        Context.Session.Set(BASE.Areas.Backend.Models.SessionStruct.VerifyCode.Subscript, new ValidImageHelper().RandomCode(5));
+    }
     <script>
         $(document).ready(function(){
+
+            $('.PlayValidCodeSubscript').click(function () {
+                var audio = document.getElementById("playerSubscript'");
+                audio.play();
+                return false;
+            });
+
             $('#btnSendSubscript').click(function(){
                 var token = $(this).siblings('input:hidden[name="__X-XSRFVerificationToken"]').val();
                 var email = $('#txtSubscriptEmail').val();
@@ -212,15 +225,26 @@
                     if (this.checked)
                         checks.push($(this).val());
                 });
+                
+                var isVerify = false;
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ajaxValidVerify", "Home")',
+                    async: false,
+                    data: { UserInput: validnum, type: 'Subscript' },
+                    success: function (response) {
+                        isVerify = response.isSuccess;
+                    }
+                });
 
                 if(email == '')
                     Swal.fire('請輸入您的訂閱信箱');
                 else if(checks.length <= 0)
                     Swal.fire('請選擇至少一個訂閱項目');
-                else if(validnum == '')
-                    Swal.fire('請輸入驗證碼');
                 else if(!rule.is(':checked'))
                     Swal.fire('請確認您是否同意我們的條款及隱私權規範');
+                else if (isVerify == false)
+                    Swal.fire('驗證碼錯誤');
                 else
                 {
                     $.ajax({
