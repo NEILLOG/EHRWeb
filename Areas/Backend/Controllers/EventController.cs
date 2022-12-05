@@ -18,6 +18,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
+using System.Net.Mail;
 using System.Text;
 using static Humanizer.In;
 using static NuGet.Packaging.PackagingConstants;
@@ -455,7 +456,8 @@ namespace BASE.Areas.Backend.Controllers
                             // 活動場次，尚未開放報名的場次才可編輯
                             if (!item.IsPublish && datapost.EventInfoItem.sectionExtendList != null && datapost.EventInfoItem.sectionExtendList.Any())
                             {
-                                foreach (var itemUserEXP in datapost.EventInfoItem.sectionExtendList)
+
+                                foreach (var itemUserEXP in datapost.EventInfoItem.sectionExtendList.Where(x=>!x.isRemove))
                                 {
                                     TbActivitySection tempActivitySection = new TbActivitySection();
                                     tempActivitySection.ActivityId = item.Id;
@@ -1704,8 +1706,12 @@ namespace BASE.Areas.Backend.Controllers
             // 例外錯誤發生，特別記錄至 TbLog
             bool unCaughtError = false;
 
+            TbActivity? activity = new TbActivity();
+            TbActivitySection? activitySection = new TbActivitySection();
+            TbActivityRegister? register = new TbActivityRegister();
             TbActivityRegisterSection? item = new TbActivityRegisterSection();
-
+            // 是否要寄送滿意度問卷調查
+            bool isSend = false;
             try
             {
                 if (string.IsNullOrEmpty(registerSectionID))
@@ -1718,6 +1724,17 @@ namespace BASE.Areas.Backend.Controllers
                     long RSId = Convert.ToInt64(registerSectionID);
                     TbActivityRegisterSection? data = _eventService.Lookup<TbActivityRegisterSection>(ref _message, x => x.Id == RSId).FirstOrDefault();
 
+                    // 活動主表
+                    activity = _eventService.Lookup<TbActivity>(ref _message, x => x.Id == data.ActivityId).FirstOrDefault();
+
+                    // 活動報名者資料
+                    register = _eventService.Lookup<TbActivityRegister>(ref _message, x => x.Id == data.RegisterId).FirstOrDefault();
+
+                    // 活動報名時段資料
+                    long longSection = Convert.ToInt64(data.RegisterSectionId);
+                    activitySection = _eventService.Lookup<TbActivitySection>(ref _message, x => x.Id == longSection).FirstOrDefault();
+
+
                     if (data == null)
                     {
                         TempData["TempMsgDetail"] = "查無指定項目！";
@@ -1725,7 +1742,10 @@ namespace BASE.Areas.Backend.Controllers
                     else
                     {
                         item = data;
-                        if(type == "AM")
+                        // 如果簽到過 = 寄滿意度調查
+                        if (!item.IsSigninAm && !item.IsSigninPm)
+                            isSend = true;
+                        if (type == "AM")
                             item.IsSigninAm = !item.IsSigninAm;
                         else
                             item.IsSigninPm = !item.IsSigninPm;
@@ -1741,6 +1761,73 @@ namespace BASE.Areas.Backend.Controllers
 
                                 transaction.Commit();
                                 isSuccess = true;
+
+                                // 後臺簽到寄送滿意度調查與學員出席證明
+                                if (isSend)
+                                {
+                                    HttpRequest httpRequest = _contextAccessor.HttpContext.Request;
+                                    string webSiteDomain = new StringBuilder().Append(httpRequest.Scheme).Append("://").Append(httpRequest.Host).ToString();
+
+                                    string actMonth = activitySection.Day.Month.ToString();
+                                    string actDay = activitySection.Day.Day.ToString();
+
+                                    //主旨
+                                    string sSubject = string.Format("【活動滿意度問卷】桃竹苗分署{0}月{1}日{2}-{3}", actMonth, actDay, activity.Title, activity.Subject);
+
+                                    //內容
+                                    string sContent = "敬愛的學員，您好： <br />";
+                                    sContent += string.Format("感謝您於{0}月{1}日參加勞動部勞動力發展署桃竹苗分署主辦之{2}–{3}。<br />", actMonth, actDay, activity.Title, activity.Subject);
+                                    sContent += "為優化活動品質，桃竹苗分署邀請您填寫本次活動滿意度調查問卷，作為未來活動規劃與改善之參考，敬請協助填寫，謝謝您！<br /><br />";
+                                    sContent += string.Format("{0}月{1}日滿意度問卷調查連結：<br /><a href='{2}/Frontend/Activity/Quiz/{3}' target='_blank'>網址連結</a><br /><br />", actMonth, actDay, webSiteDomain, EncryptService.AES.RandomizedEncrypt(item.Id.ToString()));
+                                    sContent += "附件：課程講義、其他服務資源資訊<br /><br />";
+                                    sContent += "敬祝 順心平安<br />";
+                                    sContent += "勞動部勞動力發展署桃竹苗分署<br />";
+                                    sContent += "桃竹苗區域運籌人力資源整合服務計畫_專案辦公室<br />";
+                                    sContent += "諮詢電話： 02-23660812 #164、#127 03-4855368#1905";
+
+                                    // 取出講義
+                                    string HandoutFilePath = "";
+                                    TbFileInfo HandoutFile = _eventService.Lookup<TbFileInfo>(ref _message).Where(x => x.FileId == activity.HandoutFile).FirstOrDefault();
+                                    if (HandoutFile != null)
+                                        HandoutFilePath = _fileService.MapPath(HandoutFile.FilePath);
+
+                                    // 製作學員出席證明
+                                    ProofExportExtend itemProof = new ProofExportExtend()
+                                    {
+                                        ActivityTitle = activity.Title,
+                                        ActivitySubject = activity.Subject,
+                                        StudentName = register.Name,
+                                        Year = (activitySection.Day.Year - 1911).ToString(),
+                                        Month = activitySection.Day.Month.ToString(),
+                                        Day = activitySection.Day.Day.ToString(),
+                                        Week = Week(activitySection.Day),
+                                        Time = activitySection.StartTime.ToString("hh\\:mm") + "~" + activitySection.EndTime.ToString("hh\\:mm")
+                                    };
+
+                                    // 預設的存檔路徑
+                                    string fileUploadRoot = _config["Site:FileUploadRoot"];
+                                    // 檔案存放路徑 (注意：檔案只能存在wwwroot底下)
+                                    string folderPath = _fileService.MapPath(fileUploadRoot, "ProofOfStudent/" + register.Id);
+
+                                    // 建立目錄
+                                    if (!Directory.Exists(folderPath))
+                                        Directory.CreateDirectory(folderPath);
+
+                                    // 存檔路徑
+                                    string filePath = _fileService.MapPath(fileUploadRoot, "ProofOfStudent/" + register.Id, "學員" + register.Name + "出席證明.docx");
+                                    
+                                    // 產生學生出席證明word 
+                                    var GenerateProof = _exportService.ProofWord(itemProof, filePath);
+
+                                    //直接測試寄信
+                                    await _mailService.SendEmail(new MailViewModel()
+                                    {
+                                        ToList = new List<MailAddressInfo>() { new MailAddressInfo(register.Email) },
+                                        Subject = sSubject,
+                                        Body = sContent,
+                                        AttachmentList = new List<Attachment>() { new Attachment(filePath), new Attachment(HandoutFilePath) }
+                                    });
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -1762,6 +1849,8 @@ namespace BASE.Areas.Backend.Controllers
 
             if (isSuccess)
             {
+                
+
                 result.alert_type = "success";
                 result.Message = "簽到成功";
             }
@@ -2012,7 +2101,7 @@ namespace BASE.Areas.Backend.Controllers
                 if (!string.IsNullOrEmpty(datapost.ActivityItem.Id) && !string.IsNullOrEmpty(datapost.Search.sSection))
                 {
                     // 前台簽到網址
-                    SigninUrl = string.Format("{0}/Frontend/Activity/Checkin?id={1}&section={2}", webSiteDomain, datapost.ActivityItem.Id, datapost.Search.sSection);
+                    SigninUrl = string.Format("{0}/Frontend/Activity/Checkin?aid={1}&sid={2}", webSiteDomain, EncryptService.AES.RandomizedEncrypt(datapost.ActivityItem.Id), EncryptService.AES.RandomizedEncrypt(datapost.Search.sSection));
 
                     // QRCODE URL
                     var url = string.Format("http://chart.apis.google.com/chart?cht=qr&chs={1}x{2}&chl={0}", SigninUrl, 500, 500);

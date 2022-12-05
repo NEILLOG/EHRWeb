@@ -1,7 +1,7 @@
 ﻿@using BASE.Service
 @model BASE.Areas.Frontend.Models.VM_OnePage
 
-@await Html.PartialAsync("_BannerPartial")
+@await Html.PartialAsync("_BannerPartial", new BASE.Areas.Frontend.Models.Extend.BannerPartial(){ Main = "計畫資源地圖", Detail = "" })
 
 <!-- ================================================== -->
 <!-- 企業資源專區 -->

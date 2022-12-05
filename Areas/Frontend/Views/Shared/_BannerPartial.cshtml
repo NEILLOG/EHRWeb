@@ -1,4 +1,11 @@
-﻿<!-- ================================================== -->
+﻿@model BASE.Areas.Frontend.Models.Extend.BannerPartial
+@{
+    var _Model = Model;
+    if (Model == null)
+        _Model = new BASE.Areas.Frontend.Models.Extend.BannerPartial() { Main = "(未命名)" };
+}
+
+<!-- ================================================== -->
 <!-- Banner -->
 <!-- ================================================== -->
 <div class="container-fluid position-relative">
@@ -6,10 +13,10 @@
     <div class="text-center bg-image">
         <div class="d-flex flex-column justify-content-center align-items-center bn-title">
             <div class="cTop">
-                <h3 class="mb-3 fw-bold">人資小幫手</h3>
+                <h3 class="mb-3 fw-bold">@_Model.Main</h3>
             </div>
             <div class="cBottom">
-                <p class="">首頁 / 人資小幫手</p>
+                <p class="">首頁 / @_Model.Main @(String.IsNullOrEmpty(_Model.Detail) ? "" : " / " + _Model.Detail)</p>
             </div>
         </div>
     </div>

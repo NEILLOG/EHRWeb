@@ -1,7 +1,7 @@
 ﻿@using BASE.Service
 @model BASE.Areas.Frontend.Models.VM_ConsultRegister
 
-@await Html.PartialAsync("_BannerPartial")
+@await Html.PartialAsync("_BannerPartial", new BASE.Areas.Frontend.Models.Extend.BannerPartial(){ Main = "諮詢輔導服務", Detail = "" })
 
 @section Scripts
 {
@@ -65,34 +65,14 @@
                             <div class="mb-2" id="regis-form">
 
                                 <div class="mb-2">諮詢主題(可複選)<span class="fc-red ms-1">*</span></div>
-                                <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-AA" value="組織經營" name="CheckedSubjects">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-AA">組織經營</label>
-                                </div>
-                                <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-BB" value="組織轉型" name="CheckedSubjects">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-BB">組織轉型</label>
-                                </div>
-                                <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-CC" value="人才培育" name="CheckedSubjects">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-CC">人才培育</label>
-                                </div>
-                                <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-DD" value="職能分析" name="CheckedSubjects">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-DD">職能分析</label>
-                                </div>
-                                <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-EE" value="員工職涯發展" name="CheckedSubjects">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-EE">員工職涯發展</label>
-                                </div>
-                                <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-FF" value="人力資源管理" name="CheckedSubjects">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-FF">人力資源管理</label>
-                                </div>
-                                <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-GG" value="勞資關係及法令" name="CheckedSubjects">
-                                    <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-GG">勞資關係及法令</label>
-                                </div>
+
+                                @foreach(var item in Model.ckbSubjects)
+                                {
+                                    <div class="form-check form-check-inline CusCheckbox-form">
+                                        <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-@(item.Value)" value="@item.Value" name="CheckedSubjects">
+                                        <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-@(item.Value)">@item.Text</label>
+                                    </div>
+                                }
                             </div>
                         </div>
                         <div class="col-12">

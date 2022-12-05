@@ -18,6 +18,8 @@
             public static string Consult = "Consult";
             /// <summary>訂閱服務</summary>
             public static string Subscript = "Subscript";
+            /// <summary>聯絡我們</summary>
+            public static string ContactUs = "ContactUs";
         }
     }
 

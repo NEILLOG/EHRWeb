@@ -11,6 +11,7 @@ namespace BASE.Areas.Frontend.Models
     {
         public TbContactUs? ExtendItem { get; set; }
 
+        public String VerifyCode { get; set; }
     }
 
 }

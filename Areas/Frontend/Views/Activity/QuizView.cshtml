@@ -8,7 +8,7 @@
     </script>
 }
 
-@await Html.PartialAsync("_BannerPartial")
+@await Html.PartialAsync("_BannerPartial", new BASE.Areas.Frontend.Models.Extend.BannerPartial(){ Main = "活動訊息", Detail = "問卷填寫" })
 
 <div class="section pb-md-4 py-lg-5">
     <div class="container">

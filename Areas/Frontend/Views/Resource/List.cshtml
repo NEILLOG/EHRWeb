@@ -1,7 +1,7 @@
 ﻿@using BASE.Service
 @model BASE.Areas.Frontend.Models.VM_Project
 
-@await Html.PartialAsync("_BannerPartial")
+@await Html.PartialAsync("_BannerPartial", new BASE.Areas.Frontend.Models.Extend.BannerPartial(){ Main = "企業資源專區", Detail = Model.Search.Category })
 
 <form method="post" id="frm" autocomplete="off">
     @Html.AntiForgeryToken()

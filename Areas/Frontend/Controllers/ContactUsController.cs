@@ -32,6 +32,7 @@ namespace BASE.Areas.Frontend.Controllers
 
         public async Task<IActionResult> Index()
         {
+            HttpContext.Session.Set(Backend.Models.SessionStruct.VerifyCode.ContactUs, new ValidImageHelper().RandomCode(5));
 
             VM_ContactUs data = new VM_ContactUs();
 

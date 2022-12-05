@@ -1,7 +1,7 @@
 ﻿@using BASE.Service
 @model BASE.Areas.Frontend.Models.VM_Activity
 
-@await Html.PartialAsync("_BannerPartial")
+@await Html.PartialAsync("_BannerPartial", new BASE.Areas.Frontend.Models.Extend.BannerPartial(){ Main = "活動訊息", Detail = "" })
 
 @section Scripts {
     <script>

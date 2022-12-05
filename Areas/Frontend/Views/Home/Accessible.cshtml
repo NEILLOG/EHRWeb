@@ -1,6 +1,6 @@
 ﻿@using BASE.Service
 
-@await Html.PartialAsync("_BannerPartial")
+@await Html.PartialAsync("_BannerPartial", new BASE.Areas.Frontend.Models.Extend.BannerPartial(){ Main = "網站導覽說明", Detail = "" })
 
 <div class="section pb-md-4 py-lg-5">
     <div class="container">

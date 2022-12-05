@@ -28,6 +28,9 @@ namespace BASE.Areas.Frontend.Models
             }
         }
 
+        public List<SelectListItem> ckbSubjects { get; set; }
+          
+
         public String VerifyCode { get ; set; }
     }
 

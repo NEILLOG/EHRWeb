@@ -70,7 +70,9 @@ namespace BASE.Areas.Frontend.Controllers
          
             try
             {
-
+                data.ckbSubjects = _allCommonService.Lookup<TbBasicColumn>(ref _message, x => x.BacolCode == "professionalField" && x.IsActive == true)
+                                    .Select(x => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem() { Text = x.Title, Value = x.BacolId })
+                                    .ToList();
             }
             catch (Exception ex)
             {
@@ -162,6 +164,10 @@ namespace BASE.Areas.Frontend.Controllers
                 }
                 else
                 {
+                    datapost.ckbSubjects = _allCommonService.Lookup<TbBasicColumn>(ref _message, x => x.BacolCode == "professionalField" && x.IsActive == true)
+                                            .Select(x => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem() { Text = x.Title, Value = x.BacolId })
+                                            .ToList();
+
                     return View(datapost);
                 }
             }

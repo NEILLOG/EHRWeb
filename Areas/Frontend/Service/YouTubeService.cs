@@ -30,7 +30,7 @@ namespace BASE.Areas.Frontend.Service
             try
             {
                 IQueryable<TbYouTubeVideo>? dataList = (from YouTubeInfo in _context.TbYouTubeVideo.Where(x => !x.IsDelete && x.IsPublish)
-                                                        orderby YouTubeInfo.CreateDate descending
+                                                        orderby YouTubeInfo.DisplayDate descending
                                                         select YouTubeInfo);
 
                 return dataList;

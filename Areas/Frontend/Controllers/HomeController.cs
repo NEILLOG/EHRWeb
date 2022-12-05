@@ -160,6 +160,7 @@ namespace BASE.Areas.Frontend.Controllers
                 case "Activity": code = HttpContext.Session.Get<String>(Backend.Models.SessionStruct.VerifyCode.Activity); break;
                 case "Consult": code = HttpContext.Session.Get<String>(Backend.Models.SessionStruct.VerifyCode.Consult); break;
                 case "Subscript": code = HttpContext.Session.Get<String>(Backend.Models.SessionStruct.VerifyCode.Subscript); break;
+                case "ContactUs": code = HttpContext.Session.Get<String>(Backend.Models.SessionStruct.VerifyCode.ContactUs); break;
             }
 
             Task<FileContentResult> task = Task.Run(() =>
@@ -210,6 +211,7 @@ namespace BASE.Areas.Frontend.Controllers
                 case "Activity": code = HttpContext.Session.Get<String>(Backend.Models.SessionStruct.VerifyCode.Activity); break;
                 case "Consult": code = HttpContext.Session.Get<String>(Backend.Models.SessionStruct.VerifyCode.Consult); break;
                 case "Subscript": code = HttpContext.Session.Get<String>(Backend.Models.SessionStruct.VerifyCode.Subscript); break;
+                case "ContactUs": code = HttpContext.Session.Get<String>(Backend.Models.SessionStruct.VerifyCode.ContactUs); break;
             }
 
             byte[] data = null;
@@ -248,6 +250,7 @@ namespace BASE.Areas.Frontend.Controllers
                 case "Activity": code = HttpContext.Session.Get<String>(Backend.Models.SessionStruct.VerifyCode.Activity); break;
                 case "Consult": code = HttpContext.Session.Get<String>(Backend.Models.SessionStruct.VerifyCode.Consult); break;
                 case "Subscript": code = HttpContext.Session.Get<String>(Backend.Models.SessionStruct.VerifyCode.Subscript); break;
+                case "ContactUs": code = HttpContext.Session.Get<String>(Backend.Models.SessionStruct.VerifyCode.ContactUs); break;
             }
 
             isSuccess = code == UserInput ? true : false;

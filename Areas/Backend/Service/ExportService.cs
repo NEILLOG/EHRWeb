@@ -21,6 +21,8 @@ using NPOI.WP.UserModel;
 using NPOI.SS.Util;
 using ICell = NPOI.SS.UserModel.ICell;
 using NPOI.SS.Formula.Functions;
+using System.IO;
+using System.IO.Pipes;
 
 namespace BASE.Areas.Backend.Service
 {
@@ -575,14 +577,14 @@ namespace BASE.Areas.Backend.Service
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public ActionResultModel<MemoryStream> ProofWord(ProofExportExtend item)
+        public ActionResultModel<MemoryStream> ProofWord(ProofExportExtend item,string filePath)
         {
             ActionResultModel<MemoryStream> result = new ActionResultModel<MemoryStream>();
 
             try
             {
-                string filePath = _fileService.MapPath("Sample/Sample_Proof.docx");
-                using (FileStream stream = File.OpenRead(filePath))
+                string sampleFilePath = _fileService.MapPath("Sample/Sample_Proof.docx");
+                using (FileStream stream = File.OpenRead(sampleFilePath))
                 {
                     XWPFDocument doc = new XWPFDocument(stream);
 
@@ -592,20 +594,10 @@ namespace BASE.Areas.Backend.Service
                         ReplaceKeyObjet(para, item);
                     }
 
-                    // 將word寫入MemoryStream
-                    MemoryStream ms = new MemoryStream();
-                    //doc.Write(ms);
-                    
-                    FileStream file = new FileStream("E:\\TEST.docx", FileMode.Create, FileAccess.Write);
-                    doc.Write(file);
-                    file.Close();
-
-                    ms.Close();
-                    ms.Dispose();
-
-                    result.Data = ms;
+                    FileStream Fs = new FileStream(filePath, FileMode.OpenOrCreate);
+                    doc.Write(Fs);
+                    Fs.Close();
                 }
-
             }
             catch (Exception ex)
             {

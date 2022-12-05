@@ -1,7 +1,7 @@
 ﻿@using BASE.Service
 @model BASE.Areas.Frontend.Models.VM_HRPackage
 
-@await Html.PartialAsync("_BannerPartial")
+@await Html.PartialAsync("_BannerPartial", new BASE.Areas.Frontend.Models.Extend.BannerPartial(){ Main = "人資小幫手", Detail = "HR材料包" })
 
 
 

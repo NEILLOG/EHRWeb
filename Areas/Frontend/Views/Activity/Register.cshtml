@@ -1,7 +1,7 @@
 ﻿@using BASE.Service
 @model BASE.Areas.Frontend.Models.VM_ActivityReigster
 
-@await Html.PartialAsync("_BannerPartial")
+@await Html.PartialAsync("_BannerPartial", new BASE.Areas.Frontend.Models.Extend.BannerPartial(){ Main = "活動訊息", Detail = "報名活動" })
 
 <!-- ================================================== -->
 <!-- 活動訊息 報名頁-->
@@ -139,7 +139,7 @@
                             </div>
                         </div>
                         <div class="d-flex gap-2 mt-5">
-                            <button class="btn btn-outline-primary w-50" type="button"><i class="fa-solid fa-chevron-left me-2" aria-hidden="true"></i>返回詳細頁</button>
+                            <a class="btn btn-outline-primary w-50" href="@Url.Action("Detail",new { id = EncryptService.AES.RandomizedEncrypt(Model.Header.Id) })"><i class="fa-solid fa-chevron-left me-2" aria-hidden="true"></i>返回詳細頁</a>
                             <button class="btn btn-primary w-50" type="submit" data-bs-toggle="modal" data-bs-target="#regisDoneModal"><i class="fa-solid fa-check-to-slot me-2" aria-hidden="true"></i>確定報名</button>
                         </div>
                     </form>

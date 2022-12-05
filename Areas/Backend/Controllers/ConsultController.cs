@@ -10,6 +10,8 @@ using BASE.Areas.Backend.Models.Extend;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using BASE.Models;
+using System.Net.Mail;
+using System.Text;
 
 namespace BASE.Areas.Backend.Controllers
 {
@@ -22,6 +24,7 @@ namespace BASE.Areas.Backend.Controllers
         private readonly ExportService _exportService;
         private readonly MailService _mailService;
         private readonly IConfiguration _config;
+        private readonly IHttpContextAccessor _contextAccessor = null!;
 
         public ConsultController(AllCommonService allCommonService,
             FileService fileService,
@@ -29,7 +32,8 @@ namespace BASE.Areas.Backend.Controllers
             ConsultService consultService,
             ExportService exportService,
             MailService mailService,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IHttpContextAccessor contextAccessor)
         {
             _allCommonService = allCommonService;
             _commonService = commonService;
@@ -38,6 +42,7 @@ namespace BASE.Areas.Backend.Controllers
             _exportService = exportService;
             _mailService = mailService;
             _config = configuration;
+            _contextAccessor = contextAccessor;
         }
 
         /// <summary>
@@ -499,20 +504,34 @@ namespace BASE.Areas.Backend.Controllers
                     //-- 發送滿意度問卷調查通知信
                     if (item.ReAssignDate.HasValue)
                     {
+                        HttpRequest httpRequest = _contextAccessor.HttpContext.Request;
+                        string webSiteDomain = new StringBuilder().Append(httpRequest.Scheme).Append("://").Append(httpRequest.Host).ToString();
+
                         //主旨
                         string sSubject = "【勞動部桃竹苗分署人力資源整合服務計畫_諮詢服務】請協助填寫滿意度調查，謝謝您！";
 
                         //內容
                         string sContent = string.Format("{0}{1}{2}您好：<br /><br />", item.Name, item.ContactName, item.ContactJobTitle);
-                        sContent += "有關今日諮詢輔導服務，再請您協助填寫滿意度調查表：https://forms.gle/cQBjsCbewak9BVrr6<br />希望您能提供寶貴的意見，供我們做未來服務參考，謝謝您的協助！<br /><br />";
-                        sContent += "敬祝 事事順心!";
+                        sContent += "有關今日諮詢輔導服務，再請您協助填寫滿意度調查表，並回傳至：";
+                        sContent += string.Format("<a href='{0}/Frontend/Consult/SatisfySurveyUpload/{1}' target='_blank'>滿意度調查上傳網頁</a><br />希望您能提供寶貴的意見，供我們做未來服務參考，謝謝您的協助！<br /><br />敬祝 事事順心!", webSiteDomain, EncryptService.AES.RandomizedEncrypt(item.Id.ToString()));
+
+                        //直接測試寄信
+                        //await _mailService.SendEmail(new MailViewModel()
+                        //{
+                        //    ToList = new List<MailAddressInfo>() { new MailAddressInfo("clover026@gmail.com") },
+                        //    Subject = sSubject,
+                        //    Body = sContent,
+                        //    AttachmentList = new List<Attachment>() { new Attachment(_fileService.MapPath("/Sample/附件五_諮詢服務滿意度調查.docx")) },
+
+                        //});
 
                         //寄送預約信件
                         await _mailService.ReserveSendEmail(new MailViewModel()
                         {
                             ToList = new List<MailAddressInfo>() { new MailAddressInfo(item.ContactEmail) },
                             Subject = sSubject,
-                            Body = sContent
+                            Body = sContent,
+                            AttachmentList = new List<Attachment>() { new Attachment(_fileService.MapPath("/Sample/附件五_諮詢服務滿意度調查.docx")) }
                         }, userinfo.UserID, item.ReAssignDate.Value.AddDays(1), "ConsultSatisfy");
                     }
                 }

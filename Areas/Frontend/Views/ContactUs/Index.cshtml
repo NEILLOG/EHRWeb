@@ -1,7 +1,38 @@
 ﻿@using BASE.Service
 @model BASE.Areas.Frontend.Models.VM_ContactUs
 
-@await Html.PartialAsync("_BannerPartial")
+@await Html.PartialAsync("_BannerPartial", new BASE.Areas.Frontend.Models.Extend.BannerPartial(){ Main = "聯絡我們", Detail = "" })
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.PlayValidCode').click(function () {
+                var audio = document.getElementById("player1");
+                audio.play();
+                return false;
+            });
+
+            $('#frm').submit(function () {
+                var isVerify = false;
+                var validnum = $('#VerifyCode').val();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ajaxValidVerify", "Home")',
+                    async: false,
+                    data: { UserInput: validnum, type: 'ContactUs' },
+                    success: function (response) {
+                        isVerify = response.isSuccess;
+                    }
+                });
+                if (isVerify == false) {
+                    Swal.fire('驗證碼錯誤');
+                    return false;
+                }
+            });
+
+        });
+    </script>
+}
 
 <!-- ================================================== -->
 <!-- 聯絡我們 -->
@@ -47,7 +78,7 @@
                 </div>
                 <div class="col-12">
                     <div class="registrationBox bg-white p-4 mt-3">
-                        <form action="" class="row g-3 justify-content-center" method="post">
+                        <form action="" id="frm" class="row g-3 justify-content-center" method="post">
                             <div class="col-md-6 col-12">
                                 <label for="inputA" class="form-label">姓名<span class="fc-red ms-1">*</span></label>
                                 @Html.TextBoxFor(x => x.ExtendItem.Name, new { @class="form-control",  placeholder="您的回答", required="required" })
@@ -64,11 +95,14 @@
                                 <div class="mb-3 d-flex">
                                     <div>
                                         <label for="exampleInputRandom2" class="form-label">驗證碼<span class="fc-red ms-1">*</span></label>
-                                        <input type="text" class="form-control" id="exampleInputRandom2" placeholder="請輸入驗證碼">
+                                        @Html.TextBoxFor(x => x.VerifyCode, new { @class="form-control", placeholder="請輸入驗證碼", required="required" })
                                     </div>
                                     <div>
-                                        <canvas id="canvas2" width="120" height="45" class="ms-3 mt-4"></canvas>
-                                        <a href="#" id="changeImg2" title="重新產生驗證碼">重新產生</a>
+                                        <audio id="player1" controls src="@Url.Action("TTS", "Home", new { id = "ContactUs" })" style="display:none;"></audio>
+                                        <img id="LoginCode" src="@Url.Action("GetValidateCode", "Home", new { id = "ContactUs" } )" class="w-40 ml-3 mt-4" alt="圖片驗證碼" />
+                                        <a href="#" class="PlayValidCode" title="播放圖片驗證碼">
+                                            <img src="~/areas/frontend/img/speaker.png" alt="播放圖片驗證碼" />
+                                        </a>
                                     </div>
                                 </div>
                             </div>

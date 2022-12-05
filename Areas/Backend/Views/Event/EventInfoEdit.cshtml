@@ -221,10 +221,10 @@
                                             @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[i].sectionDay, "{0:yyyy-MM-dd}", new { @class="form-control input_activityInfo",@type="date" ,placeholder = "請輸入活動日期",data_parsley_required = ""})
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[i].startTime,"{0:hh:mm}", new { @class="form-control input_activityInfo",@type="time", placeholder = "請輸入時段起",data_parsley_required = ""})
+                                            @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[i].startTime,"{0:HH:mm}", new { @class="form-control input_activityInfo",@type="time", placeholder = "請輸入時段起",data_parsley_required = ""})
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[i].endTime,"{0:hh:mm}", new { @class="form-control input_activityInfo",@type="time", placeholder = "請輸入時段訖",data_parsley_required = ""})
+                                            @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[i].endTime,"{0:HH:mm}", new { @class="form-control input_activityInfo",@type="time", placeholder = "請輸入時段訖",data_parsley_required = ""})
                                         </td>
                                         <td>
                                             @Html.DropDownListFor(x=>x.EventInfoItem.sectionExtendList[i].sectionType,Model.ddlEventType,new{@class="form-control input_activityInfo", data_parsley_required = "", data_parsley_errors_container="#errors-container-1" })

@@ -12,7 +12,7 @@
     <link href="~/lib/Parsley/v2.9.2/dist/parsley.css" rel="stylesheet" />
 }
 
-@await Html.PartialAsync("_BannerPartial")
+@await Html.PartialAsync("_BannerPartial", new BASE.Areas.Frontend.Models.Extend.BannerPartial(){ Main = "諮詢輔導服務", Detail = "企業需求調查表上傳" })
 
 <div class="section pb-md-4 py-lg-5">
     <div class="container">

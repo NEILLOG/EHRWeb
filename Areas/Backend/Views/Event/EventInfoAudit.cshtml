@@ -9,6 +9,9 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+        
+        CheckFIleUpload();
+
         @*檔案上傳物件*@
                 $('.File').each(function () {
                     $(this).FileInputCus({
@@ -25,6 +28,51 @@
             });
         });
 
+        // 判斷壓縮檔上傳
+        function CheckFIleUpload() {
+            var isEntity = false;
+            var isOnline = false;
+            var sTableName = document.getElementById("tb_Section");
+            for (var i = 0; i < $("#tb_Section tr").length; i++) {
+                var type = sTableName.children[i].children[3].children[0].value;
+                switch (type) {
+                    case "實體":
+                        isEntity = true;
+                        break;
+                    case "線上":
+                        isOnline = true;
+                        break;
+                    case "實體+線上":
+                        isEntity = true;
+                        isOnline = true;
+                        break;
+                }
+            }
+            // 若為實體模式，實體壓縮檔必須上傳
+            if (isEntity) {
+                $("#div_EntityFile").show();
+
+                if($("#FileForEntity").val() != "")
+                {
+                    $("#EntityFile").attr('data-parsley-required', 'false');
+                }else
+                {
+                    $("#EntityFile").attr('data-parsley-required', '');
+                }
+
+            } else {
+                $("#div_EntityFile").hide();
+                $("#EntityFile").attr('data-parsley-required', 'false');
+            }
+            // 若為線上模式，線上壓縮檔必須上傳
+            if (isOnline) {
+                $("#div_OnlineFile").show();
+                $("#OnlineFile").attr('data-parsley-required', '');
+            } else {
+                $("#div_OnlineFile").hide();
+                $("#OnlineFile").attr('data-parsley-required', 'false');
+            }
+        }
     </script>
 }
 
@@ -97,10 +145,10 @@
                                             @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[i].sectionDay, "{0:yyyy-MM-dd}", new { @class="form-control",@type="date" ,placeholder = "請輸入活動日期",data_parsley_required = "",disabled="disabled"})
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[i].startTime,"{0:hh:mm}", new { @class="form-control",@type="time", placeholder = "請輸入時段起",data_parsley_required = "",disabled="disabled"})
+                                            @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[i].startTime,"{0:HH:mm}", new { @class="form-control",@type="time", placeholder = "請輸入時段起",data_parsley_required = "",disabled="disabled"})
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[i].endTime,"{0:hh:mm}", new { @class="form-control",@type="time", placeholder = "請輸入時段訖",data_parsley_required = "",disabled="disabled"})
+                                            @Html.TextBoxFor(x => x.EventInfoItem.sectionExtendList[i].endTime,"{0:HH:mm}", new { @class="form-control",@type="time", placeholder = "請輸入時段訖",data_parsley_required = "",disabled="disabled"})
                                         </td>
                                         <td>
                                             @Html.DropDownListFor(x=>x.EventInfoItem.sectionExtendList[i].sectionType,Model.ddlEventType,new{@class="form-control", data_parsley_required = "", data_parsley_errors_container="#errors-container-1",disabled="disabled" })
