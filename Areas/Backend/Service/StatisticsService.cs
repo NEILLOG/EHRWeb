@@ -5,6 +5,7 @@ using BASE.Service.Base;
 using System.Linq.Expressions;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace BASE.Areas.Backend.Service
 {
@@ -23,45 +24,86 @@ namespace BASE.Areas.Backend.Service
         {
             ChartInfo data = new ChartInfo();
             data.ChartValue = new List<int>();
+            data.ChartData = new List<string>();
             var registers = Lookup<TbActivityRegister>(ref _Msg, x => x.ActivityId == id).ToList();
 
             if (filter == "1")
             {
-                var CompanyLocation = registers.Select(x => x.CompanyLocation).ToList();
-                data.ChartData = CompanyLocation.Distinct().ToList();
-                for (int i =0; i < data.ChartData.Count; i++)
+                data.ChartData.Add("桃園市");
+                data.ChartData.Add("新竹市");
+                data.ChartData.Add("新竹縣");
+                data.ChartData.Add("苗栗縣");
+                data.ChartData.Add("其他地區");
+
+                foreach (var item in data.ChartData)
                 {
-                    int cnt = registers.Where(x => x.CompanyLocation == data.ChartData[i]).Count();
+                    int cnt = registers.Where(x => x.CompanyLocation == item).Count();
                     data.ChartValue.Add(cnt);
                 }
             }
             else if (filter == "2")
             {
-                var CompanyType = registers.Select(x => x.CompanyType).ToList();
-                data.ChartData = CompanyType.Distinct().ToList();
-                for (int i = 0; i < data.ChartData.Count; i++)
+                data.ChartData.Add("A大類「農、林、魚、牧業」");
+                data.ChartData.Add("B大類「礦業及土石採取業」");
+                data.ChartData.Add("C大類「製造業」");
+                data.ChartData.Add("D大類「電力及燃氣供應業」");
+                data.ChartData.Add("E大類「用水供應及汙染整治業」");
+                data.ChartData.Add("F大類「營建工程業」");
+                data.ChartData.Add("G大類「批發及零售業」");
+                data.ChartData.Add("H大類「運輸及倉儲業」");
+                data.ChartData.Add("I大類「住宿及餐飲業」");
+                data.ChartData.Add("J大類「出版、影音製作、傳播及資通訊服務業」");
+                data.ChartData.Add("K大類「金融及保險業」");
+                data.ChartData.Add("L大類「不動產業」");
+                data.ChartData.Add("M大類「專業、科學及技術服務業」");
+                data.ChartData.Add("N大類「支援服務業」");
+                data.ChartData.Add("O大類「公共行政及國防；強制性社會安全」");
+                data.ChartData.Add("P大類「教育業」");
+                data.ChartData.Add("Q大類「醫療保健及社會工作服務業」");
+                data.ChartData.Add("R大類「藝術、娛樂及休閒服務業」");
+                data.ChartData.Add("S大類「其他服務業」");
+
+                foreach (var item in data.ChartData)
                 {
-                    int cnt = registers.Where(x => x.CompanyType == data.ChartData[i]).Count();
+                    int cnt = registers.Where(x => x.CompanyType == item).Count();
                     data.ChartValue.Add(cnt);
                 }
             }
             else if (filter == "3")
             {
-                var CompanyEmpAmount = registers.Select(x => x.CompanyEmpAmount).ToList();
-                data.ChartData = CompanyEmpAmount.Distinct().ToList();
-                for (int i = 0; i < data.ChartData.Count; i++)
+                data.ChartData.Add("5人以下");
+                data.ChartData.Add("6-10人");
+                data.ChartData.Add("11-50人");
+                data.ChartData.Add("51-100人");
+                data.ChartData.Add("101-200人");
+                data.ChartData.Add("201人以上");
+
+                foreach (var item in data.ChartData)
                 {
-                    int cnt = registers.Where(x => x.CompanyEmpAmount == data.ChartData[i]).Count();
+                    int cnt = registers.Where(x => x.CompanyEmpAmount == item).Count();
                     data.ChartValue.Add(cnt);
                 }
             }
             else if (filter == "4") 
-            { 
-                var InfoFrom = registers.Select(x => x.InfoFrom).ToList();
-                data.ChartData = InfoFrom.Distinct().ToList();
-                for (int i = 0; i < data.ChartData.Count; i++)
+            {
+                data.ChartData.Add("桃分署/就業中心");
+                data.ChartData.Add("中小企總官網/EDM");
+                data.ChartData.Add("工業區");
+                data.ChartData.Add("公(工)協會");
+                data.ChartData.Add("朋友/同事/社團介紹");
+                data.ChartData.Add("報章雜誌");
+                data.ChartData.Add("網路廣告");
+                data.ChartData.Add("其他");
+
+                foreach (var item in data.ChartData)
                 {
-                    int cnt = registers.Where(x => x.InfoFrom == data.ChartData[i]).Count();
+                    int cnt = 0;
+                    var cntVal = registers.Where(x => x.InfoFrom.Contains(item));
+                    if (cntVal != null)
+                    {
+                        cnt = cntVal.Count();
+                    }
+
                     data.ChartValue.Add(cnt);
                 }
             }
@@ -149,6 +191,31 @@ namespace BASE.Areas.Backend.Service
                 }
             }
             
+            return Data;
+        }
+
+        /// <summary>
+        /// 取得年度資訊
+        /// </summary>
+        /// <returns></returns>
+        public List<SelectListItem> SetDDL_Year()
+        {
+            List<SelectListItem> Data = new List<SelectListItem>();
+            Data.Add(new SelectListItem() { Text = "請選擇", Value = "" });
+
+            var DayMax = Lookup<TbActivitySection>(ref _Msg).OrderBy(x => x.Day).Select(x => x.Day).FirstOrDefault();
+            if (DayMax.Year == 2022)
+            {
+                Data.Add(new SelectListItem() { Text = "111", Value = "111" });
+            }
+            else
+            {
+                for (int i = 111; i <= (DayMax.Year - 1911); i++)
+                {
+                    Data.Add(new SelectListItem() { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
             return Data;
         }
 

@@ -188,9 +188,9 @@ input:checked + .slider:before {
                 @using (Html.BeginForm(FormMethod.Post, new { id = "frm", @autocomplete = "off" }))
                 {
                     @Html.AntiForgeryToken()
-                   
+
                     <div class="row g-3 align-items-end mb-3">
-                        <div class="col-12 col-md-auto ms-auto">
+                        <div class="col-12 col-md-auto">
                             <div class="input-group">
                                 @Html.LabelFor(x => x.Search.Type, "類型", new { @class="input-group-text" })
                                 @Html.DropDownListFor(x=>x.Search.Type,Model.ddlType,new{@class="form-control"})

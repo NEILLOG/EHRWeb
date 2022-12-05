@@ -1,7 +1,7 @@
 ﻿
 function ActivityChart(Year, ActID, ActName, Filter, FilterValue) {
     var myChart = echarts.init(document.getElementById('ChartDIV'));
-
+    myChart.showLoading();
     $.ajax({
         type: "Post",
         url: "/Backend/Statistics/GetActivityChart",
@@ -70,6 +70,7 @@ function ActivityChart(Year, ActID, ActName, Filter, FilterValue) {
                 ]
             };
 
+            myChart.hideLoading();
             myChart.setOption(option);
         }
     });
@@ -82,6 +83,7 @@ function ActivityChart(Year, ActID, ActName, Filter, FilterValue) {
 
 function ConsultChart(Year) {
     var myChart = echarts.init(document.getElementById('ChartDIV'));
+    myChart.showLoading();
 
     $.ajax({
         type: "Post",
@@ -150,6 +152,7 @@ function ConsultChart(Year) {
                 ]
             };
 
+            myChart.hideLoading();
             myChart.setOption(option);
         }
     });
