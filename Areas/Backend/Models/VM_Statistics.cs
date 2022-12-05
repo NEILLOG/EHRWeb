@@ -11,16 +11,7 @@ namespace BASE.Areas.Backend.Models
         
         #region 下拉選單
         /// <summary> 年度 </summary>
-        public List<SelectListItem> ddlYear {
-            get
-            {
-                return new List<SelectListItem>()
-                {
-                    new SelectListItem() { Text = "請選擇", Value = "" },
-                    new SelectListItem() { Text = "111", Value = "111" },
-                };
-            }
-        }
+        public List<SelectListItem> ddlYear { get; set; }
 
         /// <summary> 類型 </summary>
         public List<SelectListItem> ddlType {

@@ -46,8 +46,10 @@ namespace BASE.Areas.Backend.Controllers
 
             try
             {
+                // 下拉資料
                 data.ddlActivityName = _statisticsService.SetDDL_ActivityName(0).ToList();
-                
+                data.ddlYear = _statisticsService.SetDDL_Year();
+
                 //操作紀錄
                 await _commonService.OperateLog(userinfo.UserID, Feature, Action, null, "");
             }
