@@ -50,7 +50,7 @@
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.AlbumExtendItem.Album.FileId, "圖片檔案：", new { @class = "form-label" })
                     <span class="red">(建議尺寸：350*225)</span>
-                    @Html.TextBoxFor(x => x.AlbumImageFile, new { @FileID = "FileId", @class="form-control File", @type = "file", accept = ".pnf,.jpg,.jpeg", data_parsley_file_type="png,jpg,jpeg", data_parsley_errors_container="#FileID-errors-container" })
+                    @Html.TextBoxFor(x => x.AlbumImageFile, new { @FileID = "FileId", @class="form-control File", @type = "file", accept = ".pnf,.jpg,.jpeg", data_parsley_file_type="png,jpg,jpeg", data_parsley_errors_container="#FileID-errors-container", data_parsley_required = "" })
                     @Html.HiddenFor(x => x.AlbumExtendItem.Album.FileId, new { @id ="FileId" })
                     <div id="FileID-errors-container"></div>
                 </div>

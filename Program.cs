@@ -96,7 +96,7 @@ builder.Services.AddScoped<ImportService>();
 builder.Services.AddScoped<AuthorityService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<FAQService>();
-builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<MemberService>();
 builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<AdvertiseService>();
 builder.Services.AddScoped<RelationLinkService>();
@@ -111,7 +111,6 @@ builder.Services.AddScoped<B_ProjectService>();
 builder.Services.AddScoped<B_ProjectModifyService>();
 builder.Services.AddScoped<PromoteService>();
 builder.Services.AddScoped<QuizService>();
-builder.Services.AddScoped<StatisticsService>();
 
 //Frontend Servie
 builder.Services.AddScoped<BASE.Areas.Frontend.Service.NewsService>();

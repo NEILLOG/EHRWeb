@@ -28,7 +28,7 @@
 
                 <div class="col-12 form-group mb-3">
                     @Html.LabelFor(x => x.RelationLinkExtendItem.RelationLink.Title, "標題：", new { @class = "form-label" })
-                    @Html.TextBoxFor(x => x.RelationLinkExtendItem.RelationLink.Title, new { @class="form-control", placeholder = "", data_parsley_required = "" })
+                    @Html.TextBoxFor(x => x.RelationLinkExtendItem.RelationLink.Title, new { @class="form-control", placeholder = "" })
                 </div>
 
                 <div class="col-12 form-group mb-3">
@@ -41,7 +41,7 @@
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.RelationLinkExtendItem.RelationLink.FileId, "圖片：", new { @class = "form-label" })
                     <span class="red">(建議尺寸：350*350)</span>
-                    @Html.TextBoxFor(x => x.RelationLinkImageFile, new { @FileID = "FileId", @class="form-control File", @type = "file", accept = ".pnf,.jpg,.jpeg", data_parsley_file_type="png,jpg,jpeg", data_parsley_errors_container="#FileId-errors-container" })
+                    @Html.TextBoxFor(x => x.RelationLinkImageFile, new { @FileID = "FileId", @class="form-control File", @type = "file", accept = ".pnf,.jpg,.jpeg", data_parsley_file_type="png,jpg,jpeg", data_parsley_errors_container="#FileId-errors-container", data_parsley_required = "" })
                     @Html.HiddenFor(x => x.RelationLinkExtendItem.RelationLink.FileId, new { @id ="FileId" })
                     <div id="FileId-errors-container"></div>
                 </div>

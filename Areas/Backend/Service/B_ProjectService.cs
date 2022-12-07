@@ -84,7 +84,7 @@ namespace BASE.Areas.Backend.Service
             List<TbUserInfo> listUser = (from User in _context.TbUserInfo
                                          join UserGroup in _context.TbUserInGroup on User.UserId equals UserGroup.UserId
                                          join Group in _context.TbGroupInfo on UserGroup.GroupId equals Group.GroupId
-                                         where Group.GroupName == "彙管承辦" &&
+                                         where Group.GroupName == "計畫承辦" &&
                                                User.IsDelete == false &&
                                                Group.IsDelete == false
                                          select User).ToList();

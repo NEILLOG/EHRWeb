@@ -19,7 +19,7 @@
             }).then((r) => {
                 if (r.isConfirmed) {
 
-                  //  $.blockUI();
+                    //  $.blockUI();
 
                     //確定刪除
                     $.ajax({
@@ -31,7 +31,7 @@
                         },
                         data: { id: id },
                         success: function (result) {
-                         //   $.unblockUI();
+                            //   $.unblockUI();
                             inform({
                                 plugin: result.alert_plugin,
                                 type: result.alert_type,
@@ -41,10 +41,7 @@
                             });
                         }
                     });
-                } else {
-                    //任何方式的取消
-                    Swal.fire('刪除', '取消成功', 'success');
-                }
+                } 
             });
         }
 
@@ -61,7 +58,7 @@
             }).then((r) => {
                 if (r.isConfirmed) {
 
-                  //  $.blockUI();
+                    //  $.blockUI();
 
                     //確定變更狀態
                     $.ajax({
@@ -73,7 +70,7 @@
                         },
                         data: { id: id },
                         success: function (result) {
-                         //   $.unblockUI();
+                            //   $.unblockUI();
                             inform({
                                 plugin: result.alert_plugin,
                                 type: result.alert_type,

@@ -77,7 +77,7 @@
                                 <th>管理</th>
                                 <th>經辦人</th>
                                 <th>經辦日期</th>
-                                <th>管理</th>
+                                <th>經辦時間</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -95,9 +95,9 @@
 
                                         <td>
                                             @{
-                                                string DownloadName = string.Empty;
-                                                if (Model.ProjectModifyExtendList[i].FileName != null && Model.ProjectModifyExtendList[i].FileName.Split('.').Length > 1)
-                                                { DownloadName = Model.ProjectModifyExtendList[i].FileName.Split('.')[0]; }
+                                                string DownloadName = "課程變更申請單";
+                                                //if (Model.ProjectModifyExtendList[i].FileName != null && Model.ProjectModifyExtendList[i].FileName.Split('.').Length > 1)
+                                                //{ DownloadName = Model.ProjectModifyExtendList[i].FileName.Split('.')[0]; }
                                             }
                                             <a class="btn btn-sm btn-default " title="下載檔案" href="@Model.ProjectModifyExtendList[i].FilePath" download="@(DownloadName)" target="_blank"><i class="bi-download"></i></a>
                                         </td>

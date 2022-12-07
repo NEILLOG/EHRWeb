@@ -60,14 +60,14 @@
             {
                 <div class="carousel-item @(first ? "view active" : "") ">
                     <img src="@item.FileInfo.FilePath" class="d-block w-100">
-                    <div class="mask">
+                    @*<div class="mask">
                         <div class="d-flex flex-column justify-content-center align-items-center h-100">
                             @if (!String.IsNullOrEmpty(item.Header.Title))
                             {
                                 <h2>@item.Header.Title</h2>
                             }
                         </div>
-                    </div>
+                    </div>*@
                 </div>
                 first = false;
             }
@@ -145,7 +145,7 @@
                                     <a href="@Url.Action("Detail", "News", new { id = EncryptService.AES.RandomizedEncrypt(LastNews.Header.Id) })" class="stretched-link">
                                         <h4 class="card-title fw-bold">@LastNews.Header.Title</h4>
                                     </a>
-                                    <div class="card-tag"><span class="tag-news">計畫消息</span></div>
+                                    <div class="card-tag"><span class="@(LastNews.Header.Category == "其他消息" ? "tag-other" : "tag-news")">@LastNews.Header.Category</span></div>
                                     <p class="card-text">@(LastNews.Header.Contents.Length > 60 ? LastNews.Header.Contents.Substring(0,60)+"..." : LastNews.Header.Contents)</p>
                                     <p class="card-text"><small class="text-muted">@LastNews.Header.DisplayDate.ToString("yyyy .MM .dd")</small></p>
                                 </div>

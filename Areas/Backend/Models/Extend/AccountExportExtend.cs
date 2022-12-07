@@ -2,7 +2,7 @@
 
 namespace BASE.Areas.Backend.Models.Extend
 {
-    public class AccountExportExtend
+    public class MemberExportExtend
     {
         [Display(Name = "姓名")]
         public string UserName { get; set; } = null!;
@@ -11,7 +11,7 @@ namespace BASE.Areas.Backend.Models.Extend
         public string GroupName { get; set; } = null!;
 
         [Display(Name = "帳號")]
-        public string Account { get; set; }
+        public string UserInfo { get; set; }
 
         [Display(Name = "帳號狀態")]
         public string Status { get; set; }

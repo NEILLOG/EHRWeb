@@ -88,8 +88,7 @@ namespace BASE.Areas.Frontend.Controllers
 
             if (isSuccess)
             {
-                TempData["TempMsgType"] = MsgTypeEnum.success;
-                TempData["TempMsg"] = "傳送成功";
+                TempData["CostomTempEmail"] = datapost.ExtendItem.Email;
             }
             else
             {
@@ -104,7 +103,7 @@ namespace BASE.Areas.Frontend.Controllers
 
             if (isSuccess)
             {
-                return RedirectToAction("Index", "Home"); //導向清單頁
+                return RedirectToAction("Index", "ContactUs"); //導向清單頁
             }
             else
             {

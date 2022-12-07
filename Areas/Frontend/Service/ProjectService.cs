@@ -26,7 +26,7 @@ namespace BASE.Areas.Frontend.Service
             try
             {
                 IQueryable<TbProject>? dataList = (from ProejctInfo in _context.TbProject.Where(x => !x.IsDelete)
-                                                   orderby ProejctInfo.Sort ascending, ProejctInfo.CreateDate descending
+                                                   orderby ProejctInfo.Sort ascending, ProejctInfo.Id ascending, ProejctInfo.CreateDate descending
                                                    select ProejctInfo
                                                     );
 

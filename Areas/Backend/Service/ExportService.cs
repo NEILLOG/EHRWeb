@@ -113,19 +113,19 @@ namespace BASE.Areas.Backend.Service
         /// <param name="dataList"></param>
         /// <param name="columnList"></param>
         /// <returns></returns>
-        public ActionResultModel<MemoryStream> AccountExcel(IQueryable<AccountExtend> dataList)
+        public ActionResultModel<MemoryStream> AccountExcel(IQueryable<MemberExtend> dataList)
         {
             ActionResultModel<MemoryStream> result = new ActionResultModel<MemoryStream>();
             try
             {
                 // 取資料
-                List<AccountExportExtend> Data = (from data in dataList
-                                                  select new AccountExportExtend
+                List<MemberExportExtend> Data = (from data in dataList
+                                                  select new MemberExportExtend
                                                   {
-                                                      UserName = data.account.UserName,
+                                                      UserName = data.userinfo.UserName,
                                                       GroupName = data.groupInfo.GroupName,
-                                                      Account = data.account.Account,
-                                                      Status = data.account.IsActive ? ActiveStatus.True.GetDisplayName() : ActiveStatus.False.GetDisplayName()
+                                                      UserInfo = data.userinfo.Account,
+                                                      Status = data.userinfo.IsActive ? ActiveStatus.True.GetDisplayName() : ActiveStatus.False.GetDisplayName()
                                                   }).ToList();
 
                 //建立Excel
@@ -144,13 +144,13 @@ namespace BASE.Areas.Backend.Service
 
                 //資料
                 int rowIndex = 1;
-                foreach (AccountExportExtend item in Data)
+                foreach (MemberExportExtend item in Data)
                 {
                     sheet.CreateRow(rowIndex);
                     sheet.GetRow(rowIndex).CreateCell(0).SetCellValue(rowIndex);
                     sheet.GetRow(rowIndex).CreateCell(1).SetCellValue(item.GetType().GetProperty("UserName")?.GetValue(item, null)?.ToString() ?? string.Empty);
                     sheet.GetRow(rowIndex).CreateCell(2).SetCellValue(item.GetType().GetProperty("GroupName")?.GetValue(item, null)?.ToString() ?? string.Empty);
-                    sheet.GetRow(rowIndex).CreateCell(3).SetCellValue(item.GetType().GetProperty("Account")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(3).SetCellValue(item.GetType().GetProperty("UserInfo")?.GetValue(item, null)?.ToString() ?? string.Empty);
                     sheet.GetRow(rowIndex).CreateCell(4).SetCellValue(item.GetType().GetProperty("Status")?.GetValue(item, null)?.ToString() ?? string.Empty);
                     rowIndex++;
                 }

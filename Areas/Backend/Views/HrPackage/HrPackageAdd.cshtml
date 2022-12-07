@@ -47,7 +47,7 @@
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.HrPackageExtendItem.HrPackage.FileId, "上傳檔案：", new { @class = "form-label" })
-                    @Html.TextBoxFor(x => x.RelatedFile, new { @FileID = "FileId", @class="form-control File", @type = "file", data_parsley_errors_container="#FileId-errors-container" })
+                    @Html.TextBoxFor(x => x.RelatedFile, new { @FileID = "FileId", @class="form-control File", @type = "file", data_parsley_errors_container="#FileId-errors-container", data_parsley_required = "" })
                     @Html.HiddenFor(x => x.HrPackageExtendItem.HrPackage.FileId, new { @id ="FileId" })
                     <div id="FileId-errors-container"></div>
                 </div>

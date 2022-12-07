@@ -117,6 +117,10 @@ namespace BASE.Areas.Frontend.Controllers
             try
             {
                 data.Header = _allCommonService.Lookup<TbActivity>(ref _message, x => x.Id == decrypt_id).FirstOrDefault();
+
+                if (data.Header.RegEndDate <= DateTime.Now)
+                    throw new Exception("報名日期已過，請選擇別項活動");
+
                 data.Sections = _activityService.GetSections(ref _message, decrypt_id).ToList();
                 data.id = id;
             }

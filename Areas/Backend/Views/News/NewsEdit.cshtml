@@ -40,7 +40,7 @@
 
                 <div class="col-12 form-group mb-3">
                     @Html.LabelFor(x => x.isPublish, "狀態", new { @class = "form-label" })
-                    @Html.DropDownListFor(x=>x.isPublish,Model.ddlPublish,new{@class="form-control",id="ddlPublish", data_parsley_required = "", data_parsley_errors_container="#errors-container-1" })
+                    @Html.DropDownListFor(x=>x.isPublish,Model.ddlPublish,new{@class="form-control",id="ddlPublish", data_parsley_errors_container="#errors-container-1" })
                 </div>
 
                 <div class="col-12 form-group mb-3">
@@ -64,7 +64,7 @@
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.NewsExtendItem.News.Contents, "內容", new { @class = "form-label" })
-                    @Html.TextAreaFor(x => x.NewsExtendItem.News.Contents, new { @class = "form-control" })
+                    @Html.TextAreaFor(x => x.NewsExtendItem.News.Contents, new { @class = "form-control", data_parsley_required = "" })
                 </div>
                 
                 <div class="col-12 form-group mb-3">

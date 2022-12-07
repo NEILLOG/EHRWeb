@@ -13,6 +13,7 @@ $(document).ready(function () {
     $.each(main_container.find('tbody tr'), function (i, ele) {
         $(ele).find('.btnEdit').click(EditButton);
         $(ele).find('.btnDelete').click(DeleteButton);
+        $(ele).find('.btnCopy').click(CopyButton);
     });
 
     //存檔: 標題
@@ -41,6 +42,7 @@ $(document).ready(function () {
 
         NewRow.find('.btnEdit').click(EditButton);
         NewRow.find('.btnDelete').click(DeleteButton);
+        NewRow.find('.btnCopy').click(CopyButton);
 
         if (isUpdate) {
             var ele = FindRow(_NowEditorId);
@@ -85,6 +87,7 @@ $(document).ready(function () {
 
         NewRow.find('.btnEdit').click(EditButton);
         NewRow.find('.btnDelete').click(DeleteButton);
+        NewRow.find('.btnCopy').click(CopyButton);
 
         if (isUpdate) {
             var ele = FindRow(_NowEditorId);
@@ -141,6 +144,7 @@ $(document).ready(function () {
 
         NewRow.find('.btnEdit').click(EditButton);
         NewRow.find('.btnDelete').click(DeleteButton);
+        NewRow.find('.btnCopy').click(CopyButton);
 
         if (isUpdate) {
             var ele = FindRow(_NowEditorId);
@@ -198,6 +202,7 @@ $(document).ready(function () {
 
         NewRow.find('.btnEdit').click(EditButton);
         NewRow.find('.btnDelete').click(DeleteButton);
+        NewRow.find('.btnCopy').click(CopyButton);
 
         if (isUpdate) {
             var ele = FindRow(_NowEditorId);
@@ -275,7 +280,7 @@ $(document).ready(function () {
 function ParseRowToModel(ele) {
     var container = $(ele);
     var ID = container.find('input.hidId').val();
-    var Type = container.find('input.hidType').val();
+    var Type = container.find('input.hidType').val(); 
     var QuizDescription = container.find('input.hidQuizDescription').val();
     var FillDirection = container.find('input.hidFillDirection').val();
     var Options = container.find('input.hidOptions').val();
@@ -283,10 +288,10 @@ function ParseRowToModel(ele) {
     var TypeString = '標題'; //題目類型: 1:標題 2:簡答題 3:單選 4:複選
 
     switch (Type) {
-        case 1: TypeString = '標題'; break;
-        case 2: TypeString = '簡答'; break;
-        case 3: TypeString = '單選'; break;
-        case 4: TypeString = '複選'; break;
+        case '1': TypeString = '標題'; break;
+        case '2': TypeString = '簡答'; break;
+        case '3': TypeString = '單選'; break;
+        case '4': TypeString = '複選'; break;
     }
 
     return {
@@ -391,6 +396,20 @@ function EditButton() {
     //將這一列的資料還原至編輯器
     ParseModelToEditor(model);
     md.show();
+}
+
+function CopyButton() {
+    var row = $(this).parents('tr');
+    var model = ParseRowToModel(row);
+        model.ID = _uuid();
+
+    var NewRow = ParseModelToRow(model);
+
+    NewRow.find('.btnEdit').click(EditButton);
+    NewRow.find('.btnDelete').click(DeleteButton);
+    NewRow.find('.btnCopy').click(CopyButton);
+
+    $('#tableOptions').find('tbody').append(NewRow);
 }
 
 function DeleteButton() {

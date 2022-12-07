@@ -53,7 +53,7 @@ namespace BASE.Areas.Backend.Controllers
 
                 //分頁
                 if (dataList != null)
-                    data.ContactUsList = await PagerInfoService.GetRange(dataList.OrderBy(x => x.Id), data.Search.PagerInfo);
+                    data.ContactUsList = await PagerInfoService.GetRange(dataList.OrderByDescending(x => x.CreateDate), data.Search.PagerInfo);
 
                 //操作紀錄
                 await _commonService.OperateLog(userinfo.UserID, Feature, Action, null, data);

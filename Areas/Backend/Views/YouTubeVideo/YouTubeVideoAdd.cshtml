@@ -30,6 +30,7 @@
                 </div>
 
                 <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
                     @Html.LabelFor(x => x.YouTubeVideoExtendItem.YouTubeVideo.Title, "標題：", new { @class = "form-label" })
                     @Html.TextBoxFor(x => x.YouTubeVideoExtendItem.YouTubeVideo.Title, new { @class="form-control", placeholder = "請輸入標題", data_parsley_required = "" })
                 </div>
@@ -41,6 +42,7 @@
                 </div>
 
                 <div class="col-12 form-group mb-3">
+                    <span class="red">*</span>
                     @Html.LabelFor(x => x.YouTubeVideoExtendItem.YouTubeVideo.YouTubeId, "Youtube連結：", new { @class = "form-label" })
                     @Html.TextBoxFor(x => x.YouTubeVideoExtendItem.YouTubeVideo.YouTubeId, new { @class="form-control", placeholder = "請輸入影片ID", data_parsley_required = "" })
                 </div>

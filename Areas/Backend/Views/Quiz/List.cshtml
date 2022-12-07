@@ -13,7 +13,7 @@
     function Delete(id) {
         Swal.fire({
             title: '提示訊息',
-            text: '你是否要刪除FAQ？',
+            text: '你是否要刪除問卷？',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -28,7 +28,7 @@
                 //確定刪除
                 $.ajax({
                     type: "Post",
-                    url: "@(Url.Action("FAQDelete", "FAQ"))",
+                        url: "@(Url.Action("Delete", "Quiz"))",
                     dataType: "json",
                     beforeSend: function(request) {
                        request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
@@ -45,10 +45,7 @@
                         });
                     }
                 });
-            } else {
-                //任何方式的取消
-                Swal.fire('刪除', '取消成功', 'success');
-            }
+            } 
         });
     }
 </script>

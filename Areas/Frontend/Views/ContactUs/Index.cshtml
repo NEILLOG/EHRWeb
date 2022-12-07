@@ -4,6 +4,17 @@
 @await Html.PartialAsync("_BannerPartial", new BASE.Areas.Frontend.Models.Extend.BannerPartial(){ Main = "聯絡我們", Detail = "" })
 
 @section Scripts {
+
+    @if (TempData["CostomTempEmail"] != null)
+    {
+        <script>
+            $(document).ready(function () {
+                var myModal = new bootstrap.Modal(document.getElementById('DoneModal'));
+                myModal.show();
+            });
+        </script>
+    }
+
     <script>
         $(document).ready(function () {
             $('.PlayValidCode').click(function () {
@@ -113,6 +124,26 @@
                         </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 報名完成Modal -->
+
+<div class="modal fade" id="DoneModal" tabindex="-1" aria-labelledby="DoneModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-0" id="DoneModalLabel">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body text-center">
+                <img src="~/areas/frontend/img/subs-done.png" class="img-fluid mt-n1" alt="">
+                <div class="fs-2 fw-bold mb-4">送 出 完 成</div>
+                <img src="~/areas/frontend/img/regis-done.png" class="img-fluid" alt="">
+                <p class="mt-4">已成功送出您的意見，<br>相關訊息會再寄到<span class="fc-blue">@TempData["CostomTempEmail"] </span>信箱。</p>
+                <button type="button" class="btn btn-success mb-2 w-100" data-bs-dismiss="modal">確定</button>
             </div>
         </div>
     </div>

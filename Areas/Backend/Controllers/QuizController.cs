@@ -425,9 +425,9 @@ namespace BASE.Areas.Backend.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(string id)
         {
-            JsonResponse<NtuFaq> result = new JsonResponse<NtuFaq>();
+            JsonResponse<TbQuiz> result = new JsonResponse<TbQuiz>();
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
-            string Feature = "FAQ管理", Action = "刪除";
+            string Feature = "問卷管理", Action = "刪除";
 
             DateTime dtnow = DateTime.Now;
 
