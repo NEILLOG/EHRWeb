@@ -17,6 +17,7 @@ namespace BASE.Areas.Backend.Models.Extend
 
     public class OperateExtend
     {
+
         /// <summary> 操作歷程記錄 </summary>
         public TbBackendOperateLog operateLog { get; set; }
 

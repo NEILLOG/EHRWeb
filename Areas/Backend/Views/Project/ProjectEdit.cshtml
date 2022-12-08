@@ -9,7 +9,7 @@
         $(function () {
             document.getElementById("ddlContact").onchange = function () {
                 var val = this.value;
-
+                var OldText = document.getElementById("ProjectExtendItem_Project_Contact").value;
                 //確定變更狀態
                 $.ajax({
                     type: "Post",
@@ -18,10 +18,12 @@
                     beforeSend: function (request) {
                         request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
                     },
-                    data: { id: val },
+                    data: { id: val, OldText: OldText },
                     success: function (result) {
-                        var OldText = document.getElementById("ProjectExtendItem_Project_Contact").value;
-                        $('#ProjectExtendItem_Project_Contact').html(OldText + result);
+                        console.log(result);
+                        $('#ProjectExtendItem_Project_Contact').val('')
+                        var html = result;
+                        $('#ProjectExtendItem_Project_Contact').val(html)
 
                     }
                 });
@@ -77,10 +79,10 @@
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.ProjectExtendItem.Project.Contact, "聯繫窗口：", new { @class = "form-label" })
-                    @Html.DropDownList("ddlContact",Model.ddlContact,new{@class="form-control",id="ddlContact", data_parsley_required = "", data_parsley_errors_container="#errors-container-1" })
+                    @Html.DropDownList("ddlContact",Model.ddlContact,new{@class="form-control",id="ddlContact", data_parsley_errors_container="#errors-container-1" })
                     @Html.TextAreaFor(x => x.ProjectExtendItem.Project.Contact, new { @class = "form-control" , data_parsley_required = ""})
                 </div>
-                
+
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">儲存</button>
                     <a class="btn btn-light" href="@(Url.Action("ProjectList", "Project"))">取消</a>
