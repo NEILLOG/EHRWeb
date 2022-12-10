@@ -62,8 +62,10 @@ namespace BASE.Service
                 // 建立目錄
                 CreateDirectory(path);
 
+                String _filted_fileName = File.FileName.Replace("..", "").Replace("'", "").Replace("/", "").Replace(@"\", "");
+
                 //存檔
-                string extension = Path.GetExtension(File.FileName);//檔案類型
+                string extension = Path.GetExtension(_filted_fileName);//檔案類型
                 string save = MapPath(fileUploadRoot, Folder, fileRealName + extension);
 
                 using (FileStream stream = new FileStream(save, FileMode.Create))
@@ -81,7 +83,7 @@ namespace BASE.Service
                 TbFileInfo Entity = new TbFileInfo();
                 //Entity.FileId = _allCommonService.IDGenerator("FILE", 15, MaxFileID);
                 Entity.FileId = await _allCommonService.IDGenerator<TbFileInfo>();
-                Entity.FileName = String.IsNullOrEmpty(filename) ? File.FileName : filename;
+                Entity.FileName = String.IsNullOrEmpty(filename) ? _filted_fileName : filename;
                 Entity.FileRealName = fileRealName;
                 Entity.FileDescription = string.IsNullOrEmpty(FileDescription) ? string.Empty : FileDescription;
                 Entity.FilePath = ralativepath;

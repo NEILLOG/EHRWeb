@@ -590,3 +590,10 @@ D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\BASE.genruntimeco
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\ref\BASE.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\bin\Release\net6.0\System.Speech.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\bin\Release\net6.0\runtimes\win\lib\net6.0\System.Speech.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\bin\Release\net6.0\System.Web.Mvc.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\bin\Release\net6.0\System.Web.Razor.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\bin\Release\net6.0\System.Web.Helpers.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\bin\Release\net6.0\System.Web.WebPages.Deployment.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\bin\Release\net6.0\System.Web.WebPages.Razor.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\bin\Release\net6.0\System.Web.WebPages.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\bin\Release\net6.0\Microsoft.Web.Infrastructure.dll

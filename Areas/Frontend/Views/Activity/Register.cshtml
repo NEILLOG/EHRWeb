@@ -373,7 +373,10 @@
                     return false;
                 });
 
-                panel.append(NewReg);
+
+                //$(panel)[0].insertAdjacentHTML('beforeEnd', NewReg[0]);
+                //panel[0].innerHTML = NewReg[0].outerHTML;
+                panel[0].insertAdjacentHTML('beforeEnd', NewReg[0].outerHTML);
 
                 ReSortSection();
 

@@ -1,4 +1,5 @@
-﻿@model BASE.Areas.Frontend.Models.VM_QuizView
+﻿@using Microsoft.AspNetCore.Html;
+@model BASE.Areas.Frontend.Models.VM_QuizView
 
 @section Scripts
     {
@@ -18,7 +19,9 @@
                     <div class="row">
                         <div class="col-12 text-center border-bottom rb-title">
                             <h2 class="fc-green fw-bold"><span>@Model.Header.Name</span></h2>
-                            <small>@Html.Raw(Model.Header.Description)</small>
+                            <small>
+                                @(new HtmlString(Model.Header.Description))
+                            </small>
                         </div>
                     </div>
 

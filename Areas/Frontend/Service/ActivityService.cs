@@ -36,9 +36,7 @@ namespace BASE.Areas.Frontend.Service
                      {
                         Header = Activity,
                         FileInfo = FileInfo,
-                        Sections = _context.TbActivitySection.Where(x => x.ActivityId == Activity.Id).ToList()
                      });
-
 
                 Boolean IsShowPassedActivity = false; //是否顯示已完成辦理之活動
                 if (vmParam != null)

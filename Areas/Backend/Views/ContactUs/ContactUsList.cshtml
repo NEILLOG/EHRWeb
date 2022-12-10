@@ -60,16 +60,16 @@
                                 {
                                     <tr>
                                         <td>@(Model.ContactUsList.IndexOf(item) + 1)</td>
-                                        <td>@Html.Raw(item.Name)</td>
-                                        <td>@Html.Raw(item.Email)</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Email</td>
 
 
                                         @if (item.Response.Length <= 10)
-                                        { <td> @Html.Raw(item.Response)</td>}
+                                        { <td> @item.Response</td>}
                                         else
                                         {
                                             <td>
-                                                @Html.Raw(item.Response.Substring(0,10))....
+                                                @item.Response.Substring(0,10)....
                                                 <span>   </span>
                                                 <button type = "button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@(item.Response)">更多</button>
                                                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -91,7 +91,7 @@
                                                 </div>
                                             </td>
                                         }
-                                        <td>@Html.Raw(item.CreateDate.ToString("yyyy-MM-dd"))</td>
+                                        <td>@item.CreateDate.ToString("yyyy-MM-dd")</td>
                                     </tr>
                                 }
                             }

@@ -53,6 +53,9 @@ namespace BASE.Areas.Frontend.Controllers
                 data.Activities = _activityService.GetActivityList(ref _message, new VM_ActivityQueryParam()).Take(7).ToList();
                 data.RelationLinks = _relationlinkService.GetExtendItemList(ref _message);
 
+                foreach (var item in data.Activities)
+                    item.Sections = _allCommonService.Lookup<TbActivitySection>(ref _message, x => x.ActivityId == item.Header.Id).OrderBy(x => x.Day).ToList();
+
             }
             catch (Exception ex)
             {

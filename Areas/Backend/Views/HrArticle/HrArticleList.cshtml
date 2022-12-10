@@ -114,8 +114,8 @@
                                 {
                                     <tr>
                                         <td>@(Model.HrArticleExtendList.IndexOf(item) + 1)</td>
-                                        <td>@Html.Raw(item.HrArticle.Title)</td>
-                                        <td>@Html.Raw(item.HrArticle.Category)</td>
+                                        <td>@item.HrArticle.Title</td>
+                                        <td>@item.HrArticle.Category</td>
                                         @{
                                             string ButtonInfo = string.Empty;
                                             if (item.HrArticle.IsPublish)

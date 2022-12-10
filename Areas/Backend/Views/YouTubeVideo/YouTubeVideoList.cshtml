@@ -130,9 +130,9 @@
                                 {
                                     <tr>
                                         <td>@(Model.YouTubeVideoExtendList.IndexOf(item) + 1)</td>
-                                        <td style="max-width:30vw;">@Html.Raw(item.YouTubeVideo.Title)</td>
-                                        <td>@Html.Raw(item.YouTubeVideo.DisplayDate.ToString("yyyy-MM-dd"))</td>
-                                        <td>@Html.Raw(item.YouTubeVideo.YouTubeId)</td>
+                                        <td style="max-width:30vw;">@item.YouTubeVideo.Title</td>
+                                        <td>@item.YouTubeVideo.DisplayDate.ToString("yyyy-MM-dd")</td>
+                                        <td>@item.YouTubeVideo.YouTubeId</td>
                                         @{
                                            string Status = string.Empty;
                                             string ButtonInfo = string.Empty;

@@ -86,8 +86,8 @@
                                 {
                                     <tr>
                                         <td>@(Model.AlbumExtendList.IndexOf(item) + 1)</td>
-                                        <td style="max-width:30vw;">@Html.Raw(item.Album.Title)</td>
-                                        <td style="max-width:30vw;">@Html.Raw(item.Album.DisplayDate.ToString("yyyy/MM/dd"))</td>
+                                        <td style="max-width:30vw;">@item.Album.Title</td>
+                                        <td style="max-width:30vw;">@item.Album.DisplayDate.ToString("yyyy/MM/dd")</td>
                                         <td>
                                             <a class="btn btn-primary" href="@(Url.Action("AlbumEdit", "Album", new { id =item.Album.Id }))">編輯</a>
                                             <button type="button" class="btn btn-danger" onclick="Delete('@(item.Album.Id)')">刪除</button>

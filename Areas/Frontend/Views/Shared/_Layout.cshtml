@@ -278,16 +278,29 @@
             if ($radios.is(':checked') === false) {
                 $radios.filter('[value=iconRadio]').click();
                 var radioValue = $radios.filter('[value=iconRadio]').click().attr("value");
-                var targetRadio = $("." + radioValue);
+                var targetRadio = $("." + xssFilter(radioValue));
                 $(targetRadio).show();
             }
             $('input[type="radio"]').click(function () {
                 var inputValue = $(this).attr("value");
-                var targetBox = $("." + inputValue);
+                var targetBox = $("." + xssFilter(inputValue));
                 $(".viewhidden").not(targetBox).hide();
                 $(targetBox).show();
             });
         });
+
+        function xssFilter(value) {
+            if(typeof value == 'undefined')
+                return;
+            value = value.replace(">", "");
+            value = value.replace("<", "");
+            value = value.replace("\"", "");
+            value = value.replace("'", "'");
+            value = value.replace("\r", "");
+            value = value.replace("\n", "");
+            value = value.replace("\r\n", "");
+            return value;
+        }
     </script>
 
     <script>

@@ -92,22 +92,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xFdmVudFxFdmVudEluZm9SZWdpc3RyYXRpb25Nb3JlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/FAQ/FAQAdd.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xGQVFcRkFRQWRkLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/FAQ/FAQEdit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xGQVFcRkFRRWRpdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/FAQ/FAQList.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xGQVFcRkFRTGlzdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/FAQ/FAQSort.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xGQVFcRkFRU29ydC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/TFS/EHR人力資源/SourceCode/原始檔/Areas/Backend/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQmFja2VuZFxWaWV3c1xIb21lXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

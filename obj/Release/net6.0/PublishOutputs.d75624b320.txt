@@ -317,6 +317,12 @@ D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\LinqKi
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\LinqKit.Core.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\MessagePack.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\MessagePack.Annotations.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\System.Web.Mvc.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\System.Web.Razor.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\System.Web.Helpers.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\System.Web.WebPages.Deployment.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\System.Web.WebPages.Razor.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\System.Web.WebPages.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\Microsoft.AspNetCore.Cryptography.Internal.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll
@@ -368,6 +374,7 @@ D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\Micros
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\Microsoft.Web.Infrastructure.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\Newtonsoft.Json.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Release\net6.0\PubTmp\Out\NuGet.Common.dll

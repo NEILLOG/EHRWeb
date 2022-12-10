@@ -8,6 +8,7 @@ using BASE.Models.Enums;
 using BASE.Service;
 using Microsoft.AspNetCore.Mvc;
 using NPOI.SS.Formula.Functions;
+using NPOI.SS.Formula.PTG;
 
 namespace BASE.Areas.Frontend.Controllers
 {
@@ -56,6 +57,9 @@ namespace BASE.Areas.Frontend.Controllers
                 //分頁
                 if (dataList != null)
                     data.ActivityExtendList = await PagerInfoService.GetRange(dataList, data.Search.PagerInfo);
+
+                foreach(var item in data.ActivityExtendList)
+                    item.Sections = _allCommonService.Lookup<TbActivitySection>(ref _message, x => x.ActivityId == item.Header.Id).ToList();
             }
             catch (Exception ex)
             {
@@ -77,6 +81,10 @@ namespace BASE.Areas.Frontend.Controllers
                 //分頁
                 if (dataList != null)
                     datapost.ActivityExtendList = await PagerInfoService.GetRange(dataList, datapost.Search.PagerInfo);
+
+                foreach (var item in datapost.ActivityExtendList)
+                    item.Sections = _allCommonService.Lookup<TbActivitySection>(ref _message, x => x.ActivityId == item.Header.Id).ToList();
+
             }
             catch (Exception ex)
             {

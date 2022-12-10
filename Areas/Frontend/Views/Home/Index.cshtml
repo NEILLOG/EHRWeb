@@ -212,7 +212,7 @@
                         <div class="card-footer">
                             <div class="date">
                                 <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
-                                @m.Header.RegStartDate.ToString("yyyy / MM / dd")
+                                @m.Sections.First().Day.ToString("yyyy / MM / dd")
                             </div>
                             <a href="@Url.Action("Detail", "Activity", new { id = EncryptService.AES.RandomizedEncrypt(m.Header.Id) })" class="more-btn stretched-link">
                                 了解更多

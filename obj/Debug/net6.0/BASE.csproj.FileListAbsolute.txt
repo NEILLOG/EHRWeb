@@ -590,3 +590,10 @@ D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Debug\net6.0\refint\BASE.dll
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Debug\net6.0\BASE.pdb
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Debug\net6.0\BASE.genruntimeconfig.cache
 D:\TFS\EHR人力資源\SourceCode\原始檔\obj\Debug\net6.0\ref\BASE.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\bin\Debug\net6.0\System.Web.Mvc.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\bin\Debug\net6.0\System.Web.Razor.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\bin\Debug\net6.0\System.Web.Helpers.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\bin\Debug\net6.0\System.Web.WebPages.Deployment.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\bin\Debug\net6.0\System.Web.WebPages.dll
+D:\TFS\EHR人力資源\SourceCode\原始檔\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll

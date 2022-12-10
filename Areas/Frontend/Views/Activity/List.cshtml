@@ -7,11 +7,12 @@
     <script>
         var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
         var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-            const popoverId = popoverTriggerEl.attributes['data-content-id'];
+
+            const popoverId = $(popoverTriggerEl).data('content-id');
             if (popoverId) {
-                const contentEl = $(`#${popoverId.value}`).html();
+                const contentEl = document.getElementById(popoverId).children; 
                 return new bootstrap.Popover(popoverTriggerEl, {
-                    content: contentEl,
+                    content: contentEl[0],
                     html: true,
                 });
             }

@@ -1,4 +1,5 @@
 ﻿@using BASE.Service
+@using Microsoft.AspNetCore.Html;
 @model BASE.Areas.Frontend.Models.VM_OnePage
 
 @await Html.PartialAsync("_BannerPartial", new BASE.Areas.Frontend.Models.Extend.BannerPartial(){ Main = "計畫資源地圖", Detail = "" })
@@ -47,7 +48,7 @@
             </div>
             <!-- 右邊內容區塊 -->
             <div class="col-lg-9 col-12">
-                @Html.Raw(Model.ExtendItem.Contents)
+                @(new HtmlString(Model.ExtendItem.Contents))
             </div>
         </div>
     </div>

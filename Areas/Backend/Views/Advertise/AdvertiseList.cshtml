@@ -124,7 +124,7 @@
                                 {
                                     <tr>
                                         <td>@(Model.AdvertiseExtendList.IndexOf(item) + 1)</td>
-                                        <td style="max-width:30vw;">@Html.Raw(item.Advertise.Title)</td>
+                                        <td style="max-width:30vw;">@item.Advertise.Title</td>
                                         @{
                                             string Status = string.Empty;
                                             string ButtonInfo = string.Empty;

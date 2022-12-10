@@ -1,4 +1,5 @@
-﻿@model BASE.Areas.Frontend.Models.VM_Quiz
+﻿@using Microsoft.AspNetCore.Html;
+@model BASE.Areas.Frontend.Models.VM_Quiz
 
 @section Scripts
     {
@@ -117,7 +118,7 @@
                     <div class="row">
                         <div class="col-12 text-center border-bottom rb-title">
                             <h2 class="fc-green fw-bold"><span>@Model.ExtendItem.Header.Name</span></h2>
-                            <small>@Html.Raw(Model.ExtendItem.Header.Description)</small>
+                            <small>@(new HtmlString(Model.ExtendItem.Header.Description))</small>
                         </div>
                     </div>
                     <form action="" id="frm" method="post" class="row g-3 mt-2 align-items-center" enctype="multipart/form-data" data-parsley-validate="">
@@ -135,7 +136,7 @@
 
                             <div class="row">
                                 <div class="col-12">
-                                    @Html.Raw(Model.ExtendItem.Header.Description)
+                                    @(new HtmlString(Model.ExtendItem.Header.Description))
                                 </div>
                             </div>
 

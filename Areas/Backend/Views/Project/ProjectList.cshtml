@@ -115,8 +115,8 @@
                                 {
                                     <tr>
                                         <td>@(Model.ProjectExtendList.IndexOf(item) + 1)</td>
-                                        <td>@Html.Raw(item.Project.Name)</td>
-                                        <td>@Html.Raw(item.Project.Category)</td>
+                                        <td>@item.Project.Name</td>
+                                        <td>@item.Project.Category</td>
                                         @*@if (Model.MainProject.Contains(item.Project.Name))*@
                                         @if (Model.FixedProjectIds.Contains(item.Project.Id))
                                         {

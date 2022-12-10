@@ -95,7 +95,6 @@ builder.Services.AddScoped<ImportService>();
 //Backend Service
 builder.Services.AddScoped<AuthorityService>();
 builder.Services.AddScoped<UserService>();
-builder.Services.AddScoped<FAQService>();
 builder.Services.AddScoped<MemberService>();
 builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<AdvertiseService>();

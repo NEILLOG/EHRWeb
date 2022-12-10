@@ -169,9 +169,9 @@
                                 {
                                     <tr>
                                         <td>@(Model.NewsExtendList.IndexOf(item) + 1)</td>
-                                        <td>@Html.Raw(item.News.Title)</td>
-                                        <td>@Html.Raw(item.News.Category)</td>
-                                        <td>@Html.Raw(item.News.DisplayDate.ToString("yyyy-MM-dd"))</td>
+                                        <td>@item.News.Title</td>
+                                        <td>@item.News.Category</td>
+                                        <td>@item.News.DisplayDate.ToString("yyyy-MM-dd")</td>
                                         @{
                                             string Status = string.Empty;
                                             string ButtonInfo = string.Empty;

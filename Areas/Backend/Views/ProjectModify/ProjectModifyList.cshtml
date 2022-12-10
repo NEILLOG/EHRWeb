@@ -89,9 +89,9 @@
 
                                     <tr>
                                         <td>@(Model.ProjectModifyExtendList.IndexOf(item) + 1)</td>
-                                        <td>@Html.Raw(item.ProjectModify.Email)</td>
-                                        <td>@Html.Raw(item.ProjectModify.CreateDate.ToString("yyyy-MM-dd"))</td>
-                                        <td>@Html.Raw(item.ProjectModify.CreateDate.ToString("HH:mm"))</td>
+                                        <td>@item.ProjectModify.Email</td>
+                                        <td>@item.ProjectModify.CreateDate.ToString("yyyy-MM-dd")</td>
+                                        <td>@item.ProjectModify.CreateDate.ToString("HH:mm")</td>
 
                                         <td>
                                             @{
@@ -118,7 +118,7 @@
                                                 @ApproveStatus
                                             }
                                         </td>
-                                        <td>@Html.Raw(item.ProjectModify.ModifyUser)</td>
+                                        <td>@item.ProjectModify.ModifyUser</td>
                                         @{
                                             string ModifyDate = string.Empty;
                                             string ModifyTime = string.Empty;

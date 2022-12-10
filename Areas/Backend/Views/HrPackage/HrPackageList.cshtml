@@ -148,7 +148,7 @@
                                 foreach (var item in Model.HrPackageExtendList)
                                 {
                                     <tr>
-                                        <td>@Html.Raw(item.HrPackage.Title)</td>
+                                        <td>@item.HrPackage.Title</td>
                                         @{
                                             string ButtonInfo = string.Empty;
                                             if (item.HrPackage.IsPublish)
