@@ -108,7 +108,7 @@ namespace BASE.Areas.Frontend.Service
                      {
                          Header = Activity,
                          FileInfo = FileInfo,
-                         Sections = _context.TbActivitySection.Where(x => x.ActivityId == Activity.Id).ToList()
+                         Sections = _context.TbActivitySection.Where(x => x.ActivityId == id).ToList()
                      });
 
                 // 找出該筆資料

@@ -231,8 +231,7 @@ namespace BASE.Areas.Frontend.Controllers
                     {
                         if (datapost.ModifyFile != null)
                         {
-                            var upload = await _fileService.FileUploadAsync(datapost.ModifyFile,
-                                                                                  "SatisfySurveyFile/" + DateTime.Now.ToString("yyyyMMddHHmmss"),
+                            var upload = await _fileService.FileUploadAsync(datapost.ModifyFile,"SatisfySurveyFile/" + DateTime.Now.ToString("yyyyMMddHHmmss"),
                                                                                   "SatisfySurveyFile",
                                                                                   null,
                                                                                   null,
@@ -351,8 +350,7 @@ namespace BASE.Areas.Frontend.Controllers
                         //輪播圖片
                         if (datapost.ModifyFile != null)
                         {
-                            var photo_upload = await _fileService.FileUploadAsync(datapost.ModifyFile,
-                                                                                  "Survey/" + DateTime.Now.ToString("yyyyMMddHHmmss"),
+                            var photo_upload = await _fileService.FileUploadAsync(datapost.ModifyFile,"Survey/" + DateTime.Now.ToString("yyyyMMddHHmmss"),
                                                                                   "Survey",
                                                                                   null,
                                                                                   null,

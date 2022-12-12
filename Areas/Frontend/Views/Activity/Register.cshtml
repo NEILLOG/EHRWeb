@@ -329,11 +329,33 @@
 
                 var daytype = $('#hidDayType').val();
                 var mode = container.find('input[name*=mode]:checked');
-                var food = container.find('input[name*=food]:checked');
-                var section_id = container.find('input.hidSectionId').val();
-                var date_range = container.find('span.lbDateRange').text();
+                var food = container.find('input[name*=food]:checked'); 
+                var section_id = container.find('input.hidSectionId').val(); section_id = FilterXss(section_id);
+                var date_range = container.find('span.lbDateRange').text(); date_range = FilterXss(date_range);
                 var modal_ele = $(this).parents('div.modal');
                 var modal = bootstrap.Modal.getInstance(modal_ele[0]);
+
+                //先過濾危險符號
+                var _mode; 
+                switch (encodeURI(mode.val())) {
+                    case '%E5%AF%A6%E9%AB%94': _mode = '實體'; break;
+                    case '%E7%B7%9A%E4%B8%8A': _mode = '線上'; break;
+                    default:
+                        Swal.fire('發生錯誤');
+                        return;
+                }
+
+                var _food;
+                if (daytype == '全日' && _mode == '實體')
+                {
+                    switch (encodeURI(food.val())) {
+                        case '%E7%B4%A0%E9%A3%9F': _food = '素食'; break;
+                        case '%E8%91%B7%E9%A3%9F': _food = '葷食'; break;
+                        default:
+                            Swal.fire('發生錯誤');
+                            return;
+                    }
+                }
 
                 var RegisteredSections = GetAllRegisterSection();
                 if (RegisteredSections.includes(section_id))
@@ -346,7 +368,7 @@
                     Swal.fire('請選擇參與模式');
                     return;
                 }
-                if (food.length == 0 && daytype == '全日' && mode.val() == '實體') {
+                if (food.length == 0 && daytype == '全日' && _mode == '實體') {
                     Swal.fire('請選擇飲食為葷食或素食');
                     return;
                 }
@@ -355,13 +377,13 @@
 
                 var NewReg = $("#section-tmpl").tmpl({
                     DateRange: date_range,
-                    Type: mode.val(),
-                    Food: daytype == '全日' ? food.val() : null,
+                    Type: _mode,
+                    Food: daytype == '全日' ? _food : null,
                     SectionID: section_id,
-                    FoodBoolean: food.val() == '素食' ? 'true' : 'false'
+                    FoodBoolean: _food == '素食' ? 'true' : 'false'
                 });
 
-                if (daytype == '半日' || mode.val() == '線上') {
+                if (daytype == '半日' || _mode == '線上') {
                     NewReg.find('.FoodLabel').remove();
                 }
 
@@ -387,6 +409,15 @@
 
         });
 
+        function FilterXss(s){
+            if(typeof s == "undefined" || s == '')
+                return s;
+
+            s = s.replace("<", "&lt;");
+            s = s.replace(">", "&gt;");
+            return s;
+        }
+       
         function ReSortSection(){
              $('#panelSection').find('.detailItem').each(function(index, ele){
 

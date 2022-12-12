@@ -179,8 +179,7 @@ namespace BASE.Areas.Frontend.Controllers
                     {
                         if (datapost.ModifyFile != null)
                         {
-                            var photo_upload = await _fileService.FileUploadAsync(datapost.ModifyFile, 
-                                                                                  "ProjectModifyFiles/" + DateTime.Now.ToString("yyyyMMddHHmmss"), 
+                            var photo_upload = await _fileService.FileUploadAsync(datapost.ModifyFile, "ProjectModifyFiles/" + DateTime.Now.ToString("yyyyMMddHHmmss"), 
                                                                                   "ProjectModifyFiles", 
                                                                                   null, 
                                                                                   null, 

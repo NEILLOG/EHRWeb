@@ -305,6 +305,7 @@ namespace BASE.Areas.Backend.Controllers
                         Subject = datapost.MailSubject,
                         Body = datapost.MailContent
                     }, userinfo.UserID, DateTime.Now, "PromoteMail");
+                    isSuccess = true;
                 }
                 else
                 {

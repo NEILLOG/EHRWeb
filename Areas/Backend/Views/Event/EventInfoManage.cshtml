@@ -235,7 +235,7 @@ input:checked + .slider:before {
                                             <div class="py-3 d-flex justify-content-center">
                                                 <div>
                                                     <label class="switch">
-                                                        <input id="chb_@item.activity.Id" type="checkbox" class="checkbox" @(item.activity.IsPublish ? "checked" : "") onclick="SignupSwitch('@EncryptService.AES.RandomizedEncrypt(item.activity.Id)','@item.activity.IsPublish');" />
+                                                        <input id="chb_@item.activity.Id" type="checkbox" class="checkbox" @(item.activity.IsPublish ? "checked" : "") onclick="SignupSwitch('@item.activity.Id','@item.activity.IsPublish');" />
                                                         <span class="slider"></span>
                                                     </label>
                                                 </div>

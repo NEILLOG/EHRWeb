@@ -202,6 +202,13 @@ namespace BASE.Areas.Backend.Controllers
                 //取資料
                 List<ConsultExtend>? dataList = _consultService.GetConsultExtendList(ref _message, data.Search);
 
+                if (userinfo.GroupID == _config.GetValue<string>("Site:ConsultantGroupID"))
+                {
+                    dataList = dataList.Where(x => x.ConsultRegister.AssignAdviser1 == userinfo.UserID
+                                               || x.ConsultRegister.AssignAdviser2 == userinfo.UserID
+                                               || x.ConsultRegister.AssignAdviser3 == userinfo.UserID).ToList();
+                }
+
                 //分頁
                 if (dataList != null)
                     data.ConsultExtendList = await PagerInfoService.GetRange(dataList.AsQueryable(), data.Search.PagerInfo);

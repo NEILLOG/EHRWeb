@@ -16,30 +16,30 @@ namespace BASE.Areas.Backend.Controllers
             Environment = _environment;
         }
 
-        /// <summary> 前端連結取得檔案function
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> DownloadFile(string filePath, string fileName)
-        {
-            string decrypt_fileName = EncryptService.AES.Decrypt(fileName);
+        ///// <summary> 前端連結取得檔案function
+        ///// 
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<IActionResult> DownloadFile(string filePath, string fileName)
+        //{
+        //    string decrypt_fileName = EncryptService.AES.Decrypt(fileName);
 
-            //Determine the Content Type of the File.
-            string contentType = "";
-            FileExtensionContentTypeProvider providers = new FileExtensionContentTypeProvider();
+        //    //Determine the Content Type of the File.
+        //    string contentType = "";
+        //    FileExtensionContentTypeProvider providers = new FileExtensionContentTypeProvider();
 
-            //-- openoffice content type cant not found,must manual Mappings
-            providers.Mappings.Add(".odt", "application/vnd.oasis.opendocument.text");
+        //    //-- openoffice content type cant not found,must manual Mappings
+        //    providers.Mappings.Add(".odt", "application/vnd.oasis.opendocument.text");
 
-            providers.TryGetContentType(decrypt_fileName, out contentType);
+        //    providers.TryGetContentType(decrypt_fileName, out contentType);
 
-            //Build the File Path.
-            string path = Path.Combine(this.Environment.WebRootPath, filePath) + decrypt_fileName;
-            var file = System.IO.File.ReadAllBytes(path);
+        //    //Build the File Path.
+        //    string path = Path.Combine(this.Environment.WebRootPath, filePath) + decrypt_fileName;
+        //    var file = System.IO.File.ReadAllBytes(path);
 
-            //Send the File to Download.
-            return File(file, contentType, decrypt_fileName);
-        }
+        //    //Send the File to Download.
+        //    return File(file, contentType, decrypt_fileName);
+        //}
     }
 }

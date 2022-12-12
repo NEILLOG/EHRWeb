@@ -347,8 +347,7 @@ namespace BASE.Areas.Frontend.Controllers
                         //輪播圖片
                         if (datapost.ModifyFile != null)
                         {
-                            var photo_upload = await _fileService.FileUploadAsync(datapost.ModifyFile,
-                                                                                  "Health/" + DateTime.Now.ToString("yyyyMMddHHmmss"),
+                            var photo_upload = await _fileService.FileUploadAsync(datapost.ModifyFile,"Health/" + DateTime.Now.ToString("yyyyMMddHHmmss"),
                                                                                   "Health",
                                                                                   null,
                                                                                   null,

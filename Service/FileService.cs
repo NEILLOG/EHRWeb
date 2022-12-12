@@ -37,13 +37,13 @@ namespace BASE.Service
         /// <summary>
         /// 單檔案上傳
         /// </summary>
-        /// <param name="File"></param>
-        /// <param name="Folder"></param>
+        /// <param name="item">上傳之檔案</param>
+        /// <param name="fd">儲存目錄</param>
         /// <param name="FileDescription"></param>
         /// <param name="OldFileID"></param>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public async Task<FileResultModel> FileUploadAsync(IFormFile File, string Folder, string? FileDescription = null, string? OldFileID = null, string? filename = null, IDbContextTransaction? transaction = null)
+        public async Task<FileResultModel> FileUploadAsync(IFormFile item, string fd, string? FileDescription = null, string? OldFileID = null, string? filename = null, IDbContextTransaction? transaction = null)
         {
             UserSessionModel? userinfo = _contextAccessor.HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
             DateTime now = DateTime.Now;
@@ -53,31 +53,35 @@ namespace BASE.Service
             {
                 var fileRealName = this.GenerateFileID();
 
+                fd = fd.Replace("..", "").Replace("'", "").Replace("/", "").Replace(@"\", "");
+
                 // 預設的存檔路徑
                 string fileUploadRoot = _config["Site:FileUploadRoot"];
 
                 // 檔案存放路徑 (注意：檔案只能存在wwwroot底下)
-                string path = MapPath(fileUploadRoot, Folder);
+                string path = MapPath(fileUploadRoot, fd);
 
                 // 建立目錄
                 CreateDirectory(path);
 
-                String _filted_fileName = File.FileName.Replace("..", "").Replace("'", "").Replace("/", "").Replace(@"\", "");
+                String _filted_fileName = item.FileName.Replace("..", "").Replace("'", "").Replace("/", "").Replace(@"\", "");
 
                 //存檔
                 string extension = Path.GetExtension(_filted_fileName);//檔案類型
-                string save = MapPath(fileUploadRoot, Folder, fileRealName + extension);
+                       extension = extension.Replace("..", "").Replace("'", "").Replace("/", "").Replace(@"\", "");
+
+                string save = MapPath(fileUploadRoot, fd, fileRealName + extension);
 
                 using (FileStream stream = new FileStream(save, FileMode.Create))
                 {
-                    await File.CopyToAsync(stream);
+                    await item.CopyToAsync(stream);
                 }
 
                 //↓↓↓↓↓ Lock With Async ↓↓↓↓↓
                 await _lock.WaitAsync();
 
                 //資料庫紀錄
-                string ralativepath = String.Join('/', fileUploadRoot, Folder, fileRealName + extension);
+                string ralativepath = String.Join('/', fileUploadRoot, fd, fileRealName + extension);
                 //string MaxFileID = await Lookup<TbFileInfo>(ref _message).Select(x => x.FileId).MaxAsync();
 
                 TbFileInfo Entity = new TbFileInfo();

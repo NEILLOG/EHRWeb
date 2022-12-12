@@ -36,7 +36,7 @@ namespace BASE.Areas.Backend.Controllers
             }
             else
             {
-                var result = await _fileService.FileUploadAsync(file, "CK5_Uploader/images", "CK5");
+                var result = await _fileService.FileUploadAsync(file, "CK5_Uploader", "CK5");
 
                 if (result.IsSuccess)
                 {
