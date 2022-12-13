@@ -125,7 +125,7 @@
                                 </div>
                                 <div>
                                     <audio id="player1" controls src="@Url.Action("TTS", "Home", new { id = "Activity" })" style="display:none;"></audio>
-                                    <img id="LoginCode" src="@Url.Action("GetValidateCode", "Home", new { id = "Activity" } )" class="w-40 ml-3 mt-4" alt="圖片驗證碼" />
+                                    <img id="LoginCode" src="@Url.Action("GetValidateCode", "Home", new { id = "Activity" } )" class="w-40 ml-3 mt-4 btnRefreshValid" alt="圖片驗證碼" style="cursor:pointer;" />
                                     <a href="#" class="PlayValidCode" title="播放圖片驗證碼">
                                         <img src="~/areas/frontend/img/speaker.png" alt="播放圖片驗證碼" />
                                     </a>
@@ -134,8 +134,8 @@
                         </div>
                         <div class="col-12 col-md-6 text-center">
                             <div class="form-check form-switch form-CusSwitch">
-                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                                <label class="form-check-label" for="flexSwitchCheckDefault">我已詳讀<a class="fc-orange" type="button" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal" data-bs-dismiss="modal">個資宣告項目</a><span class="fc-red ms-1">*</span></label>
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" required>
+                                <label class="form-check-label" for="flexSwitchCheckDefault">我已詳讀<a class="fc-orange" type="button" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal" data-bs-dismiss="modal">個資宣告項目事項</a><span class="fc-red ms-1">*</span></label>
                             </div>
                         </div>
                         <div class="d-flex gap-2 mt-5">
@@ -167,6 +167,7 @@
                         - 
                         @day.EndTime.ToString(@"hh\:mm")
                         </span>
+                        <input class="hidDateRange" type="hidden" value="@day.Day.ToString("yyyy / MM / dd") @day.StartTime.ToString(@"hh\:mm") - @day.EndTime.ToString(@"hh\:mm")">
                     </div>
                     <small>請選擇參與模式及飲食</small>
                     <div class="text-start">
@@ -239,11 +240,16 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalToggleLabel3">個資宣告項目</h5>
+                <h5 class="modal-title" id="exampleModalToggleLabel3">個資保護聲明</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                個資宣告項目個資宣告項目個資宣告項目個資宣告項目個資宣告項目個資宣告項目個資宣告項目
+                <p>本分署為保護您的個人資料，依據個人資料保護法規定，於下列事由與目的範圍內，說明本分署直接或間接蒐集、處理及利用您的個人資料，當您完成報名時，表示您同意以下內容：</p>
+                <p>1.	蒐集之目的：基於個人資料保護法及相關法令之規定，取得您的個人資料，目的在於提供良好服務及執行職務或業務之必要範圍內蒐集、處理及利用您的個人資料。您同意本分署以您所提供的個人資料確認您的身份、與您進行連絡、提供您本分署之相關服務及資訊，包括後續通知等用途。</p>
+                <p>2.	個人資料之類別：依據報名需求提供您的個人資料，包含服務單位、職稱、姓名、出生日期、電話、E-MAIL等。</p>
+                <p>3.	您同意本分署於執行期間利用您個人資料的期間、地區、對象及方式：期間：一年；地區：中華民國領域；對象：本分署辦理及提供之各項相關服務與業務之使用者；方式：以電話、電子郵件或其他合於當時科技之適當方式作個人資料之利用。</p>
+                <p>4.	您的個人資料蒐集之目的消失或期限屆滿時，您同意本分署得繼續保存、處理或利用您的個人資料。除本分署於專案執行期間因執行職務或業務所必須或為遵循其他法令之規定者外，您可於期間隨時向本分署請求刪除、停止處理或利用您的個人資料。</p>
+                <p>5.	如您未提供正確之個人資料，本分署將無法為您提供特定目的之相關業務。</p>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-bs-dismiss="modal">確認</button>
@@ -290,7 +296,10 @@
     <script>
         $(document).ready(function(){
 
-            
+            $('.btnRefreshValid').click(function () {
+                $(this)[0].src = '@Url.Action("GetValidateCode", "Home", new { id = "Activity" })';
+                $(this).siblings('audio')[0].src = '@Url.Action("TTS", "Home", new { id = "Activity" })';
+            })
 
             $('#frm').submit(function () {
                 var isVerify = false;
@@ -314,6 +323,17 @@
                     return false;
                 }
 
+                checked = $("input[name=ckbsInfoFrom]:checked").length;
+                if (!checked) {
+                    alert("請選擇至少一個訊息來源");
+                    return false;
+                }
+
+                //若都沒問題，重新還原section_id
+                $('input[name*=RegisterSectionId]').each(function(index, ele){
+                    ele.value = decodeURI(ele.value);
+                });
+
             });
 
             $('.PlayValidCode').click(function () {
@@ -325,13 +345,13 @@
             var panel = $('#panelSection');
 
             $('.btnAddSection').click(function(){
-                var container = $(this).parents('div.modal-body'); console.log(container);
+                var container = $(this).parents('div.modal-body'); 
 
                 var daytype = $('#hidDayType').val();
                 var mode = container.find('input[name*=mode]:checked');
-                var food = container.find('input[name*=food]:checked'); 
-                var section_id = container.find('input.hidSectionId').val(); section_id = FilterXss(section_id);
-                var date_range = container.find('span.lbDateRange').text(); date_range = FilterXss(date_range);
+                var food = container.find('input[name*=food]:checked');
+                var section_id = container.find('input.hidSectionId').val(); 
+                var date_range = container.find('span.lbDateRange')[0].textContent; date_range = FilterXss(date_range);
                 var modal_ele = $(this).parents('div.modal');
                 var modal = bootstrap.Modal.getInstance(modal_ele[0]);
 
@@ -345,7 +365,7 @@
                         return;
                 }
 
-                var _food;
+                var _food;  
                 if (daytype == '全日' && _mode == '實體')
                 {
                     switch (encodeURI(food.val())) {
@@ -358,8 +378,7 @@
                 }
 
                 var RegisteredSections = GetAllRegisterSection();
-                if (RegisteredSections.includes(section_id))
-                {
+                if (RegisteredSections.includes(encodeURI(section_id))) {
                     Swal.fire('您已加入此活動日期的報名時段');
                     return;
                 }
@@ -375,11 +394,12 @@
 
                 panel.show();
 
+
                 var NewReg = $("#section-tmpl").tmpl({
                     DateRange: date_range,
                     Type: _mode,
                     Food: daytype == '全日' ? _food : null,
-                    SectionID: section_id,
+                    SectionID: encodeURI(section_id),
                     FoodBoolean: _food == '素食' ? 'true' : 'false'
                 });
 
