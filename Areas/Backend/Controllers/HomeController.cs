@@ -56,6 +56,7 @@ namespace BASE.Areas.Backend.Controllers
         public async Task<IActionResult> Login(VM_Home datapost)
         {
             string ActionName = "登入";
+            string LoginMessage = string.Empty;
             try
             {
                 if (!string.IsNullOrEmpty(datapost.acct) && !string.IsNullOrEmpty(datapost.aua8))
@@ -84,6 +85,10 @@ namespace BASE.Areas.Backend.Controllers
                             TempData["TempMsgType"] = MsgTypeEnum.error;
                             TempData["TempMsg"] = "帳號或密碼錯誤，請重新輸入";
 
+                            // 寫入登入紀錄
+                            LoginMessage = "登入失敗";
+                            await _allCommonService.LoginRecord(Platform, LoginMessage, datapost.acct);
+
                             return View(datapost);
                         }
                         else
@@ -101,12 +106,20 @@ namespace BASE.Areas.Backend.Controllers
                                 TempData["TempMsgType"] = MsgTypeEnum.success;
                                 TempData["TempMsg"] = "登入成功";
 
+                                // 寫入登入紀錄
+                                LoginMessage = "登入成功";
+                                await _allCommonService.LoginRecord(Platform, LoginMessage, datapost.acct, User.UserId);
+
                                 return RedirectToAction("Index", "Home", new { area = "Backend" });
                             }
                             else
                             {
                                 TempData["TempMsgType"] = MsgTypeEnum.error;
                                 TempData["TempMsg"] = "此帳號已被停用";
+
+                                // 寫入登入紀錄
+                                LoginMessage = "帳號停用";
+                                await _allCommonService.LoginRecord(Platform, LoginMessage, datapost.acct, User.UserId);
 
                                 return View(datapost);
                             }
