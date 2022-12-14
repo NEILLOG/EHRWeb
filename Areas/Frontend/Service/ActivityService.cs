@@ -38,7 +38,7 @@ namespace BASE.Areas.Frontend.Service
                         FileInfo = FileInfo,
                      });
 
-                Boolean IsShowPassedActivity = false; //是否顯示已完成辦理之活動
+                Boolean IsShowPassedActivity = false; //是否顯示截止報名活動
                 if (vmParam != null)
                 {
                     if (!string.IsNullOrEmpty(vmParam.Keyword))
@@ -54,7 +54,7 @@ namespace BASE.Areas.Frontend.Service
                             case "活動":
                                 dataList = dataList.Where(x => x.Header.Category == vmParam.Category);
                                 break;
-                            case "已完成辦理之活動":
+                            case "截止報名":
                                 IsShowPassedActivity = true;
                                 break;
                         }
@@ -97,6 +97,8 @@ namespace BASE.Areas.Frontend.Service
         {
             try
             {
+                id = id.Replace("'", "").Replace("=", "").Replace("\"", "").Replace("!", "").Replace("+", "").Replace("-", "");
+
                 IQueryable<ActivityExtend>? dataList =
                     (from Activity in _context.TbActivity.Where(x => !x.IsDelete && x.IsPublish && x.IsValid)
 
@@ -107,12 +109,12 @@ namespace BASE.Areas.Frontend.Service
                      select new ActivityExtend
                      {
                          Header = Activity,
-                         FileInfo = FileInfo,
-                         Sections = _context.TbActivitySection.Where(x => x.ActivityId == id).ToList()
+                         FileInfo = FileInfo
                      });
 
                 // 找出該筆資料
                 ActivityExtend data = dataList.Where(x => x.Header.Id == id).FirstOrDefault();
+                               data.Sections = _context.TbActivitySection.Where(x => x.ActivityId == id).ToList();
 
                 return data;
             }

@@ -41,7 +41,7 @@ namespace BASE.Areas.Frontend.Controllers
             VM_Activity data = new VM_Activity();
             switch (id)
             {
-                case "已完成辦理之活動":
+                case "截止報名":
                 case "講座":
                 case "課程":
                 case "活動": data.Search.Category = id; break;

@@ -50,7 +50,7 @@
                                     <a class="nav-link @(Model.Search.Category == "活動" ? "active" : "")" href="@Url.Action("List", new { id = "活動"})">活動</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link @(Model.Search.Category == "已完成辦理之活動" ? "active" : "")" href="@Url.Action("List", new { id = "已完成辦理之活動"})">已完成辦理之活動</a>
+                                <a class="nav-link @(Model.Search.Category == "截止報名" ? "active" : "")" href="@Url.Action("List", new { id = "截止報名"})">截止報名</a>
                                 </li>
                                 <li class="nav-item d-none">
                                     <button class="nav-link" href="#"></button>
