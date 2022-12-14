@@ -41,7 +41,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000020", "ENABLED")]
+        [BackendCheckLogin("Menu000047", "ENABLED")]
         public async Task<IActionResult> ProjectList(VM_Project data)
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
@@ -283,7 +283,7 @@ namespace BASE.Areas.Backend.Controllers
         /// 新增Project
         /// </summary>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000021", "ADD")]
+        [BackendCheckLogin("Menu000048", "ADD")]
         public async Task<IActionResult> ProjectAdd()
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
@@ -301,7 +301,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="datapost"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000021", "ADD")]
+        [BackendCheckLogin("Menu000048", "ADD")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ProjectAdd(VM_Project datapost)
@@ -419,7 +419,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000022", "MODIFY")]
+        [BackendCheckLogin("Menu000049", "MODIFY")]
         public async Task<IActionResult> ProjectEdit(string id)
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
@@ -500,7 +500,7 @@ namespace BASE.Areas.Backend.Controllers
         /// <param name="id"></param>
         /// <param name="datapost"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000022", "MODIFY")]
+        [BackendCheckLogin("Menu000049", "MODIFY")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ProjectEdit(string id, VM_Project datapost)
@@ -723,7 +723,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000020", "MODIFY")]
+        [BackendCheckLogin("Menu000047", "MODIFY")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ProjectContactChange(string id, string OldText)

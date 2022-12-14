@@ -17,6 +17,12 @@
 
     <script>
         $(document).ready(function () {
+
+             $('.btnRefreshValid').click(function () {
+                $(this)[0].src = '@Url.Action("GetValidateCode", "Home", new { id = "ContactUs", refresh="Y"})&' + new Date().getTime();
+                $(this).siblings('audio')[0].src = '@Url.Action("TTS", "Home", new { id = "ContactUs" })';
+            });
+
             $('.PlayValidCode').click(function () {
                 var audio = document.getElementById("player1");
                 audio.play();
@@ -90,6 +96,7 @@
                 <div class="col-12">
                     <div class="registrationBox bg-white p-4 mt-3">
                         <form action="" id="frm" class="row g-3 justify-content-center" method="post">
+                            @Html.AntiForgeryToken()
                             <div class="col-md-6 col-12">
                                 <label for="inputA" class="form-label">姓名<span class="fc-red ms-1">*</span></label>
                                 @Html.TextBoxFor(x => x.ExtendItem.Name, new { @class="form-control",  placeholder="您的回答", required="required" })
@@ -110,7 +117,7 @@
                                     </div>
                                     <div>
                                         <audio id="player1" controls src="@Url.Action("TTS", "Home", new { id = "ContactUs" })" style="display:none;"></audio>
-                                        <img id="LoginCode" src="@Url.Action("GetValidateCode", "Home", new { id = "ContactUs" } )" class="w-40 ml-3 mt-4" alt="圖片驗證碼" />
+                                        <img id="LoginCode" src="@Url.Action("GetValidateCode", "Home", new { id = "ContactUs" } )" class="w-40 ml-3 mt-4 btnRefreshValid" alt="圖片驗證碼" style="cursor:pointer;" />
                                         <a href="#" class="PlayValidCode" title="播放圖片驗證碼">
                                             <img src="~/areas/frontend/img/speaker.png" alt="播放圖片驗證碼" />
                                         </a>

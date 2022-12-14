@@ -206,6 +206,7 @@ namespace BASE.Areas.Frontend.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SatisfySurveyUpload(string id, VM_OtherUpload datapost)
         {
             string decrypt_id = EncryptService.AES.RandomizedDecrypt(id);

@@ -429,7 +429,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000009", "DELETE")]
+        [BackendCheckLogin("Menu000006", "DELETE")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AdvertiseDelete(long id)
@@ -566,7 +566,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000009", "MODIFY")]
+        [BackendCheckLogin("Menu000006", "MODIFY")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AdvertisePublishChange(long id)
@@ -667,7 +667,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000009", "MODIFY")]
+        [BackendCheckLogin("Menu000006", "MODIFY")]
         public async Task<IActionResult> AdvertiseMoveUp(int id)
         {
             JsonResponse<TbAdvertise> result = new JsonResponse<TbAdvertise>();
@@ -775,7 +775,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000009", "MODIFY")]
+        [BackendCheckLogin("Menu000006", "MODIFY")]
         public async Task<IActionResult> AdvertiseMoveDown(int id)
         {
             JsonResponse<TbAdvertise> result = new JsonResponse<TbAdvertise>();

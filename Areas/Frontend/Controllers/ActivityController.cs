@@ -141,6 +141,7 @@ namespace BASE.Areas.Frontend.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(VM_ActivityReigster data)
         {
             string decrypt_id = EncryptService.AES.RandomizedDecrypt(data.id);//postback後仍然要解密
@@ -321,6 +322,7 @@ namespace BASE.Areas.Frontend.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> HealthUpload(string id, VM_OtherUpload datapost)
         {
             string decrypt_id = EncryptService.AES.RandomizedDecrypt(id);

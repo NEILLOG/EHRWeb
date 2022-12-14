@@ -127,10 +127,18 @@
                 $("#div_EntityFile").hide();
                 $("#EntityFile").attr('data-parsley-required', 'false');
             }
+
             // 若為線上模式，線上壓縮檔必須上傳
             if (isOnline) {
                 $("#div_OnlineFile").show();
-                $("#OnlineFile").attr('data-parsley-required', '');
+
+                if ($("#FileForOnline").val() != "") {
+                    $("#OnlineFile").attr('data-parsley-required', 'false');
+                }else
+                {
+                    $("#OnlineFile").attr('data-parsley-required', '');
+                }
+
             } else {
                 $("#div_OnlineFile").hide();
                 $("#OnlineFile").attr('data-parsley-required', 'false');

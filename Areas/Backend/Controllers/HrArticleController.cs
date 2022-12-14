@@ -37,7 +37,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000020", "ENABLED")]
+        [BackendCheckLogin("Menu000040", "ENABLED")]
         public async Task<IActionResult> HrArticleList(VM_HrArticle data)
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
@@ -84,7 +84,7 @@ namespace BASE.Areas.Backend.Controllers
         /// 新增HrArticle
         /// </summary>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000021", "ADD")]
+        [BackendCheckLogin("Menu000041", "ADD")]
         public async Task<IActionResult> HrArticleAdd()
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
@@ -100,7 +100,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="datapost"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000021", "ADD")]
+        [BackendCheckLogin("Menu000041", "ADD")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> HrArticleAdd(VM_HrArticle datapost)
@@ -221,7 +221,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000022", "MODIFY")]
+        [BackendCheckLogin("Menu000042", "MODIFY")]
         public async Task<IActionResult> HrArticleEdit(long id)
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
@@ -298,7 +298,7 @@ namespace BASE.Areas.Backend.Controllers
         /// <param name="id"></param>
         /// <param name="datapost"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000022", "MODIFY")]
+        [BackendCheckLogin("Menu000042", "MODIFY")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> HrArticleEdit(long id, VM_HrArticle datapost)
@@ -433,7 +433,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000020", "MODIFY")]
+        [BackendCheckLogin("Menu000040", "MODIFY")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> HrArticlePublishChange(long id)

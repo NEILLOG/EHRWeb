@@ -79,7 +79,7 @@
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.ProjectExtendItem.Project.Contact, "聯繫窗口：", new { @class = "form-label" })
-                    @Html.DropDownList("ddlContact",Model.ddlContact,new{@class="form-control",id="ddlContact", data_parsley_required = "", data_parsley_errors_container="#errors-container-1" })
+                    @Html.DropDownList("ddlContact",Model.ddlContact,new{@class="form-control",id="ddlContact", data_parsley_errors_container="#errors-container-1" })
                     @Html.TextAreaFor(x => x.ProjectExtendItem.Project.Contact, new { @class = "form-control" , data_parsley_required = ""})
                 </div>
 

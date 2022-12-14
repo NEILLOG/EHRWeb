@@ -8,6 +8,11 @@
     <script>
         $(document).ready(function () {
 
+            $('.btnRefreshValid').click(function () {
+                $(this)[0].src = '@Url.Action("GetValidateCode", "Home", new { id = "Consult", refresh="Y"})&' + new Date().getTime();
+                $(this).siblings('audio')[0].src = '@Url.Action("TTS", "Home", new { id = "Consult" })';
+            });
+
             $('.PlayValidCode').click(function () {
                 var audio = document.getElementById("player1");
                 audio.play();
@@ -45,6 +50,7 @@
                         </div>
                     </div>
                     <form id="frm" class="row g-3 justify-content-center mt-3" method="post">
+                        @Html.AntiForgeryToken()
                         <div class="col-12">
                             <label for="inputB" class="form-label">企業所在地<span class="fc-red ms-1">*</span></label>
                             @Html.DropDownListFor(x => x.ExtendItem.Location, Model.ddlLocation, new { @class="form-select", required="required" })
@@ -115,7 +121,7 @@
                                 </div>
                                 <div>
                                     <audio id="player1" controls src="@Url.Action("TTS", "Home", new { id = "Consult" })" style="display:none;"></audio>
-                                    <img id="LoginCode" src="@Url.Action("GetValidateCode", "Home", new { id = "Consult" } )" class="w-40 ml-3 mt-4" alt="圖片驗證碼" />
+                                    <img id="LoginCode" src="@Url.Action("GetValidateCode", "Home", new { id = "Consult" } )" class="w-40 ml-3 mt-4 btnRefreshValid" alt="圖片驗證碼" style="cursor:pointer;" />
                                     <a href="#" class="PlayValidCode" title="播放圖片驗證碼">
                                         <img src="~/areas/frontend/img/speaker.png" alt="播放圖片驗證碼" />
                                     </a>

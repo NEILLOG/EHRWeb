@@ -4,6 +4,7 @@ using BASE.Extensions;
 using BASE.Models.DB;
 using BASE.Models.Enums;
 using BASE.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Drawing;
 using System.Speech.Synthesis;
@@ -205,9 +206,19 @@ namespace BASE.Areas.Frontend.Controllers
             return await task;
         }
 
-        public ActionResult GetValidateCode(string id)
+        public ActionResult GetValidateCode(string id, string refresh = "")
         {
             String code = String.Empty;
+            if(refresh == "Y")
+                switch (id)
+                {
+                    default:
+                    case "Activity": HttpContext.Session.Set(Backend.Models.SessionStruct.VerifyCode.Activity, new ValidImageHelper().RandomCode(5)); break;
+                    case "Consult": HttpContext.Session.Set(Backend.Models.SessionStruct.VerifyCode.Consult, new ValidImageHelper().RandomCode(5)); break;
+                    case "Subscript": HttpContext.Session.Set(Backend.Models.SessionStruct.VerifyCode.Subscript, new ValidImageHelper().RandomCode(5)); break;
+                    case "ContactUs": HttpContext.Session.Set(Backend.Models.SessionStruct.VerifyCode.ContactUs, new ValidImageHelper().RandomCode(5));  break;
+                }
+
             switch (id)
             {
                 default:

@@ -734,47 +734,39 @@ namespace BASE.Areas.Backend.Controllers
             // 例外錯誤發生，特別記錄至 TbLog
             bool unCaughtError = false;
 
-            string decrypt_id = EncryptService.AES.RandomizedDecrypt(id);
 
             try
             {
-                if (string.IsNullOrEmpty(decrypt_id))
+                TbActivity? item = null;
+                IQueryable<TbActivity>? temp = _eventService.Lookup<TbActivity>(ref _message, x => x.Id == id && x.IsDelete == false);
+                if (temp != null)
+                    item = await temp.SingleOrDefaultAsync();
+
+                if (item == null)
                 {
-                    result.MessageDetail = "金鑰逾時！請重新再操作一次！";
+                    TempData["TempMsgDetail"] = "查無指定項目！";
                 }
                 else
                 {
-                    TbActivity? item = null;
-                    IQueryable<TbActivity>? temp = _eventService.Lookup<TbActivity>(ref _message, x => x.Id == decrypt_id && x.IsDelete == false);
-                    if (temp != null)
-                        item = await temp.SingleOrDefaultAsync();
+                    item.IsPublish = !item.IsPublish;
+                    item.ModifyUser = userinfo.UserID;
+                    item.ModifyDate = dtnow;
 
-                    if (item == null)
+                    using (var transaction = _eventService.GetTransaction())
                     {
-                        TempData["TempMsgDetail"] = "查無指定項目！";
-                    }
-                    else
-                    {
-                        item.IsPublish = !item.IsPublish;
-                        item.ModifyUser = userinfo.UserID;
-                        item.ModifyDate = dtnow;
-
-                        using (var transaction = _eventService.GetTransaction())
+                        try
                         {
-                            try
-                            {
-                                //編輯
-                                await _eventService.Update(item, transaction);
+                            //編輯
+                            await _eventService.Update(item, transaction);
 
-                                transaction.Commit();
-                                isSuccess = true;
-                            }
-                            catch (Exception ex)
-                            {
-                                _message += ex.ToString();
-                                TempData["TempMsgDetail"] = "發生技術性錯誤，請聯絡技術人員或稍後再試一次";
-                                unCaughtError = true;
-                            }
+                            transaction.Commit();
+                            isSuccess = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            _message += ex.ToString();
+                            TempData["TempMsgDetail"] = "發生技術性錯誤，請聯絡技術人員或稍後再試一次";
+                            unCaughtError = true;
                         }
                     }
                 }
@@ -805,7 +797,7 @@ namespace BASE.Areas.Backend.Controllers
 
             //操作紀錄
             string response = result.Message + "\r\n" + result.MessageDetail;
-            await _commonService.OperateLog(userinfo.UserID, Feature, Action, decrypt_id, id, _message, response, isSuccess);
+            await _commonService.OperateLog(userinfo.UserID, Feature, Action, id, id, _message, response, isSuccess);
 
             return Json(result);
         }

@@ -41,7 +41,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000020", "ENABLED")]
+        [BackendCheckLogin("Menu000050", "ENABLED")]
         public async Task<IActionResult> ProjectModifyList(string id)
         {
             VM_ProjectModify data = new VM_ProjectModify();
@@ -82,7 +82,7 @@ namespace BASE.Areas.Backend.Controllers
         /// <param name="id"></param>
         /// <param name="datapost"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000009", "MODIFY")]
+        [BackendCheckLogin("Menu000050", "MODIFY")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ProjectModifyList(long id, VM_ProjectModify datapost)
@@ -207,14 +207,14 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000009", "MODIFY")]
+        [BackendCheckLogin("Menu000050", "MODIFY")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ProjectModifySave(long id, string ApproveStatus)
         {
             JsonResponse<TbProjectModify> result = new JsonResponse<TbProjectModify>();
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
-            string Feature = "輪播廣告管理", Action = "編輯";
+            string Feature = "課程變更管理", Action = "編輯";
 
             DateTime dtnow = DateTime.Now;
 

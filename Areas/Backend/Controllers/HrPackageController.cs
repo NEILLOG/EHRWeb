@@ -38,7 +38,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000020", "ENABLED")]
+        [BackendCheckLogin("Menu000037", "ENABLED")]
         public async Task<IActionResult> HrPackageList(VM_HrPackage data)
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
@@ -83,7 +83,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000035", "MODIFY")]
+        [BackendCheckLogin("Menu000036", "MODIFY")]
         public async Task<IActionResult> HrManual()
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
@@ -162,7 +162,7 @@ namespace BASE.Areas.Backend.Controllers
         /// <param name="id"></param>
         /// <param name="datapost"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000035", "MODIFY")]
+        [BackendCheckLogin("Menu000036", "MODIFY")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> HrManual(VM_HrPackage datapost)
@@ -279,7 +279,7 @@ namespace BASE.Areas.Backend.Controllers
         /// 新增HrPackage
         /// </summary>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000021", "ADD")]
+        [BackendCheckLogin("Menu000038", "ADD")]
         public async Task<IActionResult> HrPackageAdd()
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
@@ -295,7 +295,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="datapost"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000021", "ADD")]
+        [BackendCheckLogin("Menu000038", "ADD")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> HrPackageAdd(VM_HrPackage datapost)
@@ -418,7 +418,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000022", "MODIFY")]
+        [BackendCheckLogin("Menu000039", "MODIFY")]
         public async Task<IActionResult> HrPackageEdit(string id)
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
@@ -495,7 +495,7 @@ namespace BASE.Areas.Backend.Controllers
         /// <param name="id"></param>
         /// <param name="datapost"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000022", "MODIFY")]
+        [BackendCheckLogin("Menu000039", "MODIFY")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> HrPackageEdit(string id, VM_HrPackage datapost)
@@ -629,7 +629,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000020", "DELETE")]
+        [BackendCheckLogin("Menu000037", "DELETE")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> HrPackageDelete(string id)
@@ -767,7 +767,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000020", "MODIFY")]
+        [BackendCheckLogin("Menu000037", "MODIFY")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> HrPackagePublishChange(string id)
@@ -868,7 +868,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000009", "MODIFY")]
+        [BackendCheckLogin("Menu000037", "MODIFY")]
         public async Task<IActionResult> HrPackageMoveUp(int id)
         {
             JsonResponse<TbHrPackage> result = new JsonResponse<TbHrPackage>();
@@ -976,7 +976,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [BackendCheckLogin("Menu000009", "MODIFY")]
+        [BackendCheckLogin("Menu000037", "MODIFY")]
         public async Task<IActionResult> HrPackageMoveDown(int id)
         {
             JsonResponse<TbHrPackage> result = new JsonResponse<TbHrPackage>();

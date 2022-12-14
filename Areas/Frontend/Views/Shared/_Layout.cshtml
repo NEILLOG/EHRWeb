@@ -220,7 +220,7 @@
                             </div>
                             <div>
                                 <audio id="playerSubscript" controls src="@Url.Action("TTS", "Home", new { id = "Subscript" })" style="display:none;"></audio>
-                                <img id="LoginCode" src="@Url.Action("GetValidateCode", "Home", new { id = "Subscript" } )" class="w-40 ml-3 mt-4" alt="圖片驗證碼" />
+                                <img id="LoginCode" src="@Url.Action("GetValidateCode", "Home", new { id = "Subscript" } )" class="w-40 ml-3 mt-4 btnHomeRefreshValid" alt="圖片驗證碼" style="cursor:pointer;" />
                                 <a href="#" class="PlayValidCodeSubscript" title="播放圖片驗證碼">
                                     <img src="~/areas/frontend/img/speaker.png" alt="播放圖片驗證碼" />
                                 </a>
@@ -243,6 +243,11 @@
     }
     <script>
         $(document).ready(function(){
+
+            $('.btnHomeRefreshValid').click(function () {
+                $(this)[0].src = '@Url.Action("GetValidateCode", "Home", new { id = "Subscript", refresh="Y"})&' + new Date().getTime();
+                $(this).siblings('audio')[0].src = '@Url.Action("TTS", "Home", new { id = "Subscript" })';
+            });
 
             $('.PlayValidCodeSubscript').click(function () {
                 var audio = document.getElementById("playerSubscript'");

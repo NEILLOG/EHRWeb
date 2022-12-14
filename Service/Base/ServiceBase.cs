@@ -2,6 +2,7 @@
 using BASE.Models.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using NPOI.POIFS.FileSystem;
 using System.Linq.Expressions;
 
 
@@ -185,7 +186,7 @@ namespace BASE.Service.Base
             }
             catch (Exception ex)
             {
-                DetachAllEntities();
+                _context.Entry<T>(entity).State = EntityState.Detached;
 
                 if (transaction != null)
                 {
@@ -241,7 +242,8 @@ namespace BASE.Service.Base
             }
             catch (Exception ex)
             {
-                DetachAllEntities();
+                foreach(var entity in entities)
+                    _context.Entry<T>(entity).State = EntityState.Detached;
 
                 if (transaction != null)
                 {
@@ -295,7 +297,7 @@ namespace BASE.Service.Base
             }
             catch (Exception ex)
             {
-                DetachAllEntities();
+                _context.Entry<T>(entity).State = EntityState.Detached;
 
                 if (transaction != null)
                 {
@@ -353,7 +355,8 @@ namespace BASE.Service.Base
             }
             catch (Exception ex)
             {
-                DetachAllEntities();
+                foreach(var entity in entities)
+                    _context.Entry<T>(entity).State = EntityState.Detached;
 
                 if (transaction != null)
                 {
@@ -410,7 +413,7 @@ namespace BASE.Service.Base
             }
             catch (Exception ex)
             {
-                DetachAllEntities();
+                _context.Entry<T>(entity).State = EntityState.Detached;
 
                 if (transaction != null)
                 {
@@ -468,7 +471,8 @@ namespace BASE.Service.Base
             }
             catch (Exception ex)
             {
-                DetachAllEntities();
+                foreach(var entity in entities)
+                    _context.Entry<T>(entity).State = EntityState.Detached;
 
                 if (transaction != null)
                 {
@@ -588,17 +592,17 @@ namespace BASE.Service.Base
         /// 清除_context暫存
         /// insert第一筆_context.SaveChanges()失敗後，原先的_context.Add(entity)並不會被清除，造成後續insert皆會失敗
         /// </summary>
-        public void DetachAllEntities()
-        {
-            var changedEntriesCopy = _context.ChangeTracker.Entries()
-                .Where(e => e.State == EntityState.Added ||
-                            e.State == EntityState.Modified ||
-                            e.State == EntityState.Deleted)
-                .ToList();
+        //public void DetachAllEntities()
+        //{
+        //    var changedEntriesCopy = _context.ChangeTracker.Entries()
+        //        .Where(e => e.State == EntityState.Added ||
+        //                    e.State == EntityState.Modified ||
+        //                    e.State == EntityState.Deleted)
+        //        .ToList();
 
-            foreach (var entry in changedEntriesCopy)
-                entry.State = EntityState.Detached;
-        }
+        //    foreach (var entry in changedEntriesCopy)
+        //        entry.State = EntityState.Detached;
+        //}
 
     }
 }

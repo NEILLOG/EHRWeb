@@ -18,6 +18,8 @@
                         </div>
                     </div>
                     <form id="frm" method="post" class="row g-3 justify-content-center mt-3">
+                         @Html.AntiForgeryToken()
+
                         <div class="col-md-4">
                             <label for="inputA" class="form-label">企業名稱<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.Main.CompanyName, new { @class="form-control", placeholder="請輸入企業名稱", required="required"})
@@ -125,7 +127,8 @@
                                 </div>
                                 <div>
                                     <audio id="player1" controls src="@Url.Action("TTS", "Home", new { id = "Activity" })" style="display:none;"></audio>
-                                    <img id="LoginCode" src="@Url.Action("GetValidateCode", "Home", new { id = "Activity" } )" class="w-40 ml-3 mt-4 btnRefreshValid" alt="圖片驗證碼" style="cursor:pointer;" />
+                                    <img id="LoginCode" src="@Url.Action("GetValidateCode", "Home", new { id = "Activity"} )" class="w-40 ml-3 mt-4 btnRefreshValid" alt="圖片驗證碼" style="cursor:pointer;" />
+                                    
                                     <a href="#" class="PlayValidCode" title="播放圖片驗證碼">
                                         <img src="~/areas/frontend/img/speaker.png" alt="播放圖片驗證碼" />
                                     </a>
@@ -297,9 +300,9 @@
         $(document).ready(function(){
 
             $('.btnRefreshValid').click(function () {
-                $(this)[0].src = '@Url.Action("GetValidateCode", "Home", new { id = "Activity" })';
+                $(this)[0].src = '@Url.Action("GetValidateCode", "Home", new { id = "Activity", refresh="Y"})&' + new Date().getTime();
                 $(this).siblings('audio')[0].src = '@Url.Action("TTS", "Home", new { id = "Activity" })';
-            })
+            });
 
             $('#frm').submit(function () {
                 var isVerify = false;
