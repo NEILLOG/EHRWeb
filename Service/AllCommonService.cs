@@ -286,6 +286,37 @@ namespace BASE.Service
             }
         }
 
+        /// <summary>
+        /// 登入紀錄
+        /// </summary>
+        /// <param name="Platform">平台(Frontend,Backend...等)</param>
+        /// <param name="LoginMessage">登入訊息</param>
+        /// <param name="Account"></param>
+        /// <param name="IsSso"></param>
+        /// <param name="SsoResult"></param>
+        /// <returns></returns>
+        public async Task<bool> LoginRecord(string Platform, string LoginMessage, string Account, string? UserID = null, bool IsSso = false, string? SsoResult = null)
+        {
+            TbLoginRecord log = new TbLoginRecord
+            {
+                Platform = Platform,
+                UserId = UserID,
+                Account = Account,
+                Ip = GetIPAddress_IPv4(),
+                LoginTime = DateTime.Now,
+                LoginMsg = LoginMessage,
+                UserAgent = GetUserAgent(),
+                Sso = IsSso,
+                Ssoresult = (SsoResult == null) ? null : JsonSerializer.Serialize(SsoResult, new JsonSerializerOptions()
+                {
+                    ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+                })
+            };
+            ActionResultModel<TbLoginRecord> result = await base.Insert(log);
+            return result.IsSuccess;
+        }
+
         #region 共用下拉選單
         /// <summary>
         ///  0: 無項目 1: 請選擇 2: 全部
