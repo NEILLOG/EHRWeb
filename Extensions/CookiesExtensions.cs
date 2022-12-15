@@ -1,5 +1,6 @@
 ﻿using BASE.Service;
 using System.Text.Json;
+using System.Web;
 
 namespace BASE.Extensions
 {
@@ -29,7 +30,8 @@ namespace BASE.Extensions
                 return default;
             else
             {
-                string dValue = EncryptService.AES.RandomizedDecrypt(value);
+                //string dValue = EncryptService.AES.RandomizedDecrypt(value);
+                string dValue = EncryptService.AES.RandomizedDecrypt(HttpUtility.HtmlDecode(value));
                 return dValue == null ? default : JsonSerializer.Deserialize<T>(dValue);
             }
         }
