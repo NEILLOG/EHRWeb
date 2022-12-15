@@ -30,10 +30,8 @@ namespace BASE.Extensions
                 return default;
             else
             {
-                //string dValue = EncryptService.AES.RandomizedDecrypt(value);
                 string dValue = EncryptService.AES.RandomizedDecrypt(HttpUtility.HtmlDecode(value));
-                //return dValue == null ? default : JsonSerializer.Deserialize<T>(dValue);
-                return dValue == null ? default : (T?)JsonSerializer.Deserialize(dValue, typeof(T));
+                return dValue == null ? default : JsonSerializer.Deserialize<T>(dValue);
             }
         }
 
