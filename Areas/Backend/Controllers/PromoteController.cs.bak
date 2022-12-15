@@ -291,20 +291,20 @@ namespace BASE.Areas.Backend.Controllers
 
                 if (dataList != null && (listMail != null && listMail.Any()))
                 {
-                    //List<MailAddressInfo> listToAddress = new List<MailAddressInfo>();
+                    List<MailAddressInfo> listToAddress = new List<MailAddressInfo>();
                     foreach (var itemMailAddress in listMail)
                     {
-                        //MailAddressInfo itemMail = new MailAddressInfo(itemMailAddress);
-                        //listToAddress.Add(itemMail);
-
-                        //寄送預約信件
-                        await _mailService.ReserveSendEmail(new MailViewModel()
-                        {
-                            ToList = new List<MailAddressInfo>() { new MailAddressInfo(itemMailAddress) },
-                            Subject = datapost.MailSubject,
-                            Body = datapost.MailContent
-                        }, userinfo.UserID, DateTime.Now, "PromoteMail");
+                        MailAddressInfo itemMail = new MailAddressInfo(itemMailAddress);
+                        listToAddress.Add(itemMail);
                     }
+
+                    //寄送預約信件
+                    await _mailService.ReserveSendEmail(new MailViewModel()
+                    {
+                        ToList = listToAddress,
+                        Subject = datapost.MailSubject,
+                        Body = datapost.MailContent
+                    }, userinfo.UserID, DateTime.Now, "PromoteMail");
                     isSuccess = true;
                 }
                 else
