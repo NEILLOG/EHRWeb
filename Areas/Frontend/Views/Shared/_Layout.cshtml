@@ -193,7 +193,7 @@
                     <img src="~/areas/frontend/img/subs-done.png" class="img-fluid mt-n1" alt="">
                     <div class="fs-2 fw-bold">訂閱服務</div>
                     <img src="~/areas/frontend/img/subscribe.png" class="img-fluid" alt="">
-                    <form class="text-start">
+                    <div class="text-start">
                         <div class="mb-3">
                             <label for="txtSubscriptEmail" class="form-label">Email<span class="fc-red ms-1">*</span></label>
                             <input type="email" class="form-control" id="txtSubscriptEmail" placeholder="請輸入Email" required>
@@ -226,10 +226,10 @@
                                 </a>
                             </div>
                         </div>
-                    </form>
+                    @Html.AntiForgeryToken()
                     <button type="button" class="btn btn-success mb-2 w-100" id="btnSendSubscript">確定</button>
                     <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">取消</button>
-                    @Html.AntiForgeryToken()
+                    </div>
                 </div>
             </div>
         </div>
