@@ -8,6 +8,7 @@ using BASE.Models.Enums;
 using BASE.Extensions;
 using Microsoft.EntityFrameworkCore;
 using BASE.Extensions;
+using BASE.Areas.Backend.Service;
 
 namespace BASE.Areas.Backend.Controllers
 {
@@ -15,16 +16,19 @@ namespace BASE.Areas.Backend.Controllers
     {
         private readonly DBContext _dBContext;
         private readonly AllCommonService _allCommonService;
+        private readonly MemberService _memberService;
         private string _Message = string.Empty;
         private readonly IConfiguration _conf;
 
         public HomeController(DBContext context,
                               AllCommonService allCommonService,
-                              IConfiguration conf)
+                              IConfiguration conf,
+                              MemberService memberService)
         {
             _dBContext = context;
             _allCommonService = allCommonService;
             _conf = conf;
+            _memberService = memberService;
         }
         /// <summary>
         /// 後台首頁
@@ -33,6 +37,19 @@ namespace BASE.Areas.Backend.Controllers
         [BackendCheckLogin]
         public IActionResult Index()
         {
+            UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
+            string ErrorMsg = string.Empty;
+            // 判斷密碼是否超過三個月未修改
+            bool change = _memberService.NeedChangePWD(ref ErrorMsg, userinfo.UserID);
+            if (change)
+            {
+                TempData["TempMsgType"] = MsgTypeEnum.warning;
+                TempData["TempMsg"] = "密碼已超過2個月未修改，請至個人維護頁面進行密碼修改";
+
+                // 轉址到個人維護資料
+                return RedirectToAction("PersonalManage", "Member");
+            }
+
             return View();
         }
 

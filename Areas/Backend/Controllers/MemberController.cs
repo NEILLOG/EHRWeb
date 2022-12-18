@@ -231,6 +231,15 @@ namespace BASE.Areas.Backend.Controllers
                             //新增 TbUserRight
                             await _accountService.InsertRange(listUserInRight, transaction);
 
+                            // 寫入密碼歷程
+                            TbPwdLog PwdLog = new TbPwdLog();
+                            PwdLog.UserId = item.UserId;
+                            PwdLog.Password = item.Aua8;
+                            PwdLog.CreateUser = userinfo.UserID;
+                            PwdLog.CreateDate = DateTime.Now;
+
+                            await _commonService.Insert(PwdLog, transaction);
+
                             transaction.Commit();
                             isSuccess = true;
                             target_id = item.UserId;

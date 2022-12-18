@@ -167,6 +167,15 @@ namespace BASE.Areas.Backend.Service
             var PwdLogList = Lookup<TbPwdLog>(ref ErrorMsg, x => x.UserId == UserID).OrderByDescending(x => x.CreateDate).Take(3).Select(x => x.Password).ToList();
             if (PwdLogList.Count > 0)
             {
+                // 判斷當天是否已有修改過密碼
+                var PwdLogFirst = Lookup<TbPwdLog>(ref ErrorMsg, x => x.UserId == UserID && x.CreateDate.Value.Date == DateTime.Now.Date).FirstOrDefault();
+                if (PwdLogFirst != null)
+                {
+                    ErrorMsg = "1天內不得再次變更密碼";
+
+                    return false;
+                }
+
                 if (PwdLogList.Contains(password))
                 {
                     ErrorMsg = "密碼不得與前三次相同";
@@ -178,6 +187,33 @@ namespace BASE.Areas.Backend.Service
             return true;
         }
 
+        /// <summary>
+		/// 檢查密碼是否超過3個月未修改
+		/// </summary>
+		/// <param name="ErrorMsg">異常訊息</param>
+		/// <param name="UserID">帳號主鍵</param>
+		/// <returns></returns>
+		public bool NeedChangePWD(ref string ErrorMsg, string UserID)
+        {
+            DateTime today = DateTime.Now;
+
+            // 判斷密碼修改歷程資料表是否有資料
+            var PwdLogList = Lookup<TbPwdLog>(ref ErrorMsg, x => x.UserId == UserID).OrderByDescending(x => x.CreateDate).FirstOrDefault();
+
+            if (PwdLogList != null)
+            {
+                // 判斷密碼是否超過2個月未修改
+                TimeSpan ts = today - (DateTime)PwdLogList.CreateDate;
+                Int16 days = Convert.ToInt16(Math.Ceiling(ts.TotalDays));
+
+                if (days > 60)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         #region 下拉選單
 
