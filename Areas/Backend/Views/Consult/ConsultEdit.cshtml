@@ -121,7 +121,7 @@
                 </div>
             </div>
 
-            <div class="col-2 form-group mb-3">
+            <div class="col-2 form-group mb-3" style="display: @(Model.GroupId == "G000000001" ? "" : "none");">
                 <span class="red">*</span>
                 @Html.LabelFor(x => x.ConsultExtendItem.sApprove, "審核", new { @class = "form-label" })
                 @Html.DropDownListFor(x=>x.ConsultExtendItem.sApprove,Model.ddlAudit,new{@class="form-control", data_parsley_required = "", data_parsley_errors_container="#errors-container-5"})

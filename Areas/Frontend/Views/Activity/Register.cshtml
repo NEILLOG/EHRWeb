@@ -17,7 +17,7 @@
                             <small>請填寫以下報名表單，請注意必填欄位，確認後送出。</small>
                         </div>
                     </div>
-                    <form id="frm" method="post" class="row g-3 justify-content-center mt-3">
+                    <form id="frm" method="post" class="row g-3 justify-content-center mt-3" data-parsley-validate="">
                          @Html.AntiForgeryToken()
 
                         <div class="col-md-4">
@@ -46,11 +46,12 @@
                         </div>
                         <div class="col-md-4">
                             <label for="inputG" class="form-label">手機<span class="fc-red ms-1">*</span></label>
-                            @Html.TextBoxFor(x => x.Main.CellPhone, new { @class="form-control", placeholder="請輸入手機", required="required"})
+                            @Html.TextBoxFor(x => x.Main.CellPhone, new { @class="form-control", placeholder="請輸入手機", required="required", type="number", data_parsley_type="integer", minlength="10", maxlength="10", data_parsley_minlength="10", data_parsley_maxlength="10" })
+
                         </div>
                         <div class="col-md-4">
                             <label for="inputEmail4" class="form-label">電子郵件<span class="fc-red ms-1">*</span></label>
-                            @Html.TextBoxFor(x => x.Main.Email, new { @class="form-control", placeholder="請輸入電子郵件", type="email", required="required"})
+                            @Html.TextBoxFor(x => x.Main.Email, new { @class="form-control", placeholder="請輸入電子郵件", type="email", required="required", data_parsley_type="email"})
                         </div>
                         <div class="col-md-4">
                             <label for="inputH" class="form-label">公司員工人數<span class="fc-red ms-1">*</span></label>
@@ -262,9 +263,17 @@
 </div>
 
 
-
+@section Css {
+    <link href="~/lib/Parsley/v2.9.2/dist/parsley.css" rel="stylesheet" />
+}
 
 @section Scripts {
+
+     <!-- Parsley -->
+    <script src="~/lib/Parsley/v2.9.2/dist/parsley.min.js" asp-append-version="true"></script>
+    <script src="~/lib/Parsley/v2.9.2/dist/i18n/zh_tw.js" asp-append-version="true"></script>
+    <script src="~/lib/Parsley/parsley-custom.js" asp-append-version="true"></script>
+
     <script src="https://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
     <script type="text/x-jquery-tmpl" id="section-tmpl">
         <div class="detailItem d-flex justify-content-between align-items-center">
@@ -305,6 +314,10 @@
             });
 
             $('#frm').submit(function () {
+
+                var btnSubmit = $(this).find('button[type=submit]');
+                btnSubmit.prop('disabled', true);
+
                 var isVerify = false;
                 var validnum = $('#VerifyCode').val();
                 $.ajax({
@@ -318,17 +331,20 @@
                 });
                 if (isVerify == false) {
                     Swal.fire('驗證碼錯誤');
+                    btnSubmit.prop('disabled', false);
                     return false;
                 }
 
                 if (GetAllRegisterSection().length <=0){
                     Swal.fire('請至少選擇一個活動場次');
+                    btnSubmit.prop('disabled', false);
                     return false;
                 }
 
                 checked = $("input[name=ckbsInfoFrom]:checked").length;
                 if (!checked) {
                     alert("請選擇至少一個訊息來源");
+                    btnSubmit.prop('disabled', false);
                     return false;
                 }
 

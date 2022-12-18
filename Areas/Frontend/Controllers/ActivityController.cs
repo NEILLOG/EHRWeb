@@ -676,7 +676,7 @@ namespace BASE.Areas.Frontend.Controllers
                     await _mailService.SendEmail(new MailViewModel()
                     {
                         Subject = String.Format(MailTmeplate.Activity.SATISFACTION_SUBJECT, section.Day.ToString("yyyy / MM / dd"), activity.Title, activity.Subject),
-                        Body = String.Format(MailTmeplate.Consult.REQUIRED_SURVEY_CONTNET,
+                        Body = String.Format(MailTmeplate.Activity.SATISFACTION_CONTNET,
                                        section.Day.ToString("yyyy / MM / dd"),
                                        activity.Title, 
                                        activity.Subject,

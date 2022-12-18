@@ -140,7 +140,13 @@
                                 var LastNews = Model.News.FirstOrDefault();
                             }
                             <div class="col-12 col-md-4 text-center">
-                                <img src="@LastNews.FileInfo.FilePath" class="img-fluid rounded-start" alt="...">
+                                @if (LastNews.FileInfo != null)
+                                {
+                                    <img src="@LastNews.FileInfo.FilePath" class="img-fluid rounded-start" alt="...">
+                                } else
+                                {
+                                    <img src="~/areas/frontend/img/articleimg.png" class="img-fluid rounded-start" alt="..." />
+                                }
                             </div>
                             <div class="col-12 col-md-8">
                                 <div class="card-body">

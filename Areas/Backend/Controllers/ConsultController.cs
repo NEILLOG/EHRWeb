@@ -199,6 +199,9 @@ namespace BASE.Areas.Backend.Controllers
 
             try
             {
+                // 群組ID
+                data.GroupId = userinfo.GroupID;
+
                 //取資料
                 List<ConsultExtend>? dataList = _consultService.GetConsultExtendList(ref _message, data.Search);
 
@@ -260,6 +263,9 @@ namespace BASE.Areas.Backend.Controllers
                 }
                 else 
                 {
+                    // 群組ID
+                    data.GroupId = userinfo.GroupID;
+
                     ConsultExtend? dataItem = _consultService.GetConsultExtendItem(ref _message, decrypt_id);
 
                     if (dataItem != null)

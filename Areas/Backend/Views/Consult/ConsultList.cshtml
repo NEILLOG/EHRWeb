@@ -67,7 +67,7 @@
                                 <th>諮詢主題</th>
                                 <th>顧問</th>
                                 <th>輔導助理</th>
-                                <th>指派及審核</th>
+                                <th style="display:@(Model.GroupId == "G000000004" ? "none" : "");">指派及審核</th>
                                 <th>管理</th>
                                 <th>匯出簽到表</th>
                                 <th>狀態</th>
@@ -84,7 +84,7 @@
                                         <td style="max-width:30vw;">@Model.ConsultExtendList[i].textOfSubject</td>
                                         <td style="max-width:30vw;">@Model.ConsultExtendList[i].ConsultantList</td>
                                         <td style="max-width:30vw;">@Model.ConsultExtendList[i].Assistant</td>
-                                        <td style="max-width:30vw;">
+                                        <td style="max-width:30vw;display:@(Model.GroupId == "G000000004" ? "none" : "");">
                                             <a class="btn btn-primary btn-sm" href="@(Url.Action("ConsultEdit", "Consult", new { id = EncryptService.AES.RandomizedEncrypt(Model.ConsultExtendList[i].ConsultRegister.Id.ToString())}))">編輯</a>
                                         </td>
                                         <td style="max-width:30vw;">

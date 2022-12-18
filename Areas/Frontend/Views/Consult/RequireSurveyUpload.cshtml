@@ -28,6 +28,10 @@
                     <form action="" method="post" class="row g-3 mt-2 align-items-center" enctype="multipart/form-data" data-parsley-validate="">
                         @Html.AntiForgeryToken()
 
+                        <div class="col-12">
+                            <a href="~/sample/consultsurvey.docx" download="企業需求調查表.docx">範例檔案下載</a>
+                        </div>
+
                         <div class="col-md-10 col-12">
                             <label for="formFile" class="form-label sr-only">上傳檔案</label>
                             @Html.TextBoxFor(x => x.ModifyFile, new { @FileID = "FileId", @class="form-control File", @type = "file", accept = ".docx,.pdf,.png,.jpg,.jpeg", data_parsley_file_type="docx,pdf,png,jpg,jpeg", data_parsley_errors_container="#ActivityImage-errors-container" })
