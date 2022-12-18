@@ -127,6 +127,10 @@ namespace BASE.Models.DB
         /// 帳號鎖定時間
         /// </summary>
         public DateTime? LockTime { get; set; }
+        /// <summary>
+        /// 忘記密碼隨機碼
+        /// </summary>
+        public string? Token { get; set; }
         public virtual ICollection<TbBackendOperateLog> TbBackendOperateLog { get; set; }
         public virtual ICollection<TbUserInGroup> TbUserInGroup { get; set; }
         public virtual ICollection<TbUserRight> TbUserRight { get; set; }
