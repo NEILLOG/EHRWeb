@@ -106,6 +106,52 @@ namespace BASE.Areas.Backend.Controllers
                             LoginMessage = "登入失敗";
                             await _allCommonService.LoginRecord(Platform, LoginMessage, datapost.acct);
 
+                            int? ErrorCount;
+                            // 錯誤達3次鎖定機制
+                            TbUserInfo CheckAccout = await _allCommonService.Lookup<TbUserInfo>(ref _Message, x => x.Account == datapost.acct).FirstOrDefaultAsync();
+                            if (CheckAccout != null)
+                            {
+                                // 判斷是否為鎖定期間
+                                if (CheckAccout.LockTime != null)
+                                {
+                                    if (DateTime.Now.Subtract((DateTime)CheckAccout.LockTime).Minutes < 15)
+                                    {
+                                        TempData["TempMsgType"] = MsgTypeEnum.error;
+                                        TempData["TempMsg"] = "帳密錯誤達三次，此帳號已被鎖定，請稍後15分鐘後再試";
+                                        return View(datapost);
+                                    }
+                                    else
+                                    {
+                                        CheckAccout.ErrorCount = 0;
+                                        CheckAccout.LockTime = null;
+                                    }                                   
+                                }
+                                ErrorCount = 0;
+                                if (CheckAccout.ErrorCount == null)
+                                {
+                                    ErrorCount = 1;
+                                }
+                                else
+                                {
+                                    ErrorCount = CheckAccout.ErrorCount + 1;
+                                }
+                                CheckAccout.ErrorCount = ErrorCount;
+                                if (ErrorCount >= 3)
+                                {
+                                    TempData["TempMsgType"] = MsgTypeEnum.error;
+                                    TempData["TempMsg"] = "帳密錯誤達三次，此帳號已被鎖定，請稍後15分鐘後再試";
+
+                                    CheckAccout.LockTime = DateTime.Now;
+                                }
+                                else
+                                {
+                                    TempData["TempMsgType"] = MsgTypeEnum.error;
+                                    TempData["TempMsg"] = "帳號或密碼錯誤，請重新輸入";
+                                }
+                                // update 資料表
+                                await _allCommonService.Update<TbUserInfo>(CheckAccout);
+                            }
+                            
                             return View(datapost);
                         }
                         else
@@ -126,6 +172,24 @@ namespace BASE.Areas.Backend.Controllers
                                 // 寫入登入紀錄
                                 LoginMessage = "登入成功";
                                 await _allCommonService.LoginRecord(Platform, LoginMessage, datapost.acct, User.UserId);
+
+                                // 判斷是否為鎖定期間
+                                if (User.LockTime != null)
+                                {
+                                    if (DateTime.Now.Subtract((DateTime)User.LockTime).Minutes < 15)
+                                    {
+                                        TempData["TempMsgType"] = MsgTypeEnum.error;
+                                        TempData["TempMsg"] = "帳密錯誤達三次，此帳號已被鎖定，請稍後15分鐘後再試";
+
+                                        return View(datapost);
+                                    }
+                                }
+
+                                // 清除LockTime 及 ErrorCount
+                                User.LockTime = null;
+                                User.ErrorCount = 0;
+                                // update 資料表
+                                await _allCommonService.Update<TbUserInfo>(User);
 
                                 return RedirectToAction("Index", "Home", new { area = "Backend" });
                             }

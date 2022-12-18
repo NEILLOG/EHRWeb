@@ -119,7 +119,14 @@ namespace BASE.Models.DB
         /// 專業領域, 使用逗號分隔；可能包含以下值: 組織經營,組織轉型,人才培育,職能分析,員工職涯發展,人力資源管理,勞資關係、法令
         /// </summary>
         public string? Skill { get; set; }
-
+        /// <summary>
+        /// 登入失敗次數
+        /// </summary>
+        public int? ErrorCount { get; set; }
+        /// <summary>
+        /// 帳號鎖定時間
+        /// </summary>
+        public DateTime? LockTime { get; set; }
         public virtual ICollection<TbBackendOperateLog> TbBackendOperateLog { get; set; }
         public virtual ICollection<TbUserInGroup> TbUserInGroup { get; set; }
         public virtual ICollection<TbUserRight> TbUserRight { get; set; }
