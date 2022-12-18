@@ -426,6 +426,8 @@ namespace BASE.Areas.Backend.Controllers
 
             bool isChangeGroup = false;
 
+            bool isChangPWD = false;
+
             TbUserInfo? item = null;
             TbUserInGroup? userGroup = null;
             List<TbUserInfoExperience>? listUserExp = new List<TbUserInfoExperience>();
@@ -477,8 +479,28 @@ namespace BASE.Areas.Backend.Controllers
                         item.Email = datapost.MemberExtendItem.userinfo.Email;
                         item.Phone = datapost.MemberExtendItem.userinfo.Phone;
                         item.CellPhone = datapost.MemberExtendItem.userinfo.CellPhone;
-                        if(datapost.editAua8 != EncryptService.AES.Base64Decrypt(item.Aua8))
+                        if (datapost.editAua8 != EncryptService.AES.Base64Decrypt(item.Aua8))
+                        {
                             item.Aua8 = EncryptService.AES.Base64Encrypt(datapost.editAua8);
+                            isChangPWD = true;
+                            // 判斷密碼是否可以修改
+                            string ErrorMsg = string.Empty;
+                            bool checkPwd = _accountService.UserPWDCheck(ref ErrorMsg, item.UserId, item.Aua8);
+
+                            if (!checkPwd)
+                            {
+                                // 下拉群組
+                                datapost.ddlGroup = _accountService.SetDDL_Group(1);
+                                // radioButton:專業領域
+                                datapost.chbProfessionalField = _accountService.SetDDL_ProfessionalField(0);
+
+                                TempData["TempMsgType"] = MsgTypeEnum.error;
+                                TempData["TempMsg"] = TempData["TempMsg"] ?? ErrorMsg;
+
+                                /* 失敗回原頁 */
+                                return View(datapost);
+                            }
+                        }
                         if (datapost.Search.sGroup == _config.GetValue<string>("Site:ConsultantGroupID"))
                         {
                             item.Sex = datapost.MemberExtendItem.userinfo.Sex;
@@ -584,6 +606,18 @@ namespace BASE.Areas.Backend.Controllers
                                     await _accountService.InsertRange(newUserRight, transaction);
                                 }
 
+                                if (isChangPWD)
+                                {
+                                    // 寫入密碼歷程
+                                    TbPwdLog PwdLog = new TbPwdLog();
+                                    PwdLog.UserId = item.UserId;
+                                    PwdLog.Password = item.Aua8;
+                                    PwdLog.CreateUser = userinfo.UserID;
+                                    PwdLog.CreateDate = DateTime.Now;
+
+                                    await _commonService.Insert(PwdLog, transaction);
+                                }
+
                                 transaction.Commit();
                                 isSuccess = true;
                             }
@@ -627,8 +661,8 @@ namespace BASE.Areas.Backend.Controllers
             await _commonService.OperateLog(userinfo.UserID, Feature, Action, decrypt_id, datapost, _message, response, isSuccess);
 
             if (isSuccess)
-            {
-                return RedirectToAction("MemberList");
+            {               
+                return RedirectToAction("MemberList");               
             }
             else
             {
@@ -932,6 +966,7 @@ namespace BASE.Areas.Backend.Controllers
 
             // 最終動作成功與否
             bool isSuccess = false;
+            bool isChangPWD = false;
 
             // 例外錯誤發生，特別記錄至 TbLog
             bool unCaughtError = false;
@@ -963,7 +998,28 @@ namespace BASE.Areas.Backend.Controllers
                     item.Phone = datapost.MemberExtendItem.userinfo.Phone;
                     item.CellPhone = datapost.MemberExtendItem.userinfo.CellPhone;
                     if (datapost.editAua8 != EncryptService.AES.Base64Decrypt(item.Aua8))
+                    {
                         item.Aua8 = EncryptService.AES.Base64Encrypt(datapost.editAua8);
+                        isChangPWD = true;
+                        // 判斷密碼是否可以修改
+                        string ErrorMsg = string.Empty;
+                        bool checkPwd = _accountService.UserPWDCheck(ref ErrorMsg, item.UserId, item.Aua8);
+
+                        if (!checkPwd)
+                        {
+                            // 下拉群組
+                            datapost.ddlGroup = _accountService.SetDDL_Group(1);
+                            // radioButton:專業領域
+                            datapost.chbProfessionalField = _accountService.SetDDL_ProfessionalField(0);
+
+                            TempData["TempMsgType"] = MsgTypeEnum.error;
+                            TempData["TempMsg"] = TempData["TempMsg"] ?? ErrorMsg;
+
+                            /* 失敗回原頁 */
+                            return View(datapost);
+                        }
+                    }
+                        
                     if (datapost.Search.sGroup == _config.GetValue<string>("Site:ConsultantGroupID"))
                     {
                         item.Sex = datapost.MemberExtendItem.userinfo.Sex;
@@ -1024,6 +1080,18 @@ namespace BASE.Areas.Backend.Controllers
                                 // 若非顧問群組清空
                                 if (oriUserEXPList != null && oriUserEXPList.Any())
                                     await _accountService.DeleteRange(oriUserEXPList, transaction);
+                            }
+
+                            if (isChangPWD)
+                            {
+                                // 寫入密碼歷程
+                                TbPwdLog PwdLog = new TbPwdLog();
+                                PwdLog.UserId = item.UserId;
+                                PwdLog.Password = item.Aua8;
+                                PwdLog.CreateUser = userinfo.UserID;
+                                PwdLog.CreateDate = DateTime.Now;
+
+                                await _commonService.Insert(PwdLog, transaction);
                             }
 
                             transaction.Commit();

@@ -153,6 +153,31 @@ namespace BASE.Areas.Backend.Service
             }
         }
 
+        /// <summary>
+		/// 檢查密碼是否可以變更
+		/// </summary>
+		/// <param name="ErrorMsg">異常訊息</param>
+		/// <param name="UserID">帳號主鍵</param>
+		/// <param name="password">密碼(加密過)</param>
+		/// <returns></returns>
+		public bool UserPWDCheck(ref string ErrorMsg, string UserID, string password)
+        {
+
+            // 判斷 TB_PwdLog 是否有資料
+            var PwdLogList = Lookup<TbPwdLog>(ref ErrorMsg, x => x.UserId == UserID).OrderByDescending(x => x.CreateDate).Take(3).Select(x => x.Password).ToList();
+            if (PwdLogList.Count > 0)
+            {
+                if (PwdLogList.Contains(password))
+                {
+                    ErrorMsg = "密碼不得與前三次相同";
+
+                    return false;
+                }
+            }
+           
+            return true;
+        }
+
 
         #region 下拉選單
 

@@ -97,7 +97,7 @@
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.MemberExtendItem.userinfo.Aua8, "密碼", new { @class = "form-label" })
-                    @Html.TextBoxFor(x => x.MemberExtendItem.userinfo.Aua8, new {@class="form-control", placeholder = "請輸入密碼", data_parsley_required = "" })
+                    @Html.TextBoxFor(x => x.MemberExtendItem.userinfo.Aua8, new {@class="form-control", placeholder = "請輸入密碼", @type = "password", data_parsley_required = "", data_parsley_pattern = "^.*(?=.{8,})(?=.*\\d)(?=.*[a-zA-Z]).*$", data_parsley_error_message = "密碼至少12位數，且包含字母、數字" })
                 </div>
 
                 @*若群組選擇為"顧問"，則需再顯示以下欄位：從"性別"欄位，到"專業領域"欄位*@

@@ -103,6 +103,7 @@
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.MemberExtendItem.userinfo.Account, "帳號", new { @class = "form-label" })
                     @Html.TextBoxFor(x => x.MemberExtendItem.userinfo.Account, new { @class="form-control", placeholder = "請輸入帳號", data_parsley_required = "",disabled="disabled"})
+                    @Html.HiddenFor(x=>x.MemberExtendItem.userinfo.Account)
                 </div>
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
@@ -122,7 +123,7 @@
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.editAua8, "密碼", new { @class = "form-label" })
-                    @Html.TextBoxFor(x => x.editAua8, new {@class="form-control", placeholder = "請輸入密碼", data_parsley_required = ""})
+                    @Html.TextBoxFor(x => x.editAua8, new {@class="form-control", placeholder = "請輸入密碼", @type = "password", data_parsley_required = "", data_parsley_pattern = "^.*(?=.{8,})(?=.*\\d)(?=.*[a-zA-Z]).*$", data_parsley_error_message = "密碼至少12位數，且包含字母、數字"})
                 </div>
 
                 @*若群組選擇為"顧問"，則需再顯示以下欄位：從"性別"欄位，到"專業領域"欄位*@
@@ -224,7 +225,7 @@
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">儲存</button>
-                    <a class="btn btn-light" href="@(Url.Action("MemberList", "Member"))">取消</a>
+                    <a class="btn btn-light" href="@(Url.Action("Index", "Home"))">取消</a>
                 </div>
             </div>
         }
