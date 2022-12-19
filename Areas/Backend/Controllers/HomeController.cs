@@ -444,6 +444,11 @@ namespace BASE.Areas.Backend.Controllers
                     TempData["TempMsg"] = TempData["TempMsg"] ?? ErrorMsg;
 
                     /* 失敗回原頁 */
+                    if (ErrorMsg == "1天內不得再次變更密碼")
+                    {
+                        return RedirectToAction("Login");
+                    }
+                    
                     return View(datapost);
                 }
 
