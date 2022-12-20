@@ -106,7 +106,7 @@ namespace BASE.Areas.Backend.Controllers
                     else
                     {
                         string aua8 = EncryptService.AES.Base64Encrypt(datapost.aua8);
-                        TbUserInfo User = await _allCommonService.Lookup<TbUserInfo>(ref _Message, x => x.Account == datapost.acct && x.Aua8 == aua8).SingleOrDefaultAsync();
+                        TbUserInfo User = await _allCommonService.Lookup<TbUserInfo>(ref _Message, x => x.Account == datapost.acct && x.Aua8 == aua8 && !x.IsDelete).SingleOrDefaultAsync();
                         if (User == null)
                         {
                             TempData["TempMsgType"] = MsgTypeEnum.error;

@@ -359,6 +359,8 @@ namespace BASE.Areas.Backend.Controllers
                                     itemSkill.Selected = true;
                                 }
                             }
+                            // 處理身分證遮罩
+                            data.editIdNumber = data.MemberExtendItem.userinfo.IdNumber.Substring(0,6) + "****";
                         }
                     }
 
@@ -504,7 +506,15 @@ namespace BASE.Areas.Backend.Controllers
                         if (datapost.Search.sGroup == _config.GetValue<string>("Site:ConsultantGroupID"))
                         {
                             item.Sex = datapost.MemberExtendItem.userinfo.Sex;
-                            item.IdNumber = datapost.MemberExtendItem.userinfo.IdNumber;
+                            // 處理身分證
+                            if (datapost.editIdNumber.Contains("*"))
+                            {
+                                item.IdNumber = datapost.MemberExtendItem.userinfo.IdNumber;
+                            }
+                            else
+                            {
+                                item.IdNumber = datapost.editIdNumber;
+                            }                            
                             item.Industry = datapost.MemberExtendItem.userinfo.Industry;
                             item.ServiceUnit = datapost.MemberExtendItem.userinfo.ServiceUnit;
                             item.ContactAddr = datapost.MemberExtendItem.userinfo.ContactAddr;
@@ -908,6 +918,8 @@ namespace BASE.Areas.Backend.Controllers
                                 itemSkill.Selected = true;
                             }
                         }
+                        // 處理身分證遮罩
+                        data.editIdNumber = data.MemberExtendItem.userinfo.IdNumber.Substring(0, 6) + "****";
                     }
                 }
 
@@ -1023,7 +1035,15 @@ namespace BASE.Areas.Backend.Controllers
                     if (datapost.Search.sGroup == _config.GetValue<string>("Site:ConsultantGroupID"))
                     {
                         item.Sex = datapost.MemberExtendItem.userinfo.Sex;
-                        item.IdNumber = datapost.MemberExtendItem.userinfo.IdNumber;
+                        // 處理身分證
+                        if (datapost.editIdNumber.Contains("*"))
+                        {
+                            item.IdNumber = datapost.MemberExtendItem.userinfo.IdNumber;
+                        }
+                        else
+                        {
+                            item.IdNumber = datapost.editIdNumber;
+                        }
                         item.Industry = datapost.MemberExtendItem.userinfo.Industry;
                         item.ServiceUnit = datapost.MemberExtendItem.userinfo.ServiceUnit;
                         item.ContactAddr = datapost.MemberExtendItem.userinfo.ContactAddr;

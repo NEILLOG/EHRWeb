@@ -128,8 +128,9 @@
                         @Html.TextBoxFor(x => x.MemberExtendItem.userinfo.JobTitle, new { @class="form-control", placeholder = "請輸入職稱"})
                     </div>
                     <div class="col-12 form-group mb-3">
-                        @Html.LabelFor(x => x.MemberExtendItem.userinfo.IdNumber, "身分證號", new { @class = "form-label" })
-                        @Html.TextBoxFor(x => x.MemberExtendItem.userinfo.IdNumber, new { @class="form-control", placeholder = "請輸入身分證號", })
+                        @Html.LabelFor(x => x.editIdNumber, "身分證號", new { @class = "form-label" })
+                        @Html.TextBoxFor(x => x.editIdNumber, new { @class="form-control", placeholder = "請輸入身分證號", })
+                        @Html.HiddenFor(x=>x.MemberExtendItem.userinfo.IdNumber)
                     </div>
                     <div class="col-12 form-group mb-3">
                         @Html.LabelFor(x => x.MemberExtendItem.userinfo.Industry, "產/行業", new { @class = "form-label" })

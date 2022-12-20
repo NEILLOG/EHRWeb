@@ -21,6 +21,9 @@ namespace BASE.Areas.Backend.Models
         /// <summary> 編輯頁面使用的AUA8 </summary>
         public string editAua8 { get; set; }
 
+        /// <summary> 編輯頁面使用的身分證 </summary>
+        public string editIdNumber { get; set; }
+
         #region 檔案
         /// <summary>檔案上傳</summary>
         public IFormFile ImportFile { get; set; }
