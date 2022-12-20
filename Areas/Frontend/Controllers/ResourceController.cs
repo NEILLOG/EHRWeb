@@ -220,7 +220,7 @@ namespace BASE.Areas.Frontend.Controllers
             if (isSuccess)
             {
                 TempData["TempMsgType"] = MsgTypeEnum.success;
-                TempData["TempMsg"] = "課程變更成功";
+                TempData["TempMsg"] = "課程臨時變更申請完成";
 
                 var proejct = _allCommonService.Lookup<TbProject>(ref _message, x => x.Id == datapost.ModifyItem.ProjectId).FirstOrDefault();
                 var proejct_user = _allCommonService.Lookup<TbUserInfo>(ref _message, x => x.UserId == proejct.CreateUser).FirstOrDefault();

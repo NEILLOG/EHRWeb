@@ -4,6 +4,14 @@
 
 @await Html.PartialAsync("_BannerPartial", new BASE.Areas.Frontend.Models.Extend.BannerPartial(){ Main = "人資小幫手", Detail = Model.ExtendItem.Header.Category })
 
+@section Scripts {
+    <script>
+        $(document).ready(function(){
+            $('#contents').find('table').addClass('table');
+        });
+    </script>
+}
+
 <!-- ================================================== -->
 <!-- 人資小幫手 -->
 <!-- ================================================== -->
@@ -52,7 +60,9 @@
                     <div class="chargerContent">
                         <h2 class="fc-green fw-bold mb-3">@Model.ExtendItem.Header.Title</h2>
 
+                        <div id="contents">
                         @(new HtmlString(Model.ExtendItem.Header.Contents))
+                        </div>
 
                         @if(Model.ExtendItem.FileInfo != null)
                         {

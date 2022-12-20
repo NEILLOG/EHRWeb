@@ -34,7 +34,10 @@ namespace BASE.Areas.Backend.Models
                                                                                new SelectListItem() { Text = "其他資源", Value = "其他資源" }};
         /// <summary> 聯繫窗口 </summary>
         public List<SelectListItem> ddlContact { get; set; }
-}
+
+        //登入者權限
+        public string? UserGroup { get; set; }
+    }
 
     /// <summary>FAQ_查詢參數</summary>
     public class VM_ProjectQueryParam : VM_BaseQueryParam

@@ -1729,7 +1729,7 @@ namespace BASE.Models.DB
                     .HasComment("經辦");
 
                 entity.Property(e => e.ModifyUser)
-                    .HasMaxLength(10)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ProjectId)
@@ -2110,6 +2110,8 @@ namespace BASE.Models.DB
                     .HasMaxLength(200)
                     .HasComment("職稱");
 
+                entity.Property(e => e.LockTime).HasColumnType("datetime");
+
                 entity.Property(e => e.ModifyDate)
                     .HasColumnType("datetime")
                     .HasComment("修改日期");
@@ -2150,6 +2152,10 @@ namespace BASE.Models.DB
                     .HasComment("專業領域, 使用逗號分隔；可能包含以下值: 組織經營,組織轉型,人才培育,職能分析,員工職涯發展,人力資源管理,勞資關係、法令");
 
                 entity.Property(e => e.Title).HasMaxLength(30);
+
+                entity.Property(e => e.Token)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.UnitA).HasMaxLength(50);
 

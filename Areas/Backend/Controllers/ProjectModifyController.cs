@@ -132,7 +132,7 @@ namespace BASE.Areas.Backend.Controllers
                         {
                             item.IsApprove = false;
                         }
-                        //item.ModifyUser = userinfo.UserID;
+                        //item.ModifyUser = userinfo.UserName;
                         item.ModifyDate = dtnow;
 
                         using (var transaction = _ProjectModifyService.GetTransaction())
@@ -281,6 +281,7 @@ namespace BASE.Areas.Backend.Controllers
                                                "諮詢電話" + GetProjectInfo.Contact
                                 });
                             }
+                            item.ModifyUser = userinfo.UserName;
                             item.ModifyDate = dtnow;
                         }
                         using (var transaction = _ProjectModifyService.GetTransaction())

@@ -111,7 +111,7 @@
                             </div>
                             <div class="col-md-6 col-12">
                                 <label for="formFile" class="form-label sr-only">上傳檔案</label>
-                                @Html.TextBoxFor(x => x.ModifyFile, new { @FileID = "FileId", @class="form-control File", @type = "file", accept = ".pnf,.jpg,.jpeg,.docx,.doc", data_parsley_file_type="png,jpg,jpeg,doc,docx", data_parsley_errors_container="#ActivityImage-errors-container" })
+                                @Html.TextBoxFor(x => x.ModifyFile, new { @FileID = "FileId", @class="form-control File", @type = "file", accept = ".png,.jpg,.jpeg,.docx,.doc,.pdf", data_parsley_file_type="png,jpg,jpeg,doc,docx,pdf", data_parsley_errors_container="#ActivityImage-errors-container" })
                                 <div id="ActivityImage-errors-container"></div>
                             </div>
                             <div class="col-md-2 col-12">

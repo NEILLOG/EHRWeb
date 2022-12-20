@@ -229,7 +229,7 @@ namespace BASE.Areas.Backend.Controllers
                             //新增 TbUserInGroup
                             await _accountService.Insert(itemGroup, transaction);
                             //新增 TbUserRight
-                            await _accountService.InsertRange(listUserInRight, transaction);                           
+                            await _accountService.InsertRange(listUserInRight, transaction);
 
                             transaction.Commit();
                             isSuccess = true;

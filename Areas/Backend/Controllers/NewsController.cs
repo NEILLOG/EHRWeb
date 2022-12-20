@@ -148,9 +148,9 @@ namespace BASE.Areas.Backend.Controllers
                         try
                         {
                             //相關檔案
-                            if (datapost.RelatedFile != null)
+                            if (datapost.NewsFile != null)
                             {
-                                var photo_upload = await _fileService.FileUploadAsync(datapost.RelatedFile, "NewsFiles/" + item.Id, "NewsFiles", item.FileId, null, transaction);
+                                var photo_upload = await _fileService.FileUploadAsync(datapost.NewsFile, "NewsFiles/" + item.Id, "NewsFiles", item.FileId, null, transaction);
                                 if (photo_upload.IsSuccess == true && !string.IsNullOrEmpty(photo_upload.FileID))
                                 {
                                     item.FileId = photo_upload.FileID;
@@ -376,9 +376,9 @@ namespace BASE.Areas.Backend.Controllers
                             try
                             {
                                 //相關檔案
-                                if (datapost.RelatedFile != null)
+                                if (datapost.NewsFile != null)
                                 {
-                                    var photo_upload = await _fileService.FileUploadAsync(datapost.RelatedFile, "NewsFiles/" + item.Id, "NewsFiles", item.FileId, null, transaction);
+                                    var photo_upload = await _fileService.FileUploadAsync(datapost.NewsFile, "NewsFiles/" + item.Id, "NewsFiles", item.FileId, null, transaction);
                                     if (photo_upload.IsSuccess == true && !string.IsNullOrEmpty(photo_upload.FileID))
                                     {
                                         item.FileId = photo_upload.FileID;
@@ -387,6 +387,10 @@ namespace BASE.Areas.Backend.Controllers
                                     {
                                         _message += photo_upload.Message;
                                     }
+                                }
+                                else
+                                {
+                                    item.FileId = "";
                                 }
 
                                 //編輯

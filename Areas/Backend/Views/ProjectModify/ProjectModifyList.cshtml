@@ -25,7 +25,7 @@
             }).then((r) => {
                 if (r.isConfirmed) {
 
-                     $.blockUI();
+                    $.blockUI();
 
                     //確定變更狀態
                     $.ajax({
@@ -35,9 +35,9 @@
                         beforeSend: function (request) {
                             request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
                         },
-                        data: { id: id, ApproveStatus: document.getElementById("ddlApprove").value },
+                        data: { id: id, ApproveStatus: document.getElementById("ddlApprove_" + id).value },
                         success: function (result) {
-                              $.unblockUI();
+                            $.unblockUI();
                             inform({
                                 plugin: result.alert_plugin,
                                 type: result.alert_type,
@@ -105,7 +105,7 @@
                                         <td style="max-width:100vw;">
                                             @if (item.ProjectModify.IsApprove == null)
                                             {
-                                                @Html.DropDownListFor(x=>x.IsApprove,Model.ddlApprove,new{@class="form-control",id="ddlApprove", data_parsley_required = "", data_parsley_errors_container="#errors-container-1" })
+                                                @Html.DropDownListFor(x=>x.IsApprove,Model.ddlApprove,new{@class="form-control",id="ddlApprove_"+@item.ProjectModify.Id, data_parsley_required = "", data_parsley_errors_container="#errors-container-1" })
                                                 <button type="button" class="btn btn-success" onclick="ApproveSave('@(item.ProjectModify.Id)')">儲存並寄送通知</button>
                                             }
                                             else

@@ -339,7 +339,7 @@ namespace BASE.Areas.Backend.Controllers
                         {
                             try
                             {
-                                //輪播圖片
+                                //活動圖片
                                 if (datapost.AlbumImageFile != null)
                                 {
                                     var photo_upload = await _fileService.FileUploadAsync(datapost.AlbumImageFile, "AlbumImageFiles/" + item.Id, "AlbumImageFils", item.FileId, null, transaction);
@@ -351,6 +351,10 @@ namespace BASE.Areas.Backend.Controllers
                                     {
                                         _message += photo_upload.Message;
                                     }
+                                }
+                                else
+                                {
+                                    item.FileId = "";
                                 }
 
                                 //編輯

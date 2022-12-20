@@ -70,7 +70,7 @@
                 
                 <div class="col-12 form-group mb-3">
                     @Html.LabelFor(x => x.NewsExtendItem.News.FileId, "上傳圖片：", new { @class = "form-label" })
-                    @Html.TextBoxFor(x => x.RelatedFile, new { @FileID = "FileId", @class="form-control File", @type = "file", accept = ".pnf,.jpg,.jpeg", data_parsley_file_type="png,jpg,jpeg", data_parsley_errors_container="#FileID-errors-container" })
+                    @Html.TextBoxFor(x => x.NewsFile, new { @FileID = "FileId", @class="form-control File", @type = "file", accept = ".pnf,.jpg,.jpeg", data_parsley_file_type="png,jpg,jpeg", data_parsley_errors_container="#FileID-errors-container" })
                     @Html.HiddenFor(x => x.NewsExtendItem.News.FileId, new { @id ="FileId" })
                     <div id="FileID-errors-container"></div>
                 </div>

@@ -30,7 +30,7 @@ namespace BASE.Areas.Backend.Models
 
 
         /// <summary>相關檔案</summary>
-        public IFormFile? RelatedFile { get; set; }
+        public IFormFile? NewsFile { get; set; }
 
         /// <summary> 是否上架 </summary>
         public string? isPublish { get; set; }

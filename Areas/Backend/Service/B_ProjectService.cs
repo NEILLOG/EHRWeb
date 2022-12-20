@@ -30,7 +30,7 @@ namespace BASE.Areas.Backend.Service
                                                       select new ProjectExtend
                                                       {
                                                           Project = Project,
-                                                          ReID= Project.Name == "企業人力資源提升計畫" ? "PJ00000006" :
+                                                          ReID = Project.Name == "企業人力資源提升計畫" ? "PJ00000006" :
                                                                 Project.Name == "充電起飛計畫" ? "PJ00000005" :
                                                                 Project.Name == "小型企業人力提升計畫" ? "PJ00000004" :
                                                                 Project.Name == "在職中高齡者及高齡者穩定就業訓練補助實施計畫" ? "PJ00000003" :
@@ -71,6 +71,29 @@ namespace BASE.Areas.Backend.Service
                 ErrMsg = ex.ToString();
                 return null;
             }
+        }
+
+        /// <summary>
+        /// 取得聯繫窗口清單
+        /// </summary>
+        /// <returns></returns>
+        public string? GetUserGroup(string UserGroupId)
+        {
+            //string ReturnGroup = (from User in _context.TbUserInfo
+            //                      join UserGroup in _context.TbUserInGroup on User.UserId equals UserGroup.UserId
+            //                      join Group in _context.TbGroupInfo on UserGroup.GroupId equals Group.GroupId
+            //                      where Group.GroupName == "計畫承辦" &&
+            //                            User.IsDelete == false &&
+            //                            Group.IsDelete == false &&
+            //                            User.Account == UserAccount
+            //                      select Group.GroupName).FirstOrDefault();
+
+            string? ReturnGroup = (from Group in _context.TbGroupInfo
+                                  where Group.IsDelete == false &&
+                                  Group.GroupId == UserGroupId
+                                  select Group.GroupName).FirstOrDefault();
+
+            return ReturnGroup;
         }
 
         /// <summary>

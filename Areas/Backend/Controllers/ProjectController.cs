@@ -52,6 +52,8 @@ namespace BASE.Areas.Backend.Controllers
                 //取資料
                 IQueryable<ProjectExtend>? dataList = _ProjectService.GetProjectExtendList(ref _message);
 
+                data.UserGroup = _ProjectService.GetUserGroup(userinfo.GroupID);
+
                 if (dataList != null && !string.IsNullOrEmpty(data.Search.sName))
                 { dataList = dataList.Where(x => x.Project.Name.Contains(data.Search.sName)); }
 
@@ -763,7 +765,8 @@ namespace BASE.Areas.Backend.Controllers
                     else
                     {
                         isSuccess = true;
-                        if (string.IsNullOrEmpty(OldText) || !OldText.Contains(result.Datas.Phone))
+                        //034855368;034855368#1911;  
+                        if (string.IsNullOrEmpty(OldText) || !OldText.Contains(result.Datas.Phone + ";"))
                         {
                             strReturn += result.Datas.Phone + ";";
                         }

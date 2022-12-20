@@ -26,7 +26,7 @@ namespace BASE.Areas.Frontend.Service
             try
             {
                 IQueryable<ActivityExtend>? dataList = 
-                    (from Activity in _context.TbActivity.Where(x => !x.IsDelete && x.IsPublish && x.IsValid)
+                    (from Activity in _context.TbActivity.Where(x => !x.IsDelete && x.IsValid)
 
                      join FileInfo in _context.TbFileInfo.Where(x => !x.IsDelete) on Activity.ActivityImage equals FileInfo.FileId into Activty_File
                      from FileInfo in Activty_File.DefaultIfEmpty()
@@ -61,9 +61,9 @@ namespace BASE.Areas.Frontend.Service
                 }
 
                 if (IsShowPassedActivity)
-                    dataList = dataList.Where(x => x.Header.RegEndDate <= DateTime.Now);
+                    dataList = dataList.Where(x => x.Header.RegEndDate <= DateTime.Now || x.Header.IsPublish == false);
                 else
-                    dataList = dataList.Where(x => x.Header.RegEndDate > DateTime.Now);
+                    dataList = dataList.Where(x => x.Header.RegEndDate > DateTime.Now && x.Header.IsPublish == true);
 
                 return dataList;
             }
