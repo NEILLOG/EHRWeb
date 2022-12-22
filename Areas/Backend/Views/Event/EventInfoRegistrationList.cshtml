@@ -122,6 +122,8 @@
         // 簽到對話視窗data binding
         function SettingSignin(rowID)
         {
+            alert('@Model.ActivityItem.DateType')
+
             //-- 報名子表id
             var egisterSectionID = $(`#RegistrationExtendList_${rowID}__registerSection_Id`).val();
             $("#msRegisterSectionID").val(egisterSectionID)
@@ -131,10 +133,13 @@
             document.getElementById('msSigninAM').innerHTML = IsSigninAM == "True" ? "已簽到" :"簽到";
             document.getElementById("msSigninAM").disabled = IsSigninAM == "True" ? true : false;
 
-            //-- IsSigninPM欄位資料
-            var IsSigninPM = $(`#RegistrationExtendList_${rowID}__registerSection_IsSigninPm`).val();
-            document.getElementById('msSigninPM').innerHTML = IsSigninPM == "True" ? "已簽到" : "簽到";
-            document.getElementById("msSigninPM").disabled = IsSigninPM == "True" ? true : false;
+            if('@Model.ActivityItem.DateType' == "全日")
+            {
+                //-- IsSigninPM欄位資料
+                var IsSigninPM = $(`#RegistrationExtendList_${rowID}__registerSection_IsSigninPm`).val();
+                document.getElementById('msSigninPM').innerHTML = IsSigninPM == "True" ? "已簽到" : "簽到";
+                document.getElementById("msSigninPM").disabled = IsSigninPM == "True" ? true : false;
+            }
 
             $("#ModalSignin").modal('show');
         }

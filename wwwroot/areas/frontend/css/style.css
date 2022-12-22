@@ -645,6 +645,20 @@ footer{
 /*===== index - RWD  =====*/
 /*========================*/
 
+@media (max-width: 1920px) {
+    .carousel-inner .carousel-item {
+        height: 950px;
+        object-fit: cover;
+    }
+}
+
+@media (max-width: 1440px) {
+    .carousel-inner .carousel-item {
+        height: 800px;
+        object-fit: cover;
+    }
+}
+
 /* laptop */
 @media (max-width: 1366px) {  
    .footer div{
