@@ -49,6 +49,18 @@ namespace BASE.Areas.Backend.Controllers
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
             string ErrorMsg = string.Empty;
+
+            // 判斷是否尚未改過密碼
+            var PwdLogList = _memberService.Lookup<TbPwdLog>(ref ErrorMsg, x => x.UserId == userinfo.UserID).ToList();
+            if (PwdLogList.Count == 0)
+            {
+                TempData["TempMsgType"] = MsgTypeEnum.warning;
+                TempData["TempMsg"] = "尚未修改密碼，請至個人維護頁面進行密碼修改";
+
+                // 轉址到個人維護資料
+                return RedirectToAction("PersonalManage", "Member");
+            }
+
             // 判斷密碼是否超過三個月未修改
             bool change = _memberService.NeedChangePWD(ref ErrorMsg, userinfo.UserID);
             if (change)
