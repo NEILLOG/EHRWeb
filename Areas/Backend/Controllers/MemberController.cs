@@ -1137,8 +1137,7 @@ namespace BASE.Areas.Backend.Controllers
             if (isSuccess)
             {
                 TempData["TempMsgType"] = MsgTypeEnum.success;
-                TempData["TempMsg"] = "儲存成功";
-
+                TempData["TempMsg"] = "儲存成功";               
             }
             else
             {
@@ -1157,6 +1156,16 @@ namespace BASE.Areas.Backend.Controllers
 
             if (isSuccess)
             {
+                if (isChangPWD)
+                {
+                    // 修改密碼,強制登出,需重新登入
+                    HttpContext.Session.Clear();
+                    TempData["TempMsgType"] = MsgTypeEnum.success;
+                    TempData["TempMsg"] = "密碼儲存成功,請登出再重新登入";
+
+                    return RedirectToAction("Login", "Home", new { area = "Backend" });
+                }
+
                 return RedirectToAction("PersonalManage", "Member");
             }
             else
