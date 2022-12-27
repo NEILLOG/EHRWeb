@@ -125,5 +125,24 @@ namespace BASE.Areas.Frontend.Service
             }
         }
 
+        public Boolean IsCellphoneRegisterd(ref String ErrMsg, string cellphone, long section_id)
+        {
+            try
+            {
+                var dataList =
+                    (from register in _context.TbActivityRegister
+                     join sections in _context.TbActivityRegisterSection on register.Id equals sections.RegisterId
+                     where register.CellPhone == cellphone && sections.RegisterSectionId == section_id
+                     select register);
+
+                return dataList.Any();
+            }
+            catch (Exception ex)
+            {
+                ErrMsg = ex.ToString();
+                return true;
+            }
+        }
+
     }
 }

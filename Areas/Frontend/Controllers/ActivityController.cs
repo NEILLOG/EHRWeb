@@ -678,7 +678,7 @@ namespace BASE.Areas.Frontend.Controllers
                         Subject = String.Format(MailTmeplate.Activity.SATISFACTION_SUBJECT, section.Day.ToString("yyyy / MM / dd"), activity.Title, activity.Subject),
                         Body = String.Format(MailTmeplate.Activity.SATISFACTION_CONTNET,
                                        section.Day.ToString("yyyy / MM / dd"),
-                                       activity.Title, 
+                                       activity.Title,
                                        activity.Subject,
                                        Url.Action("Quiz", "Activity", new { id = EncryptService.AES.RandomizedEncrypt(register.Id.ToString()) }, Request.Scheme)
                                        ),
@@ -687,7 +687,7 @@ namespace BASE.Areas.Frontend.Controllers
 
                     isSuccess = true;
                 }
-                catch(ValidException ex)
+                catch (ValidException ex)
                 {
                     TempData["TempMsg"] = ex.Message;
                 }
@@ -732,6 +732,21 @@ namespace BASE.Areas.Frontend.Controllers
                 return View(datapost);
             }
 
+        }
+
+
+        [HttpPost]
+        public async Task<JsonResult> ajaxIsRegisted(string cellphone, long section_id)
+        {
+            string Message = String.Empty;
+            bool isRegisterd = _activityService.IsCellphoneRegisterd(ref Message, cellphone, section_id);
+            if (isRegisterd)
+            {
+                var section = _allCommonService.Lookup<TbActivitySection>(ref Message, x => x.Id == section_id).FirstOrDefault();
+                Message = $"經查您已報名活動場次{section.Day.ToString("yyyy / MM / dd")} {section.StartTime.ToString(@"hh\:mm")}-{section.EndTime.ToString(@"hh\:mm")}，若有更正報名資訊或其他問題，請與主辦單位聯繫";
+            }
+
+            return Json(new { isRegisterd = isRegisterd, Message = Message });
         }
     }
 }

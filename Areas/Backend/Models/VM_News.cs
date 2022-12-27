@@ -34,6 +34,9 @@ namespace BASE.Areas.Backend.Models
 
         /// <summary> 是否上架 </summary>
         public string? isPublish { get; set; }
+
+        /// <summary> 設定置頂的Id </summary>
+        public List<string> TopId { get; set; }
     }
 
     /// <summary>FAQ_查詢參數</summary>

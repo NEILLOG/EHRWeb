@@ -611,6 +611,9 @@ namespace BASE.Areas.Backend.Controllers
                 }
                 else
                 {
+                    // 諮詢輔導報名id
+                    data.ConsultRegisterId = decrypt_id;
+
                     // 群組ID
                     data.GroupId = userinfo.GroupID;
 
@@ -816,7 +819,7 @@ namespace BASE.Areas.Backend.Controllers
         /// </summary>
         /// <returns></returns>
         [BackendCheckLogin("Menu000058", "ENABLED")]
-        public async Task<IActionResult> CounselingHistory(string id)
+        public async Task<IActionResult> CounselingHistory(string id,string ConsultRegisterId)
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
             string Feature = "歷史輔導紀錄", Action = "檢視";
@@ -830,28 +833,25 @@ namespace BASE.Areas.Backend.Controllers
             bool unCaughtError = false;
 
             string decrypt_id = EncryptService.AES.RandomizedDecrypt(id);
-            
-            try {
+            string decrypt_ConsultRegisterId = EncryptService.AES.RandomizedDecrypt(ConsultRegisterId);
+
+            try
+            {
                 if (string.IsNullOrEmpty(decrypt_id))
                 {
                     TempData["TempMsgDetail"] = "金鑰逾時！請重新再操作一次！";
                 }
                 else
                 {
-                    //List<TbConsultRegister>? dataItem = _consultService.Lookup<TbConsultRegister>(ref _message, x => x.BusinessId == decrypt_id && !string.IsNullOrEmpty(x.CounselingLogFile)).OrderByDescending(x => x.CreateDate).ToList();
+                    // 諮詢輔導報名主表ID
+                    data.ConsultRegisterId = decrypt_ConsultRegisterId;
+
                     List<CounselingHistoryExtend>? dataItem = _consultService.GetCounselingHistoryExtendList(ref _message, decrypt_id);
 
-                    if (dataItem != null)
-                    {
+                    if (dataItem != null && dataItem.Any())
                         data.CounselingHistoryExtendList = dataItem;
-                        // 諮詢輔導報名主表ID
-                        data.ConsultRegisterId = dataItem.FirstOrDefault().ConsultRegister.Id.ToString();
-                    }
 
-                    if (data.CounselingHistoryExtendList == null)
-                        TempData["TempMsgDetail"] = "查無指定項目！";
-                    else
-                        isSuccess = true;
+                    isSuccess = true;
                 }
             }
             catch (Exception ex)
@@ -881,7 +881,7 @@ namespace BASE.Areas.Backend.Controllers
                     await _allCommonService.Error_Record("Backend", Feature + "-" + Action, _message);
                 }
 
-                return RedirectToAction("ConsultManage");
+                return RedirectToAction("ConsultManage", new { id= ConsultRegisterId });
             }
         }
 

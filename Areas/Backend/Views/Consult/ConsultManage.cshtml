@@ -94,7 +94,7 @@
                                     <td style="max-width:30vw;">3</td>
                                     <td style="max-width:30vw;">歷史輔導紀錄</td>
                                     <td style="max-width:30vw;">
-                                        <a class="btn btn-primary btn-sm" href="@(Url.Action("CounselingHistory", "Consult", new { id = EncryptService.AES.RandomizedEncrypt(Model.ConsultExtendItem.ConsultRegister.BusinessId) }))">查看</a>
+                                        <a class="btn btn-primary btn-sm" href="@(Url.Action("CounselingHistory", "Consult", new { id = EncryptService.AES.RandomizedEncrypt(Model.ConsultExtendItem.ConsultRegister.BusinessId),ConsultRegisterId = EncryptService.AES.RandomizedEncrypt(Model.ConsultRegisterId) }))">查看</a>
                                     </td>
                                 </tr>
                                 <tr>

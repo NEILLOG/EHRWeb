@@ -97,6 +97,7 @@ namespace BASE.Areas.Backend.Controllers
             string Feature = "新增最新消息", Action = "新增";
 
             VM_News data = new VM_News();
+            data.TopId = _newsService.GetTopId(ref _message); //取得有設置頂的ID
             await _commonService.OperateLog(userinfo.UserID, Feature, Action);
             return View(data);
         }
@@ -259,6 +260,7 @@ namespace BASE.Areas.Backend.Controllers
                 else
                 {
                     IQueryable<NewsExtend>? dataList = _newsService.GetNewsExtendItem(ref _message, id);
+                    data.TopId = _newsService.GetTopId(ref _message); //取得有設置頂的ID
                     if (dataList != null)
                     {
                         data.NewsExtendItem = dataList.FirstOrDefault();

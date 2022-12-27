@@ -1123,7 +1123,7 @@ namespace BASE.Areas.Backend.Controllers
                 {
                     IQueryable<RegistrationExtend>? temp = _eventService.GetRegistrationExtendItem(ref _message, decrypt_id);
                     if (temp != null)
-                        data.RegistrationExtendItem = await temp.SingleOrDefaultAsync();
+                        data.RegistrationExtendItem = await temp.FirstOrDefaultAsync();
 
                     isSuccess = true;
                 }
@@ -2093,7 +2093,7 @@ namespace BASE.Areas.Backend.Controllers
                 if (!string.IsNullOrEmpty(datapost.ActivityItem.Id) && !string.IsNullOrEmpty(datapost.Search.sSection))
                 {
                     // 前台簽到網址
-                    SigninUrl = string.Format("{0}/Frontend/Activity/Checkin?aid={1}&sid={2}", webSiteDomain, EncryptService.AES.RandomizedEncrypt(datapost.ActivityItem.Id), EncryptService.AES.RandomizedEncrypt(datapost.Search.sSection));
+                    SigninUrl = string.Format("{0}/Frontend/Activity/Checkin?aid={1}%26sid={2}", webSiteDomain, EncryptService.AES.RandomizedEncrypt(datapost.ActivityItem.Id), EncryptService.AES.RandomizedEncrypt(datapost.Search.sSection));
 
                     // QRCODE URL
                     var url = string.Format("http://chart.apis.google.com/chart?cht=qr&chs={1}x{2}&chl={0}", SigninUrl, 500, 500);

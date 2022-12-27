@@ -51,7 +51,7 @@
                             <button type="submit" class="btn btn-primary float-end">查詢</button>
                         </div>
                     </div>
-                    <div class="row g-3 align-items-end mb-3" >
+                    <div class="row g-3 align-items-end mb-3" style="display:@(Model.GroupId == "G000000004" ? "none" : "");">
                         <div class="col-12 col-md-auto ms-auto">
                             <button type="button" class="btn btn-success" onclick="Export()">匯出Excel</button>
                         </div>
@@ -69,7 +69,7 @@
                                 <th>輔導助理</th>
                                 <th style="display:@(Model.GroupId == "G000000004" ? "none" : "");">指派及審核</th>
                                 <th>管理</th>
-                                <th>匯出簽到表</th>
+                                <th style="display:@(Model.GroupId == "G000000004" ? "none" : "");">匯出簽到表</th>
                                 <th>狀態</th>
                             </tr>
                         </thead>
@@ -90,8 +90,7 @@
                                         <td style="max-width:30vw;">
                                             <a class="btn btn-primary btn-sm" href="@(Url.Action("ConsultManage", "Consult", new { id = EncryptService.AES.RandomizedEncrypt(Model.ConsultExtendList[i].ConsultRegister.Id.ToString()) }))">管理</a>
                                         </td>
-                                        <td style="max-width:30vw;">
-                                            @*<a class="btn btn-success btn-sm" href="@(Url.Action("ConsultSigninExport", "Consult", new { id = EncryptService.AES.RandomizedEncrypt(Model.ConsultExtendList[i].ConsultRegister.Id.ToString()) }))">匯出簽到表</a>*@
+                                        <td style="max-width:30vw;display:@(Model.GroupId == "G000000004" ? "none" : "");">
                                             <button type="button" class="btn btn-success" onclick="ExportSignin('@Model.ConsultExtendList[i].ConsultRegister.Id.ToString()')">匯出簽到表</button>
                                         </td>
                                         <td style="max-width:30vw;">@(Model.ConsultExtendList[i].ConsultRegister.IsClose == true ? "已結案" : "未結案")</td>

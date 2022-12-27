@@ -39,7 +39,6 @@ namespace BASE.Areas.Backend.Service
             }
         }
 
-
         /// <summary>
         /// News項目
         /// </summary>
@@ -56,6 +55,29 @@ namespace BASE.Areas.Backend.Service
                                                          {
                                                              News = news
                                                          });
+
+                return dataList;
+            }
+            catch (Exception ex)
+            {
+                ErrMsg = ex.ToString();
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 取得置頂ID
+        /// </summary>
+        /// <param name="ErrMsg"></param>
+        /// <returns></returns>
+        public List<string> GetTopId(ref string ErrMsg)
+        {
+            try
+            {
+                List<string> dataList = (from news in _context.TbNews
+                                                    where news.IsDelete == false && 
+                                                          news.IsKeepTop == true
+                                                    select  news.Id).ToList();
 
                 return dataList;
             }
