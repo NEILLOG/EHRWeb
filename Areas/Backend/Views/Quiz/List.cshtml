@@ -101,7 +101,7 @@
                                    <tr>
                                         <td>@(Model.ExtendList.IndexOf(item) + 1)</td>
                                        <td style="max-width:30vw;">@item.Header.Name</td>                                       
-                                       <td style="max-width:55vw;">@item.Header.CreateDate.ToShortDateString()</td>
+                                       <td style="max-width:55vw;">@item.Header.CreateDate.ToString("yyyy/MM/dd")</td>
                                        <td>
                                            <a class="btn btn-primary" href="@(Url.Action("Edit", "Quiz", new { id = EncryptService.AES.RandomizedEncrypt(item.Header.Id) }))">編輯</a>
                                            <button type="button" class="btn btn-danger" onclick="Delete('@(EncryptService.AES.RandomizedEncrypt(item.Header.Id))')">刪除</button>

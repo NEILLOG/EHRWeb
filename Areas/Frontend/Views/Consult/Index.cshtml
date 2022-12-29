@@ -6,12 +6,19 @@
 
 @section Scripts
 {
+    <script>
+        $(document).ready(function(){
+            $('#main_contents').find('img').addClass('img-fluid');
+        });
+    </script>
+
     @if (TempData["CostomTempEmail"] != null)
     {
         <script>
             $(document).ready(function () {
                 var myModal = new bootstrap.Modal(document.getElementById('regisDoneModal'));
                 myModal.show();
+
             });
         </script>
     }
@@ -28,7 +35,9 @@
                 <div class="bg-white p-4">
                     <div class="row">
 
+                        <div id="main_contents">
                         @(new HtmlString(Model.ExtendItem.Contents))
+                        </div>
 
                         <div class="d-grid gap-2 mt-4">
                             <a class="btn btn-primary" type="button" href="@Url.Action("Register")">

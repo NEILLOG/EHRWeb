@@ -100,7 +100,7 @@ namespace BASE.Areas.Frontend.Service
                 id = id.Replace("'", "").Replace("=", "").Replace("\"", "").Replace("!", "").Replace("+", "").Replace("-", "");
 
                 IQueryable<ActivityExtend>? dataList =
-                    (from Activity in _context.TbActivity.Where(x => !x.IsDelete && x.IsPublish && x.IsValid)
+                    (from Activity in _context.TbActivity.Where(x => !x.IsDelete && x.IsValid)
 
                      join FileInfo in _context.TbFileInfo.Where(x => !x.IsDelete) on Activity.ActivityImage equals FileInfo.FileId into Activty_File
                      from FileInfo in Activty_File.DefaultIfEmpty()
