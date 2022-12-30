@@ -183,7 +183,7 @@ namespace BASE.Areas.Backend.Service
             if (Year != 0)
             {
                 List<String> listID = Lookup<TbActivitySection>(ref _Msg, x => x.Day.Year == Year).Distinct().Select(x => x.ActivityId).ToList();
-                List<TbActivity> ListData = Lookup<TbActivity>(ref _Msg, x => listID.Contains(x.Id)).ToList();
+                List<TbActivity> ListData = Lookup<TbActivity>(ref _Msg, x => listID.Contains(x.Id) && x.IsDelete == false).ToList();
 
                 foreach (var item in ListData)
                 {
@@ -203,7 +203,7 @@ namespace BASE.Areas.Backend.Service
             List<SelectListItem> Data = new List<SelectListItem>();
             Data.Add(new SelectListItem() { Text = "請選擇", Value = "" });
 
-            var DayMax = Lookup<TbActivitySection>(ref _Msg).OrderBy(x => x.Day).Select(x => x.Day).FirstOrDefault();
+            var DayMax = Lookup<TbActivitySection>(ref _Msg).OrderByDescending(x => x.Day).Select(x => x.Day).FirstOrDefault();
             if (DayMax.Year == 2022)
             {
                 Data.Add(new SelectListItem() { Text = "111", Value = "111" });
