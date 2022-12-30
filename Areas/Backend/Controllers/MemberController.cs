@@ -360,7 +360,15 @@ namespace BASE.Areas.Backend.Controllers
                                 }
                             }
                             // 處理身分證遮罩
-                            data.editIdNumber = data.MemberExtendItem.userinfo.IdNumber.Substring(0,6) + "****";
+                            if (!string.IsNullOrEmpty(data.MemberExtendItem.userinfo.IdNumber))
+                            {
+                                data.editIdNumber = data.MemberExtendItem.userinfo.IdNumber.Substring(0, 6) + "****";
+                            }
+                            else
+                            {
+                                data.editIdNumber = "";
+                            }
+                            
                         }
                     }
 
@@ -918,8 +926,16 @@ namespace BASE.Areas.Backend.Controllers
                                 itemSkill.Selected = true;
                             }
                         }
-                        // 處理身分證遮罩
-                        data.editIdNumber = data.MemberExtendItem.userinfo.IdNumber.Substring(0, 6) + "****";
+                        if (!string.IsNullOrEmpty(data.MemberExtendItem.userinfo.IdNumber))
+                        {
+                            // 處理身分證遮罩
+                            data.editIdNumber = data.MemberExtendItem.userinfo.IdNumber.Substring(0, 6) + "****";
+                        }
+                        else
+                        {
+                            data.editIdNumber = "";
+                        }
+                        
                     }
                 }
 
