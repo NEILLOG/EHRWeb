@@ -10,6 +10,8 @@ $(document).ready(function () {
     new bootstrap.Modal($('#mdOptionRadio')[0]);
     new bootstrap.Modal($('#mdOptionCheckbox')[0]);
 
+    main_container.tableDnD();
+
     $.each(main_container.find('tbody tr'), function (i, ele) {
         $(ele).find('.btnEdit').click(EditButton);
         $(ele).find('.btnDelete').click(DeleteButton);
