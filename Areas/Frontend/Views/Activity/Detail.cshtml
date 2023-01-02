@@ -102,7 +102,7 @@
 
                     <div class="d-grid gap-2 mt-5">
 
-                        @if(Model.ActivityExtendItem.Header.RegEndDate > DateTime.Now){
+                        @if(Model.ActivityExtendItem.Header.RegEndDate > DateTime.Now && Model.ActivityExtendItem.Header.IsPublish == true){
                         <a class="btn btn-primary" href="@Url.Action("Register", new { id = EncryptService.AES.RandomizedEncrypt(Model.ActivityExtendItem.Header.Id) })">
                             <i class="fa-solid fa-paper-plane me-2" aria-hidden="true"></i>馬上報名</a>
                         }

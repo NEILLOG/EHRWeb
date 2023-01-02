@@ -139,25 +139,28 @@
                             @{
                                 var LastNews = Model.News.FirstOrDefault();
                             }
-                            <div class="col-12 col-md-4 text-center">
-                                @if (LastNews.FileInfo != null)
-                                {
-                                    <img src="@LastNews.FileInfo.FilePath" class="img-fluid rounded-start" alt="...">
-                                } else
-                                {
-                                    <img src="~/areas/frontend/img/articleimg.png" class="img-fluid rounded-start" alt="..." />
-                                }
-                            </div>
-                            <div class="col-12 col-md-8">
-                                <div class="card-body">
-                                    <a href="@Url.Action("Detail", "News", new { id = EncryptService.AES.RandomizedEncrypt(LastNews.Header.Id) })" class="stretched-link">
-                                        <h4 class="card-title fw-bold">@LastNews.Header.Title</h4>
-                                    </a>
-                                    <div class="card-tag"><span class="@(LastNews.Header.Category == "其他消息" ? "tag-other" : "tag-news")">@LastNews.Header.Category</span></div>
-                                    <p class="card-text">@(LastNews.Header.Contents.Length > 60 ? LastNews.Header.Contents.Substring(0,60)+"..." : LastNews.Header.Contents)</p>
-                                    <p class="card-text"><small class="text-muted">@LastNews.Header.DisplayDate.ToString("yyyy .MM .dd")</small></p>
+                            @if(LastNews != null) 
+                            {
+                                <div class="col-12 col-md-4 text-center">
+                                    @if (LastNews.FileInfo != null)
+                                    {
+                                        <img src="@LastNews.FileInfo.FilePath" class="img-fluid rounded-start" alt="...">
+                                    } else
+                                    {
+                                        <img src="~/areas/frontend/img/articleimg.png" class="img-fluid rounded-start" alt="..." />
+                                    }
                                 </div>
-                            </div>
+                                <div class="col-12 col-md-8">
+                                    <div class="card-body">
+                                        <a href="@Url.Action("Detail", "News", new { id = EncryptService.AES.RandomizedEncrypt(LastNews.Header.Id) })" class="stretched-link">
+                                            <h4 class="card-title fw-bold">@LastNews.Header.Title</h4>
+                                        </a>
+                                        <div class="card-tag"><span class="@(LastNews.Header.Category == "其他消息" ? "tag-other" : "tag-news")">@LastNews.Header.Category</span></div>
+                                        <p class="card-text">@(LastNews.Header.Contents.Length > 60 ? LastNews.Header.Contents.Substring(0,60)+"..." : LastNews.Header.Contents)</p>
+                                        <p class="card-text"><small class="text-muted">@LastNews.Header.DisplayDate.ToString("yyyy .MM .dd")</small></p>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

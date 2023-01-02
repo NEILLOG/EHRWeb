@@ -392,7 +392,7 @@ namespace BASE.Areas.Frontend.Controllers
             if (isSuccess)
             {
                 TempData["TempMsgType"] = MsgTypeEnum.success;
-                TempData["TempMsg"] = "健康聲明書上傳成功";
+                TempData["TempMsg"] = "企業需求調查表上傳成功";
             }
             else
             {
@@ -407,7 +407,7 @@ namespace BASE.Areas.Frontend.Controllers
 
             if (isSuccess)
             {
-                return RedirectToAction("List"); //導向清單頁
+                return RedirectToAction("Index"); //導向清單頁
             }
             else
             {

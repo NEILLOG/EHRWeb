@@ -596,6 +596,14 @@ namespace BASE.Areas.Frontend.Controllers
                 if (section == null)
                     throw new Exception("找不到此場次編號，或此活動不包含此場次編號");
 
+                var StartDate = section.Day + section.StartTime;
+                var EndDate = section.Day + section.EndTime;
+
+                if(DateTime.Now < StartDate)
+                    throw new Exception("此活動場次尚未開始");
+                if (DateTime.Now > EndDate)
+                    throw new Exception("此活動場次已結束");
+
                 data.Section = section;
                 data.Activity = activity;
 

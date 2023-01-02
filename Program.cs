@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Server.HttpSys;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Quartz;
 using Quartz.Impl;
@@ -198,7 +199,12 @@ app.UseEndpoints(endpoints =>
     //    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 });
 
-
+var contentTypeProvider = new FileExtensionContentTypeProvider();
+contentTypeProvider.Mappings[".odt"] = "pplication/vnd.oasis.opendocument.text";
+app.UseStaticFiles(new StaticFileOptions
+{
+    ContentTypeProvider = contentTypeProvider
+});
 
 app.MapRazorPages();
 
