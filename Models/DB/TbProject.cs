@@ -38,6 +38,10 @@ namespace BASE.Models.DB
         /// 聯繫窗口
         /// </summary>
         public string Contact { get; set; } = null!;
+        /// <summary>
+        /// 課程變更通知信收件人；若有多個，以分號分隔；僅有六大專案需要使用此欄位
+        /// </summary>
+        public string? NotifyEmails { get; set; }
         public bool IsDelete { get; set; }
         public string CreateUser { get; set; } = null!;
         public DateTime CreateDate { get; set; }

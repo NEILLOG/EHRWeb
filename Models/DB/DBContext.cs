@@ -1697,6 +1697,10 @@ namespace BASE.Models.DB
                     .HasMaxLength(100)
                     .HasComment("計畫名稱");
 
+                entity.Property(e => e.NotifyEmails)
+                    .HasMaxLength(1000)
+                    .HasComment("課程變更通知信收件人；若有多個，以分號分隔；僅有六大專案需要使用此欄位");
+
                 entity.Property(e => e.Purpose).HasComment("目的");
 
                 entity.Property(e => e.Target).HasComment("申請對象");

@@ -446,7 +446,7 @@ namespace BASE.Areas.Backend.Controllers
                     if (!string.IsNullOrEmpty(item.AssignAdviserAssistant))
                     {
                         assistantItem = _consultService.Lookup<TbUserInfo>(ref _message, x => x.UserId == item.AssignAdviserAssistant).FirstOrDefault();
-                        sAssistant = assistantItem != null ? string.Concat(assistantItem.UserName, "業務輔導員 ") : "--";
+                        sAssistant = assistantItem != null ? assistantItem.UserName : "--";
                         sAssistantPhone = (assistantItem != null && !string.IsNullOrEmpty(assistantItem.Phone)) ? assistantItem.Phone : "--";
                         sAssistantEmail = (assistantItem != null && !string.IsNullOrEmpty(assistantItem.Email)) ? assistantItem.Email : "--";
                     }

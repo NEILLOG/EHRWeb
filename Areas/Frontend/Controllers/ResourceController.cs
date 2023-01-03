@@ -15,6 +15,7 @@ using BASE.Areas.Frontend.Service;
 using BASE.Models;
 using BASE.Areas.Frontend.Models.Extend;
 using BASE.Areas.Backend.Service;
+using System.Net.Mail;
 
 namespace BASE.Areas.Frontend.Controllers
 {
@@ -223,15 +224,32 @@ namespace BASE.Areas.Frontend.Controllers
                 TempData["TempMsg"] = "課程臨時變更申請完成";
 
                 var proejct = _allCommonService.Lookup<TbProject>(ref _message, x => x.Id == datapost.ModifyItem.ProjectId).FirstOrDefault();
-                var proejct_user = _allCommonService.Lookup<TbUserInfo>(ref _message, x => x.UserId == proejct.CreateUser).FirstOrDefault();
 
-                await _mailService.SendEmail(new MailViewModel()
+                //取得所有信箱
+                var emails = String.IsNullOrEmpty(proejct.NotifyEmails) ? new List<String>() : proejct.NotifyEmails.Split(';').ToList();
+                List<MailAddressInfo> _emails = new List<MailAddressInfo>();
+                foreach(var email in emails)
                 {
-                    Subject = MailTmeplate.Resource.MODIFY_APPLY_SUBJECT,
-                    Body    = String.Format(MailTmeplate.Resource.MODIFY_APPLY_CONTNET, DateTime.Now.ToString("yyyy年MM月dd日 ")),
-                    ToList = new List<MailAddressInfo>() { new MailAddressInfo(proejct_user.Email) }
-                });
+                    try
+                    {
+                        new MailAddress(email); //利用new的方式，來檢查email是否正確
+                        _emails.Add(new MailAddressInfo(email));
+                    } 
+                    catch(Exception){continue;}
+                }
 
+                if(_emails.Count <= 0)
+                {
+                    TempData["TempMsgType"] = MsgTypeEnum.warning;
+                    TempData["TempMsg"] = "課程臨時變更申請完成，但因系統發生問題，無法寄送通知信件至承辦單位，請電話與我們聯繫確認變更情形，謝謝";
+                } 
+                else 
+                    await _mailService.SendEmail(new MailViewModel()
+                    {
+                        Subject = MailTmeplate.Resource.MODIFY_APPLY_SUBJECT,
+                        Body    = String.Format(MailTmeplate.Resource.MODIFY_APPLY_CONTNET, DateTime.Now.ToString("yyyy年MM月dd日 ")),
+                        ToList = _emails
+                    });
             }
             else
             {

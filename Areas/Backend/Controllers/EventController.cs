@@ -926,7 +926,8 @@ namespace BASE.Areas.Backend.Controllers
                     }
                     else
                     {
-                        item.IsValid = !item.IsValid;
+                        item.IsValid = true; // 審核通過
+                        item.IsPublish = true; // 報名開關同時on
                         item.ModifyUser = userinfo.UserID;
                         item.ModifyDate = dtnow;
 
