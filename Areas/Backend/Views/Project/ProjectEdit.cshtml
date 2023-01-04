@@ -9,7 +9,11 @@
         $(function () {
             document.getElementById("ddlContact").onchange = function () {
                 var val = this.value;
-                var OldText = document.getElementById("ProjectExtendItem_Project_Contact").value;
+                var OldPhoneText = document.getElementById("ProjectExtendItem_Project_Contact").value;
+                var OldMailText;
+                if (document.getElementById("ProjectExtendItem_Project_NotifyEmails") != null) {
+                    OldMailText = document.getElementById("ProjectExtendItem_Project_NotifyEmails").value;
+                }
                 //確定變更狀態
                 $.ajax({
                     type: "Post",
@@ -18,13 +22,19 @@
                     beforeSend: function (request) {
                         request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
                     },
-                    data: { id: val, OldText: OldText },
+                    data: { id: val, OldPhoneText: OldPhoneText, OldMailText: OldMailText },
                     success: function (result) {
-                        console.log(result);
+                        var Phone = result[0];
+                        console.log(Phone);
                         $('#ProjectExtendItem_Project_Contact').val('')
-                        var html = result;
-                        $('#ProjectExtendItem_Project_Contact').val(html)
+                        $('#ProjectExtendItem_Project_Contact').val(Phone)
 
+                        if (document.getElementById("ProjectExtendItem_Project_NotifyEmails") != null) {
+                            var Mail = result[1];
+                            console.log(Mail);
+                            $('#ProjectExtendItem_Project_NotifyEmails').val('')
+                            $('#ProjectExtendItem_Project_NotifyEmails').val(Mail)
+                        }
                     }
                 });
 
@@ -82,6 +92,14 @@
                     @Html.DropDownList("ddlContact",Model.ddlContact,new{@class="form-control",id="ddlContact", data_parsley_errors_container="#errors-container-1" })
                     @Html.TextAreaFor(x => x.ProjectExtendItem.Project.Contact, new { @class = "form-control" , data_parsley_required = ""})
                 </div>
+                @if (Model.FixedProjectIds.Contains(Model.ProjectExtendItem.Project.Id))
+                {
+                    <div class="col-12 form-group mb-3">
+                        <span class="red">*</span>
+                        @Html.LabelFor(x => x.ProjectExtendItem.Project.NotifyEmails, "聯繫窗口信箱：", new { @class = "form-label" })
+                        @Html.TextAreaFor(x => x.ProjectExtendItem.Project.NotifyEmails, new { @class = "form-control" , data_parsley_required = ""})
+                    </div>
+                }
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">儲存</button>

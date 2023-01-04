@@ -193,7 +193,7 @@
                             @if (IsOnline)
                             {
                                 <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input" type="radio" id="inlineCheckbox_online_@(day.Id)" value="線上" name="mode@(day.Id)">
+                                    <input class="form-check-input ckbOnline" type="radio" id="inlineCheckbox_online_@(day.Id)" value="線上" name="mode@(day.Id)">
                                     <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox_online_@(day.Id)">線上</label>
                                 </div>
                             }
@@ -201,7 +201,7 @@
                             @if (IsOffline)
                             {
                                 <div class="form-check form-check-inline CusCheckbox-form">
-                                    <input class="form-check-input" type="radio" id="inlineCheckbox_offline_@(day.Id)" value="實體" name="mode@(day.Id)">
+                                    <input class="form-check-input ckbOffline" type="radio" id="inlineCheckbox_offline_@(day.Id)" value="實體" name="mode@(day.Id)">
                                     <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox_offline_@(day.Id)">實體</label>
                                 </div>
                             }
@@ -531,22 +531,33 @@
                     NewReg.find('.FoodLabel').remove();
                 }
 
+                panel[0].insertAdjacentHTML('beforeEnd', NewReg[0].outerHTML);
+
                 panel.find('.btnDeleteSelectedSection').click(function(){
                     if(confirm('確認刪除?')) 
                     {
                         $(this).parents('.detailItem').remove();
+
+                        if ($('#panelSection .detailItem').length == 0)
+                            $('#panelSection').hide();
                     }
                     return false;
                 });
-
-
-                panel[0].insertAdjacentHTML('beforeEnd', NewReg[0].outerHTML);
 
                 ReSortSection();
 
                 modal.hide();
             });
 
+            $('.ckbOnline').click(function(){
+                var food = $(this).parents('div.text-start').find('#food-form');
+                    food.hide();
+            });
+
+            $('.ckbOffline').click(function(){
+                var food = $(this).parents('div.text-start').find('#food-form');
+                    food.show();
+            });
                 
 
         });

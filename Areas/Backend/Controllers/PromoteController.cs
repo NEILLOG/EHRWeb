@@ -156,12 +156,7 @@ namespace BASE.Areas.Backend.Controllers
                                     string PlanCategory = sheetRow.GetCell(6).ToString();
 
                                     /* 檢查必填項 */
-                                    if (StringExtensions.CheckIsNullOrEmpty(Company, BusinessID, Location, EmpoyeeAmount, Applicant, PlanCategory))
-                                    {
-                                        result.MessageDetail += $"第 {i + 1} 活頁簿，第 {row + 1} 列企業名稱、統一編號、企業所在地、就保人、申請人、電子郵件、計畫分類須必填，已略過\n";
-                                        hasError = true;
-                                    }
-                                    else
+                                    if (!StringExtensions.CheckIsNullOrEmpty(Company, BusinessID, Location, EmpoyeeAmount, Applicant, PlanCategory))
                                     {
                                         TbPromotion newPromotion = new TbPromotion();
                                         newPromotion.CompanyName = Company;

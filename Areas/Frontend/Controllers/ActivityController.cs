@@ -663,6 +663,23 @@ namespace BASE.Areas.Frontend.Controllers
                     if (register == null)
                         throw new ValidException("找不到您的報名場次資料，請再確認");
 
+                    //只有第一次簽到寄送
+                    if(register_section.IsSigninAm == false && register_section.IsSigninPm == false)
+                    {
+                        //寄送問卷調查通知
+                        await _mailService.SendEmail(new MailViewModel()
+                        {
+                            Subject = String.Format(MailTmeplate.Activity.SATISFACTION_SUBJECT, section.Day.ToString("yyyy / MM / dd"), activity.Title, activity.Subject),
+                            Body = String.Format(MailTmeplate.Activity.SATISFACTION_CONTNET,
+                                           section.Day.ToString("yyyy / MM / dd"),
+                                           activity.Title,
+                                           activity.Subject,
+                                           Url.Action("Quiz", "Activity", new { id = EncryptService.AES.RandomizedEncrypt(register.Id.ToString()) }, Request.Scheme)
+                                           ),
+                            ToList = new List<MailAddressInfo>() { new MailAddressInfo(register.Email) }
+                        });
+                    }
+
                     if (DateTime.Now.Hour < 12)
                     {
                         register_section.IsSigninAm = true;
@@ -679,19 +696,6 @@ namespace BASE.Areas.Frontend.Controllers
 
                     //更新簽到日
                     await _fileService.Update(register_section);
-
-                    //寄送問卷調查通知
-                    await _mailService.SendEmail(new MailViewModel()
-                    {
-                        Subject = String.Format(MailTmeplate.Activity.SATISFACTION_SUBJECT, section.Day.ToString("yyyy / MM / dd"), activity.Title, activity.Subject),
-                        Body = String.Format(MailTmeplate.Activity.SATISFACTION_CONTNET,
-                                       section.Day.ToString("yyyy / MM / dd"),
-                                       activity.Title,
-                                       activity.Subject,
-                                       Url.Action("Quiz", "Activity", new { id = EncryptService.AES.RandomizedEncrypt(register.Id.ToString()) }, Request.Scheme)
-                                       ),
-                        ToList = new List<MailAddressInfo>() { new MailAddressInfo(register.Email) }
-                    });
 
                     isSuccess = true;
                 }

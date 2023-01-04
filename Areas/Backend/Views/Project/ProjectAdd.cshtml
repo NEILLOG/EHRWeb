@@ -9,7 +9,7 @@
         $(function () {
             document.getElementById("ddlContact").onchange = function () {
                 var val = this.value;
-                var OldText = document.getElementById("ProjectExtendItem_Project_Contact").value;
+                var OldPhoneText = document.getElementById("ProjectExtendItem_Project_Contact").value;
                 //確定變更狀態
                 $.ajax({
                     type: "Post",
@@ -18,12 +18,12 @@
                     beforeSend: function (request) {
                         request.setRequestHeader("X-XSRF-TOKEN", $('input[name="__X-XSRFVerificationToken"]').val());
                     },
-                    data: { id: val, OldText: OldText },
+                    data: { id: val, OldPhoneText: OldPhoneText },
                     success: function (result) {
-                        console.log(result);
+                        var Phone = result[0];
+                        console.log(Phone);
                         $('#ProjectExtendItem_Project_Contact').val('')
-                var html = result;
-                        $('#ProjectExtendItem_Project_Contact').val(html)
+                        $('#ProjectExtendItem_Project_Contact').val(Phone)
 
                     }
                 });

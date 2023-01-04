@@ -8,13 +8,24 @@
 {
     <script type="text/javascript">
         $(document).ready(function () {
+            // 審核通過隱藏下面區塊
+            if('@Model.ConsultExtendItem.ConsultRegister.IsApprove' == "True")
+            {
+                document.getElementById("ConsultExtendItem_ConsultRegister_AssignAdviser1").disabled = true;
+                document.getElementById("ConsultExtendItem_ConsultRegister_AssignAdviser2").disabled = true;
+                document.getElementById("ConsultExtendItem_ConsultRegister_AssignAdviser3").disabled = true;
+                document.getElementById("ConsultExtendItem_ConsultRegister_AssignAdviserAssistant").disabled = true;
+                document.getElementById("ConsultExtendItem_ConsultRegister_ReAssignDate").disabled = true;
+                document.getElementById("ConsultExtendItem_ConsultRegister_ReAssignTime").disabled = true;
+                document.getElementById("ConsultExtendItem_sApprove").disabled = true;
+            }
 
-        @*檔案上傳物件*@
-                $('.File').each(function () {
-                    $(this).FileInputCus({
-                        dropZoneEnabled: false
-                    });
+            @*檔案上傳物件*@
+            $('.File').each(function () {
+                $(this).FileInputCus({
+                    dropZoneEnabled: false
                 });
+            });
 
             $('#frm').on('submit', function () {
 
@@ -129,7 +140,10 @@
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">儲存</button>
+                @if(!Model.ConsultExtendItem.ConsultRegister.IsApprove.HasValue || !Model.ConsultExtendItem.ConsultRegister.IsApprove.Value)
+                {
+                    <button type="submit" class="btn btn-primary">儲存</button>
+                }
                 <a class="btn btn-light" href="@(Url.Action("ConsultList", "Consult"))">回上一頁</a>
             </div>
         }

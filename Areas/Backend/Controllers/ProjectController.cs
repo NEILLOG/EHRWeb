@@ -452,6 +452,8 @@ namespace BASE.Areas.Backend.Controllers
                         data.ProjectExtendItem = dataList.FirstOrDefault();
 
                         data.ddlContact = _ProjectService.SetDDL_Contact();
+
+                        data.FixedProjectIds = _configuration.GetSection("Custom:FixedProjectIds").Get<List<string>>();
                     }
 
                     if (data.ProjectExtendItem == null)
@@ -552,6 +554,7 @@ namespace BASE.Areas.Backend.Controllers
                         item.Target = datapost.ProjectExtendItem.Project.Target;
                         item.Contents = datapost.ProjectExtendItem.Project.Contents;
                         item.Contact = datapost.ProjectExtendItem.Project.Contact;
+                        item.NotifyEmails = datapost.ProjectExtendItem.Project.NotifyEmails;
                         item.ModifyUser = userinfo.UserID;
                         item.ModifyDate = dtnow;
 
@@ -728,7 +731,7 @@ namespace BASE.Areas.Backend.Controllers
         [BackendCheckLogin("Menu000047", "MODIFY")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ProjectContactChange(string id, string OldText)
+        public async Task<IActionResult> ProjectContactChange(string id, string OldPhoneText, string OldMailText)
         {
             JsonResponse<TbUserInfo> result = new JsonResponse<TbUserInfo>();
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
@@ -744,7 +747,10 @@ namespace BASE.Areas.Backend.Controllers
 
             string decrypt_id = (id ?? "").ToString();
 
-            string strReturn = OldText;
+            List<string> strReturn = new List<string>();
+            string RetrunPhone = OldPhoneText;
+            string ReturnMail = OldMailText;
+
             try
             {
                 if (string.IsNullOrEmpty(decrypt_id))
@@ -766,14 +772,18 @@ namespace BASE.Areas.Backend.Controllers
                     {
                         isSuccess = true;
                         //034855368;034855368#1911;  
-                        if (string.IsNullOrEmpty(OldText) || !OldText.Contains(result.Datas.Phone + ";"))
+                        if (string.IsNullOrEmpty(OldPhoneText) || !OldPhoneText.Contains(result.Datas.Phone + ";"))
                         {
-                            strReturn += result.Datas.Phone + ";";
+                            RetrunPhone += result.Datas.Phone + ";";
                         }
 
-                        //result.Datas = new TbUserInfo();
-                        //result.Datas.Phone = item.Phone;
+                        if (string.IsNullOrEmpty(OldMailText) || !OldMailText.Contains(result.Datas.Email + ";"))
+                        {
+                            ReturnMail += result.Datas.Email + ";";
+                        }
                     }
+                    strReturn.Add(RetrunPhone);
+                    strReturn.Add(ReturnMail);
                 }
             }
             catch (Exception ex)

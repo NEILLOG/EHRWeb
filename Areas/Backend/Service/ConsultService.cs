@@ -27,7 +27,7 @@ namespace BASE.Areas.Backend.Service
                                                 select new ConsultExtend
                                                 {
                                                     ConsultRegister = consultRegister
-                                                }).ToList();
+                                                }).OrderByDescending(x=>x.ConsultRegister.CreateDate).ToList();
 
                 if (vmParam != null)
                 {

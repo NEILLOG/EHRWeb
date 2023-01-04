@@ -43,18 +43,18 @@ namespace BASE.Areas.Backend.Service
             try
             {
                 MemoryStream ms = new MemoryStream();
-                //file.CopyTo(ms);
+                file.CopyTo(ms);
 
-                //Stream stream = new MemoryStream(ms.ToArray());
+                Stream stream = new MemoryStream(ms.ToArray());
 
                 switch (extension)
                 {
                     case ".xls":
-                        result.Data = new HSSFWorkbook(ms);
+                        result.Data = new HSSFWorkbook(stream);
                         break;
 
                     case ".xlsx":
-                        result.Data = new XSSFWorkbook(ms);
+                        result.Data = new XSSFWorkbook(stream);
                         break;
 
                     default:
