@@ -515,7 +515,7 @@ namespace BASE.Areas.Backend.Controllers
                         {
                             item.Sex = datapost.MemberExtendItem.userinfo.Sex;
                             // 處理身分證
-                            if (datapost.editIdNumber.Contains("*"))
+                            if (!string.IsNullOrEmpty(datapost.editIdNumber) && datapost.editIdNumber.Contains("*"))
                             {
                                 item.IdNumber = datapost.MemberExtendItem.userinfo.IdNumber;
                             }
@@ -1052,7 +1052,7 @@ namespace BASE.Areas.Backend.Controllers
                     {
                         item.Sex = datapost.MemberExtendItem.userinfo.Sex;
                         // 處理身分證
-                        if (datapost.editIdNumber.Contains("*"))
+                        if (!string.IsNullOrEmpty(datapost.editIdNumber) && datapost.editIdNumber.Contains("*"))
                         {
                             item.IdNumber = datapost.MemberExtendItem.userinfo.IdNumber;
                         }
