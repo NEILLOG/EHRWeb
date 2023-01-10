@@ -13,6 +13,8 @@ namespace BASE.Areas.Frontend.Models
     public class VM_OtherUpload
     {
         public IFormFile? ModifyFile { get; set; }
+
+        public TbActivityRegister Main { get; set; }
     }
 
 }

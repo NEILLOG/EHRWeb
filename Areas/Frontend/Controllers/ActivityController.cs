@@ -7,8 +7,11 @@ using BASE.Models.DB;
 using BASE.Models.Enums;
 using BASE.Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Win32;
 using NPOI.SS.Formula.Functions;
 using NPOI.SS.Formula.PTG;
+using NPOI.XWPF.UserModel;
+using System.IO;
 
 namespace BASE.Areas.Frontend.Controllers
 {
@@ -304,6 +307,8 @@ namespace BASE.Areas.Frontend.Controllers
 
             TbActivityRegister? main = _fileService.Lookup<TbActivityRegister>(ref _message, x => x.Id == _decrypt_id).FirstOrDefault();
 
+            data.Main = main;
+
             try
             {
                 //檢查ID是否存在
@@ -321,6 +326,28 @@ namespace BASE.Areas.Frontend.Controllers
             return View(data);
         }
 
+        public async Task<IActionResult> Download(String id)
+        {
+            string decrypt_id = EncryptService.AES.RandomizedDecrypt(id);
+
+            // 預設的存檔路徑
+            string fileUploadRoot = _conf["Site:FileUploadRoot"];
+            // 檔案存放路徑 (注意：檔案只能存在wwwroot底下)
+            string folderPath = _fileService.MapPath(fileUploadRoot, "HealthUpload");
+
+            // 建立目錄
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+
+            // 存檔路徑
+            string filePath = _fileService.MapPath(fileUploadRoot, "HealthUpload", id + ".docx");
+
+            _activityService.GenerateHealthUpload(decrypt_id, filePath);
+
+            return File(System.IO.File.OpenRead(filePath), "application/octet-stream");
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> HealthUpload(string id, VM_OtherUpload datapost)
@@ -328,7 +355,7 @@ namespace BASE.Areas.Frontend.Controllers
             string decrypt_id = EncryptService.AES.RandomizedDecrypt(id);
             Int64 _decrypt_id = 0; Int64.TryParse(decrypt_id, out _decrypt_id);
 
-            string Feature = "健康聲明調查表上傳", Action = "新增";
+            string Feature = "健康聲明書上傳", Action = "新增";
 
             // 最終動作成功與否
             bool isSuccess = false;

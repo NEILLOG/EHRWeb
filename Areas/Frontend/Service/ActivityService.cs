@@ -1,11 +1,13 @@
 ﻿using BASE.Areas.Frontend.Models;
 using BASE.Areas.Frontend.Models.Extend;
+using BASE.Models;
 using BASE.Models.DB;
 using BASE.Models.Enums;
 using BASE.Service;
 using BASE.Service.Base;
 using Microsoft.EntityFrameworkCore;
 using NPOI.SS.Formula.PTG;
+using NPOI.XWPF.UserModel;
 
 namespace BASE.Areas.Frontend.Service
 {
@@ -13,12 +15,16 @@ namespace BASE.Areas.Frontend.Service
     {
         private readonly IConfiguration _conf;
         private readonly AllCommonService _allCommonService;
+        private readonly FileService _fileService;
+
         public ActivityService(DBContext context,
             AllCommonService allCommonService,
+            FileService fileService,
             IConfiguration configuration) : base(context)
         {
             _conf = configuration;
             _allCommonService = allCommonService;
+            _fileService = fileService;
         }
 
         public IQueryable<ActivityExtend>? GetActivityList(ref String ErrMsg, VM_ActivityQueryParam? vmParam)
@@ -141,6 +147,60 @@ namespace BASE.Areas.Frontend.Service
             {
                 ErrMsg = ex.ToString();
                 return true;
+            }
+        }
+
+        //產生健康聲明檔案並上傳
+        public void GenerateHealthUpload(String ActiveId, string filePath)
+        {
+            try
+            {
+                String message = "";
+                var activity = GetActivityExtendItem(ref message, ActiveId);
+
+                string sampleFilePath = _fileService.MapPath("Sample/HealthUpload.docx");
+                using (FileStream stream = System.IO.File.OpenRead(sampleFilePath))
+                {
+                    XWPFDocument doc = new XWPFDocument(stream);
+
+                    //段落
+                    foreach (var para in doc.Paragraphs)
+                    {
+                        string key = $"$[ActivityTitle]";
+                        if (para.Text.Contains(key))
+                        {
+                            try
+                            {
+                                para.ReplaceText(key, activity.Header.Title);
+                            }
+                            catch (Exception ex)
+                            {
+                                para.ReplaceText(key, "");
+                            }
+                        }
+
+                        string key_subject = $"$[ActivitySubject]";
+                        if (para.Text.Contains(key_subject))
+                        {
+                            try
+                            {
+                                para.ReplaceText(key_subject, activity.Header.Subject);
+                            }
+                            catch (Exception ex)
+                            {
+                                para.ReplaceText(key, "");
+                            }
+                        }
+                    }
+
+                    FileStream Fs = new FileStream(filePath, FileMode.OpenOrCreate);
+                    doc.Write(Fs);
+                    Fs.Close();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 

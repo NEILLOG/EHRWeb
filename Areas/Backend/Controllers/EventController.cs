@@ -161,7 +161,7 @@ namespace BASE.Areas.Backend.Controllers
                     item.Category = datapost.EventInfoItem.activity.Category;
                     item.Qid = datapost.EventInfoItem.activity.Qid;
                     item.RegStartDate = datapost.EventInfoItem.activity.RegStartDate;
-                    item.RegEndDate = datapost.EventInfoItem.activity.RegEndDate;
+                    item.RegEndDate = datapost.EventInfoItem.activity.RegEndDate.AddHours(23).AddMinutes(59).AddSeconds(59);
                     item.Title = datapost.EventInfoItem.activity.Title;
                     item.Subject = datapost.EventInfoItem.activity.Subject;
                     item.DateType = datapost.EventInfoItem.activity.DateType;
@@ -443,7 +443,7 @@ namespace BASE.Areas.Backend.Controllers
                             item.Category = datapost.EventInfoItem.activity.Category;
                             item.Qid = datapost.EventInfoItem.activity.Qid;
                             item.RegStartDate = datapost.EventInfoItem.activity.RegStartDate;
-                            item.RegEndDate = datapost.EventInfoItem.activity.RegEndDate;
+                            item.RegEndDate = datapost.EventInfoItem.activity.RegEndDate.AddHours(23).AddMinutes(59).AddSeconds(59);
                             item.Title = datapost.EventInfoItem.activity.Title;
                             item.Subject = datapost.EventInfoItem.activity.Subject;
                             item.DateType = datapost.EventInfoItem.activity.DateType;
@@ -1771,7 +1771,7 @@ namespace BASE.Areas.Backend.Controllers
                                     string sContent = "敬愛的學員，您好： <br />";
                                     sContent += string.Format("感謝您於{0}月{1}日參加勞動部勞動力發展署桃竹苗分署主辦之{2}–{3}。<br />", actMonth, actDay, activity.Title, activity.Subject);
                                     sContent += "為優化活動品質，桃竹苗分署邀請您填寫本次活動滿意度調查問卷，作為未來活動規劃與改善之參考，敬請協助填寫，謝謝您！<br /><br />";
-                                    sContent += string.Format("{0}月{1}日滿意度問卷調查連結：<br /><a href='{2}/Frontend/Activity/Quiz/{3}' target='_blank'>網址連結</a><br /><br />", actMonth, actDay, webSiteDomain, EncryptService.AES.RandomizedEncrypt(item.Id.ToString()));
+                                    sContent += string.Format("{0}月{1}日滿意度問卷調查連結：<br /><a href='{2}/Frontend/Activity/Quiz/{3}' target='_blank'>網址連結</a><br /><br />", actMonth, actDay, webSiteDomain, EncryptService.AES.RandomizedEncrypt(register.Id.ToString()));
                                     sContent += "附件：課程講義、其他服務資源資訊<br /><br />";
                                     sContent += "敬祝 順心平安<br />";
                                     sContent += "勞動部勞動力發展署桃竹苗分署<br />";
