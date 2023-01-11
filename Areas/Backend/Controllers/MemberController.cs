@@ -893,9 +893,7 @@ namespace BASE.Areas.Backend.Controllers
             bool unCaughtError = false;
 
             try
-            {
-                // 下拉群組
-                data.ddlGroup = _accountService.SetDDL_Group(1);
+            {            
                 // radioButton:專業領域
                 data.chbProfessionalField = _accountService.SetDDL_ProfessionalField(0);
 
@@ -903,6 +901,10 @@ namespace BASE.Areas.Backend.Controllers
                 if (dataList != null)
                 {
                     data.MemberExtendItem = await dataList.SingleOrDefaultAsync();
+
+                    // 下拉群組
+                    //data.ddlGroup = _accountService.SetDDL_Group(1);
+                    data.ddlGroup = _accountService.SetDDL_Group(1, data.MemberExtendItem.userinfoGroup.GroupId);
 
                     // 編輯頁面用的密碼，需先解密呈現在前端，因為前端無法解密只好重後端處理
                     // 但如果直接對本來的值做改寫，會直接被存進DB

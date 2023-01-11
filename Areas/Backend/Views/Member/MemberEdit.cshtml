@@ -215,7 +215,7 @@
                 <div class="col-12 form-group mb-3">
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.MemberExtendItem.userinfo.IsActive, "是否啟用", new { @class = "form-label" })<br>
-                    @if (Model.MemberExtendItem.userinfoGroup.GroupId == "G000000001")
+                    @if (Model.Search.sGroup == "G000000001")
                     {
                         @Html.RadioButtonFor(x=>x.MemberExtendItem.userinfo.IsActive,true,new{@id="isAction", data_parsley_required = "",disabled="disabled"})
                         <span>是</span>
