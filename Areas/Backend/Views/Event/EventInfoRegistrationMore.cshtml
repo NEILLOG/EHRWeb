@@ -46,8 +46,14 @@
                                 <td style="max-width:30vw;">2</td>
                                 <td style="max-width:30vw;">滿意度問卷</td>
                                 <td style="max-width:30vw;">
-                                    <a class="btn btn-primary btn-sm" href="~/Frontend/Activity/QuizView/@EncryptService.AES.RandomizedEncrypt(Model.RegistrationExtendItem.register.Id.ToString())" title="(另開新視窗)前台滿意度問卷" target="_blank">查看</a>
-                                    @*<button type="button" class="btn btn-primary btn-sm">查看</button>*@
+                                    @if (Model.isFillQuiz)
+                                    { 
+                                        <a class="btn btn-primary btn-sm" href="~/Frontend/Activity/QuizView/@EncryptService.AES.RandomizedEncrypt(Model.RegistrationExtendItem.register.Id.ToString())" title="(另開新視窗)前台滿意度問卷" target="_blank">查看</a>
+                                    }else
+                                    {
+                                        <button type="button" class="btn btn-warning btn-sm" disabled="disabled">參與者未回填</button>
+                                    }
+                                    
                                 </td>
                             </tr>
                         </tbody>

@@ -4,6 +4,15 @@
 
 @await Html.PartialAsync("_BannerPartial", new BASE.Areas.Frontend.Models.Extend.BannerPartial(){ Main = "計畫資源地圖", Detail = "" })
 
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#contents').find('img').addClass('img-fluid');
+        });
+    </script>
+}
+
+
 <!-- ================================================== -->
 <!-- 企業資源專區 -->
 <!-- ================================================== -->
@@ -47,7 +56,7 @@
                 </div>
             </div>
             <!-- 右邊內容區塊 -->
-            <div class="col-lg-9 col-12">
+            <div class="col-lg-9 col-12" id="contents">
                 @(new HtmlString(Model.ExtendItem.Contents))
             </div>
         </div>

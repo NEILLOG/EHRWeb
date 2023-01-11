@@ -63,10 +63,8 @@
                     @Html.HiddenFor(x => x.Search.PagerInfo.m_Search, new { @class="pager-Info-Search" })
 
                     <div class="row g-3 align-items-end mb-3">
+                      
                         <div class="col-12 col-md-auto">
-                            <a class="btn btn-primary" href="@(Url.Action("Add", "Quiz"))">新增</a>
-                        </div>
-                        <div class="col-12 col-md-auto ms-auto">
                             <div class="input-group">
                                 @Html.LabelFor(x => x.Search.Keyword, "關鍵字", new { @class="input-group-text" })
                                 @Html.TextBoxFor(x => x.Search.Keyword, new { @type="text", @class="form-control", @placeholder="請輸入關鍵字", @aria_label="關鍵字" })
@@ -79,6 +77,12 @@
                         </div>
                         <div class="col-12 col-md-auto">
                             <button type="submit" class="btn btn-primary float-end">查詢</button>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 align-items-end mb-3">
+                        <div class="col-12 col-md-auto  ms-auto">
+                            <a class="btn btn-primary" href="@(Url.Action("Add", "Quiz"))">新增</a>
                         </div>
                     </div>
                 }

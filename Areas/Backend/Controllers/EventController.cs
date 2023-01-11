@@ -1,6 +1,7 @@
 ﻿using BASE.Areas.Backend.Models;
 using BASE.Areas.Backend.Models.Extend;
 using BASE.Areas.Backend.Service;
+using BASE.Areas.Frontend.Models.Extend;
 using BASE.Extensions;
 using BASE.Filters;
 using BASE.Models;
@@ -1192,8 +1193,12 @@ namespace BASE.Areas.Backend.Controllers
                 else
                 {
                     IQueryable<RegistrationExtend>? temp = _eventService.GetRegistrationExtendItem(ref _message, decrypt_id);
-                    if (temp != null)
+                    if (temp != null) { 
                         data.RegistrationExtendItem = await temp.SingleOrDefaultAsync();
+
+                        // 是否填寫問卷?
+                        data.isFillQuiz = _eventService.Lookup<TbActivityQuizResponse>(ref _message, x => x.RegisterId == data.RegistrationExtendItem.register.Id).Any();
+                    }
 
                     isSuccess = true;
                 }
@@ -1705,6 +1710,9 @@ namespace BASE.Areas.Backend.Controllers
             TbActivityRegisterSection? item = new TbActivityRegisterSection();
             // 是否要寄送滿意度問卷調查
             bool isSend = false;
+
+            // 寄件附檔
+            List<Attachment>? listAttachments = new List<Attachment>();
             try
             {
                 if (string.IsNullOrEmpty(registerSectionID))
@@ -1782,7 +1790,14 @@ namespace BASE.Areas.Backend.Controllers
                                     string HandoutFilePath = "";
                                     TbFileInfo HandoutFile = _eventService.Lookup<TbFileInfo>(ref _message).Where(x => x.FileId == activity.HandoutFile).FirstOrDefault();
                                     if (HandoutFile != null)
+                                    {
                                         HandoutFilePath = _fileService.MapPath(HandoutFile.FilePath);
+                                        Attachment attachmentHandout = new Attachment(HandoutFilePath);
+                                        string strExtend = HandoutFile.FileName.Split('.')[1];
+                                        attachmentHandout.Name = "講義_" + dtnow.Millisecond.ToString() + "." + strExtend;  // set name here
+                                        listAttachments.Add(attachmentHandout);
+                                    }
+                                    
 
                                     // 製作學員出席證明
                                     ProofExportExtend itemProof = new ProofExportExtend()
@@ -1807,10 +1822,13 @@ namespace BASE.Areas.Backend.Controllers
                                         Directory.CreateDirectory(folderPath);
 
                                     // 存檔路徑
-                                    string filePath = _fileService.MapPath(fileUploadRoot, "ProofOfStudent/" + register.Id, "學員" + register.Name + "出席證明.docx");
+                                    string filePath = _fileService.MapPath(fileUploadRoot, "ProofOfStudent/" + register.Id, "學員" + register.Name + "出席證明"+ ".docx");
                                     
                                     // 產生學生出席證明word 
                                     var GenerateProof = _exportService.ProofWord(itemProof, filePath);
+                                    Attachment attachmentProof = new Attachment(filePath);
+                                    attachmentProof.Name = "學員" + register.Name + "出席證明_" + dtnow.Millisecond.ToString() + ".docx";  // set name here
+                                    listAttachments.Add(attachmentProof);
 
                                     //直接測試寄信
                                     await _mailService.SendEmail(new MailViewModel()
@@ -1818,7 +1836,7 @@ namespace BASE.Areas.Backend.Controllers
                                         ToList = new List<MailAddressInfo>() { new MailAddressInfo(register.Email) },
                                         Subject = sSubject,
                                         Body = sContent,
-                                        AttachmentList = new List<Attachment>() { new Attachment(filePath), new Attachment(HandoutFilePath) }
+                                        AttachmentList = listAttachments
                                     });
                                 }
                             }

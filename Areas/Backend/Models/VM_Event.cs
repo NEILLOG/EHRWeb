@@ -29,6 +29,11 @@ namespace BASE.Areas.Backend.Models
         /// <summary> 群組Id </summary>
         public string GroupId { get; set; }
 
+        /// <summary>
+        /// 是否填寫問卷
+        /// </summary>
+        public bool isFillQuiz { get; set; }
+
         #region 下拉選單
         /// <summary> 類型 </summary>
         public List<SelectListItem> ddlCategory { get; set; }
