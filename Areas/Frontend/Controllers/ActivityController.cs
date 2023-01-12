@@ -12,6 +12,7 @@ using NPOI.SS.Formula.Functions;
 using NPOI.SS.Formula.PTG;
 using NPOI.XWPF.UserModel;
 using System.IO;
+using System.Net.Mail;
 
 namespace BASE.Areas.Frontend.Controllers
 {
@@ -23,13 +24,15 @@ namespace BASE.Areas.Frontend.Controllers
         private readonly ActivityService _activityService;
         private readonly QuizService _quizService;
         private readonly MailService _mailService;
+        private readonly BASE.Areas.Backend.Service.ExportService _exportService;
 
         public ActivityController(IConfiguration configuration,
             AllCommonService allCommonService,
             ActivityService activtyService,
             FileService fileService,
             QuizService quizService,
-            MailService mailService)
+            MailService mailService,
+            BASE.Areas.Backend.Service.ExportService exportService)
         {
             _conf = configuration;
             _allCommonService = allCommonService;
@@ -37,6 +40,7 @@ namespace BASE.Areas.Frontend.Controllers
             _fileService = fileService;
             _quizService = quizService;
             _mailService = mailService;
+            _exportService = exportService;
         }
 
         public async Task<IActionResult> List(String id = "")
@@ -465,11 +469,11 @@ namespace BASE.Areas.Frontend.Controllers
                     throw new Exception("查無活動資料");
 
                 var quiz_model = _allCommonService.Lookup<TbQuiz>(ref _message, x => x.Id == activity_model.Qid).FirstOrDefault();
-                if (activity_model == null)
+                if (quiz_model == null)
                     throw new Exception("此活動查無此問卷資料");
 
                 //TODO: 如果已經填寫過問卷，則重新導向至已填答頁面
-                var IsLastFillResponse = _allCommonService.Lookup<TbActivityQuizResponse>(ref _message, x => x.QuizId == quiz_model.Id).Any();
+                var IsLastFillResponse = _allCommonService.Lookup<TbActivityQuizResponse>(ref _message, x => x.RegisterId == _RegisterId).Any();
                 if (IsLastFillResponse)
                     return RedirectToAction("QuizView", new { id = id });
 
@@ -686,13 +690,61 @@ namespace BASE.Areas.Frontend.Controllers
                     if (register == null)
                         throw new ValidException("找不到您的報名資料，請再確認");
 
-                    var register_section = _allCommonService.Lookup<TbActivityRegisterSection>(ref _message, x => x.RegisterSectionId == _SectionId && x.ActivityId == ActivityId).FirstOrDefault();
-                    if (register == null)
+                    var register_section = _allCommonService.Lookup<TbActivityRegisterSection>(ref _message, x => x.RegisterSectionId == _SectionId && x.RegisterId == register.Id).FirstOrDefault();
+                    if (register_section == null)
                         throw new ValidException("找不到您的報名場次資料，請再確認");
+
+
 
                     //只有第一次簽到寄送
                     if(register_section.IsSigninAm == false && register_section.IsSigninPm == false)
                     {
+
+                        // 製作學員出席證明
+                        BASE.Areas.Backend.Models.Extend.ProofExportExtend itemProof = new BASE.Areas.Backend.Models.Extend.ProofExportExtend()
+                        {
+                            ActivityTitle = activity.Title,
+                            ActivitySubject = activity.Subject,
+                            StudentName = register.Name,
+                            Year = (section.Day.Year - 1911).ToString(),
+                            Month = section.Day.Month.ToString(),
+                            Day = section.Day.Day.ToString(),
+                            Week = Week(section.Day),
+                            Time = section.StartTime.ToString("hh\\:mm") + "~" + section.EndTime.ToString("hh\\:mm")
+                        };
+
+                        // 預設的存檔路徑
+                        string fileUploadRoot = _conf["Site:FileUploadRoot"];
+                        // 檔案存放路徑 (注意：檔案只能存在wwwroot底下)
+                        string folderPath = _fileService.MapPath(fileUploadRoot, "ProofOfStudent/" + register.Id);
+
+                        // 建立目錄
+                        if (!Directory.Exists(folderPath))
+                            Directory.CreateDirectory(folderPath);
+
+                        // 存檔路徑
+                        string filePath = _fileService.MapPath(fileUploadRoot, "ProofOfStudent/" + register.Id, "學員" + register.Name + "出席證明" + ".docx");
+
+                        List<Attachment>? listAttachments = new List<Attachment>();
+
+                        // 產生學生出席證明word 
+                        var GenerateProof = _exportService.ProofWord(itemProof, filePath);
+                        Attachment attachmentProof = new Attachment(filePath);
+                        attachmentProof.Name = "學員" + register.Name + "出席證明_" + DateTime.Now.Millisecond.ToString() + ".docx";  // set name here
+                        listAttachments.Add(attachmentProof);
+
+                        // 取出講義
+                        string HandoutFilePath = "";
+                        TbFileInfo HandoutFile = _allCommonService.Lookup<TbFileInfo>(ref _message).Where(x => x.FileId == activity.HandoutFile).FirstOrDefault();
+                        if (HandoutFile != null)
+                        {
+                            HandoutFilePath = _fileService.MapPath(HandoutFile.FilePath);
+                            Attachment attachmentHandout = new Attachment(HandoutFilePath);
+                            string strExtend = HandoutFile.FileName.Split('.')[1];
+                            attachmentHandout.Name = "講義_" + DateTime.Now.Millisecond.ToString() + "." + strExtend;  // set name here
+                            listAttachments.Add(attachmentHandout);
+                        }
+
                         //寄送問卷調查通知
                         await _mailService.SendEmail(new MailViewModel()
                         {
@@ -703,7 +755,8 @@ namespace BASE.Areas.Frontend.Controllers
                                            activity.Subject,
                                            Url.Action("Quiz", "Activity", new { id = EncryptService.AES.RandomizedEncrypt(register.Id.ToString()) }, Request.Scheme)
                                            ),
-                            ToList = new List<MailAddressInfo>() { new MailAddressInfo(register.Email) }
+                            ToList = new List<MailAddressInfo>() { new MailAddressInfo(register.Email) },
+                            AttachmentList = listAttachments
                         });
                     }
 
@@ -771,6 +824,15 @@ namespace BASE.Areas.Frontend.Controllers
                 return View(datapost);
             }
 
+        }
+
+
+        public string Week(DateTime ActDate)
+        {
+            string[] weekdays = { "日", "一", "二", "三", "四", "五", "六" };
+            string week = weekdays[Convert.ToInt32(ActDate.DayOfWeek)];
+
+            return week;
         }
 
 
