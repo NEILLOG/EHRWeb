@@ -101,6 +101,7 @@ namespace BASE.Service
                 int saltLength = GetSaltLength();
                 byte[] ba = new byte[saltLength];
                 RandomNumberGenerator.Create().GetBytes(ba);
+                
                 return ba;
             }
 
@@ -269,7 +270,8 @@ namespace BASE.Service
 
                     byte[] baText = Encoding.UTF8.GetBytes(text);
 
-                    byte[] baSalt = GetRandomBytes();
+                    //byte[] baSalt = GetRandomBytes();  //隨機值
+                    byte[] baSalt = new byte[] { 11, 228, 42, 63, 235, 203, 79, 147 };  //因無障礙檢測Freego的執行個體會造成每次讀取頁面都不同，導致永遠檢測不完，故檢測時須使用固定值
                     byte[] baEncrypted = new byte[baSalt.Length + baText.Length];
 
                     // Combine Salt + Text

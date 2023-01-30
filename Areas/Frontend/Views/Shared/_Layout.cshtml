@@ -31,6 +31,7 @@
         <div class="small-header d-none d-lg-block" id="small-header">
             <div class="container-fluid">
                 <div class="row justify-content-end align-items-center">
+                    <a accesskey="U" href="#" title="上方功能區塊" class="sr-only sr-only-focusable">:::</a>
                     <div class="col-5 topLinks">
                         <a class="slink" href="@Url.Action("Index", "Home")" title="回首頁">回首頁</a>
                         <a class="slink" href="@Url.Action("Accessible", "Home")" title="網站導覽">網站導覽</a>
@@ -50,6 +51,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <a accesskey="M" href="#" title="主要功能選單區塊" class="sr-only sr-only-focusable">:::</a>
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -106,7 +108,7 @@
         
 
         <div>
-        @RenderBody()
+            @RenderBody()
         </div>
 
     </main>
@@ -115,7 +117,7 @@
     <!-- Footer -->
     <!-- ================================================== -->
     <footer class="container-fluid mt-5 p-lg-5 p-4 position-relative">
-        <img src="~/areas/frontend/img/circle.png" class="pic-circle-bottom d-none d-lg-block">
+        <img src="~/areas/frontend/img/circle.png" class="pic-circle-bottom d-none d-lg-block" alt="">
         <div class="footer row row-cols-auto justify-content-center align-items-center flex-column flex-md-row">
             <div class="col">
                 <img src="~/areas/frontend/img/footer/left-logo.png" class="img-fluid" alt="勞動力發展署桃竹苗分署Logo">

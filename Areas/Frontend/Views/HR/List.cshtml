@@ -20,6 +20,7 @@
             <!-- 左邊按鈕區塊 -->
             <div class="col-lg-3 col-12">
                 <div class="activityBtn bg-white p-3">
+                    <a accesskey="L" href="#" title="左方功能區塊" class="sr-only sr-only-focusable">:::</a>
                     <ul class="nav nav-tabs flex-column" id="HRToolBoxTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <a href="@Url.Action("List", new { id = "HR知識充電站"})" class="nav-link @(Model.Search.Category == "HR知識充電站" ? "active" : "")">
@@ -54,6 +55,7 @@
             </div>
             <!-- 右邊內容區塊 -->
             <div class="col-lg-9 col-12">
+                <a accesskey="C" href="#" title="中央內容區塊" class="sr-only sr-only-focusable">:::</a>
 
                 <ul class="hr-charger">
                     @foreach(var item in Model.ExtendList)

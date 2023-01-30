@@ -1259,6 +1259,7 @@ namespace BASE.Areas.Backend.Controllers
             TbActivity? activity = new TbActivity();
             TbActivitySection? activitySection = new TbActivitySection();
             List<TbActivityRegister>? activityRegister = new List<TbActivityRegister>();
+            List<RegistrationExtend>? dataList = new List<RegistrationExtend>();
             List<long>? listSuccess = new List<long>();
             List<long>? listReserve = new List<long>();
 
@@ -1281,7 +1282,7 @@ namespace BASE.Areas.Backend.Controllers
                     activitySection = _eventService.Lookup<TbActivitySection>(ref _message, x => x.Id == longSection).FirstOrDefault();
 
                     //取資料
-                    List<RegistrationExtend>? dataList = _eventService.GetRegistrationExtendList(ref _message, searchParam);
+                    dataList = _eventService.GetRegistrationExtendList(ref _message, searchParam);
 
                     if (dataList == null)
                     {
@@ -1360,6 +1361,9 @@ namespace BASE.Areas.Backend.Controllers
                     {
                         foreach (var itemSuccess in activityRegister.Where(x => listSuccess.Contains(x.Id)))
                         {
+                            // 取得該報名者子表的活動參與方式
+                            string strJoinType = dataList.Where(x => x.registerSection.RegisterId == itemSuccess.Id).Select(x=>x.registerSection.RegisterSectionType).FirstOrDefault();
+
                             // 主旨
                             string sSubject = string.Concat("勞動部勞動力發展署桃竹苗分署-", actMonth, "月", actDay, "日", activity.Title, "-", activity.Subject, "報名成功通知信(本郵件由系統自動寄發，請問直接回覆此郵件)");
 
@@ -1367,7 +1371,7 @@ namespace BASE.Areas.Backend.Controllers
                             string sContent = string.Concat(itemSuccess.Name, "您好<br />");
                             sContent += string.Concat("您已成功報名", actMonth, "月", actDay, "日 「", activity.Title, "-", activity.Subject, "」，本活動資訊如下：<br />");
                             sContent += string.Concat("活動主題：「", activity.Subject, "」<br />");
-                            sContent += string.Concat("活動參與方式：", activitySection.SectionType, "<br />");
+                            sContent += string.Concat("活動參與方式：", strJoinType, "<br />");
                             sContent += string.Concat("活動時間：", actMonth, "月", actDay, "日", activitySection.StartTime, '-', activitySection.EndTime, "【活動將於開始前30分鐘開放報到】<br />");
                             sContent += string.Concat("活動地點：", activity.Place, "<br /><br />");
                             sContent += String.Format("※提醒您，活動當天請準時出席，若臨時有事不克參與請於活動開始前3天回信至{0}或來電取消報名<br /><br />", Creater.Email);
@@ -1391,6 +1395,8 @@ namespace BASE.Areas.Backend.Controllers
                     {
                         foreach (var itemReserve in activityRegister.Where(x => listReserve.Contains(x.Id)))
                         {
+                            // 取得該報名者子表的活動參與方式
+                            string strJoinType = dataList.Where(x => x.registerSection.RegisterId == itemReserve.Id).Select(x => x.registerSection.RegisterSectionType).FirstOrDefault();
                             // 主旨
                             string sSubject = string.Concat("勞動部勞動力發展署桃竹苗分署-", actMonth, "月", actDay, "日", activity.Title, "-", activity.Subject, "報名備取成功通知信");
 
@@ -1399,7 +1405,7 @@ namespace BASE.Areas.Backend.Controllers
                             sContent += string.Concat("感謝您報名", actMonth, "月", actDay, "日 「", activity.Title, "-", activity.Subject, "」，因活動名額釋出，在此通知您備取成功，");
                             sContent += "敬請於活動當天準時出席，本活動資訊如下：<br />";
                             sContent += string.Concat("活動主題：「", activity.Subject, "」<br />");
-                            sContent += string.Concat("活動參與方式：", activitySection.SectionType, "<br />");
+                            sContent += string.Concat("活動參與方式：", strJoinType, "<br />");
                             sContent += string.Concat("活動時間：", actMonth, "月", actDay, "日", activitySection.StartTime, '-', activitySection.EndTime, "【活動將於開始前30分鐘開放報到】<br />");
                             sContent += string.Concat("活動地點：", activity.Place, "<br /><br />");
 
@@ -1464,6 +1470,7 @@ namespace BASE.Areas.Backend.Controllers
             TbActivity? activity = new TbActivity();
             TbActivitySection? activitySection = new TbActivitySection();
             List<TbActivityRegister>? activityRegister = new List<TbActivityRegister>();
+            List<TbActivityRegister>? dataList = new List<TbActivityRegister>();
             List<long>? listSuccess = new List<long>();
             List<long>? listFail = new List<long>();
             List<long>? listReserve = new List<long>();
@@ -1483,7 +1490,7 @@ namespace BASE.Areas.Backend.Controllers
                     activitySection = _eventService.Lookup<TbActivitySection>(ref _message, x => x.Id == longSection).FirstOrDefault();
 
                     //取資料
-                    List<TbActivityRegister>? dataList = _eventService.Lookup<TbActivityRegister>(ref _message, x => arrRegistration.Contains(x.Id.ToString())).ToList();
+                    dataList = _eventService.Lookup<TbActivityRegister>(ref _message, x => arrRegistration.Contains(x.Id.ToString())).ToList();
 
                     if (dataList == null)
                     {
@@ -1575,6 +1582,9 @@ namespace BASE.Areas.Backend.Controllers
                     {
                         foreach (var itemSuccess in activityRegister.Where(x=> listSuccess.Contains(x.Id)))
                         {
+                            // 取得該報名者子表的活動參與方式
+                            string strJoinType = _eventService.Lookup<TbActivityRegisterSection>(ref _message, x => x.RegisterId == itemSuccess.Id).Select(x => x.RegisterSectionType).FirstOrDefault();
+
                             // 主旨
                             string sSubject = string.Concat("勞動部勞動力發展署桃竹苗分署-", actMonth,"月", actDay,"日",activity.Title,"-",activity.Subject,"報名成功通知信(本郵件由系統自動寄發，請問直接回覆此郵件)");
 
@@ -1582,7 +1592,7 @@ namespace BASE.Areas.Backend.Controllers
                             string sContent = string.Concat(itemSuccess.Name, "您好<br />");
                             sContent += string.Concat("您已成功報名", actMonth, "月", actDay, "日 「", activity.Title, "-", activity.Subject, "」，本活動資訊如下：<br />");
                             sContent += string.Concat("活動主題：「", activity.Subject , "」<br />");
-                            sContent += string.Concat("活動參與方式：", activitySection.SectionType , "<br />");
+                            sContent += string.Concat("活動參與方式：", strJoinType, "<br />");
                             sContent += string.Concat("活動時間：", actMonth, "月", actDay, "日", activitySection.StartTime ,'-', activitySection.EndTime, "【活動將於開始前30分鐘開放報到】<br />");
                             sContent += string.Concat("活動地點：", activity.Place, "<br /><br />");
                             sContent += "※提醒您，活動當天請準時出席，若臨時有事不克參與請於活動開始前3天回信至000@wda.gov.tw或來電取消報名<br /><br />";
@@ -1633,6 +1643,9 @@ namespace BASE.Areas.Backend.Controllers
                     {
                         foreach (var itemReserve in activityRegister.Where(x => listReserve.Contains(x.Id)))
                         {
+                            // 取得該報名者子表的活動參與方式
+                            string strJoinType = _eventService.Lookup<TbActivityRegisterSection>(ref _message, x => x.RegisterId == itemReserve.Id).Select(x => x.RegisterSectionType).FirstOrDefault();
+
                             // 主旨
                             string sSubject = string.Concat("勞動部勞動力發展署桃竹苗分署-", actMonth, "月", actDay, "日", activity.Title, "-", activity.Subject, "報名備取成功通知信");
 
@@ -1641,7 +1654,7 @@ namespace BASE.Areas.Backend.Controllers
                             sContent += string.Concat("感謝您報名", actMonth, "月", actDay, "日 「", activity.Title, "-", activity.Subject, "」，因活動名額釋出，在此通知您備取成功，");
                             sContent += "敬請於活動當天準時出席，本活動資訊如下：<br />";
                             sContent += string.Concat("活動主題：「", activity.Subject, "」<br />");
-                            sContent += string.Concat("活動參與方式：", activitySection.SectionType, "<br />");
+                            sContent += string.Concat("活動參與方式：", strJoinType, "<br />");
                             sContent += string.Concat("活動時間：", actMonth, "月", actDay, "日", activitySection.StartTime, '-', activitySection.EndTime, "【活動將於開始前30分鐘開放報到】<br />");
                             sContent += string.Concat("活動地點：", activity.Place, "<br /><br />");
 
@@ -1793,8 +1806,9 @@ namespace BASE.Areas.Backend.Controllers
                                     {
                                         HandoutFilePath = _fileService.MapPath(HandoutFile.FilePath);
                                         Attachment attachmentHandout = new Attachment(HandoutFilePath);
+                                        string strFileName = HandoutFile.FileName.Split('.')[0];
                                         string strExtend = HandoutFile.FileName.Split('.')[1];
-                                        attachmentHandout.Name = "講義_" + dtnow.Millisecond.ToString() + "." + strExtend;  // set name here
+                                        attachmentHandout.Name = strFileName + "_" + dtnow.ToString("yyyyMMddHHmmss") + "." + strExtend;  // set name here
                                         listAttachments.Add(attachmentHandout);
                                     }
                                     
@@ -1991,7 +2005,7 @@ namespace BASE.Areas.Backend.Controllers
                 datapost.Search.activityId = datapost.ActivityItem.Id;
 
                 //取資料
-                List<RegistrationExtend>? dataList = _eventService.GetRegistrationExtendList(ref _message, datapost.Search).Where(x=>x.register.IsValid.HasValue && x.register.IsValid.Value).OrderBy(x=>x.register.Name).ToList();
+                List<RegistrationExtend>? dataList = _eventService.GetRegistrationExtendList(ref _message, datapost.Search).Where(x=>x.register.IsValid.HasValue && x.register.IsValid.Value && x.registerSection.RegisterSectionType != "線上").OrderBy(x=>x.register.Name).ToList();
 
                 // 取得活動日期與時段
                 long sectionId = Convert.ToInt64(datapost.Search.sSection);

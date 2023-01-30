@@ -7,7 +7,6 @@
     </style>
     <!-- Owl Stylesheets -->
     <link rel="stylesheet" href="~/areas/frontend/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="~/areas/frontend/css/owl.theme.default.min.css">
 
     <!-- Custom styles for this template -->
     <link href="~/areas/frontend/css/carousel.css" rel="stylesheet">
@@ -89,7 +88,7 @@
 <!-- 圖片按鈕 -->
 <!-- ================================================== -->
 <div class="container imgbtnBox">
-    <img src="~/areas/frontend/img/circle.png" class="pic-circle d-none d-lg-block">
+    <img src="~/areas/frontend/img/circle.png" class="pic-circle d-none d-lg-block" alt="">
     <div class="row justify-content-center align-items-center">
         <div class="col-12 col-md-4">
             <a href="@Url.Action("List", "Activity")" class="item">
@@ -241,7 +240,7 @@
                         <img src="~/areas/frontend/img/icon/users.svg" alt="" class="d-block">
                         <h5 class="card-title d-inline-block fw-bold fs-2 fc-white my-2">熱門報名課程</h5>
                         <small class="d-inline-block ms-2 fc-gray fst-italic">COURSES</small>
-                        <p class="card-text fc-white">上課時間和價格很有彈性，此外，網站經常不定時推出優惠活動、努力了解使用者想法並做出改善。而客服也總是能非常即時且盡責地回覆問題，整體來說是很替學生著想的網站。</p>
+                        <p class="card-text fc-white"></p>
                     </div>
                 </div>
             </div>
@@ -295,6 +294,7 @@
                             <h5 class="card-title fs-1 fw-bold">查看更多</h5>
                             <a href="@Url.Action("List", "Activity")" class="fc-white mt-5 stretched-link">
                                 <i class="fa-regular fa-circle-right fs-1" aria-hidden="true"></i>
+                                <span class="sr-only">查看更多</span>
                             </a>
                         </div>
                     </div>

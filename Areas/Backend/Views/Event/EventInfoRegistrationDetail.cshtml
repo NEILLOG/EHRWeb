@@ -61,10 +61,13 @@
                 @Html.LabelFor(x => x.RegistrationExtendItem.registerSection.RegisterSectionType, "課程參與模式", new { @class = "form-label" })
                 @Html.TextBoxFor(x => x.RegistrationExtendItem.registerSection.RegisterSectionType, new { @class="form-control"})
             </div>
-            <div class="col-6 form-group mb-3">
-                @Html.LabelFor(x => x.RegistrationExtendItem.registerSection.IsVegin, "飲食選擇", new { @class = "form-label" })
-                <input class="form-control" type="text" value="@(Model.RegistrationExtendItem.registerSection.IsVegin ? "葷":"素" )"/>
-            </div>
+            @if(Model.RegistrationExtendItem.registerSection.RegisterSectionType != "線上")
+            {
+                <div class="col-6 form-group mb-3" >
+                    @Html.LabelFor(x => x.RegistrationExtendItem.registerSection.IsVegin, "飲食選擇", new { @class = "form-label" })
+                    <input class="form-control" type="text" value="@(Model.RegistrationExtendItem.registerSection.IsVegin ? "葷":"素" )"/>
+                </div>
+            }
             <div class="col-6 form-group mb-3">
                 @Html.LabelFor(x => x.RegistrationExtendItem.register.InfoFrom, "訊息來源", new { @class = "form-label" })
                 @Html.TextBoxFor(x => x.RegistrationExtendItem.register.InfoFrom ,  new { @class="form-control"})

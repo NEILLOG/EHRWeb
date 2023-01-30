@@ -748,9 +748,9 @@ namespace BASE.Areas.Frontend.Controllers
                         //寄送問卷調查通知
                         await _mailService.SendEmail(new MailViewModel()
                         {
-                            Subject = String.Format(MailTmeplate.Activity.SATISFACTION_SUBJECT, section.Day.ToString("yyyy / MM / dd"), activity.Title, activity.Subject),
+                            Subject = String.Format(MailTmeplate.Activity.SATISFACTION_SUBJECT, section.Day.ToString("M月d日"), activity.Title, activity.Subject),
                             Body = String.Format(MailTmeplate.Activity.SATISFACTION_CONTNET,
-                                           section.Day.ToString("yyyy / MM / dd"),
+                                           section.Day.ToString("M月d日"),
                                            activity.Title,
                                            activity.Subject,
                                            Url.Action("Quiz", "Activity", new { id = EncryptService.AES.RandomizedEncrypt(register.Id.ToString()) }, Request.Scheme)

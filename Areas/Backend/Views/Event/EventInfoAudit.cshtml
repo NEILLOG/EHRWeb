@@ -214,7 +214,7 @@
                 </div>
                 <div class="col-12 form-group mb-3">
                     @Html.LabelFor(x => x.EventInfoItem.activity.HandoutFile, "講義", new { @class = "form-label" })
-                    @Html.TextBoxFor(x => x.HandoutFile, new { @FileID = "HandoutFile", @class="form-control File", @type = "file", data_parsley_errors_container="#handout-errors-container" })
+                    @Html.TextBoxFor(x => x.HandoutFile, new { @id ="btn_HandoutFileUpload",@FileID = "HandoutFile", @class="form-control File", @type = "file", data_parsley_errors_container="#handout-errors-container" })
                     @Html.HiddenFor(x => x.EventInfoItem.activity.HandoutFile, new { @id ="HandoutFile" })
                     <div id="handout-errors-container"></div>
                 </div>

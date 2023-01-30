@@ -15,45 +15,56 @@
     </script>
 }
 
-<div class="row">
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead class="table-primary">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>項次</th>
+                                    <th>表單名稱</th>
+                                    <th>功能</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @if (Model.RegistrationExtendItem.registerSection.RegisterSectionType != "線上")
+                            {
+                                <tr>
+                                    <td style="max-width:30vw;">1</td>
+                                    <td style="max-width:30vw;">健康申明調查表</td>
+                                    <td style="max-width:30vw;">
+                                        @if (Model.RegistrationExtendItem.File_Health == null)
+                                        {
+                                            <button type="button" class="btn btn-warning btn-sm" disabled="disabled">參與者未回填</button>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-primary btn-sm" href="@Model.RegistrationExtendItem.File_Health.FilePath" title="點擊下載健康申明調查表">查看</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
                             <tr>
-                                <th>項次</th>
-                                <th>表單名稱</th>
-                                <th>功能</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="max-width:30vw;">1</td>
-                                <td style="max-width:30vw;">健康申明調查表</td>
-                                <td style="max-width:30vw;">
-                                    @if (Model.RegistrationExtendItem.File_Health == null)
-                                    {
-                                        <button type="button" class="btn btn-warning btn-sm" disabled="disabled">參與者未回填</button>
-                                    }else
-                                    {
-                                        <a class="btn btn-primary btn-sm" href="@Model.RegistrationExtendItem.File_Health.FilePath" title="點擊下載健康申明調查表">查看</a>
-                                    }
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="max-width:30vw;">2</td>
+                                @if (Model.RegistrationExtendItem.registerSection.RegisterSectionType != "線上")
+                                {
+                                    <td style="max-width:30vw;">2</td>
+                                }else
+                                {
+                                    <td style="max-width:30vw;">1</td>
+                                }
                                 <td style="max-width:30vw;">滿意度問卷</td>
                                 <td style="max-width:30vw;">
                                     @if (Model.isFillQuiz)
-                                    { 
+                                    {
                                         <a class="btn btn-primary btn-sm" href="~/Frontend/Activity/QuizView/@EncryptService.AES.RandomizedEncrypt(Model.RegistrationExtendItem.register.Id.ToString())" title="(另開新視窗)前台滿意度問卷" target="_blank">查看</a>
-                                    }else
+                                    }
+                                    else
                                     {
                                         <button type="button" class="btn btn-warning btn-sm" disabled="disabled">參與者未回填</button>
                                     }
-                                    
+
                                 </td>
                             </tr>
                         </tbody>

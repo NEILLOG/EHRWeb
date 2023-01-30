@@ -52,7 +52,10 @@
                 var arraySection = [];
                 var sTableName = document.getElementById("tb_Section");
                 for (var i = 0; i < $("#tb_Section tr").length; i++) {
-                    arraySection.push(sTableName.children[i].children[0].children[0].value)
+                    if(sTableName.children[i].children[5].value != 'true')
+                    {
+                        arraySection.push(sTableName.children[i].children[0].children[0].value)
+                    }
                 }
                 var repeat = arraySection.filter(function (element, index, arr) {
                     return arr.indexOf(element) !== index;
