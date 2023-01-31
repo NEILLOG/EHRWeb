@@ -252,13 +252,17 @@ namespace BASE.Areas.Frontend.Controllers
                 var dateString = new List<string>();
                 foreach (var item in data.RegisterSection)
                 {
+                    //原始場次資訊
                     var section = activity.Sections.Where(x => x.Id == item.RegisterSectionId).First();
+
+                    //使用者報名的場次
+                    var user_reg_section = RegSections.Where(x => x.RegisterSectionId == item.RegisterSectionId).FirstOrDefault();
 
                     dateString.Add(String.Format(dateFormat, 
                         section.Day.ToString("MM月dd日"),
                         section.StartTime.ToString(@"hh\:mm"),
                         section.EndTime.ToString(@"hh\:mm"),
-                        section.SectionType
+                        user_reg_section.RegisterSectionType
                     ));
                 }
 

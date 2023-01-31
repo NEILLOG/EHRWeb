@@ -436,7 +436,7 @@
                 document.getElementById('lbEmail').textContent = Main_Email;
                 document.getElementById('lbCompanyEmpAmount').textContent = Main_CompanyEmpAmount;
                 document.getElementById('lbInfoFrom').textContent = ckbsInfoFrom.join(',');
-                document.getElementById('lbSections').textContent = GetAllRegisterSection_Text().join('<br />');
+                document.getElementById('lbSections').innerHTML = GetAllRegisterSection_Text().join('<br />');
 
 
                 console.log(Main_CompanyName);
