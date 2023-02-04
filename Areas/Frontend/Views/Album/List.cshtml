@@ -15,7 +15,7 @@
 }
 
 @section Css {
-    <link href="~/lib/lightbox/css/lightbox.min.css" rel="stylesheet" />
+    <link href="~/lib/lightbox/css/lightbox.css" rel="stylesheet" />
 }
 
 
@@ -50,13 +50,10 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="@Url.Action("List", "Activity", new { id = "截止報名"})">截止報名</a>
                             </li>
-                            <li class="nav-item d-none">
-                                <button class="nav-link" href="#"></button>
-                            </li>
                         </ul>
                     </div>
                     <hr class="dropdown-divider">
-                    <a href="@Url.Action("Album")" class="btn w-100 collapsed mt-2" id="mybut" style="color: #FFF; background-color: #ED6F30;">
+                    <a href="@Url.Action("List","Album")" class="btn w-100 collapsed mt-2" id="mybut" style="color: #FFF; background-color: #ED6F30;">
                         <i class="fa-solid fa-images me-2" aria-hidden="true" aria-expanded="true"></i>
                         活動花絮
                     </a>
@@ -89,7 +86,9 @@
                                 <div class="col">
                                     <div class="card h-100">
 
-                                        <a href="@item.FileInfo.FilePath" data-lightbox="image-@item.Header.Id" data-title="活動圖片: @item.Header.Title"><img src="@item.FileInfo.FilePath" class="card-img-top" alt=""></a>
+                                        <a href="@item.FileInfo.FilePath" data-lightbox="image-@item.Header.Id" data-title="活動圖片: @item.Header.Title">
+                                            <img src="@item.FileInfo.FilePath" class="card-img-top" alt="活動圖片: @item.Header.Title">
+                                        </a>
 
                                         <div class="card-body">
                                             <div class="date mb-3">

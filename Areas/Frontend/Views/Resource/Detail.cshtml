@@ -68,7 +68,7 @@
                             <input type="text" class="form-control" id="inputA" placeholder="@Model.ExtendItem.Name" disabled>
                         </div>
                         <div class="col-lg-2 col-md-4 col-12 mt-md-5 mt-2">
-                            <a href="@Model.ExtendItem.Link" target="_blank" class="btn btn-info w-100"><i class="fa-solid fa-arrow-up-right-from-square me-2" aria-hidden="true"></i>計畫連結</a>
+                            <a href="@Model.ExtendItem.Link" target="_blank" class="btn btn-info w-100" title="開啟外部網站"><i class="fa-solid fa-arrow-up-right-from-square me-2" aria-hidden="true"></i>計畫連結</a>
                         </div>
                         <div class="col-12">
                             <label for="exampleFormControlTextarea2" class="form-label">目的</label>
@@ -107,11 +107,11 @@
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
-                                <label for="inputI" class="form-label sr-only">EMAIL</label>
+                                <label for="ModifyItem_Email" class="form-label sr-only">EMAIL</label>
                                 @Html.TextBoxFor(x => x.ModifyItem.Email, new { type="email", @class="form-control", placeholder="請輸入Email", required = "required" })
                             </div>
                             <div class="col-md-6 col-12">
-                                <label for="formFile" class="form-label sr-only">上傳檔案</label>
+                                <label for="ModifyFile" class="form-label sr-only">上傳檔案</label>
                                 @Html.TextBoxFor(x => x.ModifyFile, new { @FileID = "FileId", @class="form-control File", @type = "file", accept = ".png,.jpg,.jpeg,.docx,.doc,.pdf", data_parsley_file_type="png,jpg,jpeg,doc,docx,pdf", data_parsley_errors_container="#ActivityImage-errors-container" })
                                 <div id="ActivityImage-errors-container"></div>
                             </div>

@@ -125,7 +125,7 @@ builder.Services.AddScoped<BASE.Areas.Frontend.Service.ConsultService>();
 builder.Services.AddScoped<BASE.Areas.Frontend.Service.AdService>();
 builder.Services.AddScoped<BASE.Areas.Frontend.Service.RelationLinkService>();
 builder.Services.AddScoped<BASE.Areas.Frontend.Service.QuizService>();
-
+builder.Services.AddScoped<BASE.Areas.Frontend.Service.VistorService>();
 
 /* Quartz */
 builder.Services.AddQuartz(q =>

@@ -21,6 +21,7 @@ namespace BASE.Areas.Frontend.Controllers
         private readonly ActivityService _activityService;
         private readonly AdService _adService;
         private readonly RelationLinkService _relationlinkService;
+        private readonly VistorService _vistorService;
 
         public HomeController(IConfiguration configuration,
             AllCommonService allCommonService,
@@ -28,15 +29,17 @@ namespace BASE.Areas.Frontend.Controllers
             FileService fileService,
             AdService adService,
             RelationLinkService relationlinkService,
-            ActivityService activityService)
+            ActivityService activityService,
+            VistorService vistorService)
         {
             _conf = configuration;
             _allCommonService = allCommonService;
             _newsService = newsService;
             _fileService = fileService;
-            _adService= adService;
+            _adService = adService;
             _relationlinkService = relationlinkService;
             _activityService = activityService;
+            _vistorService = vistorService;
         }
 
         public async Task<IActionResult> Index()
@@ -270,6 +273,33 @@ namespace BASE.Areas.Frontend.Controllers
             isSuccess = code == UserInput ? true : false;
 
             return Json(new { isSuccess = isSuccess, Message = Message });
+        }
+
+        public async Task<JsonResult> Visitors()
+        {
+            String ErrorMsg = "";
+            String ip = GetIPAddress_IPv4();
+
+            Int32 visitors = await _vistorService.Visitors(ip);
+
+            return Json(new { isSuccess = true, data = visitors });
+        }
+
+        public string GetIPAddress_IPv4()
+        {
+            string sIPAddress = string.Empty;
+
+            try
+            {
+                sIPAddress = HttpContext.Connection.RemoteIpAddress.ToString();
+            }
+            catch (Exception ex)
+            {
+                sIPAddress = string.Empty;
+            }
+
+            return sIPAddress;
+
         }
 
     }

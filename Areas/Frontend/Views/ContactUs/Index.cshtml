@@ -99,21 +99,21 @@
                         <form action="" id="frm" class="row g-3 justify-content-center" method="post">
                             @Html.AntiForgeryToken()
                             <div class="col-md-6 col-12">
-                                <label for="inputA" class="form-label">姓名<span class="fc-red ms-1">*</span></label>
+                                <label for="ExtendItem_Name" class="form-label">姓名<span class="fc-red ms-1">*</span></label>
                                 @Html.TextBoxFor(x => x.ExtendItem.Name, new { @class="form-control",  placeholder="您的回答", required="required" })
                             </div>
                             <div class="col-md-6 col-12">
-                                <label for="inputB" class="form-label">E-mail<span class="fc-red ms-1">*</span></label>
+                                <label for="ExtendItem_Email" class="form-label">E-mail<span class="fc-red ms-1">*</span></label>
                                 @Html.TextBoxFor(x => x.ExtendItem.Email, new { @class="form-control",  placeholder="您的回答", type="email",  required="required" })
                             </div>
                             <div class="col-12">
-                                <label for="exampleFormControlTextarea1" class="form-label">內容<span class="fc-red ms-1">*</span></label>
+                                <label for="ExtendItem_Response" class="form-label">內容<span class="fc-red ms-1">*</span></label>
                                 @Html.TextAreaFor(x => x.ExtendItem.Response, 5, 100, new { @class="form-control", required="required" })
                             </div>
                             <div class="col-12">
                                 <div class="mb-3 d-flex">
                                     <div>
-                                        <label for="exampleInputRandom2" class="form-label">驗證碼<span class="fc-red ms-1">*</span></label>
+                                        <label for="VerifyCode" class="form-label">驗證碼<span class="fc-red ms-1">*</span></label>
                                         @Html.TextBoxFor(x => x.VerifyCode, new { @class="form-control", placeholder="請輸入驗證碼", required="required" })
                                     </div>
                                     <div>

@@ -121,7 +121,7 @@
         <div class="footer row row-cols-auto justify-content-center align-items-center flex-column flex-md-row">
             <div class="col">
                 <img src="~/areas/frontend/img/footer/left-logo.png" class="img-fluid" alt="勞動力發展署桃竹苗分署Logo">
-                <p class="fc-yellow text-center">您是第<span class="fw-bold mx-2 fs-5">5889058</span>位訪客</p>
+                <p class="fc-yellow text-center">您是第<span class="fw-bold mx-2 fs-5" id="lbVistiors">-</span>位訪客</p>
             </div>
             <div class="col">
                 <img src="~/areas/frontend/img/footer/center-logo.png" class="img-fluid" alt="桃竹苗企業人力資源服務網Logo">
@@ -375,6 +375,22 @@
             $('html, body').animate({ scrollTop: 0 }, '200');
         });
     </script>
+
+    
+    <script>
+        $(document).ready(function () {
+            $.get('@Url.Action("Visitors", "Home")', null, function (response) {
+                var baseCount = 7468389;
+                if (response.isSuccess) {
+                    var RealCount = parseInt(response.data);
+                    var Count = baseCount + RealCount;
+
+                    $('#lbVistiors').text(Count);
+                }
+            });
+        });
+    </script>
+
 
     @*提示訊息*@
     @if (TempData["TempMsg"] != null)

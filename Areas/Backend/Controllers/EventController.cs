@@ -1577,6 +1577,9 @@ namespace BASE.Areas.Backend.Controllers
                     string actMonth = activitySection.Day.Month.ToString();
                     string actDay = activitySection.Day.Day.ToString();
 
+                    // 彙管承辦信箱
+                    TbUserInfo Creater = _eventService.Lookup<TbUserInfo>(ref _message, x => x.UserId == activity.CreateUser).FirstOrDefault();
+
                     //-- 審查成功通知信
                     if (listSuccess != null && listSuccess.Any())
                     {
@@ -1595,7 +1598,7 @@ namespace BASE.Areas.Backend.Controllers
                             sContent += string.Concat("活動參與方式：", strJoinType, "<br />");
                             sContent += string.Concat("活動時間：", actMonth, "月", actDay, "日", activitySection.StartTime ,'-', activitySection.EndTime, "【活動將於開始前30分鐘開放報到】<br />");
                             sContent += string.Concat("活動地點：", activity.Place, "<br /><br />");
-                            sContent += "※提醒您，活動當天請準時出席，若臨時有事不克參與請於活動開始前3天回信至000@wda.gov.tw或來電取消報名<br /><br />";
+                            sContent += String.Format("※提醒您，活動當天請準時出席，若臨時有事不克參與請於活動開始前3天回信至{0}或來電取消報名<br /><br />", Creater.Email);
                             sContent += "敬祝 順心平安<br />";
                             sContent += "勞動部勞動力發展署桃竹苗分署<br />";
                             sContent += "桃竹苗區域運籌人力資源整合服務計畫_專案辦公室<br />";

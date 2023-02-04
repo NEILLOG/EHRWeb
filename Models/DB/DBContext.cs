@@ -66,6 +66,7 @@ namespace BASE.Models.DB
         public virtual DbSet<TbUserInfo> TbUserInfo { get; set; } = null!;
         public virtual DbSet<TbUserInfoExperience> TbUserInfoExperience { get; set; } = null!;
         public virtual DbSet<TbUserRight> TbUserRight { get; set; } = null!;
+        public virtual DbSet<TbVisitors> TbVisitors { get; set; } = null!;
         public virtual DbSet<TbYouTubeVideo> TbYouTubeVideo { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -2263,6 +2264,21 @@ namespace BASE.Models.DB
                     .WithMany(p => p.TbUserRight)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_TB_UserRight_TB_UserInfo");
+            });
+
+            modelBuilder.Entity<TbVisitors>(entity =>
+            {
+                entity.HasKey(e => e.VisitorsId);
+
+                entity.HasComment("瀏覽人次");
+
+                entity.Property(e => e.VisitorsId).HasColumnName("VisitorsID");
+
+                entity.Property(e => e.Ip)
+                    .HasMaxLength(200)
+                    .HasColumnName("IP");
+
+                entity.Property(e => e.VisitDate).HasColumnType("date");
             });
 
             modelBuilder.Entity<TbYouTubeVideo>(entity =>

@@ -22,40 +22,40 @@
                          @Html.AntiForgeryToken()
 
                         <div class="col-md-4">
-                            <label for="inputA" class="form-label">企業名稱<span class="fc-red ms-1">*</span></label>
+                            <label for="Main_CompanyName" class="form-label">企業名稱<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.Main.CompanyName, new { @class="form-control", placeholder="請輸入企業名稱", required="required"})
                         </div>
                         <div class="col-md-4">
-                            <label for="inputB" class="form-label">企業所在地<span class="fc-red ms-1">*</span></label>
+                            <label for="Main_CompanyLocation" class="form-label">企業所在地<span class="fc-red ms-1">*</span></label>
                             @Html.DropDownListFor(x => x.Main.CompanyLocation, Model.ddlCompanyLocation, new { @class="form-select", required="required" })
                         </div>
                         <div class="col-md-4">
-                            <label for="inputC" class="form-label">產業別<span class="fc-red ms-1">*</span></label>
+                            <label for="Main_CompanyType" class="form-label">產業別<span class="fc-red ms-1">*</span></label>
                             @Html.DropDownListFor(x => x.Main.CompanyType, Model.ddlCompanyType, new { @class="form-select", required="required" })
                         </div>
                         <div class="col-md-4">
-                            <label for="inputD" class="form-label">姓名<span class="fc-red ms-1">*</span></label>
+                            <label for="Main_Name" class="form-label">姓名<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.Main.Name, new { @class="form-control", placeholder="請輸入姓名", required="required"})
                         </div>
                         <div class="col-md-4">
-                            <label for="inputE" class="form-label">職稱<span class="fc-red ms-1">*</span></label>
+                            <label for="Main_JobTitle" class="form-label">職稱<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.Main.JobTitle, new { @class="form-control", placeholder="請輸入職稱", required="required"})
                         </div>
                         <div class="col-md-4">
-                            <label for="inputF" class="form-label">連絡電話<span class="fc-red ms-1">*</span></label>
+                            <label for="Main_Phone" class="form-label">連絡電話<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.Main.Phone, new { @class="form-control", placeholder="請輸入連絡電話", required="required"})
                         </div>
                         <div class="col-md-4">
-                            <label for="inputG" class="form-label">手機<span class="fc-red ms-1">*</span></label>
+                            <label for="Main_CellPhone" class="form-label">手機<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.Main.CellPhone, new { @class="form-control", placeholder="請輸入手機", required="required", type="number", data_parsley_type="integer", minlength="10", maxlength="10", data_parsley_minlength="10", data_parsley_maxlength="10" })
 
                         </div>
                         <div class="col-md-4">
-                            <label for="inputEmail4" class="form-label">電子郵件<span class="fc-red ms-1">*</span></label>
+                            <label for="Main_Email" class="form-label">電子郵件<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.Main.Email, new { @class="form-control", placeholder="請輸入電子郵件", type="email", required="required", data_parsley_type="email"})
                         </div>
                         <div class="col-md-4">
-                            <label for="inputH" class="form-label">公司員工人數<span class="fc-red ms-1">*</span></label>
+                            <label for="Main_CompanyEmpAmount" class="form-label">公司員工人數<span class="fc-red ms-1">*</span></label>
                             @Html.DropDownListFor(x => x.Main.CompanyEmpAmount, Model.ddlCompanyEmpAmount, new { @class="form-select", required="required" })
                         </div>
                         <div class="col-12">
@@ -124,7 +124,7 @@
                         <div class="col-12">
                             <div class="mb-3 d-flex">
                                 <div>
-                                    <label class="form-label">驗證碼<span class="fc-red ms-1">*</span></label>
+                                    <label for="VerifyCode" class="form-label">驗證碼<span class="fc-red ms-1">*</span></label>
                                     @Html.TextBoxFor(x => x.VerifyCode, new { @class="form-control", placeholder="請輸入驗證碼", required="required" })
                                 </div>
                                 <div>

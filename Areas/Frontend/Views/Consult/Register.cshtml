@@ -53,19 +53,19 @@
                     <form id="frm" class="row g-3 justify-content-center mt-3" method="post">
                         @Html.AntiForgeryToken()
                         <div class="col-12">
-                            <label for="inputB" class="form-label">企業所在地<span class="fc-red ms-1">*</span></label>
+                            <label for="ExtendItem_Location" class="form-label">企業所在地<span class="fc-red ms-1">*</span></label>
                             @Html.DropDownListFor(x => x.ExtendItem.Location, Model.ddlLocation, new { @class="form-select", required="required" })
                         </div>
                         <div class="col-12">
-                            <label for="inputA" class="form-label">企業名稱全銜<span class="fc-red ms-1">*</span></label>
+                            <label for="ExtendItem_Name" class="form-label">企業名稱全銜<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.ExtendItem.Name, new { @class="form-control", placeholder="您的回答", required="required" })
                         </div>
                         <div class="col-12">
-                            <label for="inputD" class="form-label">企業統編<span class="fc-red ms-1">*</span></label>
+                            <label for="ExtendItem_BusinessId" class="form-label">企業統編<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.ExtendItem.BusinessId, new { @class="form-control", placeholder="您的回答", required="required" })
                         </div>
                         <div class="col-12">
-                            <label for="inputE" class="form-label">企業登記地址<span class="fc-red ms-1">*</span></label>
+                            <label for="ExtendItem_Address" class="form-label">企業登記地址<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.ExtendItem.Address, new { @class="form-control", placeholder="您的回答", required="required" })
                         </div>
                         <div class="col-12">
@@ -83,41 +83,41 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <label for="inputF" class="form-label">問題陳述<span class="fc-red ms-1">*</span></label>
+                            <label for="ExtendItem_Description" class="form-label">問題陳述<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.ExtendItem.Description, new { @class="form-control",  placeholder="您的回答", aria_describedby="inputFHelp", required="required" })
                             <div id="inputFHelp" class="form-text">※請陳述目前面臨狀況及希望達成之目標，或其他補充事項</div>
                         </div>
                         <div class="col-12">
-                            <label for="inputG" class="form-label">預計可諮詢時間<span class="fc-red ms-1">*</span></label>
+                            <label for="ExtendItem_ConsultTime" class="form-label">預計可諮詢時間<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.ExtendItem.ConsultTime, new { @class="form-control",  placeholder="您的回答", aria_describedby="inputGHelp", required="required" })
 
                             <div id="inputGHelp" class="form-text">※諮詢時間預先安排2 小時，請先行提供至少提供三個以上時間/時段，以利媒合顧問時間。回覆例如：每週三上午10-12 時、或3/18 下午14-16 時可以等)</div>
                         </div>
                         <div class="col-12">
-                            <label for="inputH" class="form-label">輔導地址<span class="fc-red ms-1">*</span></label>
+                            <label for="ExtendItem_ConsultAddress" class="form-label">輔導地址<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.ExtendItem.ConsultAddress, new { @class="form-control",  placeholder="您的回答", aria_describedby="inputHHelp", required="required" })
                             <div id="inputHHelp" class="form-text">※若貴公司不便提供進場輔導，亦可於勞動部勞動力發展署桃竹苗分署進行諮詢輔導(地址：桃園市楊梅區秀才路851號)</div>
                         </div>
                         <div class="col-12">
-                            <label for="inputI" class="form-label">聯繫人姓名<span class="fc-red ms-1">*</span></label>
+                            <label for="ExtendItem_ContactName" class="form-label">聯繫人姓名<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.ExtendItem.ContactName, new { @class="form-control", placeholder="您的回答", required="required" })
                         </div>
                         <div class="col-12">
-                            <label for="inputI" class="form-label">聯繫人職稱<span class="fc-red ms-1">*</span></label>
+                            <label for="ExtendItem_ContactJobTitle" class="form-label">聯繫人職稱<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.ExtendItem.ContactJobTitle, new { @class="form-control", placeholder="您的回答", required="required" })
                         </div>
                         <div class="col-12">
-                            <label for="inputI" class="form-label">聯絡人電話<span class="fc-red ms-1">*</span></label>
+                            <label for="ExtendItem_ContactPhone" class="form-label">聯絡人電話<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.ExtendItem.ContactPhone, new { type="text", @class="form-control", placeholder="您的回答", required="required" })
                         </div>
                         <div class="col-12">
-                            <label for="inputI" class="form-label">聯絡人EMAIL<span class="fc-red ms-1">*</span></label>
+                            <label for="ExtendItem_ContactEmail" class="form-label">聯絡人EMAIL<span class="fc-red ms-1">*</span></label>
                             @Html.TextBoxFor(x => x.ExtendItem.ContactEmail, new { type="email", @class="form-control", placeholder="您的回答", required="required" })
                         </div>
                         <div class="col-12">
                             <div class="mb-3 d-flex">
                                 <div>
-                                    <label for="exampleInputRandom2" class="form-label">驗證碼<span class="fc-red ms-1">*</span></label>
+                                    <label for="VerifyCode" class="form-label">驗證碼<span class="fc-red ms-1">*</span></label>
                                     @Html.TextBoxFor(x => x.VerifyCode, new { @class="form-control", placeholder="請輸入驗證碼", required="required"})
                                 </div>
                                 <div>

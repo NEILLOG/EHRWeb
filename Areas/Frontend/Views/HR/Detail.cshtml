@@ -59,15 +59,15 @@
                 <a accesskey="C" href="#" title="中央內容區塊" class="sr-only sr-only-focusable">:::</a>
                 <div class="tab-pane fade show active" id="HR-A" role="tabpanel" aria-labelledby="HR-A-tab">
                     <div class="chargerContent">
-                        <h2 class="fc-green fw-bold mb-3">@Model.ExtendItem.Header.Title</h2>
+                        <h2 class="fc-green fw-bold mb-3" id="hrTitle">@Model.ExtendItem.Header.Title</h2>
 
                         <div id="contents">
-                        @(new HtmlString(Model.ExtendItem.Header.Contents))
+                            @(new HtmlString(Model.ExtendItem.Header.Contents.Replace("<img", "<img alt=\"" + Model.ExtendItem.Header.Title + "\"")))
                         </div>
 
                         @if(Model.ExtendItem.FileInfo != null)
                         {
-                            <a href="@Model.ExtendItem.FileInfo.FilePath" class="btn btn-primary" download="@Model.ExtendItem.FileInfo.FileName">下載 @Model.ExtendItem.FileInfo.FileName</a>
+                            <a href="@Model.ExtendItem.FileInfo.FilePath" class="btn btn-primary" title="下載檔案" download="@Model.ExtendItem.FileInfo.FileName">下載 @Model.ExtendItem.FileInfo.FileName</a>
                         }
 
                     </div>
