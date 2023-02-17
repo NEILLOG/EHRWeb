@@ -79,7 +79,7 @@ namespace BASE.Service
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     // 設定帳號密碼
                     Credentials = new NetworkCredential(_configuration.GetValue<string>("MailSettings:UserName"),
-                                                        _configuration.GetValue<string>("MailSettings:Password")),
+                                                        _configuration.GetValue<string>("MailSettings:MailPW")),
                     // 是否使用SSL加密傳輸 (注意：Gmail的smtp必需要使用SSL)
                     EnableSsl = _configuration.GetValue<bool>("MailSettings:EnableSsl")
                 };

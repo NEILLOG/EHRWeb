@@ -17,7 +17,7 @@ namespace BASE.Service
         {
             #region "定義加密字串變數"
             private static readonly byte[] saltBytes = new byte[] { 156, 165, 69, 196, 56, 86, 53, 62 };
-            private const string password = "7_wolf";
+            private const string pw = "7_wolf";
             #endregion
 
             /// <summary>
@@ -126,7 +126,7 @@ namespace BASE.Service
                 {
                     // Get the bytes of the string
                     byte[] bytesToBeEncrypted = Encoding.UTF8.GetBytes(input);
-                    byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                    byte[] passwordBytes = Encoding.UTF8.GetBytes(pw);
 
                     // Hash the password with SHA256
                     passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
@@ -168,7 +168,7 @@ namespace BASE.Service
                             j += 2;
                         }
 
-                        byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                        byte[] passwordBytes = Encoding.UTF8.GetBytes(pw);
                         passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
 
                         byte[] bytesDecrypted = Decrypt(bytesToBeDecrypted, passwordBytes);
@@ -202,7 +202,7 @@ namespace BASE.Service
                 {
                     // Get the bytes of the string
                     byte[] bytesToBeEncrypted = Encoding.UTF8.GetBytes(input);
-                    byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                    byte[] passwordBytes = Encoding.UTF8.GetBytes(pw);
 
                     // Hash the password with SHA256
                     passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
@@ -238,7 +238,7 @@ namespace BASE.Service
                     {
                         // Get the bytes of the string
                         byte[] bytesToBeDecrypted = Convert.FromBase64String(input);
-                        byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                        byte[] passwordBytes = Encoding.UTF8.GetBytes(pw);
                         passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
 
                         byte[] bytesDecrypted = Decrypt(bytesToBeDecrypted, passwordBytes);
@@ -263,7 +263,7 @@ namespace BASE.Service
                 }
                 else
                 {
-                    byte[] baPwd = Encoding.UTF8.GetBytes(password);
+                    byte[] baPwd = Encoding.UTF8.GetBytes(pw);
 
                     // Hash the password with SHA256
                     byte[] baPwdHash = SHA256.Create().ComputeHash(baPwd);
@@ -304,7 +304,7 @@ namespace BASE.Service
                     }
                     else
                     {
-                        byte[] baPwd = Encoding.UTF8.GetBytes(password);
+                        byte[] baPwd = Encoding.UTF8.GetBytes(pw);
 
                         // Hash the password with SHA256
                         byte[] baPwdHash = SHA256.Create().ComputeHash(baPwd);
@@ -350,7 +350,7 @@ namespace BASE.Service
                 }
                 else
                 {
-                    byte[] baPwd = Encoding.UTF8.GetBytes(password);
+                    byte[] baPwd = Encoding.UTF8.GetBytes(pw);
 
                     // Hash the password with SHA256
                     byte[] baPwdHash = SHA256.Create().ComputeHash(baPwd);
@@ -394,7 +394,7 @@ namespace BASE.Service
                     }
                     else
                     {
-                        byte[] baPwd = Encoding.UTF8.GetBytes(password);
+                        byte[] baPwd = Encoding.UTF8.GetBytes(pw);
 
                         // Hash the password with SHA256
                         byte[] baPwdHash = SHA256.Create().ComputeHash(baPwd);
@@ -430,7 +430,7 @@ namespace BASE.Service
                 string file = original_file_path;
 
                 byte[] bytesToBeEncrypted = File.ReadAllBytes(file);
-                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                byte[] passwordBytes = Encoding.UTF8.GetBytes(pw);
 
                 // Hash the password with SHA256
                 passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
@@ -452,7 +452,7 @@ namespace BASE.Service
                 string fileEncrypted = encrypted_file_path;
 
                 byte[] bytesToBeDecrypted = File.ReadAllBytes(fileEncrypted);
-                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                byte[] passwordBytes = Encoding.UTF8.GetBytes(pw);
                 passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
 
                 byte[] bytesDecrypted = Decrypt(bytesToBeDecrypted, passwordBytes);
