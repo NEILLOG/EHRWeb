@@ -19,6 +19,16 @@ function ActivityChart(Year, ActID, ActName, Filter, FilterValue) {
             var option;
 
             option = {
+                toolbox: {
+                    show: true,
+                    feature: {
+                        saveAsImage: {
+                            show: true,
+                            excludeComponents: ['toolbox'],
+                            pixelRatio: 2
+                        }
+                    }
+                },
                 title: {
                     text: Year + '年 - ' + ActName + ' - ' + FilterValue + " - 統計",
                     left: 'center'
@@ -101,6 +111,16 @@ function ConsultChart(Year) {
             var option;
 
             option = {
+                toolbox: {
+                    show: true,
+                    feature: {
+                        saveAsImage: {
+                            show: true,
+                            excludeComponents: ['toolbox'],
+                            pixelRatio: 2
+                        }
+                    }
+                },
                 title: {
                     text: Year + '年 - 統計',
                     left: 'center'
