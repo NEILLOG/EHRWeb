@@ -38,7 +38,7 @@ namespace BASE.Areas.Backend.Controllers
         public async Task<IActionResult> YouTubeVideoList(VM_YouTubeVideo data)
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
-            string Feature = "Youtube影片管理", Action = "檢視";
+            string Feature = "影音專區管理", Action = "檢視";
 
             try
             {
@@ -76,7 +76,7 @@ namespace BASE.Areas.Backend.Controllers
         public async Task<IActionResult> YouTubeVideoAdd()
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
-            string Feature = "Youtube影片新增", Action = "新增";
+            string Feature = "影音專區新增", Action = "新增";
 
             VM_YouTubeVideo data = new VM_YouTubeVideo();
 
@@ -95,7 +95,7 @@ namespace BASE.Areas.Backend.Controllers
         public async Task<IActionResult> YouTubeVideoAdd(VM_YouTubeVideo datapost)
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
-            string Feature = "Youtube影片新增", Action = "新增";
+            string Feature = "影音專區新增", Action = "新增";
 
 
             // 最終動作成功與否
@@ -204,7 +204,7 @@ namespace BASE.Areas.Backend.Controllers
         public async Task<IActionResult> YouTubeVideoEdit(int id)
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
-            string Feature = "Youtube影片編輯", Action = "檢視";
+            string Feature = "影音專區編輯", Action = "檢視";
 
             VM_YouTubeVideo data = new VM_YouTubeVideo();
 
@@ -283,7 +283,7 @@ namespace BASE.Areas.Backend.Controllers
         public async Task<IActionResult> YouTubeVideoEdit(int id, VM_YouTubeVideo datapost)
         {
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
-            string Feature = "Youtube影片編輯", Action = "編輯";
+            string Feature = "影音專區編輯", Action = "編輯";
 
             // 最終動作成功與否
             bool isSuccess = false;
@@ -408,7 +408,7 @@ namespace BASE.Areas.Backend.Controllers
         {
             JsonResponse<TbYouTubeVideo> result = new JsonResponse<TbYouTubeVideo>();
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
-            string Feature = "Youtube影片管理", Action = "刪除";
+            string Feature = "影音專區管理", Action = "刪除";
 
             DateTime dtnow = DateTime.Now;
 
@@ -506,7 +506,7 @@ namespace BASE.Areas.Backend.Controllers
         {
             JsonResponse<TbYouTubeVideo> result = new JsonResponse<TbYouTubeVideo>();
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
-            string Feature = "Youtube影片管理", Action = "編輯";
+            string Feature = "影音專區管理", Action = "編輯";
 
             DateTime dtnow = DateTime.Now;
 
