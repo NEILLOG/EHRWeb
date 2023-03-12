@@ -29,7 +29,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @if (Model.RegistrationExtendItem.registerSection.RegisterSectionType != "線上")
+                            @*@if (Model.RegistrationExtendItem.registerSection.RegisterSectionType != "線上")
                             {
                                 <tr>
                                     <td style="max-width:30vw;">1</td>
@@ -45,15 +45,16 @@
                                         }
                                     </td>
                                 </tr>
-                            }
+                            }*@
                             <tr>
-                                @if (Model.RegistrationExtendItem.registerSection.RegisterSectionType != "線上")
+                                @*@if (Model.RegistrationExtendItem.registerSection.RegisterSectionType != "線上")
                                 {
                                     <td style="max-width:30vw;">2</td>
                                 }else
                                 {
                                     <td style="max-width:30vw;">1</td>
-                                }
+                                }*@
+                                <td style="max-width:30vw;">1</td>
                                 <td style="max-width:30vw;">滿意度問卷</td>
                                 <td style="max-width:30vw;">
                                     @if (Model.isFillQuiz)
