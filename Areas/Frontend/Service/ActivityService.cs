@@ -67,9 +67,9 @@ namespace BASE.Areas.Frontend.Service
                 }
 
                 if (IsShowPassedActivity)
-                    dataList = dataList.Where(x => x.Header.RegEndDate <= DateTime.Now || x.Header.IsPublish == false);
+                    dataList = dataList.Where(x => DateTime.Now > x.Header.RegEndDate || x.Header.IsPublish == false);
                 else
-                    dataList = dataList.Where(x => x.Header.RegEndDate > DateTime.Now && x.Header.IsPublish == true);
+                    dataList = dataList.Where(x => DateTime.Now <= x.Header.RegEndDate && DateTime.Now >= x.Header.RegStartDate && x.Header.IsPublish == true);
 
                 return dataList;
             }
