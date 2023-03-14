@@ -228,7 +228,7 @@ namespace BASE.Areas.Backend.Service
             try
             {
                 long registrationId = Convert.ToInt64(id);
-                IQueryable<RegistrationExtend> dataList = (from register in _context.TbActivityRegister.Where(x => x.Id == registrationId)
+                IQueryable<RegistrationExtend> dataList = (from register in _context.TbActivityRegister
 
                                                            join registerSection in _context.TbActivityRegisterSection
                                                            on register.Id equals registerSection.RegisterId
@@ -236,7 +236,7 @@ namespace BASE.Areas.Backend.Service
                                                            join FileInfo in _context.TbFileInfo 
                                                            on register.FileIdHealth equals FileInfo.FileId into FileInfo1
                                                            from FileInfo in FileInfo1.DefaultIfEmpty()
-
+                                                           where registerSection.Id == registrationId
                                                            select new RegistrationExtend
                                                            {
                                                                register = register,

@@ -286,7 +286,7 @@
                                         <td style="max-width:30vw;">@Model.RegistrationExtendList[i].register.Name</td>
                                         <td style="max-width:30vw;">@Model.RegistrationExtendList[i].register.JobTitle</td>
                                         <td style="max-width:30vw;">
-                                            <a class="btn btn-primary btn-sm" href="@(Url.Action("EventInfoRegistrationDetail", "Event", new { id = EncryptService.AES.RandomizedEncrypt(Model.RegistrationExtendList[i].register.Id.ToString()) }))">查看</a>
+                                            <a class="btn btn-primary btn-sm" href="@(Url.Action("EventInfoRegistrationDetail", "Event", new { id = EncryptService.AES.RandomizedEncrypt(Model.RegistrationExtendList[i].registerSection.Id.ToString()) }))">查看</a>
                                         </td>
                                         <td style="max-width:30vw;">
                                             @if (Model.RegistrationExtendList[i].verifyStatus == "1")
@@ -299,7 +299,7 @@
                                             }
                                         </td>
                                         <td style="max-width:30vw;">
-                                            <a class="btn btn-primary btn-sm" href="@(Url.Action("EventInfoRegistrationMore", "Event", new { id = EncryptService.AES.RandomizedEncrypt(Model.RegistrationExtendList[i].register.Id.ToString()) }))">查看</a>
+                                            <a class="btn btn-primary btn-sm" href="@(Url.Action("EventInfoRegistrationMore", "Event", new { id = EncryptService.AES.RandomizedEncrypt(Model.RegistrationExtendList[i].registerSection.Id.ToString()) }))">查看</a>
                                         </td>
                                         <td style="max-width:30vw;">
                                             <button type="button" class="btn btn-default btn-sm" onclick="SettingSignin('@i')">檢視</button>
