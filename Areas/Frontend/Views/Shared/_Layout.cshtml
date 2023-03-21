@@ -27,6 +27,12 @@
 <body>
     <a id="gotopbutton"><div class="fs--1 mt-5">back to top</div></a>
 
+    <div class="Cta-btn">
+        <a data-bs-toggle="modal" data-bs-target="#staticBot">
+            <img src="~/areas/frontend/img/boticon.png" alt="" />
+        </a>
+    </div>
+
     <header id="myHeader">
         <div class="small-header d-none d-lg-block" id="small-header">
             <div class="container-fluid">
@@ -136,7 +142,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalToggleLabel2">訂閱服務隱私權規範</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismCta-btniss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p>為了保障您能夠安心的使用本網站的各項服務與資訊，特此向您說明本網站的如何蒐集、應用及保護您所提供的個人資訊，以確保您的權益，請您詳閱下列內容：</p>
@@ -236,6 +242,26 @@
             </div>
         </div>
     </div>
+
+    <!-- 聊天機器人Modal -->
+    <!-- 智能客服Modal -->
+    <div class="modal fade botModal" id="staticBot" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">智能客服</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <iframe src="@_conf["BotLink"]" width="445" height="550" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 智能客服Modal end -->
 
     <script src="~/areas/frontend/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

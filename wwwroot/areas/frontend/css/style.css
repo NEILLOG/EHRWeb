@@ -1766,3 +1766,103 @@ footer{
 #ytList .card-footer .more-btn{
    color: #183650;
 }
+
+/*====== 智能客服 ======*/
+.Cta-btn {
+    position: fixed;
+    z-index: 1009;
+    right: 1%;
+    bottom: 25%;
+}
+
+.modal-backdrop {
+    background-color: transparent;
+}
+
+.modal-content {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.botModal .modal-content {
+    right: -80%;
+}
+
+/*===== CTA Button=====*/
+    .Cta-btn a {
+        position: relative;
+        right: 0;
+        text-align: center;
+        display: block;
+        background-color: transparent;
+        margin-bottom: 10px;
+        transition: .3s;
+    }
+
+    .Cta-btn img {
+        width: 100px;
+        margin-bottom: 5px;
+    }
+
+    .Cta-btn a:hover {
+        right: 15%;
+        transition: .3s;
+    }
+/*====== 智能客服 ======*/
+.Cta-btn {
+    position: fixed;
+    z-index: 1009;
+    right: 1%;
+    bottom: 25%;
+}
+
+.modal-backdrop {
+    background-color: transparent;
+}
+
+.modal-content {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.botModal .modal-content {
+    right: -80%;
+}
+/*=============================*/
+/*===== 智能客服 - RWD  =====*/
+/*===========================*/
+
+@media (max-width: 1920px) {
+    .botModal .modal-content {
+        right: -115%;
+    }
+}
+
+@media (max-width: 1440px) {
+    .botModal .modal-content {
+        right: -55%;
+    }
+}
+
+/* laptop */
+@media (max-width: 1366px) {
+    .botModal .modal-content {
+        right: -60%;
+    }
+}
+
+/* tablets */
+@media (max-width: 992px) {
+    .botModal .modal-content {
+        right: -3%;
+    }
+}
+
+/* phones */
+@media (max-width: 576px) {
+    .botModal .modal-content {
+        right: 0;
+    }
+}
+
+/*================================*/
+/*===== 智能客服 - RWD  END=====*/
+/*==============================*/
