@@ -127,17 +127,17 @@ namespace BASE.Areas.Frontend.Controllers
                 switch (decrypt_id)
                 {
                     //充電起飛計畫
-                    case "PJ00000002": data.SampleFilePath = "/sample/modify3.pdf"; break; //因無障礙須優先提供開放格式，故先改為pdf
+                    case "PJ00000002": data.SampleFilePath = "/sample/modify3.odt"; break; //因無障礙須優先提供開放格式，故先改為odt
                     //企業人力資源提升計畫
-                    case "PJ00000001": data.SampleFilePath = "/sample/modify2.pdf"; break; //因無障礙須優先提供開放格式，故先改為pdf
+                    case "PJ00000001": data.SampleFilePath = "/sample/modify2.odt"; break; //因無障礙須優先提供開放格式，故先改為odt
                     //小型企業人力提升計畫
-                    case "PJ00000003": data.SampleFilePath = "/sample/modify4.pdf"; break; //因無障礙須優先提供開放格式，故先改為pdf
+                    case "PJ00000003": data.SampleFilePath = "/sample/modify4.odt"; break; //因無障礙須優先提供開放格式，故先改為odt
                     //在職中高齡者及高齡者穩定就業訓練補助實施計畫
-                    case "PJ00000004": data.SampleFilePath = "/sample/modify5.pdf"; break; //因無障礙須優先提供開放格式，故先改為pdf
+                    case "PJ00000004": data.SampleFilePath = "/sample/modify5.odt"; break; //因無障礙須優先提供開放格式，故先改為odt
                     //中高齡者退休後再就業準備訓練補助實施計畫
-                    case "PJ00000005": data.SampleFilePath = "/sample/modify6.pdf"; break; //因無障礙須優先提供開放格式，故先改為pdf
+                    case "PJ00000005": data.SampleFilePath = "/sample/modify6.odt"; break; //因無障礙須優先提供開放格式，故先改為odt
                     //充電再出發訓練計畫
-                    case "PJ00000006": data.SampleFilePath = "/sample/modify1.pdf"; break; //因無障礙須優先提供開放格式，故先改為pdf
+                    case "PJ00000006": data.SampleFilePath = "/sample/modify1.odt"; break; //因無障礙須優先提供開放格式，故先改為odt
                 }
             }
 
