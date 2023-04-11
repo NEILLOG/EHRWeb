@@ -549,6 +549,9 @@ namespace BASE.Areas.Backend.Controllers
                                         {
                                             _message += handoutFile_upload.Message;
                                         }
+                                    } else
+                                    {
+                                        item.HandoutFile = null;
                                     }
                                 }
                                 
