@@ -16,6 +16,9 @@ using BASE.Models;
 using BASE.Areas.Frontend.Models.Extend;
 using BASE.Areas.Backend.Service;
 using System.Net.Mail;
+using NPOI.HSSF.UserModel;
+using NPOI.XSSF.UserModel;
+using System.IO;
 
 namespace BASE.Areas.Frontend.Controllers
 {
@@ -171,6 +174,16 @@ namespace BASE.Areas.Frontend.Controllers
 
             try
             {
+                // 取得 附檔名
+                string extension = Path.GetExtension(datapost.ModifyFile.FileName);
+                if (extension != ".png" && extension != ".jpg" && extension != ".jpeg" && extension != ".doc" && extension != ".docx" && extension != ".pdf")
+                {
+                    TempData["TempMsgType"] = MsgTypeEnum.warning;
+                    TempData["TempMsg"] = "不支援此副檔名";
+
+                    return RedirectToAction("Detail", new { id = datapost.ModifyItem.ProjectId });
+                }
+
                 datapost.ModifyItem.CreateDate = DateTime.Now;
                 datapost.ModifyItem.ProjectId = EncryptService.AES.RandomizedDecrypt(datapost.ModifyItem.ProjectId);
 
