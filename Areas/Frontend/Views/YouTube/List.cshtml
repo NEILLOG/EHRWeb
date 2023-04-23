@@ -19,7 +19,7 @@
             @foreach (var item in Model.DataList)
             {
                 <div class="col">
-                    <a class="card h-100" href="https://www.youtube.com/watch?v=@item.YouTubeId" target="_blank">
+                    <a class="card h-100" href="https://www.youtube.com/watch?v=@item.YouTubeId" target="_blank" title="@(item.Title)，點擊後另開新視窗觀看">
                         <div style="overflow:hidden; border-top-right-radius: 10px; border-top-left-radius: 10px;">
                             <iframe width="100%" style="min-height:320px;" src="https://www.youtube.com/embed/@item.YouTubeId"
                                 title="YouTube video player" frameborder="0"
@@ -35,7 +35,7 @@
                                     @item.DisplayDate.ToString("yyyy / MM / dd")
                                 </div>
                                 <div class="morebtn">
-                                    <span class="me-2">點我觀看</span>
+                                    <span class="me-2">點我觀看(另開新視窗)</span>
                                     <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                                 </div>
                             </div>

@@ -40,6 +40,8 @@ namespace BASE.Areas.Frontend.Controllers
         {
             VM_YouTube data = new VM_YouTube();
 
+            ViewBag.Title = "影音專區";
+
             try
             {
                 //取資料
@@ -61,6 +63,8 @@ namespace BASE.Areas.Frontend.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> List(VM_YouTube datapost)
         {
+            ViewBag.Title = "影音專區";
+
             try
             {
                 //取資料

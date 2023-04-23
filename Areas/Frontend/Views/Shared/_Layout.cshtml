@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="generator" content="Hugo 0.88.1">
-    <title>桃竹苗企業人力資源服務網</title>
+    <title>桃竹苗企業人力資源服務網 - @ViewBag.Title</title>
     <!-- Bootstrap core CSS -->
     <link href="~/areas/frontend/css/bootstrap.min.css" rel="stylesheet" />
     <!-- fontawesome -->
@@ -25,13 +25,14 @@
     @RenderSection("Css", required: false)
 </head>
 <body>
-    <a id="gotopbutton"><div class="fs--1 mt-5">back to top</div></a>
-
-    <div class="Cta-btn">
-        <a data-bs-toggle="modal" data-bs-target="#staticBot">
-            <img src="~/areas/frontend/img/icon_NEW.png" alt="" />
-        </a>
-    </div>
+    <noscript>
+        您的瀏覽器不支援JavaScript功能，若部份網頁功能無法正常使用時，請開啟瀏覽器JavaScript狀態<br>
+        友善列印 :<br>
+        請利用鍵盤按住Ctrl + P開啟列印功能<br>
+        字級設定 :<br>
+        IE6請利用鍵盤按住ALT鍵 + V → X → (G)最大(L)較大(M)中(S)較小(A)小，來選擇適合您的文字大小,
+        <br>而IE7或Firefox瀏覽器則可利用鍵盤 Ctrl + (+)放大 (-)縮小來改變字型大小。
+    </noscript>
 
     <header id="myHeader">
         <div class="small-header d-none d-lg-block" id="small-header">
@@ -115,6 +116,15 @@
 
         <div>
             @RenderBody()
+        </div>
+
+
+        <a id="gotopbutton" href="#"><div class="fs--1 mt-5">back to top</div></a>
+
+        <div class="Cta-btn">
+            <a data-bs-toggle="modal" data-bs-target="#staticBot" href="#">
+                <img src="~/areas/frontend/img/icon_NEW.png" alt="" />
+            </a>
         </div>
 
     </main>

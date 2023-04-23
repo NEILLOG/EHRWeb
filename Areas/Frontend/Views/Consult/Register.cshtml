@@ -72,11 +72,11 @@
                             <div class="mb-2" id="regis-form">
 
                                 <div class="mb-2">諮詢主題(可複選)<span class="fc-red ms-1">*</span></div>
-
                                 @foreach(var item in Model.ckbSubjects)
                                 {
                                     <div class="form-check form-check-inline CusCheckbox-form">
-                                        <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-@(item.Value)" value="@item.Value" name="CheckedSubjects">
+                                        <input class="form-check-input subjects" type="checkbox" id="inlineCheckbox-@(item.Value)" value="@item.Value" name="CheckedSubjects"
+                                              >
                                         <label class="form-check-label CusCheckbox-form-label" for="inlineCheckbox-@(item.Value)">@item.Text</label>
                                     </div>
                                 }

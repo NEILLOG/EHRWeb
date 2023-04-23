@@ -43,9 +43,14 @@ namespace BASE.Areas.Frontend.Controllers
             switch (id)
             {
                 case "計畫消息":
-                case "其他消息": data.Search.Category = id; break;
+                case "其他消息": 
+                    data.Search.Category = id;
+                    ViewBag.Title = "最新消息 - " + id;
+                    break;
                 default:
-                    data.Search.Category = String.Empty; break;
+                    data.Search.Category = String.Empty;
+                    ViewBag.Title = "最新消息 - 全部";
+                    break;
             }
 
             try
@@ -72,6 +77,8 @@ namespace BASE.Areas.Frontend.Controllers
         {
             try
             {
+                ViewBag.Title = datapost.Search.Category;
+
                 //取資料
                 IQueryable<NewsExtend>? dataList = _newsService.GetNewsList(ref _message, datapost.Search);
 
@@ -91,7 +98,6 @@ namespace BASE.Areas.Frontend.Controllers
         /// <summary> 最新消息-詳細頁</summary>
         public async Task<IActionResult> Detail(string id)
         {
-
             VM_News data = new VM_News();
 
             string decrypt_id = EncryptService.AES.RandomizedDecrypt(id);
@@ -100,6 +106,7 @@ namespace BASE.Areas.Frontend.Controllers
             {
                 data.NewsExtendItem = _newsService.GetNewsExtendItem(ref _message, decrypt_id);
 
+                ViewBag.Title = "最新消息 - " + data.NewsExtendItem.Header.Title;
             }
             catch (Exception ex)
             {

@@ -52,6 +52,7 @@ namespace BASE.Areas.Frontend.Controllers
             try
             {
                 data.ExtendItem = _onepageService.GetExtendItem(ref _message, "OP000003"); //TODO: 待補編號
+                ViewBag.Title = "諮詢輔導服務";
             }
             catch (Exception ex)
             {
@@ -67,7 +68,8 @@ namespace BASE.Areas.Frontend.Controllers
             HttpContext.Session.Set(Backend.Models.SessionStruct.VerifyCode.Consult, new ValidImageHelper().RandomCode(5));
 
             VM_ConsultRegister data = new VM_ConsultRegister();
-         
+            ViewBag.Title = "諮詢輔導服務 - 馬上預約";
+
             try
             {
                 data.ckbSubjects = _allCommonService.Lookup<TbBasicColumn>(ref _message, x => x.BacolCode == "professionalField" && x.IsActive == true)
@@ -88,8 +90,8 @@ namespace BASE.Areas.Frontend.Controllers
         public async Task<IActionResult> Register(VM_ConsultRegister datapost)
         {
             string Feature = "諮詢輔導服務", Action = "新增";
+            ViewBag.Title = "諮詢輔導服務 - 馬上預約";
 
-            
             bool isSuccess = false; // 最終動作成功與否
             bool unCaughtError = false; // 例外錯誤發生，特別記錄至 TbLog
 
@@ -180,6 +182,8 @@ namespace BASE.Areas.Frontend.Controllers
         public async Task<IActionResult> SatisfySurveyUpload(string id)
         {
             string test = EncryptService.AES.RandomizedEncrypt("1");
+
+            ViewBag.Title = "上傳諮詢服務滿意度問卷";
 
             VM_OtherUpload data = new VM_OtherUpload();
 
@@ -300,6 +304,7 @@ namespace BASE.Areas.Frontend.Controllers
         public async Task<IActionResult> RequireSurveyUpload(string id)
         {
             VM_OtherUpload data = new VM_OtherUpload();
+            ViewBag.Title = "企業需求調查表上傳";
 
             string decrypt_id = EncryptService.AES.RandomizedDecrypt(id);
             Int64 _decrypt_id = 0; Int64.TryParse(decrypt_id, out _decrypt_id);
@@ -327,6 +332,7 @@ namespace BASE.Areas.Frontend.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RequireSurveyUpload(string id, VM_OtherUpload datapost)
         {
+            ViewBag.Title = "企業需求調查表上傳";
             string decrypt_id = EncryptService.AES.RandomizedDecrypt(id);
             Int64 _decrypt_id = 0; Int64.TryParse(decrypt_id, out _decrypt_id);
 

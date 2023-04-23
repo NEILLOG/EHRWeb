@@ -16,6 +16,12 @@
 
 @section Css {
     <link href="~/lib/lightbox/css/lightbox.css" rel="stylesheet" />
+    <style>
+        .modal {
+            background: #00000096;
+            margin: 0;
+        }
+    </style>
 }
 
 
@@ -86,16 +92,35 @@
                                 <div class="col">
                                     <div class="card h-100">
 
-                                        <a href="@item.FileInfo.FilePath" data-lightbox="image-@item.Header.Id" data-title="活動圖片: @item.Header.Title">
+                                        @*<a href="@item.FileInfo.FilePath" data-lightbox="image-@item.Header.Id" data-title="活動圖片: @item.Header.Title">
+                                            <img src="@item.FileInfo.FilePath" class="card-img-top" alt="活動圖片: @item.Header.Title">
+                                        </a>*@
+
+                                        <a href="#" data-bs-target="#image-@item.Header.Id" data-bs-toggle="modal" data-title="活動圖片: @item.Header.Title">
                                             <img src="@item.FileInfo.FilePath" class="card-img-top" alt="活動圖片: @item.Header.Title">
                                         </a>
-
+                                            
                                         <div class="card-body">
                                             <div class="date mb-3">
                                                 <i class="fa-regular fa-calendar-days me-2 fc-ored" aria-hidden="true"></i>
                                                 @item.Header.DisplayDate.ToString("yyyy / MM / dd")
                                             </div>
                                             <h5 class="card-title fw-bold">@item.Header.Title</h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 訂閱Modal -->
+                                <div class="modal fade" id="image-@item.Header.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                活動圖片: @item.Header.Title
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <img src="@item.FileInfo.FilePath" alt="活動圖片: @item.Header.Title" class="img-fluid">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

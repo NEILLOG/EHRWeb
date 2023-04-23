@@ -32,6 +32,8 @@ namespace BASE.Areas.Frontend.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.Title = "聯絡我們";
+
             HttpContext.Session.Set(Backend.Models.SessionStruct.VerifyCode.ContactUs, new ValidImageHelper().RandomCode(5));
 
             VM_ContactUs data = new VM_ContactUs();
@@ -52,6 +54,8 @@ namespace BASE.Areas.Frontend.Controllers
         public async Task<IActionResult> Index(VM_ContactUs datapost)
         {
             string Feature = "聯絡我們", Action = "新增";
+
+            ViewBag.Title = "聯絡我們";
 
             // 最終動作成功與否
             bool isSuccess = false;

@@ -38,6 +38,7 @@ namespace BASE.Areas.Frontend.Controllers
 
         public async Task<IActionResult> List()
         {
+            ViewBag.Title = "活動花絮";
             VM_Album data = new VM_Album();
 
             try
@@ -62,6 +63,7 @@ namespace BASE.Areas.Frontend.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> List(VM_Album datapost)
         {
+            ViewBag.Title = "活動花絮";
             try
             {
                 //取資料

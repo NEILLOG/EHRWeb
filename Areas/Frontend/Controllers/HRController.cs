@@ -46,9 +46,13 @@ namespace BASE.Areas.Frontend.Controllers
             {
                 case "成功案例分享":
                 case "HR知識充電站":
-                    data.Search.Category = id; break;
+                    data.Search.Category = id;
+                    ViewBag.Title = id;
+                    break;
                 default:
-                    data.Search.Category = "HR知識充電站"; break;
+                    data.Search.Category = "HR知識充電站";
+                    ViewBag.Title = "HR知識充電站";
+                    break;
             }
 
             try
@@ -74,6 +78,8 @@ namespace BASE.Areas.Frontend.Controllers
         {
             try
             {
+                ViewBag.Title = datapost.Search.Category;
+
                 //取資料
                 IQueryable<HRExtend>? dataList = _hrService.GetList(ref _message, datapost.Search);
 
@@ -100,7 +106,7 @@ namespace BASE.Areas.Frontend.Controllers
             try
             {
                 data.ExtendItem = _hrService.GetExtendItem(ref _message, decrypt_id);
-
+                ViewBag.Title = data.ExtendItem.Header.Title;
             }
             catch (Exception ex)
             {
@@ -118,6 +124,7 @@ namespace BASE.Areas.Frontend.Controllers
             try
             {
                 data.ExtendItem = _onepageService.GetExtendItem(ref _message, "OP000002"); //TODO: 待補編號
+                ViewBag.Title = "HR工具說明書";
             }
             catch (Exception ex)
             {
@@ -131,7 +138,9 @@ namespace BASE.Areas.Frontend.Controllers
         public async Task<IActionResult> Packages()
         {
             VM_HRPackage data = new VM_HRPackage();
-         
+
+            ViewBag.Title = "HR材料包";
+
             try
             {
                 //取資料
@@ -156,6 +165,8 @@ namespace BASE.Areas.Frontend.Controllers
         {
             try
             {
+                ViewBag.Title = "HR材料包";
+
                 //取資料
                 IQueryable<HRPackageExtend>? dataList = _hrService.GetPackageList(ref _message, datapost.Search);
 

@@ -49,6 +49,7 @@ namespace BASE.Areas.Frontend.Controllers
         /// <summary>計畫資源地圖</summary>d
         public async Task<IActionResult> Map()
         {
+            ViewBag.Title = "計畫資源地圖";
             VM_OnePage data = new VM_OnePage();
 
             try
@@ -71,9 +72,14 @@ namespace BASE.Areas.Frontend.Controllers
                 case "企業訓練資源":
                 case "就業服務資源":
                 case "紓困資源":
-                case "其他資源": data.Search.Category = id; break;
+                case "其他資源": 
+                    data.Search.Category = id;
+                    ViewBag.Title = id;
+                    break;
                 default:
-                    data.Search.Category = "企業訓練資源"; break;
+                    data.Search.Category = "企業訓練資源";
+                    ViewBag.Title = "企業訓練資源";
+                    break;
             }
 
             try
@@ -99,8 +105,10 @@ namespace BASE.Areas.Frontend.Controllers
         {
             try
             {
-                //取資料
-                var dataList = _proejctService.GetList(ref _message, datapost.Search);
+                ViewBag.Title = datapost.Search.Category;
+
+               //取資料
+               var dataList = _proejctService.GetList(ref _message, datapost.Search);
 
                 //分頁
                 if (dataList != null)
@@ -148,6 +156,8 @@ namespace BASE.Areas.Frontend.Controllers
             {
                 data.ExtendItem = _proejctService.GetItem(ref _message, decrypt_id);
                 data.ModifyItem = new TbProjectModify() { ProjectId = id };
+
+                ViewBag.Title = data.ExtendItem.Name;
             }
             catch (Exception ex)
             {

@@ -50,6 +50,8 @@ namespace BASE.Areas.Frontend.Controllers
 
             VM_Index data = new VM_Index();
 
+            ViewBag.Title = "首頁";
+
             try
             {
                 data.Ads = _adService.GetExtendItemList(ref _message);
@@ -71,6 +73,8 @@ namespace BASE.Areas.Frontend.Controllers
 
         public async Task<IActionResult> Accessible()
         {
+            ViewBag.Title = "網站導覽說明";
+
             return View();
         }
 

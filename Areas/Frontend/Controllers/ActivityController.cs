@@ -51,9 +51,14 @@ namespace BASE.Areas.Frontend.Controllers
                 case "截止報名":
                 case "講座":
                 case "課程":
-                case "活動": data.Search.Category = id; break;
+                case "活動": 
+                    data.Search.Category = id;
+                    ViewBag.Title = "活動訊息 - " + id;
+                    break;
                 default:
-                    data.Search.Category = "課程"; break;
+                    data.Search.Category = "課程";
+                    ViewBag.Title = "活動訊息 - 課程";
+                    break;
             }
 
             try
@@ -82,6 +87,8 @@ namespace BASE.Areas.Frontend.Controllers
         {
             try
             {
+                ViewBag.Title = "活動訊息 - " + datapost.Search.Category;
+
                 //取資料
                 IQueryable<ActivityExtend>? dataList = _activityService.GetActivityList(ref _message, datapost.Search);
 
@@ -104,6 +111,7 @@ namespace BASE.Areas.Frontend.Controllers
 
         public async Task<IActionResult> Detail(string id)
         {
+            
 
             VM_Activity data = new VM_Activity();
 
@@ -112,6 +120,8 @@ namespace BASE.Areas.Frontend.Controllers
             try
             {
                 data.ActivityExtendItem = _activityService.GetActivityExtendItem(ref _message, decrypt_id);
+
+                ViewBag.Title = "活動訊息 - " + data.ActivityExtendItem.Header.Title;
             }
             catch (Exception ex)
             {
@@ -132,6 +142,8 @@ namespace BASE.Areas.Frontend.Controllers
             try
             {
                 data.Header = _allCommonService.Lookup<TbActivity>(ref _message, x => x.Id == decrypt_id).FirstOrDefault();
+
+                ViewBag.Title = "活動報名 - " + data.Header.Title;
 
                 if (data.Header.RegEndDate <= DateTime.Now)
                     throw new Exception("報名日期已過，請選擇別項活動");
@@ -297,7 +309,10 @@ namespace BASE.Areas.Frontend.Controllers
                 if (main == null)
                     return RedirectToAction("Detail", new { id = data.id }); //給未解密的ID
                 else
+                {
+                    ViewBag.Title = "活動報名 - " + data.Header.Title;
                     return View(data); /* 失敗回原頁 */
+                }
             }
 
         }
