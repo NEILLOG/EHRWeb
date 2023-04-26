@@ -78,7 +78,7 @@ hr{
    color: #ED6F30;
 }
 .fc-green{
-   color: #2DA7A4;
+  color: #119591;
 }
 .bg-green{
    background-color: #2DA7A4;
@@ -121,8 +121,8 @@ hr{
 
 .btn-success{
    color: #FFF;
-   background-color: #2DA7A4;
-   border-color: #2DA7A4;
+   background-color: #057673;
+   border-color: #057673;
 }
 
 .btn-success:hover{
@@ -189,7 +189,7 @@ hr{
 
 .topLinks .slink{
   font-size: 0.95rem;
-  color: #FFF;
+  color: #123433;
   text-decoration: none;
 }
 
@@ -226,6 +226,12 @@ hr{
    font-weight: 700;
 }
 
+.topLinks .subscribe-btn {
+    color: #0f7876;
+    background-color: #FFF;
+}
+
+
 #headernav{    
    background-color: #FFF;
 }
@@ -250,9 +256,18 @@ hr{
 
 /*=====  訂閱服務  =====*/
 /* custom checkbox */
-.CusCheckbox-form input[type="checkbox"]{
-   display: none;
+.CusCheckbox-form input[type="checkbox"] {
+    /*display: none;*/
+    position: relative;
+    opacity: 0;
 }
+
+.form-check-input:focus ~ .CusCheckbox-form-label {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+
 
 .CusCheckbox-form input[type="checkbox"]:checked~ .CusCheckbox-form-label {
    background-color: #373737;
@@ -1123,7 +1138,7 @@ footer{
 }
 
 #regis-form .CusCheckbox-form input[type="checkbox"]:checked~ .CusCheckbox-form-label {
-   background-color: #2DA7A4;
+   background-color: #057673;
    color: #fff;
    padding: 5px 20px 5px 40px;
 }
@@ -1237,6 +1252,15 @@ footer{
    border-radius: 5px;
 }
 
+.applicationBox .fc-green {
+   Color: #148f8c;
+}
+
+.applicationBox .fc-orange {
+   color: #bf4508;
+}
+
+
 /*==========================*/
 /*====== 企業資源專區 ======*/
 /*=========================*/
@@ -1259,7 +1283,7 @@ footer{
 
 #resourceTab .nav-item.show .nav-link, #resourceTab .nav-link.active{
    width: 100%;
-   background-color: #E16A2F;
+   background-color: #cb4605;
    color: #FFF;
    font-weight: 700;
    border-bottom-left-radius: 0.25rem;
@@ -1602,7 +1626,7 @@ footer{
    display: inline-block;
    border-radius: 21px;
    background-color: rgba(233, 138, 90, 0.2);
-   color: #E16A2F;
+   color: #b73d00;
    font-weight: 400;
    font-size: 0.85rem;
    padding: 5px 16px;
@@ -1614,14 +1638,14 @@ footer{
 }
 
 #news-tab .nav-link{
-   border: 1.2px solid #2DA7A4;
-   color: #2DA7A4;
+   border: 1.2px solid #098581;
+   color: #098581;
    padding: 8px 36px;    
    width: 200px;
 }
 
 #news-tab .nav-link.active, #news-tab .show>.nav-link{
-   background-color: #2DA7A4;
+   background-color: #057673;
    color: #FFF;
    width: 200px;
 }
