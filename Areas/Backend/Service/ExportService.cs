@@ -189,6 +189,12 @@ namespace BASE.Areas.Backend.Service
                                                         CompanyType = data.register.CompanyType,
                                                         Name = data.register.Name,
                                                         JobTitle = data.register.JobTitle,
+                                                        Phone = data.register.Phone,
+                                                        CellPhone = data.register.CellPhone,
+                                                        Email = data.register.Email,
+                                                        CompanyEmpAmount = data.register.CompanyEmpAmount,
+                                                        RegisterSectionType = data.registerSection.RegisterSectionType,
+                                                        IsVegin = data.registerSection.RegisterSectionType == "實體" ? (data.registerSection.IsVegin ? "葷" : "素") : "",
                                                         IsValid = data.registerSection.IsValid.HasValue ? (data.registerSection.IsValid.Value ? "通過" : "不通過") : "尚未審核"
                                                     }).ToList();
 
@@ -206,7 +212,13 @@ namespace BASE.Areas.Backend.Service
                 sheet.GetRow(0).CreateCell(3).SetCellValue("產業別");
                 sheet.GetRow(0).CreateCell(4).SetCellValue("姓名");
                 sheet.GetRow(0).CreateCell(5).SetCellValue("職稱");
-                sheet.GetRow(0).CreateCell(6).SetCellValue("審核狀態");
+                sheet.GetRow(0).CreateCell(6).SetCellValue("連絡電話");
+                sheet.GetRow(0).CreateCell(7).SetCellValue("手機");
+                sheet.GetRow(0).CreateCell(8).SetCellValue("電子郵件");
+                sheet.GetRow(0).CreateCell(9).SetCellValue("公司人數");
+                sheet.GetRow(0).CreateCell(10).SetCellValue("課程參與模式");
+                sheet.GetRow(0).CreateCell(11).SetCellValue("飲食選擇");
+                sheet.GetRow(0).CreateCell(12).SetCellValue("審核狀態");
 
                 //資料
                 int rowIndex = 1;
@@ -219,7 +231,13 @@ namespace BASE.Areas.Backend.Service
                     sheet.GetRow(rowIndex).CreateCell(3).SetCellValue(item.GetType().GetProperty("CompanyType")?.GetValue(item, null)?.ToString() ?? string.Empty);
                     sheet.GetRow(rowIndex).CreateCell(4).SetCellValue(item.GetType().GetProperty("Name")?.GetValue(item, null)?.ToString() ?? string.Empty);
                     sheet.GetRow(rowIndex).CreateCell(5).SetCellValue(item.GetType().GetProperty("JobTitle")?.GetValue(item, null)?.ToString() ?? string.Empty);
-                    sheet.GetRow(rowIndex).CreateCell(6).SetCellValue(item.GetType().GetProperty("IsValid")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(6).SetCellValue(item.GetType().GetProperty("Phone")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(7).SetCellValue(item.GetType().GetProperty("CellPhone")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(8).SetCellValue(item.GetType().GetProperty("Email")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(9).SetCellValue(item.GetType().GetProperty("CompanyEmpAmount")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(10).SetCellValue(item.GetType().GetProperty("RegisterSectionType")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(11).SetCellValue(item.GetType().GetProperty("IsVegin")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(12).SetCellValue(item.GetType().GetProperty("IsValid")?.GetValue(item, null)?.ToString() ?? string.Empty);
                     rowIndex++;
                 }
 

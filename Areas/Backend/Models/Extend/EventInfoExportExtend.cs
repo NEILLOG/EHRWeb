@@ -19,6 +19,24 @@ namespace BASE.Areas.Backend.Models.Extend
         [Display(Name = "職稱")]
         public string JobTitle { get; set; }
 
+        [Display(Name = "連絡電話")]
+        public string Phone { get; set; }
+
+        [Display(Name = "手機")]
+        public string CellPhone { get; set; }
+
+        [Display(Name = "電子郵件")]
+        public string Email { get; set; }
+
+        [Display(Name = "公司人數")]
+        public string CompanyEmpAmount { get; set; }
+
+        [Display(Name = "課程參與模式")]
+        public string RegisterSectionType { get; set; }
+
+        [Display(Name = "飲食選擇")]
+        public string IsVegin { get; set; }
+
         [Display(Name = "審核狀態")]
         public string IsValid { get; set; }
     }
