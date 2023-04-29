@@ -1456,7 +1456,7 @@ namespace BASE.Areas.Backend.Controllers
         [BackendCheckLogin("Menu000016", "MODIFY")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangeVerifyStatus(List<string> arrRegistration, List<string> verifyStatus,string activityID, string sectionID)
+        public async Task<IActionResult> ChangeVerifyStatus(List<string> arrRegistration, List<string> verifyStatus,string activityID, string sectionID, List<string> arrRegisterID)
         {
             JsonResponse<TbActivityRegister> result = new JsonResponse<TbActivityRegister>();
             UserSessionModel? userinfo = HttpContext.Session.Get<UserSessionModel>(SessionStruct.Login.UserInfo);
@@ -1473,7 +1473,8 @@ namespace BASE.Areas.Backend.Controllers
             TbActivity? activity = new TbActivity();
             TbActivitySection? activitySection = new TbActivitySection();
             List<TbActivityRegister>? activityRegister = new List<TbActivityRegister>();
-            List<TbActivityRegister>? dataList = new List<TbActivityRegister>();
+            List<TbActivityRegisterSection>? activityRegisterSection = new List<TbActivityRegisterSection>();
+            List<TbActivityRegisterSection>? dataList = new List<TbActivityRegisterSection>();
             List<long>? listSuccess = new List<long>();
             List<long>? listFail = new List<long>();
             List<long>? listReserve = new List<long>();
@@ -1493,7 +1494,7 @@ namespace BASE.Areas.Backend.Controllers
                     activitySection = _eventService.Lookup<TbActivitySection>(ref _message, x => x.Id == longSection).FirstOrDefault();
 
                     //取資料
-                    dataList = _eventService.Lookup<TbActivityRegister>(ref _message, x => arrRegistration.Contains(x.Id.ToString())).ToList();
+                    dataList = _eventService.Lookup<TbActivityRegisterSection>(ref _message, x => arrRegisterID.Contains(x.Id.ToString())).ToList();
 
                     if (dataList == null)
                     {
@@ -1504,7 +1505,7 @@ namespace BASE.Areas.Backend.Controllers
                         for (int i = 0; i < arrRegistration.Count; i++)
                         {
                             bool? changeStatus = verifyStatus[i] != "-1" ? (verifyStatus[i] == "1" ? true : false) : null;
-                            TbActivityRegister temp = dataList.Where(x => x.Id.ToString() == arrRegistration[i]).FirstOrDefault();
+                            TbActivityRegisterSection temp = dataList.Where(x => x.Id.ToString() == arrRegisterID[i]).FirstOrDefault();
                             if (temp.IsValid != changeStatus)
                             {
                                 // 寄發成功通知信
@@ -1528,7 +1529,7 @@ namespace BASE.Areas.Backend.Controllers
                                 temp.IsValid = changeStatus;
                                 temp.ModifyDate = dtnow;
                                 temp.ModifyUser = userinfo.UserID;
-                                activityRegister.Add(temp);
+                                activityRegisterSection.Add(temp);
                             }
                             else {
                                 continue;
@@ -1539,10 +1540,10 @@ namespace BASE.Areas.Backend.Controllers
                         {
                             try
                             {
-                                if (activityRegister != null && activityRegister.Any())
+                                if (activityRegisterSection != null && activityRegisterSection.Any())
                                 {
                                     //編輯
-                                    await _eventService.UpdateRange(activityRegister, transaction);
+                                    await _eventService.UpdateRange(activityRegisterSection, transaction);
 
                                     transaction.Commit();
                                     isSuccess = true;
@@ -1575,7 +1576,7 @@ namespace BASE.Areas.Backend.Controllers
             if (isSuccess)
             {
                 
-                if (activityRegister != null && activityRegister.Any())
+                if (activityRegisterSection != null && activityRegisterSection.Any())
                 {
                     string actMonth = activitySection.Day.Month.ToString();
                     string actDay = activitySection.Day.Day.ToString();
@@ -1586,7 +1587,7 @@ namespace BASE.Areas.Backend.Controllers
                     //-- 審查成功通知信
                     if (listSuccess != null && listSuccess.Any())
                     {
-                        foreach (var itemSuccess in activityRegister.Where(x=> listSuccess.Contains(x.Id)))
+                        foreach (var itemSuccess in activityRegisterSection.Where(x=> listSuccess.Contains(x.Id)))
                         {
                             // 取得該報名者子表的活動參與方式
                             string strJoinType = _eventService.Lookup<TbActivityRegisterSection>(ref _message, x => x.RegisterId == itemSuccess.Id).Select(x => x.RegisterSectionType).FirstOrDefault();
@@ -1594,8 +1595,10 @@ namespace BASE.Areas.Backend.Controllers
                             // 主旨
                             string sSubject = string.Concat("勞動部勞動力發展署桃竹苗分署-", actMonth,"月", actDay,"日",activity.Title,"-",activity.Subject,"報名成功通知信(本郵件由系統自動寄發，請問直接回覆此郵件)");
 
+                            TbActivityRegister tempdata = _eventService.Lookup<TbActivityRegister>(ref _message, x => x.Id == itemSuccess.RegisterId).FirstOrDefault();
+
                             //內容
-                            string sContent = string.Concat(itemSuccess.Name, "您好<br />");
+                            string sContent = string.Concat(tempdata.Name, "您好<br />");
                             sContent += string.Concat("您已成功報名", actMonth, "月", actDay, "日 「", activity.Title, "-", activity.Subject, "」，本活動資訊如下：<br />");
                             sContent += string.Concat("活動主題：「", activity.Subject , "」<br />");
                             sContent += string.Concat("活動參與方式：", strJoinType, "<br />");
@@ -1610,7 +1613,7 @@ namespace BASE.Areas.Backend.Controllers
                             //寄送預約信件
                             await _mailService.ReserveSendEmail(new MailViewModel()
                             {
-                                ToList = new List<MailAddressInfo>() { new MailAddressInfo(itemSuccess.Email) },
+                                ToList = new List<MailAddressInfo>() { new MailAddressInfo(tempdata.Email) },
                                 Subject = sSubject,
                                 Body = sContent
                             }, userinfo.UserID, DateTime.Now, "ActivityPass");
@@ -1620,13 +1623,15 @@ namespace BASE.Areas.Backend.Controllers
                     //-- 審查未通過通知信
                     if (listFail != null && listFail.Any())
                     {
-                        foreach (var itemFail in activityRegister.Where(x => listFail.Contains(x.Id)))
+                        foreach (var itemFail in activityRegisterSection.Where(x => listFail.Contains(x.Id)))
                         {
                             // 主旨
                             string sSubject = string.Concat("勞動部勞動力發展署桃竹苗分署-", actMonth, "月", actDay, "日", activity.Title, "-", activity.Subject, "報名未錄取通知信");
 
+                            TbActivityRegister tempdata = _eventService.Lookup<TbActivityRegister>(ref _message, x => x.Id == itemFail.RegisterId).FirstOrDefault();
+
                             //內容
-                            string sContent = string.Concat(itemFail.Name, "您好<br />");
+                            string sContent = string.Concat(tempdata.Name, "您好<br />");
                             sContent += string.Concat("感謝您報名", actMonth, "月", actDay, "日 「", activity.Title, "-", activity.Subject, "」，因活動名額有限，您目前為本活動候補者。");
                             sContent += "若後續有名額釋出，我們將會與您聯繫確認出席意願，如您有任何問題皆歡迎來電詢問，謝謝。<br /><br />";
                             sContent += "敬祝 順心平安<br />";
@@ -1637,7 +1642,7 @@ namespace BASE.Areas.Backend.Controllers
                             //寄送預約信件
                             await _mailService.ReserveSendEmail(new MailViewModel()
                             {
-                                ToList = new List<MailAddressInfo>() { new MailAddressInfo(itemFail.Email) },
+                                ToList = new List<MailAddressInfo>() { new MailAddressInfo(tempdata.Email) },
                                 Subject = sSubject,
                                 Body = sContent
                             }, userinfo.UserID, DateTime.Now, "ActivityFail");
@@ -1647,7 +1652,7 @@ namespace BASE.Areas.Backend.Controllers
                     //-- 審查備取成功通知信
                     if (listReserve != null && listReserve.Any())
                     {
-                        foreach (var itemReserve in activityRegister.Where(x => listReserve.Contains(x.Id)))
+                        foreach (var itemReserve in activityRegisterSection.Where(x => listReserve.Contains(x.Id)))
                         {
                             // 取得該報名者子表的活動參與方式
                             string strJoinType = _eventService.Lookup<TbActivityRegisterSection>(ref _message, x => x.RegisterId == itemReserve.Id).Select(x => x.RegisterSectionType).FirstOrDefault();
@@ -1655,8 +1660,10 @@ namespace BASE.Areas.Backend.Controllers
                             // 主旨
                             string sSubject = string.Concat("勞動部勞動力發展署桃竹苗分署-", actMonth, "月", actDay, "日", activity.Title, "-", activity.Subject, "報名備取成功通知信");
 
+                            TbActivityRegister tempdata = _eventService.Lookup<TbActivityRegister>(ref _message, x => x.Id == itemReserve.RegisterId).FirstOrDefault();
+
                             //內容
-                            string sContent = string.Concat(itemReserve.Name, "您好<br />");
+                            string sContent = string.Concat(tempdata.Name, "您好<br />");
                             sContent += string.Concat("感謝您報名", actMonth, "月", actDay, "日 「", activity.Title, "-", activity.Subject, "」，因活動名額釋出，在此通知您備取成功，");
                             sContent += "敬請於活動當天準時出席，本活動資訊如下：<br />";
                             sContent += string.Concat("活動主題：「", activity.Subject, "」<br />");
@@ -1672,7 +1679,7 @@ namespace BASE.Areas.Backend.Controllers
                             //寄送預約信件
                             await _mailService.ReserveSendEmail(new MailViewModel()
                             {
-                                ToList = new List<MailAddressInfo>() { new MailAddressInfo(itemReserve.Email) },
+                                ToList = new List<MailAddressInfo>() { new MailAddressInfo(tempdata.Email) },
                                 Subject = sSubject,
                                 Body = sContent
                             }, userinfo.UserID, DateTime.Now, "ActivityReserve");
@@ -2011,7 +2018,7 @@ namespace BASE.Areas.Backend.Controllers
                 datapost.Search.activityId = datapost.ActivityItem.Id;
 
                 //取資料
-                List<RegistrationExtend>? dataList = _eventService.GetRegistrationExtendList(ref _message, datapost.Search).Where(x=>x.register.IsValid.HasValue && x.register.IsValid.Value && x.registerSection.RegisterSectionType != "線上").OrderBy(x=>x.register.Name).ToList();
+                List<RegistrationExtend>? dataList = _eventService.GetRegistrationExtendList(ref _message, datapost.Search).Where(x=>x.registerSection.IsValid.HasValue && x.registerSection.IsValid.Value && x.registerSection.RegisterSectionType != "線上").OrderBy(x=>x.register.Name).ToList();
 
                 // 取得活動日期與時段
                 long sectionId = Convert.ToInt64(datapost.Search.sSection);

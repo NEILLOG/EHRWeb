@@ -50,5 +50,10 @@ namespace BASE.Models.DB
         public DateTime? SigninDatePm { get; set; }
         public DateTime? ModifyDate { get; set; }
         public string? ModifyUser { get; set; }
+
+        /// <summary>
+        /// 是否審核通過(null預設；true通過；false不通過)
+        /// </summary>
+        public bool? IsValid { get; set; }
     }
 }

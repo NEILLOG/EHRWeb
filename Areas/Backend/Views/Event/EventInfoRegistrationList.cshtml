@@ -77,14 +77,18 @@
                     $.blockUI();
                     var arrRegistration = [];
                     var arrVerify = [];
+                    var arrRegisterID = [];
                     // 取得頁面資訊
                     var sTableName = document.getElementById("tb_Registration");
                     for (var i = 0; i < $("#tb_Registration tr").length-1 ; i++) 
                     {
                         var registrationId = sTableName.children[i].children[10].children[0].value;
-                        arrRegistration.push(registrationId)
+                        arrRegistration.push(registrationId);
                         var verifyStatus = sTableName.children[i].children[7].children[0].value;
-                        arrVerify.push(verifyStatus)   
+                        arrVerify.push(verifyStatus);
+                        var registerId = sTableName.children[i].children[10].children[1].value;
+                        arrRegisterID.push(registerId);
+                        
                     }
 
                     //確定刪除
@@ -99,7 +103,8 @@
                             arrRegistration: arrRegistration,
                             verifyStatus: arrVerify,
                             activityID: $("#ActivityID").val(),
-                            sectionID: $("#Search_sSection").val()
+                            sectionID: $("#Search_sSection").val(),
+                            arrRegisterID: arrRegisterID
                         },
                         success: function (result) {
                             $.unblockUI();

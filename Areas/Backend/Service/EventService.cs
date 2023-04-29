@@ -199,7 +199,7 @@ namespace BASE.Areas.Backend.Service
                                                      {
                                                          register = register,
                                                          registerSection = registerSection,
-                                                         verifyStatus = register.IsValid.HasValue ? (register.IsValid.Value ? "1" : "2") : "-1",
+                                                         verifyStatus = registerSection.IsValid.HasValue ? (registerSection.IsValid.Value ? "1" : "2") : "-1",
                                                      }).ToList();
 
                 if (vmParam != null)

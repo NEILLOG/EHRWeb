@@ -189,7 +189,7 @@ namespace BASE.Areas.Backend.Service
                                                         CompanyType = data.register.CompanyType,
                                                         Name = data.register.Name,
                                                         JobTitle = data.register.JobTitle,
-                                                        IsValid = data.register.IsValid.HasValue ? (data.register.IsValid.Value ? "通過" : "不通過") : "尚未審核"
+                                                        IsValid = data.registerSection.IsValid.HasValue ? (data.registerSection.IsValid.Value ? "通過" : "不通過") : "尚未審核"
                                                     }).ToList();
 
                 //建立Excel
