@@ -269,7 +269,8 @@ namespace BASE.Areas.Frontend.Controllers
                 else 
                     await _mailService.SendEmail(new MailViewModel()
                     {
-                        Subject = MailTmeplate.Resource.MODIFY_APPLY_SUBJECT,
+                        //Subject = MailTmeplate.Resource.MODIFY_APPLY_SUBJECT,
+                        Subject = String.Format(MailTmeplate.Resource.MODIFY_APPLY_SUBJECT, proejct.Name),
                         Body    = String.Format(MailTmeplate.Resource.MODIFY_APPLY_CONTNET, DateTime.Now.ToString("yyyy年MM月dd日 ")),
                         ToList = _emails
                     });

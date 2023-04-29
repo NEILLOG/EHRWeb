@@ -486,7 +486,7 @@ namespace BASE.Areas.Backend.Controllers
                     foreach (var itemConsultant in listConsultant)
                     {
                         //主旨
-                        string sSubject = string.Concat("【勞動部桃竹苗分署人資整合案_諮詢服務】", itemConsultant.UserName,"顧問您好，邀約顧問協助企業輔導_", sMonth, "月", sDay, "日 ", sTime, item.Name,"，謝謝您!");
+                        string sSubject = string.Concat("【勞動部桃竹苗分署人資整合案_諮詢服務】", itemConsultant.UserName,"顧問您好，邀約顧問協助企業輔導_", sMonth, "月", sDay, "日 ", sTime, item.Name, "，謝謝您!(此為系統自動發出信件，請勿回信)");
 
                         //內容
                         string sContent = string.Concat("敬愛的", itemConsultant.UserName,"顧問您好：<br /><br />");

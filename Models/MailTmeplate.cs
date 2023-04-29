@@ -72,7 +72,7 @@
         /// <summary>臨時課程變更</summary>
         public class Resource
         {
-            public static String MODIFY_APPLY_SUBJECT = "勞動部勞動力發展署桃竹苗分署-企業人力資源提升計畫—事業單位上傳課程臨時變更提醒通知信";
+            public static String MODIFY_APPLY_SUBJECT = "勞動部勞動力發展署桃竹苗分署-{0}—事業單位上傳課程臨時變更提醒通知信";
             public static String MODIFY_APPLY_CONTNET = @"
                 <p>您好</p>
                 <p>{0} 有事業單位上傳課程臨時變更申請書，提醒您儘速上系統下載文件，辦理相關作業並於完成後上系統點選「同意」或「不同意」。</p>
