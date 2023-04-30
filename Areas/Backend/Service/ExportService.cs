@@ -270,10 +270,21 @@ namespace BASE.Areas.Backend.Service
                 List<ConsultExportExtned> Data = (from data in dataList
                                                   select new ConsultExportExtned
                                                   {
+                                                      Location = data.ConsultRegister.Location,
                                                       Name = data.ConsultRegister.Name,
+                                                      BusinessId = data.ConsultRegister.BusinessId,
+                                                      Address = data.ConsultRegister.Address,
                                                       ConsultSubject = data.textOfSubject,
+                                                      Description = data.ConsultRegister.Description,
+                                                      ConsultTime = data.ConsultRegister.ConsultTime,
+                                                      ConsultAddress = data.ConsultRegister.ConsultAddress,
+                                                      ContactName = data.ConsultRegister.ContactName,
+                                                      ContactJobTitle = data.ConsultRegister.ContactJobTitle,
+                                                      ContactPhone = data.ConsultRegister.ContactPhone,
+                                                      ContactEmail = data.ConsultRegister.ContactEmail,
                                                       Adviser = data.ConsultantList,
                                                       AdviserAssistant = data.Assistant,
+                                                      ReAssignDate = data.ConsultRegister.ReAssignDate.HasValue ? data.ConsultRegister.ReAssignDate.Value.ToString("yyyy-MM-dd") : "",
                                                       IsClose = data.ConsultRegister.IsClose ? "已結案" : "未結案"
                                                   }).ToList();
 
@@ -286,11 +297,22 @@ namespace BASE.Areas.Backend.Service
                 //標題
                 sheet.CreateRow(0); //需先用CreateRow建立,才可通过GetRow取得該欄位
                 sheet.GetRow(0).CreateCell(0).SetCellValue("序號");
-                sheet.GetRow(0).CreateCell(1).SetCellValue("企業名稱");
-                sheet.GetRow(0).CreateCell(2).SetCellValue("諮詢主題");
-                sheet.GetRow(0).CreateCell(3).SetCellValue("顧問");
-                sheet.GetRow(0).CreateCell(4).SetCellValue("輔導助理");
-                sheet.GetRow(0).CreateCell(5).SetCellValue("審核狀態");
+                sheet.GetRow(0).CreateCell(1).SetCellValue("企業所在地");
+                sheet.GetRow(0).CreateCell(2).SetCellValue("企業名稱");
+                sheet.GetRow(0).CreateCell(3).SetCellValue("企業統編");
+                sheet.GetRow(0).CreateCell(4).SetCellValue("企業登記地址");
+                sheet.GetRow(0).CreateCell(5).SetCellValue("諮詢主題");
+                sheet.GetRow(0).CreateCell(6).SetCellValue("問題陳述");
+                sheet.GetRow(0).CreateCell(7).SetCellValue("諮詢時間");
+                sheet.GetRow(0).CreateCell(8).SetCellValue("輔導地址");
+                sheet.GetRow(0).CreateCell(9).SetCellValue("聯繫人姓名");
+                sheet.GetRow(0).CreateCell(10).SetCellValue("聯繫人職稱");
+                sheet.GetRow(0).CreateCell(11).SetCellValue("聯絡人電話");
+                sheet.GetRow(0).CreateCell(12).SetCellValue("聯絡人EMAIL");
+                sheet.GetRow(0).CreateCell(13).SetCellValue("顧問");
+                sheet.GetRow(0).CreateCell(14).SetCellValue("輔導助理");
+                sheet.GetRow(0).CreateCell(15).SetCellValue("輔導日期");
+                sheet.GetRow(0).CreateCell(16).SetCellValue("審核狀態");
 
                 //資料
                 int rowIndex = 1;
@@ -298,11 +320,22 @@ namespace BASE.Areas.Backend.Service
                 {
                     sheet.CreateRow(rowIndex);
                     sheet.GetRow(rowIndex).CreateCell(0).SetCellValue(rowIndex);
-                    sheet.GetRow(rowIndex).CreateCell(1).SetCellValue(item.GetType().GetProperty("Name")?.GetValue(item, null)?.ToString() ?? string.Empty);
-                    sheet.GetRow(rowIndex).CreateCell(2).SetCellValue(item.GetType().GetProperty("ConsultSubject")?.GetValue(item, null)?.ToString() ?? string.Empty);
-                    sheet.GetRow(rowIndex).CreateCell(3).SetCellValue(item.GetType().GetProperty("Adviser")?.GetValue(item, null)?.ToString() ?? string.Empty);
-                    sheet.GetRow(rowIndex).CreateCell(4).SetCellValue(item.GetType().GetProperty("AdviserAssistant")?.GetValue(item, null)?.ToString() ?? string.Empty);
-                    sheet.GetRow(rowIndex).CreateCell(5).SetCellValue(item.GetType().GetProperty("IsClose")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(1).SetCellValue(item.GetType().GetProperty("Location")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(2).SetCellValue(item.GetType().GetProperty("Name")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(3).SetCellValue(item.GetType().GetProperty("BusinessId")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(4).SetCellValue(item.GetType().GetProperty("Address")?.GetValue(item, null)?.ToString() ?? string.Empty);                                     
+                    sheet.GetRow(rowIndex).CreateCell(5).SetCellValue(item.GetType().GetProperty("ConsultSubject")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(6).SetCellValue(item.GetType().GetProperty("Description")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(7).SetCellValue(item.GetType().GetProperty("ConsultTime")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(8).SetCellValue(item.GetType().GetProperty("ConsultAddress")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(9).SetCellValue(item.GetType().GetProperty("ContactName")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(10).SetCellValue(item.GetType().GetProperty("ContactJobTitle")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(11).SetCellValue(item.GetType().GetProperty("ContactPhone")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(12).SetCellValue(item.GetType().GetProperty("ContactEmail")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(13).SetCellValue(item.GetType().GetProperty("Adviser")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(14).SetCellValue(item.GetType().GetProperty("AdviserAssistant")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(15).SetCellValue(item.GetType().GetProperty("ReAssignDate")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(16).SetCellValue(item.GetType().GetProperty("IsClose")?.GetValue(item, null)?.ToString() ?? string.Empty);
                     rowIndex++;
                 }
 
