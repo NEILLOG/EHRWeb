@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Server.HttpSys;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Quartz;
 using Quartz.Impl;
 using System.Text.Encodings.Web;
@@ -42,9 +43,13 @@ builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromDays(1);
+    options.IdleTimeout = TimeSpan.FromMinutes(builder.Configuration.GetValue<int>("Site:SessionTimeOut"));
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
+
+    //設定cookie只能在Https底下執行，若沒有SSL需註解掉
+    if (builder.Configuration.GetValue<bool>("Site:SSL"))
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
@@ -57,6 +62,11 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 builder.Services.Configure<CookieTempDataProviderOptions>(options =>
 {
     options.Cookie.IsEssential = true;
+    options.Cookie.HttpOnly = true;
+
+    //設定cookie只能在Https底下執行，若沒有SSL需註解掉
+    if (builder.Configuration.GetValue<bool>("Site:SSL"))
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 
 
@@ -72,6 +82,10 @@ builder.Services.AddAntiforgery(option =>
 {
     option.FormFieldName = "__X-XSRFVerificationToken";
     option.HeaderName = "X-XSRF-TOKEN";
+
+    //設定cookie只能在Https底下執行，若沒有SSL需註解掉
+    if (builder.Configuration.GetValue<bool>("Site:SSL"))
+        option.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 
 /* 
@@ -153,6 +167,7 @@ builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
 var app = builder.Build();
 
+// 透過 app 設定 Middlewares (HTTP request pipeline)
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -163,7 +178,13 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseHttpsRedirection();
+
+    if (builder.Configuration.GetValue<bool>("Site:IsDebug"))
+        app.UseDeveloperExceptionPage();
+    else
+        app.UseExceptionHandler("/error/error.html");
+
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
