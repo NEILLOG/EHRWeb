@@ -167,6 +167,19 @@ builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
 var app = builder.Build();
 
+// 設定Header
+app.Use((context, next) =>
+{
+    //context.Response.Headers.Remove("X-Powered-By");
+    //context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+    context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+    //context.Response.Headers.Add("Content-Security-Policy", "default-src 'unsafe-inline' 'unsafe-eval' data: blob: https:;");
+    //context.Response.Headers.Add("X-Content-Security-Policy", "default-src 'unsafe-inline' 'unsafe-eval' data: blob: https:;");
+
+
+    return next();
+});
+
 // 透過 app 設定 Middlewares (HTTP request pipeline)
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
