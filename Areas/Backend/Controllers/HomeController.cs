@@ -490,7 +490,7 @@ namespace BASE.Areas.Backend.Controllers
         /// <returns></returns>
         public async Task<IActionResult> GetCaptcha()
         {
-            bool SSL = _conf.GetValue<string>("Site:SSL") == "Y";
+            bool SSL = _conf.GetValue<bool>("Site:SSL");
 
             try
             {

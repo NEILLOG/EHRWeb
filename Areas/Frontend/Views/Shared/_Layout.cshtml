@@ -416,7 +416,7 @@
     <script>
         $(document).ready(function () {
             $.get('@Url.Action("Visitors", "Home")', null, function (response) {
-                var baseCount = 7468389;
+                var baseCount = 0;
                 if (response.isSuccess) {
                     var RealCount = parseInt(response.data);
                     var Count = baseCount + RealCount;
