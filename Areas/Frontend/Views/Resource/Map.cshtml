@@ -7,7 +7,7 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            $('#contents').find('img').addClass('img-fluid');
+            $('#content').find('img').addClass('img-fluid');
         });
     </script>
 }
@@ -57,7 +57,7 @@
                 </div>
             </div>
             <!-- 右邊內容區塊 -->
-            <div class="col-lg-9 col-12" id="contents">
+            <div class="col-lg-9 col-12" id="content">
                 <a accesskey="C" href="#" title="中央內容區塊" class="sr-only sr-only-focusable">:::</a>
                 @(new HtmlString(Model.ExtendItem.Contents))
             </div>

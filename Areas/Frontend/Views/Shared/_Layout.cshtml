@@ -23,6 +23,26 @@
     </script>
 
     @RenderSection("Css", required: false)
+
+    <style>
+        #gotocenter:focus {
+            position: absolute;
+            left: 0;
+            top: 0;
+            outline-color: transparent;
+            -webkit-transition: top .1s ease-in;
+            transition: top .1s ease-in;
+            border: #ffbf47 solid 0.4rem;
+            background: #ffbf47;
+            color: #000;
+            font-weight: 700;
+            clip:auto;
+            width:114px;
+            height:42px;
+            z-index:9999;
+        }
+        
+    </style>
 </head>
 <body>
     <noscript>
@@ -35,6 +55,9 @@
     </noscript>
 
     <header id="myHeader">
+
+        <a href="#content" id="gotocenter" title="移到主要內容" class="sr-only sr-only-focusable">跳到主要內容</a>
+
         <div class="small-header d-none d-lg-block" id="small-header">
             <div class="container-fluid">
                 <div class="row justify-content-end align-items-center">
@@ -113,7 +136,6 @@
 
     <main>
         
-
         <div>
             @RenderBody()
         </div>

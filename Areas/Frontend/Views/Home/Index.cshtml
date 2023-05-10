@@ -58,7 +58,7 @@
             @foreach(var item in Model.Ads)
             {
                 <div class="carousel-item @(first ? "view active" : "") ">
-                    <a href="@item.Header.Link" target="_blank" title="@item.Header.Title">
+                    <a href="@item.Header.Link" target="_blank" title="@item.Header.Title" tabindex="-1">
                         <img src="@item.FileInfo.FilePath" class="d-block w-100" alt="@item.Header.Title">
                     </a>
                     @*<div class="mask">
