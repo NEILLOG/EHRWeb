@@ -57,7 +57,7 @@ hr{
   color: #FFF;
 }
 .fc-gray{
-   color: #C9C9C9;
+   color: #6c6c6c;
 }
 .fc-ored{
    color: #F56962;
@@ -1319,8 +1319,8 @@ footer{
 
 .corp-resource .item .tag{
    border-radius: 21px;
-   background-color: rgba(45, 167, 164, 0.2);
-   color: #2DA7A4;
+   background-color: #d5eded;
+   color: #0c6a68;
    font-weight: 400;
    font-size: 0.9rem;
    padding: 5px 16px;
