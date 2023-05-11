@@ -293,7 +293,7 @@ namespace BASE.Areas.Backend.Service
         public List<SelectListItem> SetDDL_quiz(int Type)
         {
             List<SelectListItem> Data = new List<SelectListItem>();
-            List<TbQuiz> dataQuiz = Lookup<TbQuiz>(ref _Msg).ToList();
+            List<TbQuiz> dataQuiz = Lookup<TbQuiz>(ref _Msg, x => x.IsDelete == false).ToList();
             switch (Type)
             {
                 case 1:
