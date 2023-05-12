@@ -1328,22 +1328,22 @@ namespace BASE.Areas.Backend.Controllers
                             if (sheetRow == null || sheetRow.Cells.All(x => x.CellType == CellType.Blank))
                                 break;
 
-                            string member = sheetRow.GetCell(0).ToString();
-                            string aua8 = sheetRow.GetCell(1).ToString();
-                            string name = sheetRow.GetCell(2).ToString();
-                            string phone = sheetRow.GetCell(3).ToString();
-                            string email = sheetRow.GetCell(4).ToString();
-                            string cellphone = sheetRow.GetCell(5).ToString();
-                            string sex = sheetRow.GetCell(6).ToString();
-                            string IDNumber = sheetRow.GetCell(7).ToString();
-                            string Industry = sheetRow.GetCell(8).ToString();
-                            string ServiceUnit = sheetRow.GetCell(9).ToString();
-                            string ContactAddr = sheetRow.GetCell(10).ToString();
-                            string PermanentAddr = sheetRow.GetCell(11).ToString();
-                            string Education = sheetRow.GetCell(12).ToString();
-                            string Expertise = sheetRow.GetCell(13).ToString();
-                            string JobTitle = sheetRow.GetCell(14).ToString();
-                            string Skill = sheetRow.GetCell(15).ToString();
+                            string? member = sheetRow.GetCell(0)?.ToString();
+                            string? aua8 = sheetRow.GetCell(1)?.ToString();
+                            string? name = sheetRow.GetCell(2)?.ToString();
+                            string? phone = sheetRow.GetCell(3)?.ToString();
+                            string? email = sheetRow.GetCell(4)?.ToString();
+                            string? cellphone = sheetRow.GetCell(5)?.ToString();
+                            string? sex = sheetRow.GetCell(6)?.ToString();
+                            string? IDNumber = sheetRow.GetCell(7)?.ToString();
+                            string? Industry = sheetRow.GetCell(8)?.ToString();
+                            string? ServiceUnit = sheetRow.GetCell(9)?.ToString();
+                            string? ContactAddr = sheetRow.GetCell(10)?.ToString();
+                            string? PermanentAddr = sheetRow.GetCell(11)?.ToString();
+                            string? Education = sheetRow.GetCell(12)?.ToString();
+                            string? Expertise = sheetRow.GetCell(13)?.ToString();
+                            string? JobTitle = sheetRow.GetCell(14)?.ToString();
+                            string? Skill = sheetRow.GetCell(15)?.ToString();
 
                             /* 檢查必填項 */
                             if (StringExtensions.CheckIsNullOrEmpty(member, name, aua8, email, cellphone, sex, Skill))
