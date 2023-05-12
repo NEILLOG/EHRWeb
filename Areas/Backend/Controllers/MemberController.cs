@@ -1324,132 +1324,126 @@ namespace BASE.Areas.Backend.Controllers
                             // 驗證不是空白列
                             IRow sheetRow = sheet.GetRow(row);
 
-                            /* row 的欄位數對才處理 */
-                            if (sheetRow != null)
+                            // 當全部都為空白,不再寫入資料
+                            if (sheetRow == null || sheetRow.Cells.All(x => x.CellType == CellType.Blank))
+                                break;
+
+                            string member = sheetRow.GetCell(0).ToString();
+                            string aua8 = sheetRow.GetCell(1).ToString();
+                            string name = sheetRow.GetCell(2).ToString();
+                            string phone = sheetRow.GetCell(3).ToString();
+                            string email = sheetRow.GetCell(4).ToString();
+                            string cellphone = sheetRow.GetCell(5).ToString();
+                            string sex = sheetRow.GetCell(6).ToString();
+                            string IDNumber = sheetRow.GetCell(7).ToString();
+                            string Industry = sheetRow.GetCell(8).ToString();
+                            string ServiceUnit = sheetRow.GetCell(9).ToString();
+                            string ContactAddr = sheetRow.GetCell(10).ToString();
+                            string PermanentAddr = sheetRow.GetCell(11).ToString();
+                            string Education = sheetRow.GetCell(12).ToString();
+                            string Expertise = sheetRow.GetCell(13).ToString();
+                            string JobTitle = sheetRow.GetCell(14).ToString();
+                            string Skill = sheetRow.GetCell(15).ToString();
+
+                            /* 檢查必填項 */
+                            if (StringExtensions.CheckIsNullOrEmpty(member, name, aua8, email, cellphone, sex, Skill))
                             {
-                                if (sheetRow.PhysicalNumberOfCells == column_num)
+                                result.MessageDetail += $"第 {i + 1} 活頁簿，第 {row + 1} 列帳號、信箱、姓名、電話、手機、密碼、性別與專業領域須必填，已略過\n";
+                                hasError = true;
+                            }
+                            else
+                            {
+                                string skillCode = "";
+                                // 處理專業領域文字轉代碼
+                                if (!string.IsNullOrEmpty(Skill))
                                 {
-                                    string member = sheetRow.GetCell(0).ToString();
-                                    string aua8 = sheetRow.GetCell(1).ToString();
-                                    string name = sheetRow.GetCell(2).ToString();
-                                    string phone = sheetRow.GetCell(3).ToString();
-                                    string email = sheetRow.GetCell(4).ToString();
-                                    string cellphone = sheetRow.GetCell(5).ToString();
-                                    string sex = sheetRow.GetCell(6).ToString();
-                                    string IDNumber = sheetRow.GetCell(7).ToString();
-                                    string Industry = sheetRow.GetCell(8).ToString();
-                                    string ServiceUnit = sheetRow.GetCell(9).ToString();
-                                    string ContactAddr = sheetRow.GetCell(10).ToString();
-                                    string PermanentAddr = sheetRow.GetCell(11).ToString();
-                                    string Education = sheetRow.GetCell(12).ToString();
-                                    string Expertise = sheetRow.GetCell(13).ToString();
-                                    string JobTitle = sheetRow.GetCell(14).ToString();
-                                    string Skill = sheetRow.GetCell(15).ToString();
+                                    List<string> listSkillText = new List<string>();
+                                    listSkillText = Skill.Split(',').ToList();
+                                    List<string> listSkillCode = new List<string>();
+                                    listSkillCode = skillColumns.Where(x => listSkillText.Contains(x.Title)).Select(x => x.BacolId).ToList();
 
-                                    /* 檢查必填項 */
-                                    if (StringExtensions.CheckIsNullOrEmpty(member, name, aua8, email, phone, cellphone, sex, Skill))
+                                    foreach (var itemSkill in listSkillCode)
                                     {
-                                        result.MessageDetail += $"第 {i + 1} 活頁簿，第 {row + 1} 列帳號、信箱、姓名、電話、手機、密碼、性別與專業領域須必填，已略過\n";
-                                        hasError = true;
+                                        skillCode = string.IsNullOrEmpty(skillCode) ? skillCode + itemSkill : skillCode + "," + itemSkill;
                                     }
-                                    else
-                                    {
-                                        string skillCode = "";
-                                        // 處理專業領域文字轉代碼
-                                        if (!string.IsNullOrEmpty(Skill))
-                                        {
-                                            List<string> listSkillText = new List<string>();
-                                            listSkillText = Skill.Split(',').ToList();
-                                            List<string> listSkillCode = new List<string>();
-                                            listSkillCode = skillColumns.Where(x => listSkillText.Contains(x.Title)).Select(x => x.BacolId).ToList();
+                                }
 
-                                            foreach (var itemSkill in listSkillCode)
-                                            {
-                                                skillCode = string.IsNullOrEmpty(skillCode) ? skillCode + itemSkill : skillCode + "," + itemSkill;
-                                            }
-                                        }
+                                MemberExtend existItem = existList.Where(x => x.userinfo.Account == member).FirstOrDefault();
+                                if (existItem != null && existItem.userinfo != null)
+                                {// 需要更新的顧問資料
+                                    existItem.userinfo.Aua8 = EncryptService.AES.Base64Encrypt(aua8);
+                                    existItem.userinfo.UserName = name;
+                                    existItem.userinfo.Phone = phone;
+                                    existItem.userinfo.Email = email;
+                                    existItem.userinfo.CellPhone = cellphone;
+                                    existItem.userinfo.Sex = sex == "男" ? "M" : "F";
+                                    existItem.userinfo.IdNumber = IDNumber;
+                                    existItem.userinfo.Industry = Industry;
+                                    existItem.userinfo.ServiceUnit = ServiceUnit;
+                                    existItem.userinfo.ContactAddr = ContactAddr;
+                                    existItem.userinfo.PermanentAddr = PermanentAddr;
+                                    existItem.userinfo.Education = Education;
+                                    existItem.userinfo.Expertise = Expertise;
+                                    existItem.userinfo.JobTitle = JobTitle;
+                                    existItem.userinfo.Skill = skillCode;
+                                    existItem.userinfo.ModifyDate = dtnow;
+                                    existItem.userinfo.ModifyUser = userinfo.UserID;
 
-                                        MemberExtend existItem = existList.Where(x => x.userinfo.Account == member).FirstOrDefault();
-                                        if (existItem != null && existItem.userinfo != null)
-                                        {// 需要更新的顧問資料
-                                            existItem.userinfo.Aua8 = EncryptService.AES.Base64Encrypt(aua8);
-                                            existItem.userinfo.UserName = name;
-                                            existItem.userinfo.Phone = phone;
-                                            existItem.userinfo.Email = email;
-                                            existItem.userinfo.CellPhone = cellphone;
-                                            existItem.userinfo.Sex = sex == "男" ? "M" : "F";
-                                            existItem.userinfo.IdNumber = IDNumber;
-                                            existItem.userinfo.Industry = Industry;
-                                            existItem.userinfo.ServiceUnit = ServiceUnit;
-                                            existItem.userinfo.ContactAddr = ContactAddr;
-                                            existItem.userinfo.PermanentAddr = PermanentAddr;
-                                            existItem.userinfo.Education = Education;
-                                            existItem.userinfo.Expertise = Expertise;
-                                            existItem.userinfo.JobTitle = JobTitle;
-                                            existItem.userinfo.Skill = skillCode;
-                                            existItem.userinfo.ModifyDate = dtnow;
-                                            existItem.userinfo.ModifyUser = userinfo.UserID;
-
-                                            update_UserInfo.Add(existItem.userinfo);
-                                        }
-                                        else {
-                                            TbUserInfo newUser = new TbUserInfo();
-                                            newUser.UserId = await _allCommonService.IDGenerator<TbUserInfo>();
-                                            newUser.Account = member;
-                                            newUser.Aua8 = EncryptService.AES.Base64Encrypt(aua8);
-                                            newUser.UserName = name;
-                                            newUser.Phone = phone;
-                                            newUser.Email = email;
-                                            newUser.IsActive = true;
-                                            newUser.IsDelete = false;
-                                            newUser.CellPhone = cellphone;
-                                            newUser.Sex = sex == "男" ? "M" : "F";
-                                            newUser.JobTitle = JobTitle;
-                                            newUser.IdNumber = IDNumber;
-                                            newUser.Industry = Industry;
-                                            newUser.ServiceUnit = ServiceUnit;
-                                            newUser.ContactAddr = ContactAddr;
-                                            newUser.PermanentAddr = PermanentAddr;
-                                            newUser.Education = Education;
-                                            newUser.Expertise = Expertise;
-                                            newUser.Skill = skillCode;
-                                            newUser.CreateDate = dtnow;
-                                            newUser.CreateUser = userinfo.UserID;
-                                            insert_UserInfo.Add(newUser);
-
-
-                                            // 新增對應的USER群組
-                                            TbUserInGroup newUserInGroup = new TbUserInGroup();
-                                            newUserInGroup.UserId = newUser.UserId;
-                                            newUserInGroup.GroupId = "G000000004";
-                                            insert_UserInGroup.Add(newUserInGroup);
-
-                                            // 新增對應的USER 權限
-                                            foreach (var itemGroupRight in listGroup)
-                                            {
-                                                TbUserRight newUserRight = new TbUserRight();
-                                                newUserRight.UserId = newUser.UserId;
-                                                newUserRight.MenuId = itemGroupRight.MenuId;
-                                                newUserRight.Enabled = itemGroupRight.Enabled;
-                                                newUserRight.AddEnabled = itemGroupRight.AddEnabled;
-                                                newUserRight.UploadEnabled = itemGroupRight.UploadEnabled;
-                                                newUserRight.ModifyEnabled = itemGroupRight.ModifyEnabled;
-                                                newUserRight.DownloadEnabled = itemGroupRight.DownloadEnabled;
-                                                newUserRight.DeleteEnabled = itemGroupRight.DeleteEnabled;
-                                                newUserRight.ViewEnabled = itemGroupRight.ViewEnabled;
-
-                                                insert_UserRight.Add(newUserRight);
-                                            }
-
-                                        }
-                                    }
+                                    update_UserInfo.Add(existItem.userinfo);
                                 }
                                 else
                                 {
-                                    result.MessageDetail += $"第 {i + 1} 活頁簿，第 {row + 1} 列欄位數目不正確，已略過\n";
-                                    hasError = true;
+                                    TbUserInfo newUser = new TbUserInfo();
+                                    newUser.UserId = await _allCommonService.IDGenerator<TbUserInfo>();
+                                    newUser.Account = member;
+                                    newUser.Aua8 = EncryptService.AES.Base64Encrypt(aua8);
+                                    newUser.UserName = name;
+                                    newUser.Phone = phone;
+                                    newUser.Email = email;
+                                    newUser.IsActive = true;
+                                    newUser.IsDelete = false;
+                                    newUser.CellPhone = cellphone;
+                                    newUser.Sex = sex == "男" ? "M" : "F";
+                                    newUser.JobTitle = JobTitle;
+                                    newUser.IdNumber = IDNumber;
+                                    newUser.Industry = Industry;
+                                    newUser.ServiceUnit = ServiceUnit;
+                                    newUser.ContactAddr = ContactAddr;
+                                    newUser.PermanentAddr = PermanentAddr;
+                                    newUser.Education = Education;
+                                    newUser.Expertise = Expertise;
+                                    newUser.Skill = skillCode;
+                                    newUser.CreateDate = dtnow;
+                                    newUser.CreateUser = userinfo.UserID;
+                                    insert_UserInfo.Add(newUser);
+
+
+                                    // 新增對應的USER群組
+                                    TbUserInGroup newUserInGroup = new TbUserInGroup();
+                                    newUserInGroup.UserId = newUser.UserId;
+                                    newUserInGroup.GroupId = "G000000004";
+                                    insert_UserInGroup.Add(newUserInGroup);
+
+                                    // 新增對應的USER 權限
+                                    foreach (var itemGroupRight in listGroup)
+                                    {
+                                        TbUserRight newUserRight = new TbUserRight();
+                                        newUserRight.UserId = newUser.UserId;
+                                        newUserRight.MenuId = itemGroupRight.MenuId;
+                                        newUserRight.Enabled = itemGroupRight.Enabled;
+                                        newUserRight.AddEnabled = itemGroupRight.AddEnabled;
+                                        newUserRight.UploadEnabled = itemGroupRight.UploadEnabled;
+                                        newUserRight.ModifyEnabled = itemGroupRight.ModifyEnabled;
+                                        newUserRight.DownloadEnabled = itemGroupRight.DownloadEnabled;
+                                        newUserRight.DeleteEnabled = itemGroupRight.DeleteEnabled;
+                                        newUserRight.ViewEnabled = itemGroupRight.ViewEnabled;
+
+                                        insert_UserRight.Add(newUserRight);
+                                    }
+
                                 }
                             }
+                            
                         }
                     }
 
