@@ -194,10 +194,15 @@ else
     app.UseHttpsRedirection();
 
     if (builder.Configuration.GetValue<bool>("Site:IsDebug"))
+    {
         app.UseDeveloperExceptionPage();
+    }        
     else
+    {
         app.UseExceptionHandler("/error/error.html");
-
+        app.UseStatusCodePagesWithRedirects("/error/error.html");
+    }
+        
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
