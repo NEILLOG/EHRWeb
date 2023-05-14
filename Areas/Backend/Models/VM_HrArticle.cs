@@ -31,6 +31,9 @@ namespace BASE.Areas.Backend.Models
 
         /// <summary>相關檔案</summary>
         public IFormFile? RelatedFile { get; set; }
+
+        /// <summary>相關檔案(刪除用)</summary>
+        public List<string>? DelFileList { get; set; }
     }
 
     /// <summary>FAQ_查詢參數</summary>

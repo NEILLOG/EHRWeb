@@ -366,7 +366,11 @@ namespace BASE.Areas.Backend.Controllers
                                 }
                                 else
                                 {
-                                    item.FileId = "";
+                                    //檔案(刪除)
+                                    if (datapost.DelFileList != null && datapost.DelFileList.Count > 0)
+                                    {
+                                        item.FileId = "";
+                                    }
                                 }
 
                                 //編輯

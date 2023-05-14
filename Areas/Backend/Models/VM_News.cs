@@ -32,6 +32,9 @@ namespace BASE.Areas.Backend.Models
         /// <summary>相關檔案</summary>
         public IFormFile? NewsFile { get; set; }
 
+        /// <summary>相關檔案(刪除用)</summary>
+        public List<string>? DelFileList { get; set; }
+
         /// <summary> 是否上架 </summary>
         public string? isPublish { get; set; }
 
