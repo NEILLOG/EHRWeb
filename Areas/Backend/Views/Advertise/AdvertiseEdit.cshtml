@@ -5,41 +5,20 @@
     {
     <script src="~/lib/ckeditor5/ckeditor.js"></script>
     <script type="text/javascript">
-        let ck5_editor;
         $(document).ready(function () {
-            ClassicEditor
-                .create(document.querySelector('#ck5'), {
-                    simpleUpload: {
-                        // The URL that the images are uploaded to.
-                        uploadUrl: '/Backend/File/CK5_FileUpload',
-
-                        // Enable the XMLHttpRequest.withCredentials property.
-                        withCredentials: true,
-
-                        // Headers sent along with the XMLHttpRequest to the upload server.
-                        headers: {
-                            'X-XSRF-TOKEN': $('input[name="__X-XSRFVerificationToken"]').val(),
-                            "X-Requested-With": "XMLHttpRequest"
-                        }
-                    }
-                })
-                .then(editor => {
-                    /* console.log(editor);*/
-                    ck5_editor = editor;
-                })
-                .catch(error => {
-                    /* console.error(error);*/
-                });
 
             $('#frm').on('submit', function () {
-                let ck5_content = ck5_editor.getData();
-
-                if (ck5_content == '') {
-                    toastr['error']('請填入答案!');
-                    return false;
-                } else {
+                let pass = true;
+                $('.File').each((i, ele) => {
+                    if ($(ele).fileinput('getFilesCount', true) == 0) {
+                        toastr['error']('請上傳輪播圖片!');
+                        pass = false;
+                    }
+                });
+                if (pass) {
                     $.blockUI();
-                    return true;
+                } else {
+                    return false;
                 }
             });
         });

@@ -360,10 +360,10 @@ namespace BASE.Areas.Backend.Controllers
                                         _message += photo_upload.Message;
                                     }
                                 }
-                                else
-                                {
-                                    item.FileId = "";
-                                }
+                                //else
+                                //{
+                                //    item.FileId = "";
+                                //}
 
                                 //編輯
                                 await _advService.Update(item, transaction);
