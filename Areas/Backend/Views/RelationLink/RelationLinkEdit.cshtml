@@ -12,7 +12,7 @@
                 let pass = true;
                 $('.File').each((i, ele) => {
                     if ($(ele).fileinput('getFilesCount', true) == 0) {
-                        toastr['error']('請上傳輪播圖片!');
+                        toastr['error']('請上傳圖片!');
                         pass = false;
                     }
                 });

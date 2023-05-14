@@ -17,6 +17,20 @@
         });
 
         $(document).ready(function () {
+            $('#frm').on('submit', function () {
+                let pass = true;
+                $('.File').each((i, ele) => {
+                    if ($(ele).fileinput('getFilesCount', true) == 0) {
+                        toastr['error']('請上傳圖片檔案!');
+                        pass = false;
+                    }
+                });
+                if (pass) {
+                    $.blockUI();
+                } else {
+                    return false;
+                }
+            });
             @*檔案上傳物件*@
                 $('.File').each(function () {
                     $(this).FileInputCus({
@@ -50,7 +64,7 @@
                     <span class="red">*</span>
                     @Html.LabelFor(x => x.AlbumExtendItem.Album.FileId, "圖片檔案：", new { @class = "form-label" })
                     <span class="red">(建議尺寸：300*200px)</span>
-                    @Html.TextBoxFor(x => x.AlbumImageFile, new { @FileID = "FileId", @class="form-control File input_activityInfo", @type = "file", accept = ".pnf,.jpg,.jpeg", data_parsley_file_type="png,jpg,jpeg", data_parsley_errors_container="#FileId-errors-container", data_parsley_required = "" })
+                    @Html.TextBoxFor(x => x.AlbumImageFile, new { @FileID = "FileId", @class="form-control File input_activityInfo", @type = "file", accept = ".pnf,.jpg,.jpeg", data_parsley_file_type="png,jpg,jpeg", data_parsley_errors_container="#FileId-errors-container" })
                     @Html.HiddenFor(x => x.AlbumExtendItem.Album.FileId, new { @id ="FileId" })
                     <div id="FileId-errors-container"></div>
                 </div>

@@ -16,6 +16,21 @@
         });
 
         $(document).ready(function () {
+            $('#frm').on('submit', function () {
+                let pass = true;
+                $('.File').each((i, ele) => {
+                    if ($(ele).fileinput('getFilesCount', true) == 0) {
+                        toastr['error']('請上傳檔案!');
+                        pass = false;
+                    }
+                });
+                if (pass) {
+                    $.blockUI();
+                } else {
+                    return false;
+                }
+            });
+
             @*檔案上傳物件*@
                 $('.File').each(function () {
                     $(this).FileInputCus({
