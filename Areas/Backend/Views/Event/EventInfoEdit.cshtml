@@ -23,8 +23,11 @@
             $('.File').each(function () {
                 $(this).FileInputCus({
                     dropZoneEnabled: false
+                }, {
+                        deleteOBJ: 'DelFileList'
                 });
             });
+
             if ('@Model.EventInfoItem.activity.Category' == '活動') {
                 $("#spLecturerInfo").hide();
                 $('#EventInfoItem_activity_LecturerInfo').attr('data-parsley-required', 'false');

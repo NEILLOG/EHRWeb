@@ -551,7 +551,11 @@ namespace BASE.Areas.Backend.Controllers
                                         }
                                     } else
                                     {
-                                        item.HandoutFile = null;
+                                        //檔案(刪除)
+                                        if (datapost.DelFileList != null && datapost.DelFileList.Count > 0)
+                                        {
+                                            item.HandoutFile = null;
+                                        }
                                     }
                                 }
                                 

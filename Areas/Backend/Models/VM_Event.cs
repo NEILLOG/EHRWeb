@@ -66,6 +66,9 @@ namespace BASE.Areas.Backend.Models
         /// <summary>講義</summary>
         public IFormFile? HandoutFile { get; set; }
 
+        /// <summary>講義(刪除用)</summary>
+        public List<string>? DelFileList { get; set; }
+
         #endregion
     }
 
