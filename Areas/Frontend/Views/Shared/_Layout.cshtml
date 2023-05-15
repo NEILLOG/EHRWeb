@@ -407,6 +407,18 @@
             value = value.replace("\r\n", "");
             return value;
         }
+
+        function listChange (value) {
+            if (value == "listRadio") {
+                $("#listRadioView").show();
+                $("#iconRadioView").hide();
+            }
+            else {
+                $("#listRadioView").hide();
+                $("#iconRadioView").show();
+            }
+            
+        }
     </script>
 
     <script>
