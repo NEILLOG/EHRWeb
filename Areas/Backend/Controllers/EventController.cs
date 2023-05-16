@@ -2146,7 +2146,7 @@ namespace BASE.Areas.Backend.Controllers
                     SigninUrl = string.Format("{0}/Frontend/Activity/Checkin?aid={1}%26sid={2}", webSiteDomain, EncryptService.AES.RandomizedEncrypt(datapost.ActivityItem.Id), EncryptService.AES.RandomizedEncrypt(datapost.Search.sSection));
 
                     // QRCODE URL
-                    var url = string.Format("http://chart.apis.google.com/chart?cht=qr&chs={1}x{2}&chl={0}", SigninUrl, 500, 500);
+                    var url = string.Format("https://chart.apis.google.com/chart?cht=qr&chs={1}x{2}&chl={0}", SigninUrl, 500, 500);
                     WebResponse webResponse = default(WebResponse);
                     Stream remoteStream = default(Stream);
                     StreamReader readStream = default(StreamReader);
