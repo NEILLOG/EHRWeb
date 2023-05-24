@@ -94,7 +94,7 @@
         <div class="col-12 col-md-4">
             <a href="@Url.Action("List", "Activity")" class="item">
                 <img src="~/areas/frontend/img/imgbtn/a.png" alt="" class="img-fluid">
-                <h3 class="fw-bold mt-3">活動報名<span class="ms-2 fc-gray"><i class="fa-solid fa-circle-arrow-right"></i></span></h3>
+                <div class="h3 fw-bold mt-3">活動報名<span class="ms-2 fc-gray"><i class="fa-solid fa-circle-arrow-right"></i></span></div>
                 <small class="fc-gray">EVENT</small>
             </a>
         </div>
@@ -102,7 +102,7 @@
         <div class="col-12 col-md-4">
             <a href="@Url.Action("Index", "Consult")" class="item">
                 <img src="~/areas/frontend/img/imgbtn/b.png" alt="" class="img-fluid">
-                <h3 class="fw-bold mt-3">諮詢預約<span class="ms-2 fc-gray"><i class="fa-solid fa-circle-arrow-right"></i></span></h3>
+                <div class="h3 fw-bold mt-3">諮詢預約<span class="ms-2 fc-gray"><i class="fa-solid fa-circle-arrow-right"></i></span></div>
                 <small class="fc-gray">CONSULT</small>
             </a>
         </div>
@@ -110,7 +110,7 @@
         <div class="col-12 col-md-4">
             <a href="@Url.Action("List", "Resource")" class="item">
                 <img src="~/areas/frontend/img/imgbtn/c.png" alt="" class="img-fluid">
-                <h3 class="fw-bold mt-3">找資源<span class="ms-2 fc-gray"><i class="fa-solid fa-circle-arrow-right"></i></span></h3>
+                <div class="h3 fw-bold mt-3">找資源<span class="ms-2 fc-gray"><i class="fa-solid fa-circle-arrow-right"></i></span></div>
                 <small class="fc-gray">RESOURCE</small>
             </a>
         </div>
@@ -125,7 +125,7 @@
         <div class="row g-4">
             <div class="col-12 d-flex justify-content-between">
                 <div class="section-title">
-                    <h2 class="fw-bold"><img src="~/areas/frontend/img/icon/photos.svg" class="me-2" alt="">最新消息</h2>
+                    <div class="h2 fw-bold"><img src="~/areas/frontend/img/icon/photos.svg" class="me-2" alt="">最新消息</div>
                     <small class="ms-2 fc-gray fst-italic">HOT NEWS</small>
                 </div>
                 <div class="section-btn">
@@ -153,7 +153,7 @@
                                 <div class="col-12 col-md-8">
                                     <div class="card-body">
                                         <a href="@Url.Action("Detail", "News", new { id = EncryptService.AES.RandomizedEncrypt(LastNews.Header.Id) })" class="stretched-link">
-                                            <h4 class="card-title fw-bold">@LastNews.Header.Title</h4>
+                                            <div class="h4 card-title fw-bold">@LastNews.Header.Title</div>
                                         </a>
                                         <div class="card-tag"><span class="@(LastNews.Header.Category == "其他消息" ? "tag-other" : "tag-news")">@LastNews.Header.Category</span></div>
                                         <p class="card-text">@(LastNews.Header.Contents.Length > 60 ? LastNews.Header.Contents.Substring(0,60)+"..." : LastNews.Header.Contents)</p>
@@ -217,7 +217,7 @@
                     <div class="card h-100 courseItem">
                         <img src="@m.FileInfo.FilePath" class="card-img-top" alt="課程預覽圖">
                         <div class="card-body">
-                            <h5 class="card-title">@m.Header.Title</h5>
+                            <div class="h5 card-title">@m.Header.Title</div>
                             <p class="card-text tripleline-ellipsis">@m.Header.Description</p>
                         </div>
                         <div class="card-footer">
@@ -239,7 +239,7 @@
                 <div class="card h-100 border-0 bg-transparent courseCard">
                     <div class="card-body p-4">
                         <img src="~/areas/frontend/img/icon/users.svg" alt="" class="d-block">
-                        <h5 class="card-title d-inline-block fw-bold fs-2 fc-white my-2">熱門報名課程</h5>
+                        <div class="h5 card-title d-inline-block fw-bold fs-2 fc-white my-2">熱門報名課程</div>
                         <small class="d-inline-block ms-2 fc-gray fst-italic">COURSES</small>
                         <p class="card-text fc-white"></p>
                     </div>
@@ -292,7 +292,7 @@
                 <div class="card moreBox">
                     <div class="wrap-mask">
                         <div class="card-body p-0 p-md-3 p-lg-5">
-                            <h5 class="card-title fs-1 fw-bold">查看更多</h5>
+                            <div class="h5 card-title fs-1 fw-bold">查看更多</div>
                             <a href="@Url.Action("List", "Activity")" class="fc-white mt-5 stretched-link" title="點擊查看更多熱門報名課程">
                                 <i class="fa-regular fa-circle-right fs-1" aria-hidden="true"></i>
                                 <span class="sr-only">查看更多</span>
@@ -315,7 +315,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="section-title">
-                    <h2 class="fw-bold"><img src="~/areas/frontend/img/icon/link.svg" class="me-2" alt="">相關連結</h2>
+                    <div class="h2 fw-bold"><img src="~/areas/frontend/img/icon/link.svg" class="me-2" alt="">相關連結</div>
                     <small class="ms-2 fc-gray fst-italic">LINKS</small>
                 </div>
             </div>

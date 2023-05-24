@@ -37,7 +37,7 @@
                                     <a class="card h-100" href="@Url.Action("Detail", new { id = EncryptService.AES.RandomizedEncrypt(news.Header.Id) })">
                                         <div class="card-body">
                                             <div class="tag">@news.Header.Category</div>
-                                            <h5 class="card-title fw-bold">@news.Header.Title</h5>
+                                            <div class="h5 card-title fw-bold">@news.Header.Title</div>
                                             <p class="card-text tripleline-ellipsis">
                                                 @(news.Header.Contents.Length > 50 ? news.Header.Contents.Substring(0, 50) + "..." : news.Header.Contents)
                                             </p>
