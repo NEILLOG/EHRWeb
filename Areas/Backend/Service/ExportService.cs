@@ -194,7 +194,7 @@ namespace BASE.Areas.Backend.Service
                                                         Email = data.register.Email,
                                                         CompanyEmpAmount = data.register.CompanyEmpAmount,
                                                         RegisterSectionType = data.registerSection.RegisterSectionType,
-                                                        IsVegin = data.registerSection.RegisterSectionType == "實體" ? (data.registerSection.IsVegin ? "葷" : "素") : "",
+                                                        IsVegin = data.registerSection.RegisterSectionType == "實體" ? (data.registerSection.IsVegin ? "素" : "葷") : "",
                                                         IsValid = data.registerSection.IsValid.HasValue ? (data.registerSection.IsValid.Value ? "通過" : "不通過") : "尚未審核"
                                                     }).ToList();
 
