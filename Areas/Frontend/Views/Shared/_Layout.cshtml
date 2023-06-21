@@ -307,10 +307,19 @@
 
     <script src="~/areas/frontend/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L1P0FVFHJK"></script>
 
     @{
         Context.Session.Set(BASE.Areas.Backend.Models.SessionStruct.VerifyCode.Subscript, new ValidImageHelper().RandomCode(5));
     }
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-L1P0FVFHJK');
+    </script>
+
     <script>
         $(document).ready(function(){
 
