@@ -36,7 +36,8 @@ namespace BASE.Areas.Backend.Service
                                                       {
                                                           userinfo = account,
                                                           userinfoGroup = account.TbUserInGroup.FirstOrDefault(),
-                                                          groupInfo = gp
+                                                          groupInfo = gp,
+                                                          LoginRecord = _context.TbLoginRecord.Where(x => x.UserId == account.UserId && x.LoginMsg == "登入成功").OrderByDescending(x => x.LoginTime).FirstOrDefault()
                                                       });
 
                 if (filter != null)

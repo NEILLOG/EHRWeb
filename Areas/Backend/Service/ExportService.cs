@@ -125,7 +125,8 @@ namespace BASE.Areas.Backend.Service
                                                       UserName = data.userinfo.UserName,
                                                       GroupName = data.groupInfo.GroupName,
                                                       UserInfo = data.userinfo.Account,
-                                                      Status = data.userinfo.IsActive ? ActiveStatus.True.GetDisplayName() : ActiveStatus.False.GetDisplayName()
+                                                      Status = data.userinfo.IsActive ? ActiveStatus.True.GetDisplayName() : ActiveStatus.False.GetDisplayName(),
+                                                      LoginTime = data.LoginRecord.LoginTime.ToString("yyyy-MM-dd HH:mm")
                                                   }).ToList();
 
                 //建立Excel
@@ -141,6 +142,7 @@ namespace BASE.Areas.Backend.Service
                 sheet.GetRow(0).CreateCell(2).SetCellValue("群組");
                 sheet.GetRow(0).CreateCell(3).SetCellValue("帳號");
                 sheet.GetRow(0).CreateCell(4).SetCellValue("啟用");
+                sheet.GetRow(0).CreateCell(5).SetCellValue("最後登入時間");
 
                 //資料
                 int rowIndex = 1;
@@ -152,6 +154,8 @@ namespace BASE.Areas.Backend.Service
                     sheet.GetRow(rowIndex).CreateCell(2).SetCellValue(item.GetType().GetProperty("GroupName")?.GetValue(item, null)?.ToString() ?? string.Empty);
                     sheet.GetRow(rowIndex).CreateCell(3).SetCellValue(item.GetType().GetProperty("UserInfo")?.GetValue(item, null)?.ToString() ?? string.Empty);
                     sheet.GetRow(rowIndex).CreateCell(4).SetCellValue(item.GetType().GetProperty("Status")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(5).SetCellValue(item.GetType().GetProperty("LoginTime")?.GetValue(item, null)?.ToString() ?? string.Empty);
+
                     rowIndex++;
                 }
 

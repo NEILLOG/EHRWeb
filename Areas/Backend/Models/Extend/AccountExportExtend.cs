@@ -15,5 +15,8 @@ namespace BASE.Areas.Backend.Models.Extend
 
         [Display(Name = "帳號狀態")]
         public string Status { get; set; }
+
+        [Display(Name = "最後登入時間")]
+        public string LoginTime { get; set; }
     }
 }

@@ -161,6 +161,7 @@
                                 <th>群組</th>
                                 <th>帳號</th>
                                 <th>啟用</th>
+                                <th>最後登入時間</th>
                                 <th>管理</th>
                             </tr>
                         </thead>
@@ -175,6 +176,16 @@
                                         <td style="max-width:55vw;">@item.groupInfo.GroupName</td>
                                         <td style="max-width:30vw;">@item.userinfo.Account</td>
                                         <td style="max-width:30vw;">@(item.userinfo.IsActive ? "是":"否")</td>
+                                        <td style="max-width:30vw;">
+                                            @if (item.LoginRecord != null)
+                                            {
+                                                @Convert.ToDateTime(item.LoginRecord.LoginTime).ToString("yyyy-MM-dd HH:mm")
+                                            }
+                                            else
+                                            {
+                                                @("-")
+                                            }
+                                        </td>
                                         <td>
                                             <a class="btn btn-primary" href="@(Url.Action("MemberEdit", "Member", new { id = EncryptService.AES.RandomizedEncrypt(item.userinfo.UserId) }))">編輯</a>
                                             @if (item.groupInfo.GroupId != "G000000001"){

@@ -13,6 +13,9 @@ namespace BASE.Areas.Backend.Models.Extend
 
         /// <summary> 經歷 </summary>
         public List<TbUserInfoExperience> listUserEXP { get; set; }
+
+        /// <summary> 登入紀錄 </summary>
+        public TbLoginRecord LoginRecord { get; set; }
     }
 
     public class OperateExtend
