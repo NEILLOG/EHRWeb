@@ -39,5 +39,17 @@ namespace BASE.Areas.Backend.Models.Extend
 
         [Display(Name = "審核狀態")]
         public string IsValid { get; set; }
+
+        [Display(Name = "是否已簽到(上午場)")]
+        public string IsSigninAM { get; set; }
+
+        [Display(Name = "是否已簽到(下午場)")]
+        public string IsSigninPM { get; set; }
+
+        [Display(Name = "簽到日期(上午)")]
+        public string SigninDate_AM { get; set; }
+
+        [Display(Name = "簽到日期(下午)")]
+        public string SigninDate_PM { get; set; }
     }
 }

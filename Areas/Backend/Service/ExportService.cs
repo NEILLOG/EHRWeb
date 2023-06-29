@@ -199,7 +199,11 @@ namespace BASE.Areas.Backend.Service
                                                         CompanyEmpAmount = data.register.CompanyEmpAmount,
                                                         RegisterSectionType = data.registerSection.RegisterSectionType,
                                                         IsVegin = data.registerSection.RegisterSectionType == "實體" ? (data.registerSection.IsVegin ? "素" : "葷") : "",
-                                                        IsValid = data.registerSection.IsValid.HasValue ? (data.registerSection.IsValid.Value ? "通過" : "不通過") : "尚未審核"
+                                                        IsValid = data.registerSection.IsValid.HasValue ? (data.registerSection.IsValid.Value ? "通過" : "不通過") : "尚未審核",
+                                                        IsSigninAM = data.registerSection.IsSigninAm ? "已簽到" : "未簽到",
+                                                        IsSigninPM = data.registerSection.IsSigninPm ? "已簽到" : "未簽到",
+                                                        SigninDate_AM = data.registerSection.SigninDateAm != null ? Convert.ToDateTime(data.registerSection.SigninDateAm).ToString("yyyy-MM-dd HH:mm") : "",
+                                                        SigninDate_PM = data.registerSection.SigninDatePm != null ? Convert.ToDateTime(data.registerSection.SigninDatePm).ToString("yyyy-MM-dd HH:mm") : ""
                                                     }).ToList();
 
                 //建立Excel
@@ -223,6 +227,10 @@ namespace BASE.Areas.Backend.Service
                 sheet.GetRow(0).CreateCell(10).SetCellValue("課程參與模式");
                 sheet.GetRow(0).CreateCell(11).SetCellValue("飲食選擇");
                 sheet.GetRow(0).CreateCell(12).SetCellValue("審核狀態");
+                sheet.GetRow(0).CreateCell(13).SetCellValue("是否已簽到(上午場)");
+                sheet.GetRow(0).CreateCell(14).SetCellValue("是否已簽到(下午場)");
+                sheet.GetRow(0).CreateCell(15).SetCellValue("簽到日期(上午)");
+                sheet.GetRow(0).CreateCell(16).SetCellValue("簽到日期(下午)");
 
                 //資料
                 int rowIndex = 1;
@@ -242,6 +250,11 @@ namespace BASE.Areas.Backend.Service
                     sheet.GetRow(rowIndex).CreateCell(10).SetCellValue(item.GetType().GetProperty("RegisterSectionType")?.GetValue(item, null)?.ToString() ?? string.Empty);
                     sheet.GetRow(rowIndex).CreateCell(11).SetCellValue(item.GetType().GetProperty("IsVegin")?.GetValue(item, null)?.ToString() ?? string.Empty);
                     sheet.GetRow(rowIndex).CreateCell(12).SetCellValue(item.GetType().GetProperty("IsValid")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(13).SetCellValue(item.GetType().GetProperty("IsSigninAM")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(14).SetCellValue(item.GetType().GetProperty("IsSigninPM")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(15).SetCellValue(item.GetType().GetProperty("SigninDate_AM")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(16).SetCellValue(item.GetType().GetProperty("SigninDate_PM")?.GetValue(item, null)?.ToString() ?? string.Empty);
+
                     rowIndex++;
                 }
 
