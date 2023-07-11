@@ -260,8 +260,10 @@ namespace BASE.Areas.Frontend.Controllers
                 var activity_user = _allCommonService.Lookup<TbUserInfo>(ref _message, x => x.UserId == activity.Header.CreateUser).FirstOrDefault();
 
                 //日期格式:○月○日  ○:○-○:○ (實體/線上 )、○月○日  ○:○-○:○ (實體/線上 )···
-                var dateFormat = @"{0} {1}-{2}({3})";
-                var dateString = new List<string>();
+                var datetimeFormat = @"{0} {1}-{2}";
+                var dateFormat = @"{0}";
+                var dateString = "";
+                var datetimeString = "";
                 foreach (var item in data.RegisterSection)
                 {
                     //原始場次資訊
@@ -270,26 +272,32 @@ namespace BASE.Areas.Frontend.Controllers
                     //使用者報名的場次
                     var user_reg_section = RegSections.Where(x => x.RegisterSectionId == item.RegisterSectionId).FirstOrDefault();
 
-                    dateString.Add(String.Format(dateFormat, 
+                    dateString = String.Format(dateFormat,
+                        section.Day.ToString("MM月dd日")
+                    );
+
+                    datetimeString = String.Format(datetimeFormat,
                         section.Day.ToString("MM月dd日"),
                         section.StartTime.ToString(@"hh\:mm"),
-                        section.EndTime.ToString(@"hh\:mm"),
-                        user_reg_section.RegisterSectionType
-                    ));
-                }
+                        section.EndTime.ToString(@"hh\:mm")
+                    );
 
-                await _mailService.SendEmail(new MailViewModel()
-                {
-                    Subject = String.Format(MailTmeplate.Activity.REGISTER_SUCCESS_SUBJECT, activity.Header.Title, activity.Header.Subject),
-                    Body = String.Format(MailTmeplate.Activity.REGISTER_SUCCESS_CONTNET,
+                    await _mailService.SendEmail(new MailViewModel()
+                    {
+                        Subject = String.Format(MailTmeplate.Activity.REGISTER_SUCCESS_SUBJECT, dateString, activity.Header.Title),
+                        Body = String.Format(MailTmeplate.Activity.REGISTER_SUCCESS_CONTNET,
                                             data.Main.Name,
                                             activity.Header.Title,
                                             activity.Header.Subject,
-                                            String.Join("<br />", dateString),
-                                            activity_user.Email
+                                            dateString,
+                                            activity_user.Email,
+                                            user_reg_section.RegisterSectionType,
+                                            datetimeString
                                             ),
-                    ToList = new List<MailAddressInfo>() { new MailAddressInfo(main.Email) }
-                });
+                        ToList = new List<MailAddressInfo>() { new MailAddressInfo(main.Email) }
+                    });
+
+                }               
             }
             else
             {
