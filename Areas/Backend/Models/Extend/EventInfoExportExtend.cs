@@ -51,5 +51,8 @@ namespace BASE.Areas.Backend.Models.Extend
 
         [Display(Name = "簽到日期(下午)")]
         public string SigninDate_PM { get; set; }
+
+        [Display(Name = "滿意度問卷填寫狀態")]
+        public string isFillQuiz { get; set; }
     }
 }

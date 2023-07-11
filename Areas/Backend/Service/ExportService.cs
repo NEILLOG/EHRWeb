@@ -203,7 +203,8 @@ namespace BASE.Areas.Backend.Service
                                                         IsSigninAM = data.registerSection.IsSigninAm ? "已簽到" : "未簽到",
                                                         IsSigninPM = data.registerSection.IsSigninPm ? "已簽到" : "未簽到",
                                                         SigninDate_AM = data.registerSection.SigninDateAm != null ? Convert.ToDateTime(data.registerSection.SigninDateAm).ToString("yyyy-MM-dd HH:mm") : "",
-                                                        SigninDate_PM = data.registerSection.SigninDatePm != null ? Convert.ToDateTime(data.registerSection.SigninDatePm).ToString("yyyy-MM-dd HH:mm") : ""
+                                                        SigninDate_PM = data.registerSection.SigninDatePm != null ? Convert.ToDateTime(data.registerSection.SigninDatePm).ToString("yyyy-MM-dd HH:mm") : "",
+                                                        isFillQuiz = _context.TbActivityQuizResponse.Where(x => x.RegisterId == data.register.Id).Any() ? "已填寫" : "未填寫"
                                                     }).ToList();
 
                 //建立Excel
@@ -231,6 +232,7 @@ namespace BASE.Areas.Backend.Service
                 sheet.GetRow(0).CreateCell(14).SetCellValue("是否已簽到(下午場)");
                 sheet.GetRow(0).CreateCell(15).SetCellValue("簽到日期(上午)");
                 sheet.GetRow(0).CreateCell(16).SetCellValue("簽到日期(下午)");
+                sheet.GetRow(0).CreateCell(17).SetCellValue("滿意度問卷填寫狀態");
 
                 //資料
                 int rowIndex = 1;
@@ -254,6 +256,7 @@ namespace BASE.Areas.Backend.Service
                     sheet.GetRow(rowIndex).CreateCell(14).SetCellValue(item.GetType().GetProperty("IsSigninPM")?.GetValue(item, null)?.ToString() ?? string.Empty);
                     sheet.GetRow(rowIndex).CreateCell(15).SetCellValue(item.GetType().GetProperty("SigninDate_AM")?.GetValue(item, null)?.ToString() ?? string.Empty);
                     sheet.GetRow(rowIndex).CreateCell(16).SetCellValue(item.GetType().GetProperty("SigninDate_PM")?.GetValue(item, null)?.ToString() ?? string.Empty);
+                    sheet.GetRow(rowIndex).CreateCell(17).SetCellValue(item.GetType().GetProperty("isFillQuiz")?.GetValue(item, null)?.ToString() ?? string.Empty);
 
                     rowIndex++;
                 }
