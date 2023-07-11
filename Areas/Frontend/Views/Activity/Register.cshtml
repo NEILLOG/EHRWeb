@@ -383,28 +383,28 @@
                 }
 
                 //檢查電話是否註冊過
-                var isRegisterd = true;
-                var cellphone = document.getElementById("Main_CellPhone").value;
-                var section_ids = GetAllRegisterSection();
-                for(var i = 0; i < section_ids.length; i++) {
-                    var msg = '';
-                    $.ajax({
-                        type: "POST",
-                        url: '@Url.Action("ajaxIsRegisted", "Activity")',
-                        async: false,
-                        data: { cellphone: cellphone, section_id: section_ids[i] },
-                        success: function (response) {
-                            isRegisterd = response.isRegisterd;
-                            msg = response.message;
-                        }
-                    });
+                //var isRegisterd = true;
+                //var cellphone = document.getElementById("Main_CellPhone").value;
+                //var section_ids = GetAllRegisterSection();
+                //for(var i = 0; i < section_ids.length; i++) {
+                //    var msg = '';
+                //    $.ajax({
+                //        type: "POST",
+                //        url: '@Url.Action("ajaxIsRegisted", "Activity")',
+                //        async: false,
+                //        data: { cellphone: cellphone, section_id: section_ids[i] },
+                //        success: function (response) {
+                //            isRegisterd = response.isRegisterd;
+                //            msg = response.message;
+                //        }
+                //    });
 
-                    if (isRegisterd == true) {
-                        Swal.fire(msg);
-                        btnSubmit.prop('disabled', false);
-                        return false;
-                    }
-                }
+                //    if (isRegisterd == true) {
+                //        Swal.fire(msg);
+                //        btnSubmit.prop('disabled', false);
+                //        return false;
+                //    }
+                //}
 
                 var checked = $("input[name=ckbsInfoFrom]:checked").length;
                 if (!checked) {
