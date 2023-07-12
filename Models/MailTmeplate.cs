@@ -32,6 +32,7 @@
             //滿意度
             public static String SATISFACTION_SUBJECT = "【活動滿意度問卷】桃竹苗分署{0}{1}–{2}";
             public static String SATISFACTION_CONTNET = @"
+                <p><B>(本郵件由系統自動寄發，請勿直接回覆此信件)</B></p>
                 <p>敬愛的學員，您好：<br />
                 感謝您於 {0} 參加勞動部勞動力發展署桃竹苗分署主辦之{1}–{2}。</p>
 
