@@ -1408,7 +1408,7 @@ namespace BASE.Areas.Backend.Controllers
                         foreach (var itemReserve in activityRegister.Where(x => listReserve.Contains(x.Id)))
                         {
                             // 主旨
-                            string sSubject = string.Concat("【主旨】勞動部勞動力發展署桃竹苗分署-", actMonth, "月", actDay, "日", activity.Title, "-", activity.Subject, "報名備取成功通知信");
+                            string sSubject = string.Concat("勞動部勞動力發展署桃竹苗分署-", actMonth, "月", actDay, "日", activity.Title, "-", activity.Subject, "報名備取成功通知信");
 
                             TbActivityRegister tempdata = _eventService.Lookup<TbActivityRegister>(ref _message, x => x.Id == itemReserve.RegisterId).FirstOrDefault();
 
@@ -1670,7 +1670,7 @@ namespace BASE.Areas.Backend.Controllers
                         {
                             
                             // 主旨
-                            string sSubject = string.Concat("【主旨】勞動部勞動力發展署桃竹苗分署-", actMonth, "月", actDay, "日", activity.Title, "-", activity.Subject, "報名備取成功通知信");
+                            string sSubject = string.Concat("勞動部勞動力發展署桃竹苗分署-", actMonth, "月", actDay, "日", activity.Title, "-", activity.Subject, "報名備取成功通知信");
 
                             TbActivityRegister tempdata = _eventService.Lookup<TbActivityRegister>(ref _message, x => x.Id == itemReserve.RegisterId).FirstOrDefault();
 
