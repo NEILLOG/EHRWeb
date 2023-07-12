@@ -2061,7 +2061,7 @@ namespace BASE.Areas.Backend.Controllers
                     };
 
                     //產生Word檔
-                    result = _exportService.EventSigninWord(item);
+                    result = _exportService.EventSigninExcel(item);
 
                     if (!result.IsSuccess)
                     {
@@ -2105,7 +2105,7 @@ namespace BASE.Areas.Backend.Controllers
 
             if (isSuccess && result.Data != null)
             {
-                return File(result.Data.ToArray(), "application/vnd.ms-word.document.12", FileName + ".docx");
+                return File(result.Data.ToArray(), "application/vnd.ms-excel", FileName + ".xlsx");
             }
             else
             {

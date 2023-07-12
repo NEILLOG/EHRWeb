@@ -23,6 +23,7 @@ using ICell = NPOI.SS.UserModel.ICell;
 using NPOI.SS.Formula.Functions;
 using System.IO;
 using System.IO.Pipes;
+using System.Drawing;
 
 namespace BASE.Areas.Backend.Service
 {
@@ -642,6 +643,147 @@ namespace BASE.Areas.Backend.Service
             }
             return result;
         }
+
+        /// <summary>
+        /// 活動報名簽到表
+        /// </summary>
+        /// <returns></returns>
+        public ActionResultModel<MemoryStream> EventSigninExcel(RegistrationExportExtend dataItem)
+        {
+            ActionResultModel<MemoryStream> result = new ActionResultModel<MemoryStream>();
+            try
+            {
+                //建立Excel
+                MemoryStream ms = new MemoryStream();
+                //DataTable dt = new DataTable();
+                IWorkbook workbook = new XSSFWorkbook(); //建立活頁簿
+                ISheet sheet = workbook.CreateSheet("課程簽到表"); //建立sheet
+                sheet.PrintSetup.PaperSize = (short)PaperSize.A4_Small;
+                sheet.PrintSetup.Landscape = true;
+                sheet.PrintSetup.FitWidth = 1;                           //所有列在一页  
+                sheet.PrintSetup.FitHeight = 0;                          //所有行在一页
+
+                // 設定標題的格式
+                ICellStyle cellStyle = workbook.CreateCellStyle();//聲明樣式
+                cellStyle.Alignment = HorizontalAlignment.Center;//水平居中
+                cellStyle.VerticalAlignment = VerticalAlignment.Center;//垂直居中
+                IFont font = workbook.CreateFont();//聲明字體
+                font.Boldweight = (Int16)FontBoldWeight.Bold;//加粗
+                font.FontHeightInPoints = 18;//字體大小
+                font.FontName = "標楷體";
+                cellStyle.SetFont(font);//加入單元格
+
+                IRow row0 = sheet.CreateRow(0);//創建行
+                row0.HeightInPoints = 35;//行高
+                ICell cell0 = row0.CreateCell(0);//創建單元格
+                cell0.SetCellValue("勞動部勞動力發展署桃竹苗分署");//賦值
+                cell0.CellStyle = cellStyle;//設置樣式
+                sheet.AddMergedRegion(new CellRangeAddress(0, 0, 0, 5));//合併單元格（第幾行，到第幾行，第幾列，到第幾列）
+
+                IRow row1 = sheet.CreateRow(1);//創建行
+                row1.HeightInPoints = 35;//行高
+                ICell cell1 = row1.CreateCell(0);//創建單元格
+                cell1.SetCellValue(dataItem.ActivityTitle);//賦值
+                cell1.CellStyle = cellStyle;//設置樣式
+                sheet.AddMergedRegion(new CellRangeAddress(1, 1, 0, 5));//合併單元格（第幾行，到第幾行，第幾列，到第幾列）
+
+                IRow row2 = sheet.CreateRow(2);//創建行
+                row2.HeightInPoints = 35;//行高
+                ICell cell2 = row2.CreateCell(0);//創建單元格
+                cell2.SetCellValue("實體場次學員 簽到表");//賦值
+                cell2.CellStyle = cellStyle;//設置樣式
+                sheet.AddMergedRegion(new CellRangeAddress(2, 2, 0, 5));//合併單元格（第幾行，到第幾行，第幾列，到第幾列）
+
+                //-- 輔導時間與地點
+                ICellStyle cellStyle2 = workbook.CreateCellStyle();//聲明樣式
+                IFont font2 = workbook.CreateFont();//聲明字體
+                font2.FontHeightInPoints = 16;//字體大小
+                font2.FontName = "標楷體";
+                cellStyle2.SetFont(font2);//加入單元格
+
+                IRow row3 = sheet.CreateRow(3);//創建行
+                row3.HeightInPoints = 30;//行高
+                ICell cell3 = row3.CreateCell(0);//創建單元格
+                cell3.SetCellValue("活動時間：" + dataItem.ActivityDate);//賦值
+                cell3.CellStyle = cellStyle2;//設置樣式
+                sheet.AddMergedRegion(new CellRangeAddress(3, 3, 0, 5));//合併單元格（第幾行，到第幾行，第幾列，到第幾列）
+
+                IRow row4 = sheet.CreateRow(4);//創建行
+                row4.HeightInPoints = 30;//行高
+                ICell cell4 = row4.CreateCell(0);//創建單元格
+                cell4.SetCellValue("活動地點：" + dataItem.ActivityPlace);//賦值
+                cell4.CellStyle = cellStyle2;//設置樣式
+                sheet.AddMergedRegion(new CellRangeAddress(4, 4, 0, 5));//合併單元格（第幾行，到第幾行，第幾列，到第幾列）
+
+                // 空白行
+                //IRow row5 = sheet.CreateRow(5);//創建行
+                //row5.HeightInPoints = 10;//行高
+                //ICell cell5 = row5.CreateCell(0);//創建單元格
+                //cell5.SetCellValue("輔導地點：" + dataItem.CounselingPlace);//賦值
+                //cell5.CellStyle = cellStyle;//設置樣式
+                //sheet.AddMergedRegion(new CellRangeAddress(5, 5, 0, 3));//合併單元格（第幾行，到第幾行，第幾列，到第幾列）
+
+                // 資料列表標頭
+                IRow row6 = sheet.CreateRow(5);
+                row6.HeightInPoints = 30;//行高
+                ICell cell6 = row6.CreateCell(0);//創建單元格
+                cell6.CellStyle = cellStyle2;//設置樣式
+
+                sheet.GetRow(5).CreateCell(0).SetCellValue("序號");
+                sheet.GetRow(5).CreateCell(1).SetCellValue("單位");
+                sheet.GetRow(5).CreateCell(2).SetCellValue("姓名");
+                sheet.GetRow(5).CreateCell(3).SetCellValue("職稱");
+                sheet.GetRow(5).CreateCell(4).SetCellValue("上午簽到");
+                sheet.GetRow(5).CreateCell(5).SetCellValue("下午簽到");
+
+                //資料
+                int rowIndex = 6;
+                int datacount = 1;
+                foreach (var item in dataItem.listData)
+                {
+                    IRow rowX = sheet.CreateRow(rowIndex);
+                    rowX.HeightInPoints = 30;//行高
+                    ICell cellX = rowX.CreateCell(0);//創建單元格
+                    cellX.CellStyle = cellStyle2;//設置樣式
+
+                    sheet.GetRow(rowIndex).CreateCell(0).SetCellValue(datacount);
+                    sheet.GetRow(rowIndex).CreateCell(1).SetCellValue(item.register.CompanyName);
+                    sheet.GetRow(rowIndex).CreateCell(2).SetCellValue(item.register.Name);
+                    sheet.GetRow(rowIndex).CreateCell(3).SetCellValue(item.register.JobTitle);
+                    sheet.GetRow(rowIndex).CreateCell(4).SetCellValue("");
+                    sheet.GetRow(rowIndex).CreateCell(5).SetCellValue("");
+                    rowIndex++;
+                    datacount++;
+                }
+
+                // 自動調整欄位
+                //sheet.SetColumnWidth(0, 32 * 256);
+                sheet.SetColumnWidth(1, 32 * 256);
+                sheet.SetColumnWidth(2, 32 * 256);
+                sheet.SetColumnWidth(4, 10 * 256);
+                sheet.SetColumnWidth(5, 10 * 256);
+
+                //sheet.AutoSizeColumn(0);
+                //sheet.AutoSizeColumn(1);
+                //sheet.AutoSizeColumn(2);
+                //sheet.AutoSizeColumn(3);
+
+                //寫入MemoryStream
+                workbook.Write(ms);
+
+                ms.Close();
+                ms.Dispose();
+
+                result.Data = ms;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.IsSuccess = false;
+            }
+            return result;
+        }
+
 
         /// <summary>
         /// 出席學員證明(Word)
