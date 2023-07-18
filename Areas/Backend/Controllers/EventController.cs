@@ -1357,6 +1357,7 @@ namespace BASE.Areas.Backend.Controllers
             {
                 if (activityRegister != null && activityRegister.Any())
                 {
+                    string actYear = (activitySection.Day.Year - 1911).ToString();
                     string actMonth = activitySection.Day.Month.ToString();
                     string actDay = activitySection.Day.Day.ToString();
 
@@ -1379,12 +1380,15 @@ namespace BASE.Areas.Backend.Controllers
                             //內容
                             string sContent = string.Concat("<B>(本郵件由系統自動寄發，請勿直接回覆此郵件)</B><br /><br />");
                             sContent += string.Concat(tempdata.Name, "您好<br />");
-                            sContent += string.Concat("您已成功報名", actMonth, "月", actDay, "日 ", activity.Title, "，本活動資訊如下：<br />");
+                            sContent += string.Concat("您已成功報名", actMonth, "月", actDay, "日 ", activity.Title, "活動，本活動資訊如下：<br />");
                             sContent += string.Concat("活動主題：「", activity.Subject, "」<br />");
-                            sContent += string.Concat("活動時間：", actMonth, "月", actDay, "日", activitySection.StartTime, '-', activitySection.EndTime, "【活動將於開始前30分鐘開放報到】<br />");
+                            sContent += string.Concat("活動時間：", actYear, "年", actMonth, "月", actDay, "日", activitySection.StartTime, '-', activitySection.EndTime, "<br />");
                             sContent += string.Concat("活動地點：", activity.Place, "<br />");
                             sContent += string.Concat("活動參與方式：", itemSuccess.RegisterSectionType, "出席<br />");
-                            sContent += string.Concat("飲食選擇：", IsVegin, "<br /><br />");
+                            if (itemSuccess.RegisterSectionType == "實體")
+                            {
+                                sContent += string.Concat("飲食選擇：", IsVegin, "<br /><br />");
+                            }
                             sContent += string.Concat("※將於活動前10天寄出詳細會前通知，再請留意信箱收件 (報名線上場次者將於會前通知提供會議室連結) <br />");
                             sContent += String.Format("※提醒您，活動當天請準時出席，若臨時有事不克參與請於活動開始前3天回信至{0}或來電取消報名<br /><br />", Creater.Email);
                             sContent += "敬祝 順心平安<br />";
@@ -1589,6 +1593,7 @@ namespace BASE.Areas.Backend.Controllers
                 
                 if (activityRegisterSection != null && activityRegisterSection.Any())
                 {
+                    string actYear = (activitySection.Day.Year - 1911).ToString();
                     string actMonth = activitySection.Day.Month.ToString();
                     string actDay = activitySection.Day.Day.ToString();
 
@@ -1610,12 +1615,15 @@ namespace BASE.Areas.Backend.Controllers
                             //內容
                             string sContent = string.Concat("<B>(本郵件由系統自動寄發，請勿直接回覆此郵件)</B><br /><br />");
                             sContent += string.Concat(tempdata.Name, "您好<br />");
-                            sContent += string.Concat("您已成功報名", actMonth, "月", actDay, "日 ", activity.Title, "，本活動資訊如下：<br />");
+                            sContent += string.Concat("您已成功報名", actMonth, "月", actDay, "日 ", activity.Title, "課程，本活動資訊如下：<br />");
                             sContent += string.Concat("活動主題：「", activity.Subject , "」<br />");
-                            sContent += string.Concat("活動時間：", actMonth, "月", actDay, "日", activitySection.StartTime, '-', activitySection.EndTime, "【活動將於開始前30分鐘開放報到】<br />");
+                            sContent += string.Concat("活動時間：", actYear, "年", actMonth, "月", actDay, "日", activitySection.StartTime, '-', activitySection.EndTime, "<br />");
                             sContent += string.Concat("活動地點：", activity.Place, "<br />");
                             sContent += string.Concat("活動參與方式：", itemSuccess.RegisterSectionType, "出席<br />");
-                            sContent += string.Concat("飲食選擇：", IsVegin, "<br /><br />");
+                            if (itemSuccess.RegisterSectionType == "實體")
+                            {
+                                sContent += string.Concat("飲食選擇：", IsVegin, "<br /><br />");
+                            }
                             sContent += string.Concat("※將於活動前10天寄出詳細會前通知，再請留意信箱收件 (報名線上場次者將於會前通知提供會議室連結) <br />");
                             sContent += String.Format("※提醒您，活動當天請準時出席，若臨時有事不克參與請於活動開始前3天回信至{0}或來電取消報名<br /><br />", Creater.Email);
                             sContent += "敬祝 順心平安<br />";
@@ -2054,7 +2062,7 @@ namespace BASE.Areas.Backend.Controllers
 
                     RegistrationExportExtend item = new RegistrationExportExtend()
                     {
-                        ActivityTitle = String.Concat(datapost.ActivityItem.Title,datapost.ActivityItem.Subject),
+                        ActivityTitle = datapost.ActivityItem.Title,
                         ActivityDate = ActDate,
                         ActivityPlace = datapost.ActivityItem.Place,
                         listData = dataList
