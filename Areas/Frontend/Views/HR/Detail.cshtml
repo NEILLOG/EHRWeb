@@ -4,6 +4,17 @@
 
 @await Html.PartialAsync("_BannerPartial", new BASE.Areas.Frontend.Models.Extend.BannerPartial(){ Main = "人資小幫手", Detail = Model.ExtendItem.Header.Category })
 
+@section Css{
+    <style>
+        #contents blockquote {
+            padding: 0.5em 26px;
+            border-left: 5px solid #cacfd7;
+            color: #6b6b6b;
+            margin: 0;
+        }
+    </style>
+}
+
 @section Scripts {
     <script>
         $(document).ready(function(){
