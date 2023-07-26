@@ -34,7 +34,9 @@
                                 @line.QuizDescription
                             </th>
                             <td>
-                                @line.ResponseText.Replace("|", "、");
+                                @if (line.ResponseText != null) {
+                                    @line.ResponseText.Replace("|", "、");
+                                }                                
                             </td>
                         </tr>
                     }
