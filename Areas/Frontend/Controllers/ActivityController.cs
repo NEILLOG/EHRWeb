@@ -750,14 +750,14 @@ namespace BASE.Areas.Frontend.Controllers
                             Directory.CreateDirectory(folderPath);
 
                         // 存檔路徑
-                        string filePath = _fileService.MapPath(fileUploadRoot, "ProofOfStudent/" + register.Id, "學員" + register.Name + "出席證明" + ".docx");
+                        string filePath = _fileService.MapPath(fileUploadRoot, "ProofOfStudent/" + register.Id, "學員" + register.Name + "出席證明" + ".pdf");
 
                         List<Attachment>? listAttachments = new List<Attachment>();
 
                         // 產生學生出席證明word 
-                        var GenerateProof = _exportService.ProofWord(itemProof, filePath);
+                        var GenerateProof = _exportService.ProofPDF(itemProof, filePath);
                         Attachment attachmentProof = new Attachment(filePath);
-                        attachmentProof.Name = "學員" + register.Name + "出席證明_" + DateTime.Now.Millisecond.ToString() + ".docx";  // set name here
+                        attachmentProof.Name = "學員" + register.Name + "出席證明_" + DateTime.Now.Millisecond.ToString() + ".pdf";  // set name here
                         listAttachments.Add(attachmentProof);
 
                         // 取出講義

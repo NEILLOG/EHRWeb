@@ -820,6 +820,45 @@ namespace BASE.Areas.Backend.Service
             return result;
         }
 
+        /// <summary>
+        /// 出席學員證明(PDF)
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public ActionResultModel<MemoryStream> ProofPDF(ProofExportExtend item, string filePath)
+        {
+            ActionResultModel<MemoryStream> result = new ActionResultModel<MemoryStream>();
+
+            try
+            {
+                string sampleFilePath = _fileService.MapPath("Sample/Sample_Proof.docx");
+
+                GemBox.Document.ComponentInfo.SetLicense("FREE-LIMITED-KEY");
+                //建立 word application instance
+                GemBox.Document.DocumentModel wordDocument = GemBox.Document.DocumentModel.Load(sampleFilePath);
+
+                //替換文字
+                //OfficeInteropExtensions.ReplaceKeyObjectGem(wordDocument.Content, item);
+                wordDocument.Content.Replace("$[ActivityTitle]", item.ActivityTitle);
+                wordDocument.Content.Replace("$[StudentName]", item.StudentName);
+                wordDocument.Content.Replace("$[Year]", item.Year);
+                wordDocument.Content.Replace("$[Month]", item.Month);
+                wordDocument.Content.Replace("$[Day]", item.Day);
+                wordDocument.Content.Replace("$[Week]", item.Week);
+                wordDocument.Content.Replace("$[Time]", item.Time);
+                wordDocument.Content.Replace("$[ActivitySubject]", item.ActivitySubject);
+
+                //匯出為 pdf
+                wordDocument.Save(filePath);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.IsSuccess = false;
+            }
+            return result;
+        }
+
         private static void ReplaceKeyObjet(XWPFParagraph para, object model)
         {
             Type t = model.GetType();

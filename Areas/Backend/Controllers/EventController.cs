@@ -1871,12 +1871,12 @@ namespace BASE.Areas.Backend.Controllers
                                         Directory.CreateDirectory(folderPath);
 
                                     // 存檔路徑
-                                    string filePath = _fileService.MapPath(fileUploadRoot, "ProofOfStudent/" + register.Id, "學員" + register.Name + "出席證明"+ ".docx");
+                                    string filePath = _fileService.MapPath(fileUploadRoot, "ProofOfStudent/" + register.Id, "學員" + register.Name + "出席證明"+ ".pdf");
                                     
                                     // 產生學生出席證明word 
-                                    var GenerateProof = _exportService.ProofWord(itemProof, filePath);
+                                    var GenerateProof = _exportService.ProofPDF(itemProof, filePath);
                                     Attachment attachmentProof = new Attachment(filePath);
-                                    attachmentProof.Name = "學員" + register.Name + "出席證明_" + dtnow.Millisecond.ToString() + ".docx";  // set name here
+                                    attachmentProof.Name = "學員" + register.Name + "出席證明_" + dtnow.Millisecond.ToString() + ".pdf";  // set name here
                                     listAttachments.Add(attachmentProof);
 
                                     //直接測試寄信
